@@ -1,79 +1,78 @@
-import { Pool } from "pg";
+import { Router, Request, Response } from "express";
+import * as customerRepo from "../repositories/customerRepository";
 
-export class SharedService<T> {
-  constructor(
-    private pool: Pool,
-    private table: string,
-    private idField: string = "id"
-  ) {}
+const router = Router();
 
-  async getAll(): Promise<T[]> {
-    const { rows } = await this.pool.query(`SELECT * FROM ${this.table}`);
-    return rows;
+// 一覧取得
+router.get("/", async (req: Request, res: Response) => {
+  try {
+    const customers = await customerRepo.getCustomers();
+    res.json(customers);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Database error" });
   }
+});
 
-  async getById(id: string): Promise<T | null> {
-    const { rows } = await this.pool.query(
-      `SELECT * FROM ${this.table} WHERE "${this.idField}" = $1`,
-      [id]
-    );
-    return rows[0] || null;
+// 1件取得
+router.get("/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  if (!id) return res.status(400).json({ error: "Customer ID is required" });
+
+  try {
+    const customer = await customerRepo.getCustomerById(id);
+    if (!customer) return res.status(404).json({ error: "Not found" });
+    res.json(customer);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Database error" });
   }
+});
 
-  async create(data: Partial<T>, workerId: string): Promise<T> {
-    const now = new Date();
-
-    // 共通フィールドを追加
-    const commonFields = {
-      createdate: now,
-      createworker: workerId,
-      updatedate: now,
-      updateworker: workerId,
-    };
-
-    const allData = { ...data, ...commonFields };
-
-    const keys = Object.keys(allData)
-      .map((k) => `"${k}"`)
-      .join(", ");
-    const values = Object.values(allData);
-    const placeholders = values.map((_, i) => `$${i + 1}`).join(", ");
-
-    const { rows } = await this.pool.query(
-      `INSERT INTO ${this.table} (${keys}) VALUES (${placeholders}) RETURNING *`,
-      values
-    );
-    return rows[0];
+// 登録
+router.post("/", async (req: Request, res: Response) => {
+  try {
+    const newCustomer = await customerRepo.createCustomer(req.body);
+    res.status(201).json(newCustomer);
+  } catch (err: any) {
+    console.error(err);
+    if (err.code === "23505") {
+      // unique制約違反
+      res.status(400).json({ error: "Customer name must be unique" });
+    } else {
+      res.status(500).json({ error: "Database error" });
+    }
   }
+});
 
-  async update(id: string, data: Partial<T>, workerId: string): Promise<T> {
-    const now = new Date();
+// 更新
+router.put("/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  if (!id) return res.status(400).json({ error: "Customer ID is required" });
 
-    // 共通フィールドを追加（更新のみ）
-    const allData = {
-      ...data,
-      updatedate: now,
-      updateworker: workerId,
-    };
-
-    const set = Object.keys(allData)
-      .map((k, i) => `"${k}"=$${i + 1}`)
-      .join(", ");
-    const values = Object.values(allData);
-
-    const { rows } = await this.pool.query(
-      `UPDATE ${this.table} SET ${set} WHERE "${this.idField}"=$${
-        values.length + 1
-      } RETURNING *`,
-      [...values, id]
-    );
-    return rows[0];
+  try {
+    const updated = await customerRepo.updateCustomer(id, req.body);
+    if (!updated) return res.status(404).json({ error: "Not found" });
+    res.json(updated);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Database error" });
   }
+});
 
-  async delete(id: string): Promise<void> {
-    await this.pool.query(
-      `DELETE FROM ${this.table} WHERE "${this.idField}"=$1`,
-      [id]
-    );
+// 削除
+router.delete("/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  if (!id) return res.status(400).json({ error: "Customer ID is required" });
+
+  try {
+    const deleted = await customerRepo.deleteCustomer(id);
+    if (!deleted) return res.status(404).json({ error: "Not found" });
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Database error" });
   }
-}
+});
+
+export default router;
