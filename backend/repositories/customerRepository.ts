@@ -1,15 +1,8 @@
 import { pool } from "../db";
-
-export interface Customer {
-  customerid: string;
-  customername: string;
-  customertel?: string;
-  customerrepemail?: string;
-  customeraccuntemail?: string;
-}
+import { customer } from "../types/customer";
 
 // 一覧取得
-export async function getCustomers(): Promise<Customer[]> {
+export async function getCustomers(): Promise<customer[]> {
   const result = await pool.query(
     "SELECT * FROM CustomerMst ORDER BY CustomerName"
   );
@@ -17,7 +10,7 @@ export async function getCustomers(): Promise<Customer[]> {
 }
 
 // 1件取得
-export async function getCustomerById(id: string): Promise<Customer | null> {
+export async function getCustomerById(id: string): Promise<customer | null> {
   const result = await pool.query(
     "SELECT * FROM CustomerMst WHERE CustomerID = $1",
     [id]
@@ -27,16 +20,33 @@ export async function getCustomerById(id: string): Promise<Customer | null> {
 
 // 登録
 export async function createCustomer(
-  data: Omit<Customer, "customerid">
-): Promise<Customer> {
-  const { customername, customertel, customerrepemail, customeraccuntemail } =
-    data;
+  data: Omit<customer, "customerid">
+): Promise<customer> {
+  const {
+    customername,
+    customertel,
+    customerrepemail,
+    customeraccuntemail,
+    createdate,
+    creareworker,
+    updatedate,
+    updateworker,
+  } = data;
   const result = await pool.query(
     `INSERT INTO CustomerMst 
-      (CustomerName, CustomerTel, CustomerRepEmail, CustomerAccuntEmail) 
-     VALUES ($1, $2, $3, $4) 
+      (CustomerName, CustomerTel, CustomerRepEmail, CustomerAccuntEmail, CreateDate, CreateWorker, UpdateDate, UpdateWorker) 
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
      RETURNING *`,
-    [customername, customertel, customerrepemail, customeraccuntemail]
+    [
+      customername,
+      customertel,
+      customerrepemail,
+      customeraccuntemail,
+      createdate,
+      creareworker,
+      updatedate,
+      updateworker,
+    ]
   );
   return result.rows[0];
 }
@@ -44,8 +54,8 @@ export async function createCustomer(
 // 更新
 export async function updateCustomer(
   id: string,
-  data: Partial<Omit<Customer, "customerid">>
-): Promise<Customer | null> {
+  data: Partial<Omit<customer, "customerid">>
+): Promise<customer | null> {
   const { customername, customertel, customerrepemail, customeraccuntemail } =
     data;
   const result = await pool.query(

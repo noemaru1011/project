@@ -1,9 +1,9 @@
-import { Shared } from "./Shared";
+import { common } from "./common";
 
-export interface CustomerMst extends Shared {
-  CustomerID: string;
-  CustomerName: string;
-  CustomerTel?: string;
-  CustomerRepEmail?: string;
-  CustomerAccuntEmail?: string;
+export interface customer extends common {
+  customerid: string;
+  customername: string;
+  customertel: string;
+  customerrepemail: string;
+  customeraccuntemail: string;
 }
