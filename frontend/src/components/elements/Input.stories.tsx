@@ -30,7 +30,6 @@ export const textInput: Story = {
     id: "textInput",
     label: "テキスト",
     type: "text",
-    value: "",
   },
 };
 
@@ -41,7 +40,6 @@ export const requiredInput: Story = {
     type: "password",
     label: "パスワード",
     required: true,
-    value: "",
   },
 };
 
@@ -50,7 +48,6 @@ export const noLabelInput: Story = {
   args: {
     id: "noLabelInput",
     type: "text",
-    value: "",
   },
 };
 
@@ -60,7 +57,6 @@ export const disabeledInput: Story = {
     id: "disabeledInput",
     label: "非活性テキスト",
     type: "text",
-    value: "",
     disabled: true,
   },
 };

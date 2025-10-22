@@ -4,7 +4,7 @@ type Props = {
   variant: ButtonVariant;
   name?: string;
   disabled?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
   type?: "button" | "submit" | "reset";
 };
 

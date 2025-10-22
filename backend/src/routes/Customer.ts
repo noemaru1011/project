@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { PrismaClient } from "@prisma/client";
-import { validation, CustomerInput } from "../../../shared/schemas/Cutomer";
+import { validation } from "../../../shared/schemas/Customer";
 
 const prisma = new PrismaClient();
 const router = Router();
@@ -17,7 +17,6 @@ router.get("/Index", async (req, res) => {
 
 router.post("/Create", async (req, res) => {
   try {
-    // Zod でバリデーション
     const result = validation.safeParse(req.body);
     if (!result.success) {
       const errors = result.error.flatten().fieldErrors;

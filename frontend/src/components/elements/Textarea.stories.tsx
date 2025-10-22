@@ -29,7 +29,6 @@ export const textarea: Story = {
   args: {
     id: "textarea",
     label: "備考欄",
-    value: "",
   },
 };
 
@@ -38,7 +37,6 @@ export const disabeldTaxtarea: Story = {
   args: {
     id: "disabledTextarea",
     label: "備考欄参照",
-    value: "ここに備考などを書く",
     disabled: true,
   },
 };
