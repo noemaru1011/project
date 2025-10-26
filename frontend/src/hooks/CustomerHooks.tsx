@@ -1,13 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
 import { validation, type Customer } from "@shared/schemas/Customer";
-import { CustomerApi } from "@/api/customerApi";
+import { CustomerApi } from "@/api/CustomerApi";
 
 export const useCreateCustomer = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -21,17 +19,13 @@ export const useCreateCustomer = () => {
 
   const onSubmit = async (data: Customer) => {
     try {
-      setLoading(true);
       await CustomerApi.create(data);
       alert("登録が完了しました");
-      navigate("/Mst001/Create");
+      navigate("/Mst001/Index");
     } catch (error: any) {
-      console.error(error);
-      alert(error.message || "登録に失敗しました");
-    } finally {
-      setLoading(false);
+      alert("登録に失敗しました");
     }
   };
 
-  return { register, handleSubmit, errors, onSubmit, loading };
+  return { register, handleSubmit, errors, onSubmit };
 };
