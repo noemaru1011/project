@@ -5,8 +5,8 @@ import { useState } from "react";
 
 const HeaderOptions: Option[] = [
   { value: ROUTES.HOME, label: "メインページへ" },
-  { value: ROUTES.REQUEST.INDEX, label: "新規依頼受付" },
-  { value: ROUTES.REQUEST.CREATE, label: "依頼受付一覧" },
+  { value: ROUTES.State.INDEX, label: "事故一覧" },
+  { value: "", label: "ログアウト" },
 ];
 
 const Header = () => {

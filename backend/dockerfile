@@ -1,0 +1,26 @@
+FROM node:25.0.0
+
+# 作業ディレクトリ
+WORKDIR /project/
+
+COPY package.json ./
+RUN npm install
+
+WORKDIR /project/backend
+COPY backend/package*.json ./
+COPY backend/tsconfig.json ./
+RUN npm install
+
+# backend のソースコードをコピー
+COPY backend/src ./src
+COPY backend/prisma ./prisma
+
+# shared は project 直下にコピー
+COPY shared ../shared
+
+RUN npx prisma generate
+# ポート開放
+EXPOSE 3000
+
+# 起動コマンド
+CMD ["npm", "run", "start"]

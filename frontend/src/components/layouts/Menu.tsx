@@ -4,14 +4,12 @@ import type { Option } from "@/types/ui";
 import { ROUTES } from "@/domain/routes";
 
 const MenuOptions: Option[] = [
-  { value: ROUTES.CUSTOMER.INDEX, label: "得意先マスタ" },
-  { value: ROUTES.CUSTOMER_STAFF.INDEX, label: "得意先担当者マスタ" },
-  { value: ROUTES.SUPPLIER.INDEX, label: "仕入先マスタ" },
-  { value: ROUTES.SUPPLIER_STAFF.INDEX, label: "仕入先担当者マスタ" },
-  { value: ROUTES.PROPERTY.INDEX, label: "物件マスタ" },
-  { value: ROUTES.HOUSEMASTER.INDEX, label: "家主マスタ" },
-  { value: ROUTES.GOODS_WORKS.INDEX, label: "小分類マスタ" },
-  { value: "", label: "ログアウト" },
+  { value: ROUTES.Category.INDEX, label: "大分類マスタ" },
+  { value: ROUTES.SubCategory.INDEX, label: "中分類マスタ" },
+  { value: ROUTES.MinorCategory.INDEX, label: "小分類マスタ" },
+  { value: ROUTES.Department.INDEX, label: "学科マスタ" },
+  { value: ROUTES.StatusClass.INDEX, label: "状態区分" },
+  { value: ROUTES.Student.INDEX, label: "学生マスタ" },
 ];
 
 type MenuProps = {

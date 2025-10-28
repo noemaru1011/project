@@ -7,11 +7,74 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Customer {
-  id        Int      @id @default(autoincrement())
-  name      String @unique
-  email     String @unique
-  tel      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Category {
+  categoryId    Int @id @default(autoincrement())
+  categoryName  String        @unique
+  subCategories SubCategory[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model SubCategory {
+  subCategoryId  Int @id @default(autoincrement())
+  subCategoryName String        @unique
+  categoryId      Int
+  category        Category      @relation(fields: [categoryId], references: [categoryId])
+  minorCategories MinorCategory[]
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model MinorCategory {
+  minorCategoryId   Int @id @default(autoincrement())
+  minorCategoryName String        @unique
+  subCategoryId     Int
+  subCategory       SubCategory   @relation(fields: [subCategoryId], references: [subCategoryId])
+  students          Student[]
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+}
+
+model Department {
+  departmentId   Int @id @default(autoincrement())
+  departmentName String        @unique
+  students       Student[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model Status {
+  statusId Int @id @default(autoincrement())
+  statusName String @unique
+  histories   History[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt 
+}
+
+model Student {
+  studentId       String @id @default(uuid())
+  minorCategoryId Int
+  minorCategory   MinorCategory @relation(fields: [minorCategoryId], references: [minorCategoryId])
+  departmentId    Int
+  department      Department    @relation(fields: [departmentId], references: [departmentId])
+  studentName     String
+  Grade           Int
+  histories   History[]
+  deleteFlag Boolean @default(false)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+}
+
+model History {
+  historyId     String @id @default(uuid())
+  studentId   String
+  student     Student   @relation(fields: [studentId], references: [studentId])
+  statusId        Int
+  status          Status       @relation(fields: [statusId], references: [statusId])
+  other           String?
+  startTime       DateTime
+  endTime         DateTime?
+  validFlag     Boolean      @default(true)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
 }
