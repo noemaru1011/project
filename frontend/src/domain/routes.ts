@@ -17,8 +17,8 @@ export const ROUTES = {
   },
 
   //状態区分
-  StatusClass: {
-    INDEX: "/StatusClass/Index",
+  Status: {
+    INDEX: "/Status/Index/",
   },
 
   //学科マスタ
@@ -29,13 +29,32 @@ export const ROUTES = {
   // 学生マスタ
   Student: {
     INDEX: "/Student/Index/",
-    CREATE: (id: string) => `/Student/Create/${id}`,
+    CREATE: "/Student/Create/",
     EDIT: (id: string) => `/Student/Update/${id}`,
     VIEW: (id: string) => `/Student/View/${id}`,
+    DELETE: (id: string) => `/Student/Delete/${id}`,
   },
 
   //事故一覧
   State: {
     INDEX: "/State/Index/",
+  },
+
+  //ログイン
+  Login: {
+    INDEX: "/Login",
+  },
+
+  //認証
+  Auth: {
+    LOGIN: "/Auth/Login/",
+    LOGOUT: "/Auth/Logout/",
+  },
+
+  //エラーページ
+  Error: {
+    Forbidden: "/Error/Forbidden",
+    SERVER: "/Error/ServerError",
+    Other: "/Error/Other",
   },
 } as const;

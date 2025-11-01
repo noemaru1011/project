@@ -8,7 +8,7 @@ const MenuOptions: Option[] = [
   { value: ROUTES.SubCategory.INDEX, label: "中分類マスタ" },
   { value: ROUTES.MinorCategory.INDEX, label: "小分類マスタ" },
   { value: ROUTES.Department.INDEX, label: "学科マスタ" },
-  { value: ROUTES.StatusClass.INDEX, label: "状態区分" },
+  { value: ROUTES.Status.INDEX, label: "状態区分" },
   { value: ROUTES.Student.INDEX, label: "学生マスタ" },
 ];
 

@@ -24,7 +24,7 @@ const Template: Story = {
       <Select
         {...args}
         value={value}
-        onChange={(option) => setValue(option?.value ?? "")}
+        onChange={(e) => setValue(e.target.value)}
       />
     );
   },

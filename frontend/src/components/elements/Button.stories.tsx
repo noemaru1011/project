@@ -40,13 +40,6 @@ export const SearchButton: Story = {
     onClick: () => alert("クリックされました！"),
   },
 };
-export const OtherButton: Story = {
-  args: {
-    variant: "Other",
-    onClick: () => alert("クリックされました！"),
-    name: "ボタン名",
-  },
-};
 
 /** ボタン類まとめ */
 export const GroupingButton: Story = {
@@ -57,11 +50,6 @@ export const GroupingButton: Story = {
       <Button variant="Update" onClick={() => alert("クリックされました！")} />
       <Button variant="Delete" onClick={() => alert("クリックされました！")} />
       <Button variant="Search" onClick={() => alert("クリックされました！")} />
-      <Button
-        variant="Other"
-        name="ボタン名"
-        onClick={() => alert("クリックされました！")}
-      />
     </div>
   ),
 };

@@ -6,10 +6,3 @@ export const validation = z.object({
 });
 
 export type SubCategory = z.infer<typeof validation>;
-
-export const SubCategoryLabels: Record<
-  keyof Pick<SubCategory, "subCategoryName">,
-  string
-> = {
-  subCategoryName: "中分類",
-};

@@ -1,17 +1,39 @@
+import { ROUTES } from "@/domain/routes";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+/**
+ * バックエンドAPIを呼び出す汎用関数
+ * @param path - APIエンドポイント
+ * @param options - fetchのオプション
+ */
 export async function Api<T>(path: string, options?: RequestInit): Promise<T> {
-  const res = await fetch(`${API_BASE_URL}${path}`, {
-    headers: {
-      "Content-Type": "application/json",
-      ...(options?.headers || {}),
-    },
-    ...options,
-  });
+  try {
+    const res = await fetch(`${API_BASE_URL}${path}`, {
+      headers: {
+        "Content-Type": "application/json",
+        ...(options?.headers || {}),
+      },
+      ...options,
+    });
 
-  if (!res.ok) {
-    const errorText = await res.text();
-    throw new Error(`API Error: ${res.status} ${errorText}`);
+    // サーバー側エラー
+    if (res.status >= 500) {
+      window.location.href = ROUTES.Error.SERVER;
+    }
+    // クライアント側エラー（認証エラーなど）
+    if (res.status == 403) {
+      window.location.href = ROUTES.Error.Forbidden;
+    }
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(`API Error: ${res.status} ${errorText}`);
+    }
+
+    const data: T = await res.json();
+    return data;
+  } catch (error) {
+    //レスポンスが取得できなかった場合
+    throw error;
   }
-
-  return res.json() as Promise<T>;
 }

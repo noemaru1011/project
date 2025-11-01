@@ -30,6 +30,7 @@ export const textInput: Story = {
     id: "textInput",
     label: "テキスト",
     type: "text",
+    value: "テキスト",
   },
 };
 
