@@ -4,7 +4,7 @@ import { useMinorCategory } from "@/hooks/MinorCategoryHooks";
 import { MinorCategoryLabels } from "@/types/minorCategory";
 
 const MinorCategoryIndex = () => {
-  const { data: MinorCategories, loading, error } = useMinorCategory();
+  const { data: MinorCategories, loading, error } = useMinorCategory(true);
 
   return (
     <LoadAndError loading={loading} error={error}>

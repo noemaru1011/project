@@ -29,12 +29,12 @@ const StudentCreate = () => {
   const onSubmit = async (data: any) => {
     try {
       await create(data);
-      //toast.success("登録に成功しました！");
+      toast.success("登録に成功しました！");
       setTimeout(() => {
         navigate(ROUTES.Student.INDEX);
       }, 10000);
     } catch (err: any) {
-      //toast.error("登録に失敗しました。");
+      toast.error("登録に失敗しました。");
     }
   };
 

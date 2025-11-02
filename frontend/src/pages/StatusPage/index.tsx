@@ -4,7 +4,7 @@ import { useStatus } from "@/hooks/StatusHooks";
 import { StatusLabels } from "@/types/status";
 
 const StatusIndex = () => {
-  const { data: Status, loading, error } = useStatus();
+  const { data: Status, loading, error } = useStatus(true);
 
   return (
     <LoadAndError loading={loading} error={error}>

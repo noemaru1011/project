@@ -1,5 +1,5 @@
 import { ROUTES } from "@/domain/routes";
-import { useNavigate } from "react-router-dom";
+import { NavigationService } from "@/utils/NavigationService";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 /**
@@ -8,7 +8,6 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
  * @param options - fetchのオプション
  */
 export async function Api<T>(path: string, options?: RequestInit): Promise<T> {
-  const navigate = useNavigate();
   try {
     const res = await fetch(`${API_BASE_URL}${path}`, {
       headers: {
@@ -20,11 +19,11 @@ export async function Api<T>(path: string, options?: RequestInit): Promise<T> {
 
     // サーバー側エラー
     if (res.status >= 500) {
-      navigate(ROUTES.Error.SERVER);
+      NavigationService.navigate(ROUTES.Error.SERVER);
     }
     // クライアント側エラー（認証エラーなど）
     if (res.status == 403) {
-      navigate(ROUTES.Error.Forbidden);
+      NavigationService.navigate(ROUTES.Error.Forbidden);
     }
 
     if (!res.ok) {

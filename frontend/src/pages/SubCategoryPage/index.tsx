@@ -4,7 +4,7 @@ import { useSubCategory } from "@/hooks/SubCategoryHooks";
 import { SubCategoryLabels } from "@/types/subCategory";
 
 const SubCategoryIndex = () => {
-  const { data: subCategories, loading, error } = useSubCategory();
+  const { data: subCategories, loading, error } = useSubCategory(true);
 
   return (
     <LoadAndError loading={loading} error={error}>

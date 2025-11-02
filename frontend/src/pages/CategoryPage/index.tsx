@@ -4,7 +4,7 @@ import { useCategory } from "@/hooks/CategoryHooks";
 import { CategoryLabels } from "@/types/category";
 
 const CategoryIndex = () => {
-  const { data: Categories, loading, error } = useCategory();
+  const { data: Categories, loading, error } = useCategory(true);
 
   return (
     <LoadAndError loading={loading} error={error}>
