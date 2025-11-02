@@ -5,6 +5,7 @@ import SubCategoryRoutes from "./routes/SubCategory";
 import MinorCategoryRoutes from "./routes/MinorSubCategory";
 import DepartmentRoutes from "./routes/Department";
 import statusRoutes from "./routes/Status";
+import studentRoutes from "./routes/Student";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use("/SubCategory", SubCategoryRoutes);
 app.use("/MinorCategory", MinorCategoryRoutes);
 app.use("/Department", DepartmentRoutes);
 app.use("/Status", statusRoutes);
+app.use("/Student", studentRoutes);
 
 // サーバー起動
 const PORT = process.env.PORT || 3000;

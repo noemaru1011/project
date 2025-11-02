@@ -1,8 +1,7 @@
 import { z } from "zod";
 
+const validMinorCategoryIds = Array.from({ length: 48 }, (_, i) => i + 1);
 const validation = z.object({
-  studentId: z.string().uuid().optional(),
-
   studentName: z
     .string()
     .nonempty("学生名は必須です。")
@@ -21,9 +20,21 @@ const validation = z.object({
     .nonempty("メールアドレスは必須です。")
     .email("有効なメールアドレスを入力してください"),
 
-  minorCategoryId: z.string().nonempty("小分類名は必須です。"),
+  minorCategoryId: z
+    .string()
+    .nonempty("小分類名は必須です。")
+    .transform((val) => Number(val))
+    .refine((val) => validMinorCategoryIds.includes(val), {
+      message: "存在する小分類名を選択してください",
+    }),
 
-  departmentId: z.string().nonempty("学科名は必須です。"),
+  departmentId: z
+    .string()
+    .nonempty("学科名は必須です。")
+    .transform((val) => Number(val))
+    .refine((val) => [1, 2, 3, 4, 5, 6, 7].includes(val), {
+      message: "存在する学科名を選択してください。",
+    }),
 });
 
 export default validation;

@@ -7,9 +7,9 @@ type ApiMethods<T, Q> = {
   delete?: (id: string) => Promise<void>;
 };
 
-export function Hooks<T, Q = any>(api: ApiMethods<T, Q>, autoFetch = true) {
+export function Hooks<T, Q = any>(api: ApiMethods<T, Q>, autoFetch: boolean) {
   const [data, setData] = useState<T[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(autoFetch);
   const [error, setError] = useState<string | null>(null);
 
   // 一覧取得

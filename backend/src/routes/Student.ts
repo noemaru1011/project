@@ -16,14 +16,16 @@ router.get("/Index", async (req, res) => {
 
 router.post("/Create", async (req, res) => {
   try {
-    const { studentName, departmentId, minorCategoryId, Grade } = req.body;
+    const { studentName, studentEmail, departmentId, minorCategoryId, grade } =
+      req.body;
 
     const student = await prisma.student.create({
       data: {
         studentName,
+        studentEmail,
         departmentId: Number(departmentId),
         minorCategoryId: Number(minorCategoryId),
-        Grade: Number(Grade),
+        grade: Number(grade),
         createdAt: new Date(),
         updatedAt: new Date(),
       },

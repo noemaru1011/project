@@ -6,17 +6,18 @@ const hundreds = [1, 2, 3, 4];
 const tens = [1, 2, 3, 4];
 const ones = [1, 2, 3];
 
-for (const h of hundreds) {
+let counter = 1;
+
+outer: for (const h of hundreds) {
   for (const t of tens) {
     for (const o of ones) {
-      const value = `${h}${t}${o}`;
-      const label = `${value}小隊`;
+      const value = String(counter);
+      const label = `${h}${t}${o}小隊`;
       squads.push({ value, label });
-      if (squads.length >= 443) break;
+      counter++;
+      if (squads.length >= 443) break outer;
     }
-    if (squads.length >= 443) break;
   }
-  if (squads.length >= 443) break;
 }
 
 export const minorCategoryOptions: Option[] = squads;
