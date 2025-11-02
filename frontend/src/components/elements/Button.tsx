@@ -5,6 +5,7 @@ type Props = {
   disabled?: boolean;
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
+  className?: string;
 };
 
 const VARIANT_STYLES = {
@@ -15,7 +16,7 @@ const VARIANT_STYLES = {
   Search: { bg: "bg-blue-400", label: "検索" },
 } as const;
 
-const Button = ({ variant, disabled, onClick, type }: Props) => {
+const Button = ({ variant, disabled, onClick, type, className }: Props) => {
   const { bg, label } = VARIANT_STYLES[variant];
 
   return (
@@ -23,7 +24,7 @@ const Button = ({ variant, disabled, onClick, type }: Props) => {
       type={type ?? "button"}
       onClick={onClick}
       disabled={disabled}
-      className={`${bg} px-3 py-1 rounded-lg text-white font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed`}
+      className={`${bg} ${className} px-3 py-1 rounded-lg text-white font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed`}
     >
       {label}
     </button>

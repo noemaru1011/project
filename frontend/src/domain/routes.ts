@@ -33,16 +33,17 @@ export const ROUTES = {
     EDIT: (id: string) => `/Student/Update/${id}`,
     VIEW: (id: string) => `/Student/View/${id}`,
     DELETE: (id: string) => `/Student/Delete/${id}`,
+    CHANGE: (id: string) => `/Student/Change/${id}`,
   },
 
   //事故一覧
-  State: {
-    INDEX: "/State/Index/",
+  History: {
+    INDEX: "/History/Index/",
   },
 
   //ログイン
   Login: {
-    INDEX: "/Login",
+    INDEX: "/Login/",
   },
 
   //認証

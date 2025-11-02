@@ -44,11 +44,11 @@ model Department {
 }
 
 model Status {
-  statusId Int @id @default(autoincrement())
-  statusName String @unique
-  histories   History[]
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt 
+  statusId      Int @id @default(autoincrement())
+  statusName    String @unique
+  histories     History[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt 
 }
 
 model Student {
@@ -58,34 +58,42 @@ model Student {
   departmentId    Int
   department      Department    @relation(fields: [departmentId], references: [departmentId])
   studentName     String
-  studentNumber   String       @unique
-  password        String
-  Grade           Int
-  histories   History[]
-  deleteFlag Boolean @default(false)
+  password        StudentPassword?
+  grade           Int
+  studentEmail    String @unique  
+  histories       History[]
+  deleteFlag      Boolean @default(false)
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
 }
 
+model StudentPassword{
+  studentId     String@id
+  student           Student @relation(fields: [studentId], references: [studentId])
+  password          String
+  defaultChangeFlag Boolean @default(false)
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+}
+
 model History {
-  historyId     String @id @default(uuid())
-  studentId   String
-  student     Student   @relation(fields: [studentId], references: [studentId])
+  historyId       String @id @default(uuid())
+  studentId       String
+  student         Student   @relation(fields: [studentId], references: [studentId])
   statusId        Int
   status          Status       @relation(fields: [statusId], references: [statusId])
   other           String?
   startTime       DateTime
   endTime         DateTime?
-  validFlag     Boolean      @default(true)
+  validFlag       Boolean      @default(true)
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
 }
 
 model Admin {
-  adminId     String @id @default(uuid())
-  adminName   String
-  adminNumber String @unique
-  password    String  
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  adminId        String @id @default(uuid())
+  adminNumber    String @unique
+  password       String  
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }

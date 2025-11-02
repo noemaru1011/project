@@ -14,7 +14,7 @@ router.get("/Index", async (req, res) => {
   }
 });
 
-router.post("/create", async (req, res) => {
+router.post("/Create", async (req, res) => {
   try {
     const { studentName, departmentId, minorCategoryId, Grade } = req.body;
 
@@ -32,7 +32,7 @@ router.post("/create", async (req, res) => {
     res.json(student);
   } catch (err: any) {
     console.error(err);
-    res.status(500).json({ error: "Failed to fetch Students" });
+    res.status(500).json({ error: "Failed to create Students" });
   }
 });
 

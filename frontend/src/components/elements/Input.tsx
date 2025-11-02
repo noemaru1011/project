@@ -5,19 +5,13 @@ type Props = {
   id: string;
   label?: string;
   type: InputType;
-  value?: String;
+  error?: string;
   required?: boolean;
   disabled?: boolean;
-  onChange?: (e: React.ChangeEvent<any>) => void;
-  onBlur?: (e: React.ChangeEvent<any>) => void;
-  error?: string;
-};
+} & React.InputHTMLAttributes<HTMLInputElement>; // ← react-hook-form用
 
 const Input = React.forwardRef<HTMLInputElement, Props>(
-  (
-    { id, label, type, error, required, disabled, value, onChange, onBlur },
-    ref
-  ) => {
+  ({ id, label, type, error, required, disabled, ...rest }, ref) => {
     return (
       <div className="flex flex-col space-y-1">
         {label && (
@@ -32,16 +26,17 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
           type={type}
           ref={ref}
           disabled={disabled}
-          value={value?.toString()}
-          className="border-b focus:outline-none focus:border-b-2 focus:border-indigo-500 disabled:bg-gray-100 disabled:text-gray-400"
-          onChange={onChange}
-          onBlur={onBlur}
+          className={`border-b focus:outline-none focus:border-b-2 focus:border-indigo-500 disabled:bg-gray-100 disabled:text-gray-400
+            ${error ? "border-red-500" : "border-gray-300"}`}
+          autoComplete="off"
+          {...rest} // registerのonChange, onBlur, name, valueがここに入る
         />
 
         {error && <p className="text-red-500 text-sm ml-1">{error}</p>}
-        {disabled && <input type="hidden" value={value?.toString()} />}
+        {disabled && <input type="hidden" value={rest.value?.toString()} />}
       </div>
     );
   }
 );
+
 export default Input;

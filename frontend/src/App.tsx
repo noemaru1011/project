@@ -12,7 +12,7 @@ import SubCategoryIndex from "@/pages/SubCategoryPage";
 import MinorCategoryIndex from "@/pages/MInorCategoryPage";
 import DepartmentIndex from "@/pages/DepartmentPage";
 import StatusIndex from "@/pages/StatusPage";
-import StudnetIndex from "@/pages/StudentPage/Index";
+import StudentCreate from "./pages/StudentPage/create";
 
 const App = () => {
   return (
@@ -31,7 +31,7 @@ const App = () => {
             element={<MinorCategoryIndex />}
           />
           <Route path={ROUTES.Department.INDEX} element={<DepartmentIndex />} />
-          <Route path={ROUTES.Student.INDEX} element={<StudnetIndex />} />
+          <Route path={ROUTES.Student.CREATE} element={<StudentCreate />} />
 
           {/* エラー画面 */}
           <Route path={ROUTES.Status.INDEX} element={<StatusIndex />} />
