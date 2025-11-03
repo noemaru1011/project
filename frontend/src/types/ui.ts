@@ -1,4 +1,10 @@
-export type ButtonVariant = "Create" | "Read" | "Update" | "Delete" | "Search";
+export type ButtonVariant =
+  | "Create"
+  | "Read"
+  | "Update"
+  | "Delete"
+  | "Search"
+  | "Login";
 
 export type InputType =
   | "text"

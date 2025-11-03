@@ -3,7 +3,9 @@ import type { Auth } from "@shared/schemas/Auth";
 import { ROUTES } from "@/domain/routes";
 
 export const AuthApi = {
-  login: () => Api<Auth[]>(ROUTES.Auth.LOGIN, { method: "POST" }),
-
-  logout: () => Api<Auth[]>(ROUTES.Auth.LOGOUT, { method: "POST" }),
+  login: (data: Partial<Auth>) =>
+    Api<Auth>(ROUTES.Auth.LOGIN, {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
 };

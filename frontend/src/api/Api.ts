@@ -23,7 +23,7 @@ export async function Api<T>(path: string, options?: RequestInit): Promise<T> {
     }
     // クライアント側エラー（認証エラーなど）
     if (res.status == 403) {
-      NavigationService.navigate(ROUTES.Error.Forbidden);
+      NavigationService.navigate(ROUTES.Error.FORBIDDEN);
     }
 
     if (!res.ok) {

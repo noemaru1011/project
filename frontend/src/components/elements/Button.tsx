@@ -14,6 +14,7 @@ const VARIANT_STYLES = {
   Update: { bg: "bg-yellow-400", label: "更新" },
   Delete: { bg: "bg-red-400", label: "削除" },
   Search: { bg: "bg-blue-400", label: "検索" },
+  Login: { bg: "bg-blue-400", label: "ログイン" },
 } as const;
 
 const Button = ({ variant, disabled, onClick, type, className }: Props) => {

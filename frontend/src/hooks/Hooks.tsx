@@ -5,6 +5,7 @@ type ApiMethods<T, Q> = {
   create?: (data: Partial<T>) => Promise<T>;
   update?: (id: string, data: Partial<T>) => Promise<T>;
   delete?: (id: string) => Promise<void>;
+  view?: (id: string) => Promise<T>;
 };
 
 export function Hooks<T, Q = any>(api: ApiMethods<T, Q>, autoFetch: boolean) {
@@ -27,14 +28,16 @@ export function Hooks<T, Q = any>(api: ApiMethods<T, Q>, autoFetch: boolean) {
   };
 
   //検索
-  const fetchData = async (query?: Q) => {
-    if (!api.index) return;
+  const fetchData = async (query?: Q): Promise<T[]> => {
+    if (!api.index) return [];
     try {
       setLoading(true);
       const result = await api.index(query);
       setData(result);
+      return result;
     } catch (err: any) {
       setError(err.message);
+      return [];
     } finally {
       setLoading(false);
     }
@@ -90,9 +93,33 @@ export function Hooks<T, Q = any>(api: ApiMethods<T, Q>, autoFetch: boolean) {
     }
   };
 
+  const view = async (id: string): Promise<T | undefined> => {
+    if (!api.view) return undefined;
+    try {
+      setLoading(true);
+      const result = await api.view(id);
+      return result;
+    } catch (err: any) {
+      setError(err.message);
+      return undefined;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (autoFetch) fetchAll();
   }, []);
 
-  return { data, loading, error, fetchAll, fetchData, create, update, remove };
+  return {
+    data,
+    loading,
+    error,
+    fetchAll,
+    fetchData,
+    create,
+    update,
+    remove,
+    view,
+  };
 }

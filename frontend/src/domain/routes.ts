@@ -30,20 +30,15 @@ export const ROUTES = {
   Student: {
     INDEX: "/Student/Index/",
     CREATE: "/Student/Create/",
-    EDIT: (id: string) => `/Student/Update/${id}`,
-    VIEW: (id: string) => `/Student/View/${id}`,
-    DELETE: (id: string) => `/Student/Delete/${id}`,
-    CHANGE: (id: string) => `/Student/Change/${id}`,
+    UPDATE: (studentId = ":studentId") => `/Student/Update/${studentId}`,
+    VIEW: (studentId = ":studentId") => `/Student/View/${studentId}`,
+    DELETE: (studentId = ":studentId") => `/Student/Delete/${studentId}`,
+    CHANGE: (studentId = ":studentId") => `/Student/Change/${studentId}`,
   },
 
   //事故一覧
   History: {
     INDEX: "/History/Index/",
-  },
-
-  //ログイン
-  Login: {
-    INDEX: "/Login/",
   },
 
   //認証
@@ -54,8 +49,9 @@ export const ROUTES = {
 
   //エラーページ
   Error: {
-    Forbidden: "/Error/Forbidden",
+    FORBIDDEN: "/Error/Forbidden",
     SERVER: "/Error/ServerError",
-    Other: "/Error/Other",
+    OTHER: "/Error/Other",
+    NOTFOUND: "*",
   },
 } as const;

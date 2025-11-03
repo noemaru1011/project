@@ -7,10 +7,12 @@ import {
 } from "react-router-dom";
 import { useEffect } from "react";
 import { NavigationService } from "@/utils/NavigationService";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { ROUTES } from "@/domain/routes";
 
 import Layout from "@/components/layouts/Layout";
-import LoginIndex from "@/pages/LoginPage";
+import Login from "@/pages/Auth/login";
 import HomePage from "@/pages/Home/HomePage";
 import CategoryIndex from "@/pages/CategoryPage";
 import SubCategoryIndex from "@/pages/SubCategoryPage";
@@ -18,6 +20,7 @@ import MinorCategoryIndex from "@/pages/MInorCategoryPage";
 import DepartmentIndex from "@/pages/DepartmentPage";
 import StatusIndex from "@/pages/StatusPage";
 import StudentCreate from "@/pages/StudentPage/create";
+import StudentUpdate from "./pages/StudentPage/update";
 
 import { NotFound } from "@/pages/ErrorPage/NotFound";
 import { ServerError } from "@/pages/ErrorPage/ServerError";
@@ -38,7 +41,7 @@ function NavigatorProvider() {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path={ROUTES.Login.INDEX} element={<LoginIndex />} />
+        <Route path={ROUTES.Auth.LOGIN} element={<Login />} />
         <Route path={ROUTES.HOME} element={<HomePage />} />
         <Route path={ROUTES.Category.INDEX} element={<CategoryIndex />} />
         <Route path={ROUTES.SubCategory.INDEX} element={<SubCategoryIndex />} />
@@ -48,12 +51,13 @@ function NavigatorProvider() {
         />
         <Route path={ROUTES.Department.INDEX} element={<DepartmentIndex />} />
         <Route path={ROUTES.Student.CREATE} element={<StudentCreate />} />
+        <Route path={ROUTES.Student.UPDATE()} element={<StudentUpdate />} />
 
         {/* エラー画面 */}
         <Route path={ROUTES.Status.INDEX} element={<StatusIndex />} />
         <Route path={ROUTES.Error.SERVER} element={<ServerError />} />
-        <Route path={ROUTES.Error.Forbidden} element={<Forbidden />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path={ROUTES.Error.FORBIDDEN} element={<Forbidden />} />
+        <Route path={ROUTES.Error.NOTFOUND} element={<NotFound />} />
       </Route>
     </Routes>
   );
@@ -66,6 +70,17 @@ const App = () => {
   return (
     <Router>
       <NavigatorProvider />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </Router>
   );
 };

@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import AuthRoutes from "./routes/Auth";
 import categoryRoutes from "./routes/Category";
 import SubCategoryRoutes from "./routes/SubCategory";
 import MinorCategoryRoutes from "./routes/MinorSubCategory";
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ルートをまとめて登録
+app.use("/Auth", AuthRoutes);
 app.use("/Category", categoryRoutes);
 app.use("/SubCategory", SubCategoryRoutes);
 app.use("/MinorCategory", MinorCategoryRoutes);

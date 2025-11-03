@@ -41,6 +41,7 @@ export default validation;
 export type Student = z.infer<typeof validation>;
 
 export const studentQuery = z.object({
+  studentId: z.string(),
   category: z.string().optional(),
   subCategory: z.string().optional(),
   minorCategory: z.string().optional(),

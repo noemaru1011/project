@@ -25,8 +25,8 @@ export const StudentApi = {
     }),
 
   update: (id: string, data: Partial<Student>) =>
-    Api<Student>(ROUTES.Student.EDIT(id), {
-      method: "POST",
+    Api<Student>(ROUTES.Student.UPDATE(id), {
+      method: "PUT",
       body: JSON.stringify(data),
     }),
 
