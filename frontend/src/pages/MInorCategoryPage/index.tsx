@@ -6,20 +6,19 @@ import { useMinorCategory } from "@/hooks/MinorCategoryHooks";
 import { MinorCategoryLabels } from "@/types/minorCategory";
 
 const MinorCategoryIndex = () => {
-  const {
-    data: MinorCategories,
-    fetchAll,
-    loading,
-    error,
-  } = useMinorCategory();
+  const { data: MinorCategories, fetchAll, loading } = useMinorCategory();
 
   useEffect(() => {
-    fetchAll();
+    const fetchData = async () => {
+      try {
+        await fetchAll();
+      } catch (err: any) {
+        toast.error(err.message || "予期せぬエラーが発生しました");
+      }
+    };
+
+    fetchData();
   }, [fetchAll]);
-
-  useEffect(() => {
-    if (error) toast.error(error);
-  }, [error]);
 
   return (
     <Loading loading={loading}>

@@ -1,24 +1,24 @@
-import { useForm } from "react-hook-form";
 import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import Input from "@/components/elements/Input";
 import Select from "@/components/elements/Select";
 import Button from "@/components/elements/Button";
+import { Loading } from "@/components/elements/Loading";
 import { gradeOptions } from "@/domain/grade";
 import { minorCategoryOptions } from "@/domain/minorCategory";
 import { departmentOptions } from "@/domain/department";
-import validation from "@shared/schemas/Student";
-import type { Student } from "@shared/schemas/Student";
-import { useStudent } from "@/hooks/StudentHooks";
-import { Loading } from "@/components/elements/Loading";
 import { ROUTES } from "@/domain/routes";
-import { toast } from "react-toastify";
+import { useStudent } from "@/hooks/StudentHooks";
+import validation from "@shared/schemas/Student";
 
 const StudentUpdate = () => {
   const navigate = useNavigate();
   const { studentId } = useParams<{ studentId: string }>();
-  const { view, update, loading, error } = useStudent();
+  const { view, update, loading } = useStudent();
 
   const {
     register,
@@ -27,94 +27,102 @@ const StudentUpdate = () => {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(validation),
-    defaultValues: {
-      studentName: "",
-      studentEmail: "",
-      grade: "",
-      minorCategoryId: "",
-      departmentId: "",
-    },
   });
 
-  // 初期値をセット
+  // 初期値をロード
   useEffect(() => {
     if (!studentId) return;
-    view(studentId).then((student) => {
-      if (!student) return;
-      reset({
-        studentName: student.studentName,
-        studentEmail: student.studentEmail,
-        grade: String(student.grade),
-        minorCategoryId: String(student.minorCategoryId),
-        departmentId: String(student.departmentId),
-      });
-    });
-  }, []);
 
-  const onSubmit = async (formData: Student) => {
+    const fetchStudent = async () => {
+      try {
+        const data: any = await view(studentId);
+        if (!data) throw new Error("学生情報が取得できません");
+        reset({
+          studentName: data.student.studentName,
+          studentEmail: data.student.studentEmail,
+          grade: String(data.student.grade),
+          minorCategoryId: String(data.student.minorCategoryId),
+          departmentId: String(data.student.departmentId),
+        });
+      } catch (err: any) {
+        toast.error(err.message || "学生情報の取得に失敗しました");
+        navigate(ROUTES.Student.INDEX);
+      }
+    };
+
+    fetchStudent();
+  }, [studentId, view, reset, navigate]);
+
+  // 更新処理
+  const onSubmit = async (data: any) => {
     if (!studentId) return;
-
     try {
-      await update(studentId, {
-        ...formData,
-        grade: Number(formData.grade),
-        minorCategoryId: Number(formData.minorCategoryId),
-        departmentId: Number(formData.departmentId),
-      });
+      const payload = {
+        ...data,
+        grade: String(data.grade),
+        departmentId: String(data.departmentId),
+        minorCategoryId: String(data.minorCategoryId),
+      };
+      await update(studentId, payload);
       toast.success("更新に成功しました！");
-      navigate(ROUTES.Student.INDEX);
+      setTimeout(() => navigate(ROUTES.Student.INDEX), 1000);
     } catch (err: any) {
-      toast.error("更新に失敗しました。");
+      toast.error(
+        "更新に失敗しました：" +
+          (err?.message || "予期せぬエラーが発生しました")
+      );
     }
   };
 
   return (
     <Loading loading={loading}>
       <div className="mt-5 flex justify-center min-h-screen">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            id="studentName"
-            label="学生名"
-            type="text"
-            required
-            error={errors.studentName?.message}
-            {...register("studentName")}
-          />
-          <Select
-            id="grade"
-            label="学年"
-            options={gradeOptions}
-            required
-            error={errors.grade?.message}
-            {...register("grade")}
-          />
-          <Select
-            id="minorCategoryId"
-            label="小分類名"
-            options={minorCategoryOptions}
-            required
-            error={errors.minorCategoryId?.message}
-            {...register("minorCategoryId")}
-          />
-          <Input
-            id="studentEmail"
-            type="email"
-            label="メールアドレス"
-            required
-            error={errors.studentEmail?.message}
-            {...register("studentEmail")}
-          />
-          <Select
-            id="departmentId"
-            label="学科名"
-            options={departmentOptions}
-            required
-            error={errors.departmentId?.message}
-            {...register("departmentId")}
-          />
-
-          <Button type="submit" variant="Update" className="w-full mt-4" />
-        </form>
+        <div className="w-full max-w-md space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Input
+              id="studentName"
+              label="学生名"
+              type="text"
+              error={errors.studentName?.message}
+              required
+              {...register("studentName")}
+            />
+            <Select
+              id="grade"
+              label="学年"
+              options={gradeOptions}
+              required
+              error={errors.grade?.message}
+              {...register("grade")}
+            />
+            <Select
+              id="minorCategory"
+              label="小分類名"
+              options={minorCategoryOptions}
+              required
+              error={errors.minorCategoryId?.message}
+              {...register("minorCategoryId")}
+            />
+            <Input
+              id="studentEmail"
+              type="email"
+              label="メールアドレス"
+              required
+              disabled
+              error={errors.studentEmail?.message}
+              {...register("studentEmail")}
+            />
+            <Select
+              id="department"
+              label="学科名"
+              options={departmentOptions}
+              required
+              error={errors.departmentId?.message}
+              {...register("departmentId")}
+            />
+            <Button type="submit" variant="Update" className="w-full mt-4" />
+          </form>
+        </div>
       </div>
     </Loading>
   );

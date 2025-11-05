@@ -19,6 +19,7 @@ import SubCategoryIndex from "@/pages/SubCategoryPage";
 import MinorCategoryIndex from "@/pages/MInorCategoryPage";
 import DepartmentIndex from "@/pages/DepartmentPage";
 import StatusIndex from "@/pages/StatusPage";
+import StudnetIndex from "./pages/StudentPage";
 import StudentCreate from "@/pages/StudentPage/create";
 import StudentUpdate from "./pages/StudentPage/update";
 import StudentView from "./pages/StudentPage/view";
@@ -51,6 +52,7 @@ function NavigatorProvider() {
           element={<MinorCategoryIndex />}
         />
         <Route path={ROUTES.Department.INDEX} element={<DepartmentIndex />} />
+        <Route path={ROUTES.Student.INDEX} element={<StudnetIndex />} />
         <Route path={ROUTES.Student.CREATE} element={<StudentCreate />} />
         <Route path={ROUTES.Student.UPDATE()} element={<StudentUpdate />} />
         <Route path={ROUTES.Student.VIEW()} element={<StudentView />} />
@@ -75,6 +77,7 @@ const App = () => {
       <ToastContainer
         position="top-right"
         autoClose={3000}
+        toastStyle={{ width: "500px" }}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

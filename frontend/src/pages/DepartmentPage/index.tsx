@@ -6,15 +6,19 @@ import { useDepartment } from "@/hooks/DepartmentHooks";
 import { DepartmentLabels } from "@/types/department";
 
 const DepartmentIndex = () => {
-  const { data: Departments, fetchAll, loading, error } = useDepartment();
+  const { data: Departments, fetchAll, loading } = useDepartment();
 
   useEffect(() => {
-    fetchAll();
+    const fetchData = async () => {
+      try {
+        await fetchAll();
+      } catch (err: any) {
+        toast.error(err.message || "予期せぬエラーが発生しました");
+      }
+    };
+
+    fetchData();
   }, [fetchAll]);
-
-  useEffect(() => {
-    if (error) toast.error(error);
-  }, [error]);
 
   return (
     <Loading loading={loading}>

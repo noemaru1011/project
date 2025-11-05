@@ -6,15 +6,19 @@ import { useStatus } from "@/hooks/StatusHooks";
 import { StatusLabels } from "@/types/status";
 
 const StatusIndex = () => {
-  const { data: Status, fetchAll, loading, error } = useStatus();
+  const { data: Status, fetchAll, loading } = useStatus();
 
   useEffect(() => {
-    fetchAll();
+    const fetchData = async () => {
+      try {
+        await fetchAll();
+      } catch (err: any) {
+        toast.error(err.message || "予期せぬエラーが発生しました");
+      }
+    };
+
+    fetchData();
   }, [fetchAll]);
-
-  useEffect(() => {
-    if (error) toast.error(error);
-  }, [error]);
 
   return (
     <Loading loading={loading}>

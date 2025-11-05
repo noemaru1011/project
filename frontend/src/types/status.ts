@@ -1,5 +1,3 @@
-import type { Status } from "@shared/schemas/Status";
-
-export const StatusLabels: Pick<Status, "statusName"> = {
+export const StatusLabels: Record<string, string> = {
   statusName: "状態名",
 };

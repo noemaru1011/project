@@ -11,7 +11,6 @@ type ApiMethods<T, Q> = {
 export function Hooks<T, Q = any>(api: ApiMethods<T, Q>) {
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   // 一覧取得
   const fetchAll = useCallback(async () => {
@@ -19,10 +18,10 @@ export function Hooks<T, Q = any>(api: ApiMethods<T, Q>) {
     try {
       setLoading(true);
       const result = await api.index();
-      setError(null);
+
       setData(result);
     } catch (err: any) {
-      setError(err.message ?? "予期せぬエラーが発生しました");
+      throw err;
     } finally {
       setLoading(false);
     }
@@ -35,11 +34,11 @@ export function Hooks<T, Q = any>(api: ApiMethods<T, Q>) {
       try {
         setLoading(true);
         const result = await api.index(query);
-        setError(null);
+
         setData(result);
         return result;
       } catch (err: any) {
-        setError(err.message ?? "予期せぬエラーが発生しました");
+        throw err;
         return [];
       } finally {
         setLoading(false);
@@ -51,14 +50,17 @@ export function Hooks<T, Q = any>(api: ApiMethods<T, Q>) {
   // 登録
   const create = useCallback(
     async (item: Partial<T>) => {
-      if (!api.create) return;
+      if (!api.create) {
+        console.warn("API create 関数が存在しません");
+        return;
+      }
+      setLoading(true);
       try {
-        setLoading(true);
+        console.log("postします");
         const newItem = await api.create(item);
-        setError(null);
+        console.log("postしました");
         setData((prev) => [...prev, newItem]);
-      } catch (err: any) {
-        setError(err.message ?? "予期せぬエラーが発生しました");
+        return newItem;
       } finally {
         setLoading(false);
       }
@@ -77,12 +79,12 @@ export function Hooks<T, Q = any>(api: ApiMethods<T, Q>) {
       try {
         setLoading(true);
         const updated = await api.update(id, data);
-        setError(null);
+
         setData((prev) =>
           prev.map((d: any) => (String(d[keyField]) === id ? updated : d))
         );
       } catch (err: any) {
-        setError(err.message ?? "予期せぬエラーが発生しました");
+        throw err;
       } finally {
         setLoading(false);
       }
@@ -100,9 +102,8 @@ export function Hooks<T, Q = any>(api: ApiMethods<T, Q>) {
         if (keyField) {
           setData((prev) => prev.filter((d) => String(d[keyField]) !== id));
         }
-        setError(null);
       } catch (err: any) {
-        setError(err.message ?? "予期せぬエラーが発生しました");
+        throw err;
       } finally {
         setLoading(false);
       }
@@ -116,11 +117,9 @@ export function Hooks<T, Q = any>(api: ApiMethods<T, Q>) {
       try {
         setLoading(true);
         const result = await api.view(id);
-        setError(null);
         return result;
       } catch (err: any) {
-        setError(err.message ?? "予期せぬエラーが発生しました");
-        return undefined;
+        throw err;
       } finally {
         setLoading(false);
       }
@@ -131,7 +130,6 @@ export function Hooks<T, Q = any>(api: ApiMethods<T, Q>) {
   return {
     data,
     loading,
-    error,
     fetchAll,
     fetchData,
     create,

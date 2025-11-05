@@ -1,5 +1,3 @@
-import type { MinorCategory } from "@shared/schemas/MinorCategory";
-
-export const MinorCategoryLabels: Pick<MinorCategory, "minorCategoryName"> = {
+export const MinorCategoryLabels: Record<string, string> = {
   minorCategoryName: "小分類名",
 };

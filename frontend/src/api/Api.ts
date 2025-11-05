@@ -20,16 +20,15 @@ export async function Api<T>(path: string, options?: RequestInit): Promise<T> {
 
     // レスポンスを安全にJSON化
     const data = await res.json().catch(() => ({}));
+    console.log(JSON.stringify(data, null, 2));
 
     // サーバー側エラー
     if (res.status >= 500) {
-      NavigationService.navigate(ROUTES.Error.SERVER);
       const message = (data as any).error || "予期せぬエラーが発生しました";
       throw new Error(message);
     }
     // クライアント側エラー（権限なし）
     if (res.status == 403) {
-      NavigationService.navigate(ROUTES.Error.FORBIDDEN);
       const message = (data as any).error || "権限がありません";
       throw new Error(message);
     }
@@ -41,16 +40,21 @@ export async function Api<T>(path: string, options?: RequestInit): Promise<T> {
     }
 
     if (!res.ok) {
-      NavigationService.navigate(ROUTES.Error.SERVER);
       const message = (data as any).error || "予期せぬエラーが発生しました";
       throw new Error(message);
     }
 
     return data;
   } catch (error) {
-    //レスポンスが取得できなかった場合、ネットワークやJSON変換失敗など
-    NavigationService.navigate(ROUTES.Error.SERVER);
-    if (error instanceof Error) throw error;
-    throw new Error("予期せぬエラーが発生しました");
+    let message = "予期せぬエラーが発生しました";
+    if (error instanceof Error) {
+      if (error.message === "Failed to fetch") {
+        message =
+          "サーバーに接続できません。ネットワークやサーバーの状態を確認してください";
+      } else {
+        message = error.message;
+      }
+    }
+    throw new Error(message);
   }
 }

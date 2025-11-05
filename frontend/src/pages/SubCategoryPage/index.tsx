@@ -6,15 +6,19 @@ import { useSubCategory } from "@/hooks/SubCategoryHooks";
 import { SubCategoryLabels } from "@/types/subCategory";
 
 const SubCategoryIndex = () => {
-  const { data: subCategories, fetchAll, loading, error } = useSubCategory();
+  const { data: subCategories, fetchAll, loading } = useSubCategory();
 
   useEffect(() => {
-    fetchAll();
+    const fetchData = async () => {
+      try {
+        await fetchAll();
+      } catch (err: any) {
+        toast.error(err.message || "予期せぬエラーが発生しました");
+      }
+    };
+
+    fetchData();
   }, [fetchAll]);
-
-  useEffect(() => {
-    if (error) toast.error(error);
-  }, [error]);
 
   return (
     <Loading loading={loading}>

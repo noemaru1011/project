@@ -1,11 +1,28 @@
 import Button from "@/components/elements/Button";
 
 type Props<T> = {
-  labels: Partial<Record<keyof T, string>>;
+  labels: Record<string, string>; // 表示用ラベル
   data: T[];
-  keyField: keyof T;
+  keyField: string; // 一意キー
   showActions?: boolean;
 };
+
+// ネストされたオブジェクトをフラット化するヘルパー
+function flattenObject(obj: any, prefix = "", res: any = {}): any {
+  for (const key in obj) {
+    if (!Object.prototype.hasOwnProperty.call(obj, key)) continue;
+
+    const value = obj[key];
+    const newKey = prefix ? `${prefix}.${key}` : key;
+
+    if (value && typeof value === "object" && !Array.isArray(value)) {
+      flattenObject(value, newKey, res);
+    } else {
+      res[newKey] = value;
+    }
+  }
+  return res;
+}
 
 export function Table<T extends Record<string, any>>({
   labels,
@@ -13,7 +30,7 @@ export function Table<T extends Record<string, any>>({
   keyField,
   showActions = true,
 }: Props<T>) {
-  const labelKeys = Object.keys(labels) as (keyof T)[];
+  const labelKeys = Object.keys(labels); // string[] で扱う
 
   return (
     <div className="flex justify-center m-4">
@@ -22,7 +39,7 @@ export function Table<T extends Record<string, any>>({
           <thead className="bg-gray-100 border-b-2 border-gray-300">
             <tr>
               {labelKeys.map((key) => (
-                <th key={String(key)} className="p-2 text-center">
+                <th key={key} className="p-2 text-center">
                   {labels[key]}
                 </th>
               ))}
@@ -32,26 +49,29 @@ export function Table<T extends Record<string, any>>({
             </tr>
           </thead>
           <tbody>
-            {data.map((row) => (
-              <tr
-                key={String(row[keyField])}
-                className="border-b border-gray-300"
-              >
-                {labelKeys.map((key) => (
-                  <td key={String(key)} className="p-2 text-center">
-                    {String(row[key])}
-                  </td>
-                ))}
+            {data.map((row) => {
+              const flatRow = flattenObject(row); // ネストをフラット化
+              return (
+                <tr
+                  key={String(row[keyField])}
+                  className="border-b border-gray-300"
+                >
+                  {labelKeys.map((key) => (
+                    <td key={key} className="p-2 text-center">
+                      {flatRow[key] !== undefined ? String(flatRow[key]) : ""}
+                    </td>
+                  ))}
 
-                {showActions && (
-                  <td className="p-2 flex justify-center gap-2">
-                    <Button variant="Read" />
-                    <Button variant="Update" />
-                    <Button variant="Delete" />
-                  </td>
-                )}
-              </tr>
-            ))}
+                  {showActions && (
+                    <td className="p-2 flex justify-center gap-2">
+                      <Button variant="Read" />
+                      <Button variant="Update" />
+                      <Button variant="Delete" />
+                    </td>
+                  )}
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

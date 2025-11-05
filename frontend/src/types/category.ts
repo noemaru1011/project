@@ -1,5 +1,3 @@
-import type { Category } from "@shared/schemas/Category";
-
-export const CategoryLabels: Pick<Category, "categoryName"> = {
+export const CategoryLabels: Record<string, string> = {
   categoryName: "大分類名",
 };

@@ -1,5 +1,3 @@
-import type { Department } from "@shared/schemas/Department";
-
-export const DepartmentLabels: Pick<Department, "departmentName"> = {
+export const DepartmentLabels: Record<string, string> = {
   departmentName: "学科名",
 };

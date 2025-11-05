@@ -3,20 +3,7 @@ import type { Student, StudentQuery } from "@shared/schemas/Student";
 import { ROUTES } from "@/domain/routes";
 
 export const StudentApi = {
-  // index: (query?: StudentQuery) => {
-  //   const params = new URLSearchParams();
-  //   if (query?.studentNumber)
-  //     params.append("studentNumber", query.studentNumber);
-  //   if (query?.studentName) params.append("studentName", query.studentName);
-  //   if (query?.departmentId)
-  //     params.append("departmentId", String(query.departmentId));
-  //   if (query?.grade) params.append("grade", String(query.grade));
-
-  //   const queryString = params.toString() ? `?${params.toString()}` : "";
-  //   return Api<Student[]>(`${ROUTES.Student.INDEX}${queryString}`, {
-  //     method: "GET",
-  //   });
-  // },
+  index: () => Api<Student[]>(ROUTES.Student.INDEX, { method: "GET" }),
 
   create: (data: Partial<Student>) =>
     Api<Student>(ROUTES.Student.CREATE, {

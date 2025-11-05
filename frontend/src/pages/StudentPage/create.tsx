@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Input from "@/components/elements/Input";
@@ -16,7 +15,7 @@ import { ROUTES } from "@/domain/routes";
 
 const StudentCreate = () => {
   const navigate = useNavigate();
-  const { create, loading, error } = useStudent();
+  const { create, loading } = useStudent();
 
   const {
     register,
@@ -29,68 +28,72 @@ const StudentCreate = () => {
   // 送信処理
   const onSubmit = async (data: any) => {
     try {
-      await create(data);
+      const payload = {
+        ...data,
+        grade: String(data.grade),
+        departmentId: String(data.departmentId),
+        minorCategoryId: String(data.minorCategoryId),
+      };
+      await create(payload);
       toast.success("登録に成功しました！");
-      setTimeout(() => {
-        navigate(ROUTES.Student.INDEX);
-      }, 1000);
+      setTimeout(() => navigate(ROUTES.Student.INDEX), 1000);
     } catch (err: any) {
-      return;
-      // エラーは useStudent() の error state で管理・toast表示される
+      toast.error(
+        "登録に失敗しました：" +
+          (err?.message || "予期せぬエラーが発生しました")
+      );
     }
   };
-
-  useEffect(() => {
-    if (error) toast.error(error);
-  }, [error]);
 
   return (
     <Loading loading={loading}>
       <div className="mt-5 flex justify-center min-h-screen">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            id="studentName"
-            label="学生名"
-            type="text"
-            error={errors.studentName?.message}
-            required
-            {...register("studentName")}
-          />
-          <Select
-            id="grade"
-            label="学年"
-            options={gradeOptions}
-            required
-            error={errors.grade?.message}
-            {...register("grade")}
-          />
-          <Select
-            id="minorCategory"
-            label="小分類名"
-            options={minorCategoryOptions}
-            required
-            error={errors.minorCategoryId?.message}
-            {...register("minorCategoryId")}
-          />
-          <Input
-            id="studentEmail"
-            type="email"
-            label="メールアドレス"
-            required
-            error={errors.studentEmail?.message}
-            {...register("studentEmail")}
-          />
-          <Select
-            id="department"
-            label="学科名"
-            options={departmentOptions}
-            required
-            error={errors.departmentId?.message}
-            {...register("departmentId")}
-          />
+        <div className="w-full max-w-md space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Input
+              id="studentName"
+              label="学生名"
+              type="text"
+              error={errors.studentName?.message}
+              required
+              {...register("studentName")}
+            />
+            <Select
+              id="grade"
+              label="学年"
+              options={gradeOptions}
+              required
+              error={errors.grade?.message}
+              {...register("grade")}
+            />
+            <Select
+              id="minorCategory"
+              label="小分類名"
+              options={minorCategoryOptions}
+              required
+              error={errors.minorCategoryId?.message}
+              {...register("minorCategoryId")}
+            />
+            <Input
+              id="studentEmail"
+              type="email"
+              label="メールアドレス"
+              required
+              error={errors.studentEmail?.message}
+              {...register("studentEmail")}
+            />
+            <Select
+              id="department"
+              label="学科名"
+              options={departmentOptions}
+              required
+              error={errors.departmentId?.message}
+              {...register("departmentId")}
+            />
 
-          <Button type="submit" variant="Create" className="w-full mt-4" />
-        </form>
+            <Button type="submit" variant="Create" className="w-full mt-4" />
+          </form>
+        </div>
       </div>
     </Loading>
   );

@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import type { Student } from "@shared/schemas/Student";
 import Input from "@/components/elements/Input";
 import Select from "@/components/elements/Select";
 import Button from "@/components/elements/Button";
@@ -14,15 +15,25 @@ import { toast } from "react-toastify";
 const StudentView = () => {
   const navigate = useNavigate();
   const { studentId } = useParams<{ studentId: string }>();
-  const { view, loading, error } = useStudent();
+  const { view, loading } = useStudent();
+  const [student, setStudent] = useState<Student | null>(null);
 
   useEffect(() => {
-    if (studentId) view(studentId);
-  }, [studentId, view]);
+    if (!studentId) return;
 
-  useEffect(() => {
-    if (error) toast.error(error);
-  }, [error]);
+    const fetchStudent = async () => {
+      try {
+        const data: any = await view(studentId);
+        if (!data) throw new Error("学生情報が取得できません");
+        setStudent(data.student);
+      } catch (err: any) {
+        toast.error(err.message || "学生情報の取得に失敗しました");
+        navigate(ROUTES.Student.INDEX);
+      }
+    };
+
+    fetchStudent();
+  }, [studentId, view, navigate]);
 
   return (
     <Loading loading={loading}>
@@ -32,35 +43,35 @@ const StudentView = () => {
             id="studentName"
             label="学生名"
             type="text"
-            value={student.studentName}
+            value={student ? student.studentName : ""}
             disabled
           />
           <Select
             id="grade"
             label="学年"
             options={gradeOptions}
-            value={String(student.grade)}
+            value={student ? String(student.grade) : ""}
             disabled
           />
           <Select
             id="minorCategoryId"
             label="小分類名"
             options={minorCategoryOptions}
-            value={String(student.minorCategoryId)}
+            value={student ? String(student.minorCategoryId) : ""}
             disabled
           />
           <Input
             id="studentEmail"
             label="メールアドレス"
             type="email"
-            value={student.studentEmail}
+            value={student ? student.studentEmail : ""}
             disabled
           />
           <Select
             id="departmentId"
             label="学科名"
             options={departmentOptions}
-            value={String(student.departmentId)}
+            value={student ? String(student.departmentId) : ""}
             disabled
           />
 

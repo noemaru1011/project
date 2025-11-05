@@ -6,15 +6,19 @@ import { useCategory } from "@/hooks/CategoryHooks";
 import { CategoryLabels } from "@/types/category";
 
 const CategoryIndex = () => {
-  const { data: Categories, fetchAll, loading, error } = useCategory();
+  const { data: Categories, fetchAll, loading } = useCategory();
 
   useEffect(() => {
-    fetchAll();
+    const fetchData = async () => {
+      try {
+        await fetchAll();
+      } catch (err: any) {
+        toast.error(err.message || "予期せぬエラーが発生しました");
+      }
+    };
+
+    fetchData();
   }, [fetchAll]);
-
-  useEffect(() => {
-    if (error) toast.error(error);
-  }, [error]);
 
   return (
     <Loading loading={loading}>

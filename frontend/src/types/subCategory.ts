@@ -1,5 +1,3 @@
-import type { SubCategory } from "@shared/schemas/SubCategory";
-
-export const SubCategoryLabels: Pick<SubCategory, "subCategoryName"> = {
+export const SubCategoryLabels: Record<string, string> = {
   subCategoryName: "中分類名",
 };

@@ -27,7 +27,7 @@ const sendAccountEmail = async (email: string, password: string) => {
       from: "no-reply@resend.dev",
       to: email,
       subject: "アカウント作成通知",
-      text: `学生アカウントが作成されました。\n\nユーザー名: ${email}\n初回パスワード: ${password}`,
+      text: `学生アカウントが作成されました。\n\nユーザー名: ${email}\n初回パスワード: ${password}\n\n心当たりがない場合はメールの削除をお願いします。\n本メールは送信専用のため返信できません。`,
     });
   } catch (error) {
     throw new Error("メール送信に失敗しました。");
@@ -36,7 +36,18 @@ const sendAccountEmail = async (email: string, password: string) => {
 
 router.get("/Index", async (req, res) => {
   try {
-    const Students = await prisma.student.findMany();
+    const Students = await prisma.student.findMany({
+      select: {
+        studentId: true,
+        studentName: true,
+        grade: true,
+        minorCategory: {
+          select: {
+            minorCategoryName: true,
+          },
+        },
+      },
+    });
     res.json(Students);
   } catch (error) {
     res.status(500).json({ error: "予期せぬエラーが発生しました" });
@@ -76,7 +87,14 @@ router.post("/Create", validateBody(validation), async (req, res) => {
 
     //メール送信(ハッシュ化前のパスワードを送信)
     await sendAccountEmail(studentEmail, plainPassword);
+    res.status(201).json({ message: "追加完了" });
   } catch (err: any) {
+    if (err.code === "P2002" && err.meta?.target?.includes("studentEmail")) {
+      return res
+        .status(400)
+        .json({ error: "このメールアドレスはすでに登録されています" });
+    }
+    console.error("Create Student Error:", err); // ←これで詳細を見る
     res.status(500).json({ error: "予期せぬエラーが発生しました" });
   }
 });
@@ -96,7 +114,6 @@ router.get("/View/:id", async (req, res) => {
       );
     res.json({
       student: {
-        studentId: student.studentId,
         studentName: student.studentName,
         studentEmail: student.studentEmail,
         departmentId: student.departmentId,
@@ -110,15 +127,13 @@ router.get("/View/:id", async (req, res) => {
 });
 
 router.put("/Update/:id", validateBody(validation), async (req, res) => {
-  const { studentName, studentEmail, departmentId, minorCategoryId, grade } =
-    req.body;
+  const { studentName, departmentId, minorCategoryId, grade } = req.body;
   try {
     const { id } = req.params;
     await prisma.student.update({
       where: { studentId: id! },
       data: {
         studentName,
-        studentEmail,
         departmentId: Number(departmentId),
         minorCategoryId: Number(minorCategoryId),
         grade: Number(grade),
