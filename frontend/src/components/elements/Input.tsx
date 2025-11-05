@@ -33,7 +33,6 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
         />
 
         {error && <p className="text-red-500 text-sm ml-1">{error}</p>}
-        {disabled && <input type="hidden" value={rest.value?.toString()} />}
       </div>
     );
   }

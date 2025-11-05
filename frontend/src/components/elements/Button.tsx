@@ -15,6 +15,7 @@ const VARIANT_STYLES = {
   Delete: { bg: "bg-red-400", label: "削除" },
   Search: { bg: "bg-blue-400", label: "検索" },
   Login: { bg: "bg-blue-400", label: "ログイン" },
+  Back: { bg: "bg-blue-400", label: "一覧に戻る" },
 } as const;
 
 const Button = ({ variant, disabled, onClick, type, className }: Props) => {

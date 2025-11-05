@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import Input from "@/components/elements/Input";
 import Button from "@/components/elements/Button";
+import { Loading } from "@/components/elements/Loading";
 import { validation } from "@shared/schemas/Auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
@@ -31,32 +32,34 @@ const Login = () => {
   };
 
   return (
-    <div className="mt-5 flex justify-center min-h-screen">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          id="studentEmail"
-          type="email"
-          label="メールアドレス"
-          required
-          error={errors.studentEmail?.message}
-          {...register("studentEmail")}
-        />
-        <Input
-          id="studentPassword"
-          type="password"
-          label="パスワード"
-          required
-          error={errors.studentPassword?.message}
-          {...register("studentPassword")}
-        />
-        <Button
-          type="submit"
-          variant="Login"
-          className="w-full mt-4"
-          disabled={loading}
-        />
-      </form>
-    </div>
+    <Loading loading={loading} error={error}>
+      <div className="mt-5 flex justify-center min-h-screen">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            id="studentEmail"
+            type="email"
+            label="メールアドレス"
+            required
+            error={errors.studentEmail?.message}
+            {...register("studentEmail")}
+          />
+          <Input
+            id="studentPassword"
+            type="password"
+            label="パスワード"
+            required
+            error={errors.studentPassword?.message}
+            {...register("studentPassword")}
+          />
+          <Button
+            type="submit"
+            variant="Login"
+            className="w-full mt-4"
+            disabled={loading}
+          />
+        </form>
+      </div>
+    </Loading>
   );
 };
 

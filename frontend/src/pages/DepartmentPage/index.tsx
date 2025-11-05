@@ -1,20 +1,30 @@
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 import { Table } from "@/components/layouts/Table";
-import { LoadAndError } from "@/components/layouts/LoadAndError";
+import { Loading } from "@/components/elements/Loading";
 import { useDepartment } from "@/hooks/DepartmentHooks";
 import { DepartmentLabels } from "@/types/department";
 
 const DepartmentIndex = () => {
-  const { data: Departments, loading, error } = useDepartment(true);
+  const { data: Departments, fetchAll, loading, error } = useDepartment();
+
+  useEffect(() => {
+    fetchAll();
+  }, [fetchAll]);
+
+  useEffect(() => {
+    if (error) toast.error(error);
+  }, [error]);
 
   return (
-    <LoadAndError loading={loading} error={error}>
+    <Loading loading={loading}>
       <Table
         labels={DepartmentLabels}
         data={Departments}
         keyField="departmentId"
         showActions={false}
       />
-    </LoadAndError>
+    </Loading>
   );
 };
 

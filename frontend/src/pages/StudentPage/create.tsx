@@ -1,4 +1,7 @@
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import Input from "@/components/elements/Input";
 import Select from "@/components/elements/Select";
 import Button from "@/components/elements/Button";
@@ -8,14 +11,12 @@ import { departmentOptions } from "@/domain/department";
 import validation from "@shared/schemas/Student";
 import { useStudent } from "@/hooks/StudentHooks";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoadAndError } from "@/components/layouts/LoadAndError";
-import { useNavigate } from "react-router-dom";
+import { Loading } from "@/components/elements/Loading";
 import { ROUTES } from "@/domain/routes";
-import { toast } from "react-toastify";
 
 const StudentCreate = () => {
   const navigate = useNavigate();
-  const { create, loading, error } = useStudent(false);
+  const { create, loading, error } = useStudent();
 
   const {
     register,
@@ -32,16 +33,20 @@ const StudentCreate = () => {
       toast.success("登録に成功しました！");
       setTimeout(() => {
         navigate(ROUTES.Student.INDEX);
-      }, 10000);
+      }, 1000);
     } catch (err: any) {
-      toast.error("登録に失敗しました。");
+      return;
+      // エラーは useStudent() の error state で管理・toast表示される
     }
   };
 
+  useEffect(() => {
+    if (error) toast.error(error);
+  }, [error]);
+
   return (
-    <LoadAndError loading={loading} error={error}>
+    <Loading loading={loading}>
       <div className="mt-5 flex justify-center min-h-screen">
-        <h2>学生登録画面</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input
             id="studentName"
@@ -87,7 +92,7 @@ const StudentCreate = () => {
           <Button type="submit" variant="Create" className="w-full mt-4" />
         </form>
       </div>
-    </LoadAndError>
+    </Loading>
   );
 };
 

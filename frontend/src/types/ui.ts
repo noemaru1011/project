@@ -4,7 +4,8 @@ export type ButtonVariant =
   | "Update"
   | "Delete"
   | "Search"
-  | "Login";
+  | "Login"
+  | "Back";
 
 export type InputType =
   | "text"

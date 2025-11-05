@@ -32,7 +32,6 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, Props>(
         />
 
         {error && <p className="text-red-500 text-sm ml-1">{error}</p>}
-        {disabled && <input type="hidden" value={value?.toString()} />}
       </div>
     );
   }

@@ -1,15 +1,17 @@
 import { Router } from "express";
 import { PrismaClient } from "@prisma/client";
+import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 const router = Router();
 const prisma = new PrismaClient();
+const JWT_SECRET = process.env.JWT_SECRET;
 
-router.post("/login", async (req, res) => {
+router.post("/Login", async (req, res) => {
   try {
     const { studentEmail, studentPassword } = req.body;
 
-    // 1. メールアドレスでユーザーを取得
+    // 1. メールアドレスで学生テーブルからユーザーIDを取得
     const student = await prisma.student.findUnique({
       where: { studentEmail: studentEmail },
     });
@@ -26,9 +28,12 @@ router.post("/login", async (req, res) => {
     });
 
     if (!password) {
-      return res
-        .status(401)
-        .json({ error: "メールアドレスかパスワードが違います" });
+      return (
+        res
+          .status(401)
+          //パスワードが登録されていない旨は伝えない,自動生成されるはず
+          .json({ error: "メールアドレスかパスワードが違います" })
+      );
     }
 
     // 3. bcrypt で比較
@@ -40,10 +45,17 @@ router.post("/login", async (req, res) => {
     }
 
     // 4. 成功
-    return res.json({ message: "ログイン成功", studentId: student.studentId });
+    const token = jwt.sign({ studentEmail }, JWT_SECRET!, { expiresIn: "1h" });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // 本番は HTTPS
+      sameSite: "strict",
+      maxAge: 3600 * 1000, // 1時間
+    });
+
+    res.json({ message: "ログイン成功" });
   } catch (err: any) {
-    console.error(err);
-    res.status(500).json({ error: "サーバーエラー" });
+    res.status(500).json({ error: "予期せぬエラーが発生しました" });
   }
 });
 

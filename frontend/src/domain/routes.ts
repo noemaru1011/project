@@ -45,13 +45,13 @@ export const ROUTES = {
   Auth: {
     LOGIN: "/Auth/Login/",
     LOGOUT: "/Auth/Logout/",
+    CHECK_AUTH: "/Auth/Check",
   },
 
   //エラーページ
   Error: {
     FORBIDDEN: "/Error/Forbidden",
     SERVER: "/Error/ServerError",
-    OTHER: "/Error/Other",
     NOTFOUND: "*",
   },
 } as const;

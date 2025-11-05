@@ -11,14 +11,14 @@ import { departmentOptions } from "@/domain/department";
 import validation from "@shared/schemas/Student";
 import type { Student } from "@shared/schemas/Student";
 import { useStudent } from "@/hooks/StudentHooks";
-import { LoadAndError } from "@/components/layouts/LoadAndError";
+import { Loading } from "@/components/elements/Loading";
 import { ROUTES } from "@/domain/routes";
 import { toast } from "react-toastify";
 
 const StudentUpdate = () => {
   const navigate = useNavigate();
   const { studentId } = useParams<{ studentId: string }>();
-  const { view, update, loading, error } = useStudent(false);
+  const { view, update, loading, error } = useStudent();
 
   const {
     register,
@@ -69,7 +69,7 @@ const StudentUpdate = () => {
   };
 
   return (
-    <LoadAndError loading={loading} error={error}>
+    <Loading loading={loading}>
       <div className="mt-5 flex justify-center min-h-screen">
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input
@@ -116,7 +116,7 @@ const StudentUpdate = () => {
           <Button type="submit" variant="Update" className="w-full mt-4" />
         </form>
       </div>
-    </LoadAndError>
+    </Loading>
   );
 };
 

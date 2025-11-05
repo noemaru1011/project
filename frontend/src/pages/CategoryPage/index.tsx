@@ -1,20 +1,30 @@
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 import { Table } from "@/components/layouts/Table";
-import { LoadAndError } from "@/components/layouts/LoadAndError";
+import { Loading } from "@/components/elements/Loading";
 import { useCategory } from "@/hooks/CategoryHooks";
 import { CategoryLabels } from "@/types/category";
 
 const CategoryIndex = () => {
-  const { data: Categories, loading, error } = useCategory(true);
+  const { data: Categories, fetchAll, loading, error } = useCategory();
+
+  useEffect(() => {
+    fetchAll();
+  }, [fetchAll]);
+
+  useEffect(() => {
+    if (error) toast.error(error);
+  }, [error]);
 
   return (
-    <LoadAndError loading={loading} error={error}>
+    <Loading loading={loading}>
       <Table
         labels={CategoryLabels}
         data={Categories}
         keyField="categoryId"
         showActions={false}
       />
-    </LoadAndError>
+    </Loading>
   );
 };
 

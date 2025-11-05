@@ -1,20 +1,30 @@
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 import { Table } from "@/components/layouts/Table";
-import { LoadAndError } from "@/components/layouts/LoadAndError";
+import { Loading } from "@/components/elements/Loading";
 import { useSubCategory } from "@/hooks/SubCategoryHooks";
 import { SubCategoryLabels } from "@/types/subCategory";
 
 const SubCategoryIndex = () => {
-  const { data: subCategories, loading, error } = useSubCategory(true);
+  const { data: subCategories, fetchAll, loading, error } = useSubCategory();
+
+  useEffect(() => {
+    fetchAll();
+  }, [fetchAll]);
+
+  useEffect(() => {
+    if (error) toast.error(error);
+  }, [error]);
 
   return (
-    <LoadAndError loading={loading} error={error}>
+    <Loading loading={loading}>
       <Table
         labels={SubCategoryLabels}
         data={subCategories}
         keyField="subCategoryId"
         showActions={false}
       />
-    </LoadAndError>
+    </Loading>
   );
 };
 

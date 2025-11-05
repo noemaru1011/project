@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useCallback } from "react";
 
 type ApiMethods<T, Q> = {
   index?: (query?: Q) => Promise<T[]>;
@@ -8,108 +8,125 @@ type ApiMethods<T, Q> = {
   view?: (id: string) => Promise<T>;
 };
 
-export function Hooks<T, Q = any>(api: ApiMethods<T, Q>, autoFetch: boolean) {
+export function Hooks<T, Q = any>(api: ApiMethods<T, Q>) {
   const [data, setData] = useState<T[]>([]);
-  const [loading, setLoading] = useState(autoFetch);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // 一覧取得
-  const fetchAll = async () => {
+  const fetchAll = useCallback(async () => {
     if (!api.index) return;
     try {
       setLoading(true);
       const result = await api.index();
+      setError(null);
       setData(result);
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message ?? "予期せぬエラーが発生しました");
     } finally {
       setLoading(false);
     }
-  };
+  }, [api]);
 
   //検索
-  const fetchData = async (query?: Q): Promise<T[]> => {
-    if (!api.index) return [];
-    try {
-      setLoading(true);
-      const result = await api.index(query);
-      setData(result);
-      return result;
-    } catch (err: any) {
-      setError(err.message);
-      return [];
-    } finally {
-      setLoading(false);
-    }
-  };
+  const fetchData = useCallback(
+    async (query?: Q): Promise<T[]> => {
+      if (!api.index) return [];
+      try {
+        setLoading(true);
+        const result = await api.index(query);
+        setError(null);
+        setData(result);
+        return result;
+      } catch (err: any) {
+        setError(err.message ?? "予期せぬエラーが発生しました");
+        return [];
+      } finally {
+        setLoading(false);
+      }
+    },
+    [api]
+  );
 
   // 登録
-  const create = async (item: Partial<T>) => {
-    if (!api.create) return;
-    try {
-      setLoading(true);
-      const newItem = await api.create(item);
-      setData((prev) => [...prev, newItem]);
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const create = useCallback(
+    async (item: Partial<T>) => {
+      if (!api.create) return;
+      try {
+        setLoading(true);
+        const newItem = await api.create(item);
+        setError(null);
+        setData((prev) => [...prev, newItem]);
+      } catch (err: any) {
+        setError(err.message ?? "予期せぬエラーが発生しました");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [api]
+  );
 
   // 更新
-  const update = async (
-    id: string,
-    data: Partial<T>,
-    keyField: keyof T = "id" as keyof T
-  ) => {
-    if (!api.update) return;
-    try {
-      setLoading(true);
-      const updated = await api.update(id, data);
-      setData((prev) =>
-        prev.map((d: any) => (String(d[keyField]) === id ? updated : d))
-      );
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const update = useCallback(
+    async (
+      id: string,
+      data: Partial<T>,
+      keyField: keyof T = "id" as keyof T
+    ) => {
+      if (!api.update) return;
+      try {
+        setLoading(true);
+        const updated = await api.update(id, data);
+        setError(null);
+        setData((prev) =>
+          prev.map((d: any) => (String(d[keyField]) === id ? updated : d))
+        );
+      } catch (err: any) {
+        setError(err.message ?? "予期せぬエラーが発生しました");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [api]
+  );
 
   // 削除
-  const remove = async (id: string, keyField: keyof T = "id" as keyof T) => {
-    if (!api.delete) return;
-    try {
-      setLoading(true);
-      await api.delete(id);
-      if (keyField) {
-        setData((prev) => prev.filter((d) => String(d[keyField]) !== id));
+  const remove = useCallback(
+    async (id: string, keyField: keyof T = "id" as keyof T) => {
+      if (!api.delete) return;
+      try {
+        setLoading(true);
+        await api.delete(id);
+        if (keyField) {
+          setData((prev) => prev.filter((d) => String(d[keyField]) !== id));
+        }
+        setError(null);
+      } catch (err: any) {
+        setError(err.message ?? "予期せぬエラーが発生しました");
+      } finally {
+        setLoading(false);
       }
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+    [api]
+  );
 
-  const view = async (id: string): Promise<T | undefined> => {
-    if (!api.view) return undefined;
-    try {
-      setLoading(true);
-      const result = await api.view(id);
-      return result;
-    } catch (err: any) {
-      setError(err.message);
-      return undefined;
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (autoFetch) fetchAll();
-  }, []);
+  const view = useCallback(
+    async (id: string): Promise<T | undefined> => {
+      if (!api.view) return undefined;
+      try {
+        setLoading(true);
+        const result = await api.view(id);
+        setError(null);
+        return result;
+      } catch (err: any) {
+        setError(err.message ?? "予期せぬエラーが発生しました");
+        return undefined;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [api]
+  );
 
   return {
     data,

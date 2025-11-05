@@ -10,6 +10,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export async function Api<T>(path: string, options?: RequestInit): Promise<T> {
   try {
     const res = await fetch(`${API_BASE_URL}${path}`, {
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
         ...(options?.headers || {}),
@@ -17,24 +18,39 @@ export async function Api<T>(path: string, options?: RequestInit): Promise<T> {
       ...options,
     });
 
+    // レスポンスを安全にJSON化
+    const data = await res.json().catch(() => ({}));
+
     // サーバー側エラー
     if (res.status >= 500) {
       NavigationService.navigate(ROUTES.Error.SERVER);
+      const message = (data as any).error || "予期せぬエラーが発生しました";
+      throw new Error(message);
     }
-    // クライアント側エラー（認証エラーなど）
+    // クライアント側エラー（権限なし）
     if (res.status == 403) {
       NavigationService.navigate(ROUTES.Error.FORBIDDEN);
+      const message = (data as any).error || "権限がありません";
+      throw new Error(message);
+    }
+    // クライアント側エラー（未ログイン）
+    if (res.status == 401) {
+      NavigationService.navigate(ROUTES.Auth.LOGIN);
+      const message = (data as any).error || "ログインしてください";
+      throw new Error(message);
     }
 
     if (!res.ok) {
-      const errorText = await res.text();
-      throw new Error(`API Error: ${res.status} ${errorText}`);
+      NavigationService.navigate(ROUTES.Error.SERVER);
+      const message = (data as any).error || "予期せぬエラーが発生しました";
+      throw new Error(message);
     }
 
-    const data: T = await res.json();
     return data;
   } catch (error) {
-    //レスポンスが取得できなかった場合
-    throw error;
+    //レスポンスが取得できなかった場合、ネットワークやJSON変換失敗など
+    NavigationService.navigate(ROUTES.Error.SERVER);
+    if (error instanceof Error) throw error;
+    throw new Error("予期せぬエラーが発生しました");
   }
 }

@@ -6,11 +6,15 @@ const router = Router();
 
 router.get("/Index", async (req, res) => {
   try {
-    const SubCategorys = await prisma.subCategory.findMany();
+    const SubCategorys = await prisma.subCategory.findMany({
+      select: {
+        subCategoryId: true,
+        subCategoryName: true,
+      },
+    });
     res.json(SubCategorys);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to fetch SubCategorys" });
+    res.status(500).json({ error: "予期せぬエラーが発生しました" });
   }
 });
 

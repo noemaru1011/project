@@ -21,6 +21,7 @@ import DepartmentIndex from "@/pages/DepartmentPage";
 import StatusIndex from "@/pages/StatusPage";
 import StudentCreate from "@/pages/StudentPage/create";
 import StudentUpdate from "./pages/StudentPage/update";
+import StudentView from "./pages/StudentPage/view";
 
 import { NotFound } from "@/pages/ErrorPage/NotFound";
 import { ServerError } from "@/pages/ErrorPage/ServerError";
@@ -40,8 +41,8 @@ function NavigatorProvider() {
   // Routesをここにまとめることで、NavigationServiceが確実に初期化された状態で描画される
   return (
     <Routes>
+      <Route path={ROUTES.Auth.LOGIN} element={<Login />} />
       <Route element={<Layout />}>
-        <Route path={ROUTES.Auth.LOGIN} element={<Login />} />
         <Route path={ROUTES.HOME} element={<HomePage />} />
         <Route path={ROUTES.Category.INDEX} element={<CategoryIndex />} />
         <Route path={ROUTES.SubCategory.INDEX} element={<SubCategoryIndex />} />
@@ -52,6 +53,7 @@ function NavigatorProvider() {
         <Route path={ROUTES.Department.INDEX} element={<DepartmentIndex />} />
         <Route path={ROUTES.Student.CREATE} element={<StudentCreate />} />
         <Route path={ROUTES.Student.UPDATE()} element={<StudentUpdate />} />
+        <Route path={ROUTES.Student.VIEW()} element={<StudentView />} />
 
         {/* エラー画面 */}
         <Route path={ROUTES.Status.INDEX} element={<StatusIndex />} />

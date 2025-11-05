@@ -2,9 +2,9 @@ import { Router } from "express";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { Resend } from "resend";
-import dotenv from "dotenv";
+import { validateBody } from "../middleware/validate";
+import validation from "@shared/schemas/Student";
 
-dotenv.config();
 const prisma = new PrismaClient();
 const router = Router();
 const resend = new Resend(process.env.RESEND_API_KEY!);
@@ -20,23 +20,36 @@ function generateRandomPassword(length = 12) {
   return password;
 }
 
+//メール送信(汎用的ではないためutilsにはしない)
+const sendAccountEmail = async (email: string, password: string) => {
+  try {
+    await resend.emails.send({
+      from: "no-reply@resend.dev",
+      to: email,
+      subject: "アカウント作成通知",
+      text: `学生アカウントが作成されました。\n\nユーザー名: ${email}\n初回パスワード: ${password}`,
+    });
+  } catch (error) {
+    throw new Error("メール送信に失敗しました。");
+  }
+};
+
 router.get("/Index", async (req, res) => {
   try {
     const Students = await prisma.student.findMany();
     res.json(Students);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to fetch Students" });
+    res.status(500).json({ error: "予期せぬエラーが発生しました" });
   }
 });
 
-router.post("/Create", async (req, res) => {
+router.post("/Create", validateBody(validation), async (req, res) => {
+  const { studentName, studentEmail, departmentId, minorCategoryId, grade } =
+    req.body;
   try {
-    const { studentName, studentEmail, departmentId, minorCategoryId, grade } =
-      req.body;
-
     // ランダムパスワード生成
     const plainPassword = generateRandomPassword();
+    //パスワードハッシュ化
     const password = await bcrypt.hash(plainPassword, 10);
 
     const student = await prisma.student.create({
@@ -51,27 +64,20 @@ router.post("/Create", async (req, res) => {
       },
     });
 
-    // Passwordテーブルに保存
+    // Passwordテーブルにも保存
     await prisma.studentPassword.create({
       data: {
         studentId: student.studentId,
         password,
         createdAt: new Date(),
+        updatedAt: new Date(),
       },
     });
 
-    //メール送信
-    const result = await resend.emails.send({
-      from: "no-reply@resend.dev", //無料ドメイン
-      to: studentEmail,
-      subject: "アカウント作成通知",
-      text: `学生アカウントが作成されました。\n\nユーザー名: ${studentEmail}\n初回パスワード: ${plainPassword}\nログイン後は必ずパスワードを変更してください。`,
-    });
-    console.log("Resend result:", result);
-    res.json({ student });
+    //メール送信(ハッシュ化前のパスワードを送信)
+    await sendAccountEmail(studentEmail, plainPassword);
   } catch (err: any) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to create Students" });
+    res.status(500).json({ error: "予期せぬエラーが発生しました" });
   }
 });
 
@@ -79,24 +85,37 @@ router.get("/View/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const student = await prisma.student.findUnique({
-      where: { studentId: id },
+      where: { studentId: id, deleteFlag: false },
     });
-    if (!student) return res.status(404).json({ error: "Student not found" });
-    res.json(student);
+    if (!student)
+      return (
+        res
+          .status(404)
+          //toDo メッセージを模索中
+          .json({ error: "該当する学生が見つかりませんでした" })
+      );
+    res.json({
+      student: {
+        studentId: student.studentId,
+        studentName: student.studentName,
+        studentEmail: student.studentEmail,
+        departmentId: student.departmentId,
+        minorCategoryId: student.minorCategoryId,
+        grade: student.grade,
+      },
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to fetch student" });
+    res.status(500).json({ error: "予期せぬエラーが発生しました" });
   }
 });
 
-router.put("/Update/:id", async (req, res) => {
+router.put("/Update/:id", validateBody(validation), async (req, res) => {
+  const { studentName, studentEmail, departmentId, minorCategoryId, grade } =
+    req.body;
   try {
     const { id } = req.params;
-    const { studentName, studentEmail, departmentId, minorCategoryId, grade } =
-      req.body;
-
-    const updatedStudent = await prisma.student.update({
-      where: { studentId: id },
+    await prisma.student.update({
+      where: { studentId: id! },
       data: {
         studentName,
         studentEmail,
@@ -107,10 +126,27 @@ router.put("/Update/:id", async (req, res) => {
       },
     });
 
-    res.json(updatedStudent);
+    res.status(201).json({ message: "更新完了" });
   } catch (err: any) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to update Student" });
+    res.status(500).json({ error: "予期せぬエラーが発生しました" });
+  }
+});
+
+router.post("/Delete/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await prisma.student.update({
+      where: { studentId: id },
+      data: {
+        deleteFlag: true,
+        updatedAt: new Date(),
+      },
+    });
+
+    res.status(201).json({ message: "削除完了" });
+  } catch (err: any) {
+    res.status(500).json({ error: "予期せぬエラーが発生しました" });
   }
 });
 

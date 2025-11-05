@@ -1,20 +1,30 @@
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 import { Table } from "@/components/layouts/Table";
-import { LoadAndError } from "@/components/layouts/LoadAndError";
+import { Loading } from "@/components/elements/Loading";
 import { useStatus } from "@/hooks/StatusHooks";
 import { StatusLabels } from "@/types/status";
 
 const StatusIndex = () => {
-  const { data: Status, loading, error } = useStatus(true);
+  const { data: Status, fetchAll, loading, error } = useStatus();
+
+  useEffect(() => {
+    fetchAll();
+  }, [fetchAll]);
+
+  useEffect(() => {
+    if (error) toast.error(error);
+  }, [error]);
 
   return (
-    <LoadAndError loading={loading} error={error}>
+    <Loading loading={loading}>
       <Table
         labels={StatusLabels}
         data={Status}
         keyField="statusId"
         showActions={false}
       />
-    </LoadAndError>
+    </Loading>
   );
 };
 

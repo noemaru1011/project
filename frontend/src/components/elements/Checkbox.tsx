@@ -27,9 +27,6 @@ const Checkbox = React.forwardRef<HTMLInputElement, Props>(
           {required && <span className="text-red-500 ml-1">*</span>}
         </label>
         {error && <p className="text-red-500 text-sm ml-2">{error}</p>}
-        {disabled && (
-          <input type="hidden" name={id} value={rest.value?.toString()} />
-        )}
       </div>
     );
   }

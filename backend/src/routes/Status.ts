@@ -6,11 +6,15 @@ const router = Router();
 
 router.get("/Index", async (req, res) => {
   try {
-    const Status = await prisma.status.findMany();
+    const Status = await prisma.status.findMany({
+      select: {
+        statusId: true,
+        statusName: true,
+      },
+    });
     res.json(Status);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to fetch Status" });
+    res.status(500).json({ error: "予期せぬエラーが発生しました" });
   }
 });
 

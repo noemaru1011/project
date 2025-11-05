@@ -6,11 +6,15 @@ const router = Router();
 
 router.get("/Index", async (req, res) => {
   try {
-    const Departments = await prisma.department.findMany();
+    const Departments = await prisma.department.findMany({
+      select: {
+        departmentId: true,
+        departmentName: true,
+      },
+    });
     res.json(Departments);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to fetch Departments" });
+    res.status(500).json({ error: "予期せぬエラーが発生しました" });
   }
 });
 
