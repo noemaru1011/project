@@ -1,27 +1,27 @@
 import { Api } from "./Api";
 import type { Student, StudentQuery } from "@shared/schemas/Student";
-import { ROUTES } from "@/domain/routes";
+import { API_ROUTES } from "@/constants/apiRoutes";
 
 export const StudentApi = {
-  index: () => Api<Student[]>(ROUTES.Student.INDEX, { method: "GET" }),
+  index: () => Api<Student[]>(API_ROUTES.STUDENT.INDEX, { method: "GET" }),
 
   create: (data: Partial<Student>) =>
-    Api<Student>(ROUTES.Student.CREATE, {
+    Api<Student>(API_ROUTES.STUDENT.CREATE, {
       method: "POST",
       body: JSON.stringify(data),
     }),
 
   update: (id: string, data: Partial<Student>) =>
-    Api<Student>(ROUTES.Student.UPDATE(id), {
+    Api<Student>(API_ROUTES.STUDENT.UPDATE(id), {
       method: "PUT",
       body: JSON.stringify(data),
     }),
 
   delete: (id: string) =>
-    Api<void>(ROUTES.Student.DELETE(id), {
-      method: "POST",
+    Api<void>(API_ROUTES.STUDENT.DELETE(id), {
+      method: "DELETE",
     }),
 
   view: (id: string) =>
-    Api<Student>(ROUTES.Student.VIEW(id), { method: "GET" }),
+    Api<Student>(API_ROUTES.STUDENT.VIEW(id), { method: "GET" }),
 };

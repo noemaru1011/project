@@ -7,9 +7,10 @@ import {
 } from "react-router-dom";
 import { useEffect } from "react";
 import { NavigationService } from "@/utils/NavigationService";
+import { CsrfProvider } from "@/hooks/contexts/CSRF";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ROUTES } from "@/domain/routes";
+import { ROUTES } from "@/constants/routes";
 
 import Layout from "@/components/layouts/Layout";
 import Login from "@/pages/Auth/login";
@@ -72,21 +73,23 @@ function NavigatorProvider() {
  */
 const App = () => {
   return (
-    <Router>
-      <NavigatorProvider />
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        toastStyle={{ width: "500px" }}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-    </Router>
+    <CsrfProvider>
+      <Router>
+        <NavigatorProvider />
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          toastStyle={{ width: "500px" }}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+      </Router>
+    </CsrfProvider>
   );
 };
 

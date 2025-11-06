@@ -56,9 +56,8 @@ export function Hooks<T, Q = any>(api: ApiMethods<T, Q>) {
       }
       setLoading(true);
       try {
-        console.log("postします");
         const newItem = await api.create(item);
-        console.log("postしました");
+
         setData((prev) => [...prev, newItem]);
         return newItem;
       } finally {

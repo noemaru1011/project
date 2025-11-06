@@ -1,0 +1,31 @@
+export const API_ROUTES = {
+  CATEGORY: {
+    INDEX: "/api/categories",
+  },
+  SUBCATEGORY: {
+    INDEX: "/api/subCategories",
+  },
+  MINORCATEGORY: {
+    INDEX: "/api/minor-categories",
+  },
+  DEPARTMENT: {
+    INDEX: "/api/departments",
+  },
+  STATUS: { INDEX: "/api/statuses" },
+  STUDENT: {
+    //get
+    INDEX: "/api/students",
+    //post
+    CREATE: "/api/students",
+    //put
+    UPDATE: (id: string) => `/api/students/${id}`,
+    //get;id
+    VIEW: (id: string) => `/api/students/${id}`,
+    //delete:id
+    DELETE: (id: string) => `/api/students/${id}`,
+  },
+  AUTH: {
+    LOGIN: "/api/auth/login",
+    LOGOUT: "/api/auth/logout",
+  },
+} as const;

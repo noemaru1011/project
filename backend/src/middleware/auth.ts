@@ -8,7 +8,10 @@ export const authMiddleware = (
 ) => {
   const token = req.cookies.token;
   if (!token) {
-    return res.status(401).json({ message: "未ログインです" });
+    return res.status(401).json({
+      code: "TOKEN_EXPIRED",
+      message: "ログインしてください",
+    });
   }
 
   try {
@@ -16,6 +19,9 @@ export const authMiddleware = (
     (req as any).jwtPayload = payload;
     next();
   } catch (err) {
-    return res.status(401).json({ message: "トークンが無効です" });
+    return res.status(401).json({
+      code: "INVALID_TOKEN",
+      message: "無効なトークンです",
+    });
   }
 };

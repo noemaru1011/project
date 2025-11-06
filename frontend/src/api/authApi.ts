@@ -1,17 +1,12 @@
 import { Api } from "./Api";
 import type { Auth } from "@shared/schemas/Auth";
-import { ROUTES } from "@/domain/routes";
+import { API_ROUTES } from "@/constants/apiRoutes";
 
 export const AuthApi = {
   login: (data: Partial<Auth>) =>
-    Api<Auth>(ROUTES.Auth.LOGIN, {
+    Api<Auth>(API_ROUTES.AUTH.LOGIN, {
       method: "POST",
       credentials: "include",
       body: JSON.stringify(data),
-    }),
-  checkAuth: () =>
-    Api<Auth>(ROUTES.Auth.CHECK_AUTH, {
-      method: "GET",
-      credentials: "include",
     }),
 };

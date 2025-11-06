@@ -1,7 +1,7 @@
 import menuIcon from "@/assets/menu.svg";
 import colseIcon from "@/assets/close.svg";
 import type { Option } from "@/types/ui";
-import { ROUTES } from "@/domain/routes";
+import { ROUTES } from "@/constants/routes";
 
 const MenuOptions: Option[] = [
   { value: ROUTES.Category.INDEX, label: "大分類マスタ" },

@@ -34,9 +34,12 @@ const sendAccountEmail = async (email: string, password: string) => {
   }
 };
 
-router.get("/Index", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const Students = await prisma.student.findMany({
+      where: {
+        deleteFlag: false,
+      },
       select: {
         studentId: true,
         studentName: true,
@@ -50,11 +53,11 @@ router.get("/Index", async (req, res) => {
     });
     res.json(Students);
   } catch (error) {
-    res.status(500).json({ error: "予期せぬエラーが発生しました" });
+    res.status(500).json({ message: "予期せぬエラーが発生しました" });
   }
 });
 
-router.post("/Create", validateBody(validation), async (req, res) => {
+router.post("/", validateBody(validation), async (req, res) => {
   const { studentName, studentEmail, departmentId, minorCategoryId, grade } =
     req.body;
   try {
@@ -92,14 +95,13 @@ router.post("/Create", validateBody(validation), async (req, res) => {
     if (err.code === "P2002" && err.meta?.target?.includes("studentEmail")) {
       return res
         .status(400)
-        .json({ error: "このメールアドレスはすでに登録されています" });
+        .json({ message: "このメールアドレスはすでに登録されています" });
     }
-    console.error("Create Student Error:", err); // ←これで詳細を見る
-    res.status(500).json({ error: "予期せぬエラーが発生しました" });
+    res.status(500).json({ message: "予期せぬエラーが発生しました" });
   }
 });
 
-router.get("/View/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const student = await prisma.student.findUnique({
@@ -109,8 +111,8 @@ router.get("/View/:id", async (req, res) => {
       return (
         res
           .status(404)
-          //toDo メッセージを模索中
-          .json({ error: "該当する学生が見つかりませんでした" })
+          //メッセージを模索中
+          .json({ message: "該当する学生が見つかりませんでした" })
       );
     res.json({
       student: {
@@ -122,11 +124,11 @@ router.get("/View/:id", async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({ error: "予期せぬエラーが発生しました" });
+    res.status(500).json({ message: "予期せぬエラーが発生しました" });
   }
 });
 
-router.put("/Update/:id", validateBody(validation), async (req, res) => {
+router.put("/:id", validateBody(validation), async (req, res) => {
   const { studentName, departmentId, minorCategoryId, grade } = req.body;
   try {
     const { id } = req.params;
@@ -143,11 +145,11 @@ router.put("/Update/:id", validateBody(validation), async (req, res) => {
 
     res.status(201).json({ message: "更新完了" });
   } catch (err: any) {
-    res.status(500).json({ error: "予期せぬエラーが発生しました" });
+    res.status(500).json({ message: "予期せぬエラーが発生しました" });
   }
 });
 
-router.post("/Delete/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -161,7 +163,7 @@ router.post("/Delete/:id", async (req, res) => {
 
     res.status(201).json({ message: "削除完了" });
   } catch (err: any) {
-    res.status(500).json({ error: "予期せぬエラーが発生しました" });
+    res.status(500).json({ message: "予期せぬエラーが発生しました" });
   }
 });
 

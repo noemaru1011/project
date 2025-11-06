@@ -5,13 +5,15 @@ import { Loading } from "@/components/elements/Loading";
 import { validation } from "@shared/schemas/Auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
-import { ROUTES } from "@/domain/routes";
+import { ROUTES } from "@/constants/routes";
 import { toast } from "react-toastify";
 import { useAuth } from "@/hooks/AuthHooks";
+import { useCsrf } from "@/hooks/contexts/CSRF";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login, loading, error } = useAuth();
+  const { login, loading } = useAuth();
+  const { setCsrfToken } = useCsrf();
 
   const {
     register,
@@ -23,41 +25,46 @@ const Login = () => {
 
   const onSubmit = async (data: any) => {
     try {
-      await login(data);
+      const res: any = await login(data);
+      setCsrfToken(res.csrfToken);
+      sessionStorage.setItem("csrfToken", res.csrfToken);
       toast.success("ログインに成功しました！");
       navigate(ROUTES.HOME);
     } catch (err: any) {
-      toast.error(err.response?.data?.message || "ログインに失敗しました。");
+      // Api層では Error(message) をthrowしているのでここでOK
+      toast.error(err.message || "ログインに失敗しました。");
     }
   };
 
   return (
-    <Loading loading={loading} error={error}>
+    <Loading loading={loading}>
       <div className="mt-5 flex justify-center min-h-screen">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            id="studentEmail"
-            type="email"
-            label="メールアドレス"
-            required
-            error={errors.studentEmail?.message}
-            {...register("studentEmail")}
-          />
-          <Input
-            id="studentPassword"
-            type="password"
-            label="パスワード"
-            required
-            error={errors.studentPassword?.message}
-            {...register("studentPassword")}
-          />
-          <Button
-            type="submit"
-            variant="Login"
-            className="w-full mt-4"
-            disabled={loading}
-          />
-        </form>
+        <div className="w-full max-w-md space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Input
+              id="studentEmail"
+              type="email"
+              label="メールアドレス"
+              required
+              error={errors.studentEmail?.message}
+              {...register("studentEmail")}
+            />
+            <Input
+              id="studentPassword"
+              type="password"
+              label="パスワード"
+              required
+              error={errors.studentPassword?.message}
+              {...register("studentPassword")}
+            />
+            <Button
+              type="submit"
+              variant="Login"
+              className="w-full mt-4"
+              disabled={loading}
+            />
+          </form>
+        </div>
       </div>
     </Loading>
   );

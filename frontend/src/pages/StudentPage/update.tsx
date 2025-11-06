@@ -8,10 +8,10 @@ import Input from "@/components/elements/Input";
 import Select from "@/components/elements/Select";
 import Button from "@/components/elements/Button";
 import { Loading } from "@/components/elements/Loading";
-import { gradeOptions } from "@/domain/grade";
-import { minorCategoryOptions } from "@/domain/minorCategory";
-import { departmentOptions } from "@/domain/department";
-import { ROUTES } from "@/domain/routes";
+import { gradeOptions } from "@/constants/grade";
+import { minorCategoryOptions } from "@/constants/minorCategory";
+import { departmentOptions } from "@/constants/department";
+import { ROUTES } from "@/constants/routes";
 import { useStudent } from "@/hooks/StudentHooks";
 import validation from "@shared/schemas/Student";
 
@@ -107,7 +107,6 @@ const StudentUpdate = () => {
               id="studentEmail"
               type="email"
               label="メールアドレス"
-              required
               disabled
               error={errors.studentEmail?.message}
               {...register("studentEmail")}

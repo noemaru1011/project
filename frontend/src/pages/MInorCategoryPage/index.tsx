@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { Table } from "@/components/layouts/Table";
+import { Table } from "@/components/elements/Table";
 import { Loading } from "@/components/elements/Loading";
 import { useMinorCategory } from "@/hooks/MinorCategoryHooks";
 import { MinorCategoryLabels } from "@/types/minorCategory";

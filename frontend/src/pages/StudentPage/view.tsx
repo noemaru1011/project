@@ -4,12 +4,12 @@ import type { Student } from "@shared/schemas/Student";
 import Input from "@/components/elements/Input";
 import Select from "@/components/elements/Select";
 import Button from "@/components/elements/Button";
-import { gradeOptions } from "@/domain/grade";
-import { minorCategoryOptions } from "@/domain/minorCategory";
-import { departmentOptions } from "@/domain/department";
+import { gradeOptions } from "@/constants/grade";
+import { minorCategoryOptions } from "@/constants/minorCategory";
+import { departmentOptions } from "@/constants/department";
 import { useStudent } from "@/hooks/StudentHooks";
 import { Loading } from "@/components/elements/Loading";
-import { ROUTES } from "@/domain/routes";
+import { ROUTES } from "@/constants/routes";
 import { toast } from "react-toastify";
 
 const StudentView = () => {

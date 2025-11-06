@@ -1,39 +1,58 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import { doubleCsrf } from "csrf-csrf";
-import AuthRoutes from "./routes/Auth";
-import categoryRoutes from "./routes/Category";
-import SubCategoryRoutes from "./routes/SubCategory";
-import MinorCategoryRoutes from "./routes/MinorSubCategory";
-import DepartmentRoutes from "./routes/Department";
-import statusRoutes from "./routes/Status";
-import studentRoutes from "./routes/Student";
-//import { authMiddleware } from "./middleware/auth";
+import session from "express-session";
+import { API_ROUTES } from "./constants/routes";
+import AuthRoutes from "./controllers/Auth";
+import categoryRoutes from "./controllers/categoryController";
+import SubCategoryRoutes from "./controllers/SubCategory";
+import MinorCategoryRoutes from "./controllers/MinorSubCategory";
+import DepartmentRoutes from "./controllers/Department";
+import statusRoutes from "./controllers/Status";
+import studentRoutes from "./controllers/Student";
+import { authMiddleware } from "./middleware/auth";
+import { csrfMiddleware } from "./middleware/csrf";
 
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:5173", // フロントエンドURL
+    //オリジンは今回は1つのみ
+    origin: process.env.FRONT_URL,
     credentials: true,
   })
 );
 app.use(cookieParser());
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET!, // セッションIDを署名する秘密鍵
+    resave: false, // リクエストごとにセッションを保存し直すか
+    saveUninitialized: false, // 初期化されていないセッションを保存するか
+    cookie: {
+      // セッションIDを保持するクッキーの設定
+      httpOnly: true, // JSからは読めない（XSS対策）
+      secure: false,
+      maxAge: 1000 * 60 * 60, // 1時間で有効期限切れ
+    },
+  })
+);
+//ネストされたJSONなどを解析できるようにパース
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // 認証不要
-app.use("/Auth", AuthRoutes);
+app.use(API_ROUTES.AUTH, AuthRoutes);
 
 // 認証必須
-app.use("/Category", categoryRoutes);
-app.use("/SubCategory", SubCategoryRoutes);
-app.use("/MinorCategory", MinorCategoryRoutes);
-app.use("/Department", DepartmentRoutes);
-app.use("/Status", statusRoutes);
-app.use("/Student", studentRoutes);
+app.use(API_ROUTES.CATEGORY, authMiddleware, categoryRoutes);
+app.use(API_ROUTES.SUBCATEGORY, authMiddleware, SubCategoryRoutes);
+app.use(API_ROUTES.MINOR_CATEGORY, authMiddleware, MinorCategoryRoutes);
+app.use(API_ROUTES.DEPARTMENT, authMiddleware, DepartmentRoutes);
+app.use(API_ROUTES.STATUS, authMiddleware, statusRoutes);
+app.use(API_ROUTES.STUDENT, authMiddleware, csrfMiddleware, studentRoutes);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.BACK_PORT;
 app.listen(PORT, () => {
-  console.log(`🚀 Backend running: http://localhost:${PORT}`);
+  console.log(`🚀 Frontend connecting: ${process.env.FRONT_URL}`);
+  console.log(`🚀 Backend running: ${process.env.BACK_URL}`);
+  console.log(`🚀 DataBase connecting: ${process.env.DATABASE_URL}`);
 });

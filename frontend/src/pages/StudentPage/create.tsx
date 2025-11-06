@@ -4,14 +4,14 @@ import { useNavigate } from "react-router-dom";
 import Input from "@/components/elements/Input";
 import Select from "@/components/elements/Select";
 import Button from "@/components/elements/Button";
-import { gradeOptions } from "@/domain/grade";
-import { minorCategoryOptions } from "@/domain/minorCategory";
-import { departmentOptions } from "@/domain/department";
+import { gradeOptions } from "@/constants/grade";
+import { minorCategoryOptions } from "@/constants/minorCategory";
+import { departmentOptions } from "@/constants/department";
 import validation from "@shared/schemas/Student";
 import { useStudent } from "@/hooks/StudentHooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loading } from "@/components/elements/Loading";
-import { ROUTES } from "@/domain/routes";
+import { ROUTES } from "@/constants/routes";
 
 const StudentCreate = () => {
   const navigate = useNavigate();

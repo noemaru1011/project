@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { Table } from "@/components/layouts/Table";
+import { Table } from "@/components/elements/Table";
 import { Loading } from "@/components/elements/Loading";
 import { useStatus } from "@/hooks/StatusHooks";
 import { StatusLabels } from "@/types/status";

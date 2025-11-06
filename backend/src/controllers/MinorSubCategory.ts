@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 const router = Router();
 
-router.get("/Index", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const MinorSubCategorys = await prisma.minorCategory.findMany({
       select: {
@@ -14,7 +14,7 @@ router.get("/Index", async (req, res) => {
     });
     res.json(MinorSubCategorys);
   } catch (error) {
-    res.status(500).json({ error: "予期せぬエラーが発生しました" });
+    res.status(500).json({ message: "予期せぬエラーが発生しました" });
   }
 });
 

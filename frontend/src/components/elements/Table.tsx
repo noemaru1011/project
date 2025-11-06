@@ -1,13 +1,14 @@
 import Button from "@/components/elements/Button";
 
 type Props<T> = {
-  labels: Record<string, string>; // 表示用ラベル
+  labels: Record<string, string | object>;
   data: T[];
-  keyField: string; // 一意キー
+  keyField: string;
   showActions?: boolean;
 };
 
-// ネストされたオブジェクトをフラット化するヘルパー
+// ネストされたオブジェクトをドット区切りキーで展開
+//toDO 要勉強
 function flattenObject(obj: any, prefix = "", res: any = {}): any {
   for (const key in obj) {
     if (!Object.prototype.hasOwnProperty.call(obj, key)) continue;
@@ -24,13 +25,16 @@ function flattenObject(obj: any, prefix = "", res: any = {}): any {
   return res;
 }
 
-export function Table<T extends Record<string, any>>({
+// labels も data もネストを解決して使う
+export function Table<T extends Record<string, string | object>>({
   labels,
   data,
   keyField,
   showActions = true,
 }: Props<T>) {
-  const labelKeys = Object.keys(labels); // string[] で扱う
+  // ラベルをフラット化して表示名マップを作る
+  const flatLabels = flattenObject(labels);
+  const labelKeys = Object.keys(flatLabels);
 
   return (
     <div className="flex justify-center m-4">
@@ -40,7 +44,7 @@ export function Table<T extends Record<string, any>>({
             <tr>
               {labelKeys.map((key) => (
                 <th key={key} className="p-2 text-center">
-                  {labels[key]}
+                  {flatLabels[key]}
                 </th>
               ))}
               {showActions && (
@@ -50,7 +54,7 @@ export function Table<T extends Record<string, any>>({
           </thead>
           <tbody>
             {data.map((row) => {
-              const flatRow = flattenObject(row); // ネストをフラット化
+              const flatRow = flattenObject(row);
               return (
                 <tr
                   key={String(row[keyField])}

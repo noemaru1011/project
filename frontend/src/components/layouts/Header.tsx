@@ -1,5 +1,5 @@
 import type { Option } from "@/types/ui";
-import { ROUTES } from "@/domain/routes";
+import { ROUTES } from "@/constants/routes";
 import Menu from "./Menu";
 import { useState } from "react";
 
