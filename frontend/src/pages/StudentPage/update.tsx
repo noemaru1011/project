@@ -38,11 +38,11 @@ const StudentUpdate = () => {
         const data: any = await view(studentId);
         if (!data) throw new Error("学生情報が取得できません");
         reset({
-          studentName: data.student.studentName,
-          studentEmail: data.student.studentEmail,
-          grade: String(data.student.grade),
-          minorCategoryId: String(data.student.minorCategoryId),
-          departmentId: String(data.student.departmentId),
+          studentName: data.studentName,
+          studentEmail: data.studentEmail,
+          grade: String(data.grade),
+          minorCategoryId: String(data.minorCategoryId),
+          departmentId: String(data.departmentId),
         });
       } catch (err: any) {
         toast.error(err.message || "学生情報の取得に失敗しました");

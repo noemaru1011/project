@@ -1,15 +1,14 @@
-import { Router } from "express";
-import { CategoryService } from "../service/categoryService";
+import { Request, Response } from "express";
+import { CategoryService } from "@/services/categoryService";
 
-const router = Router();
-
-router.get("/", async (req, res) => {
-  try {
-    const categories = await CategoryService.getAllCategories();
-    res.json(categories);
-  } catch (error) {
-    res.status(500).json({ message: "予期せぬエラーが発生しました" });
-  }
-});
-
-export default router;
+export const CategoryController = {
+  async getAllCategories(req: Request, res: Response) {
+    try {
+      const categories = await CategoryService.getAllCategories();
+      res.json(categories);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "予期せぬエラーが発生しました" });
+    }
+  },
+};

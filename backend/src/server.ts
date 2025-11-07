@@ -4,12 +4,12 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import { API_ROUTES } from "./constants/routes";
 import AuthRoutes from "./controllers/Auth";
-import categoryRoutes from "./controllers/categoryController";
-import SubCategoryRoutes from "./controllers/SubCategory";
-import MinorCategoryRoutes from "./controllers/MinorSubCategory";
-import DepartmentRoutes from "./controllers/Department";
-import statusRoutes from "./controllers/Status";
-import studentRoutes from "./controllers/Student";
+import categoryRoutes from "@/routes/categoryRoutes";
+import SubCategoryRoutes from "@/routes/subCategoryRoutes";
+import MinorCategoryRoutes from "@/routes/minorCategoryRoutes";
+import DepartmentRoutes from "@/routes/departmentRoutes";
+import statusRoutes from "@/routes/statusRoutes";
+import studentRoutes from "@/routes/studentRoutes";
 import { authMiddleware } from "./middleware/auth";
 import { csrfMiddleware } from "./middleware/csrf";
 
@@ -48,7 +48,7 @@ app.use(API_ROUTES.SUBCATEGORY, authMiddleware, SubCategoryRoutes);
 app.use(API_ROUTES.MINOR_CATEGORY, authMiddleware, MinorCategoryRoutes);
 app.use(API_ROUTES.DEPARTMENT, authMiddleware, DepartmentRoutes);
 app.use(API_ROUTES.STATUS, authMiddleware, statusRoutes);
-app.use(API_ROUTES.STUDENT, authMiddleware, csrfMiddleware, studentRoutes);
+app.use(API_ROUTES.STUDENT, authMiddleware, studentRoutes);
 
 const PORT = process.env.BACK_PORT;
 app.listen(PORT, () => {

@@ -25,7 +25,7 @@ const StudentView = () => {
       try {
         const data: any = await view(studentId);
         if (!data) throw new Error("学生情報が取得できません");
-        setStudent(data.student);
+        setStudent(data);
       } catch (err: any) {
         toast.error(err.message || "学生情報の取得に失敗しました");
         navigate(ROUTES.Student.INDEX);

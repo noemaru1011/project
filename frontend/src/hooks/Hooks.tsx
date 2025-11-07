@@ -116,6 +116,7 @@ export function Hooks<T, Q = any>(api: ApiMethods<T, Q>) {
       try {
         setLoading(true);
         const result = await api.view(id);
+        console.log(result);
         return result;
       } catch (err: any) {
         throw err;
