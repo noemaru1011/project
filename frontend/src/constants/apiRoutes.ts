@@ -25,7 +25,7 @@ export const API_ROUTES = {
     DELETE: (id: string) => `/api/students/${id}`,
   },
   AUTH: {
-    LOGIN: "/api/auth/login",
-    LOGOUT: "/api/auth/logout",
+    LOGIN: "/api/login",
+    LOGOUT: "/api/logout",
   },
 } as const;

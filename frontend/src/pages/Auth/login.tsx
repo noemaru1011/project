@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import Input from "@/components/elements/Input";
 import Button from "@/components/elements/Button";
 import { Loading } from "@/components/elements/Loading";
-import { validation } from "@shared/schemas/Auth";
+import { validation } from "@shared/schemas/login";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/constants/routes";
@@ -25,13 +25,23 @@ const Login = () => {
 
   const onSubmit = async (data: any) => {
     try {
+      // ここでは email と password だけ送信
       const res: any = await login(data);
-      setCsrfToken(res.csrfToken);
-      sessionStorage.setItem("csrfToken", res.csrfToken);
+
+      // レスポンスに role を含めてもらうとフロントで画面遷移制御可能
+      const { csrfToken, role } = res;
+      setCsrfToken(csrfToken);
+      sessionStorage.setItem("csrfToken", csrfToken);
+
       toast.success("ログインに成功しました！");
-      navigate(ROUTES.HOME);
+
+      // 管理者なら管理者ページ、学生ならホームページ
+      if (role === "admin") {
+        navigate(ROUTES.HOME);
+      } else {
+        navigate(ROUTES.HOME);
+      }
     } catch (err: any) {
-      // Api層では Error(message) をthrowしているのでここでOK
       toast.error(err.message || "ログインに失敗しました。");
     }
   };
@@ -42,20 +52,20 @@ const Login = () => {
         <div className="w-full max-w-md space-y-4">
           <form onSubmit={handleSubmit(onSubmit)}>
             <Input
-              id="studentEmail"
+              id="email"
               type="email"
               label="メールアドレス"
               required
-              error={errors.studentEmail?.message}
-              {...register("studentEmail")}
+              error={errors.email?.message}
+              {...register("email")}
             />
             <Input
               id="studentPassword"
               type="password"
               label="パスワード"
               required
-              error={errors.studentPassword?.message}
-              {...register("studentPassword")}
+              error={errors.password?.message}
+              {...register("password")}
             />
             <Button
               type="submit"

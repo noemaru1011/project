@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { toast } from "react-toastify";
 import { Table } from "@/components/elements/Table";
 import { Loading } from "@/components/elements/Loading";
 import { useCategory } from "@/hooks/CategoryHooks";
@@ -9,15 +8,7 @@ const CategoryIndex = () => {
   const { data: Categories, fetchAll, loading } = useCategory();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await fetchAll();
-      } catch (err: any) {
-        toast.error(err.message || "予期せぬエラーが発生しました");
-      }
-    };
-
-    fetchData();
+    fetchAll();
   }, [fetchAll]);
 
   return (

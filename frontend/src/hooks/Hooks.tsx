@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { toast } from "react-toastify";
 
 type ApiMethods<T, Q> = {
   index?: (query?: Q) => Promise<T[]>;
@@ -12,59 +13,62 @@ export function Hooks<T, Q = any>(api: ApiMethods<T, Q>) {
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState(false);
 
+  /** 🔥 共通エラーハンドリング */
+  const handleError = useCallback((err: any) => {
+    const message = err?.message || "予期せぬエラーが発生しました";
+    toast.error(message);
+  }, []);
+
   // 一覧取得
   const fetchAll = useCallback(async () => {
     if (!api.index) return;
     try {
       setLoading(true);
       const result = await api.index();
-
       setData(result);
     } catch (err: any) {
-      throw err;
+      handleError(err);
     } finally {
       setLoading(false);
     }
-  }, [api]);
+  }, [api, handleError]);
 
-  //検索
+  // 検索
   const fetchData = useCallback(
     async (query?: Q): Promise<T[]> => {
       if (!api.index) return [];
       try {
         setLoading(true);
         const result = await api.index(query);
-
         setData(result);
         return result;
       } catch (err: any) {
-        throw err;
+        handleError(err);
         return [];
       } finally {
         setLoading(false);
       }
     },
-    [api]
+    [api, handleError]
   );
 
   // 登録
   const create = useCallback(
     async (item: Partial<T>) => {
-      if (!api.create) {
-        console.warn("API create 関数が存在しません");
-        return;
-      }
-      setLoading(true);
+      if (!api.create) return;
       try {
+        setLoading(true);
         const newItem = await api.create(item);
-
         setData((prev) => [...prev, newItem]);
+        toast.success("登録が完了しました！✅");
         return newItem;
+      } catch (err: any) {
+        handleError(err);
       } finally {
         setLoading(false);
       }
     },
-    [api]
+    [api, handleError]
   );
 
   // 更新
@@ -78,17 +82,17 @@ export function Hooks<T, Q = any>(api: ApiMethods<T, Q>) {
       try {
         setLoading(true);
         const updated = await api.update(id, data);
-
         setData((prev) =>
           prev.map((d: any) => (String(d[keyField]) === id ? updated : d))
         );
+        toast.success("更新しました！✏️");
       } catch (err: any) {
-        throw err;
+        handleError(err);
       } finally {
         setLoading(false);
       }
     },
-    [api]
+    [api, handleError]
   );
 
   // 削除
@@ -98,33 +102,32 @@ export function Hooks<T, Q = any>(api: ApiMethods<T, Q>) {
       try {
         setLoading(true);
         await api.delete(id);
-        if (keyField) {
-          setData((prev) => prev.filter((d) => String(d[keyField]) !== id));
-        }
+        setData((prev) => prev.filter((d) => String(d[keyField]) !== id));
+        toast.success("削除しました🗑️");
       } catch (err: any) {
-        throw err;
+        handleError(err);
       } finally {
         setLoading(false);
       }
     },
-    [api]
+    [api, handleError]
   );
 
+  // 詳細取得
   const view = useCallback(
     async (id: string): Promise<T | undefined> => {
-      if (!api.view) return undefined;
+      if (!api.view) return;
       try {
         setLoading(true);
         const result = await api.view(id);
-        console.log(result);
         return result;
       } catch (err: any) {
-        throw err;
+        handleError(err);
       } finally {
         setLoading(false);
       }
     },
-    [api]
+    [api, handleError]
   );
 
   return {

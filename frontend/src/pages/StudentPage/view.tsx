@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import type { Student } from "@shared/schemas/Student";
+import type { Student } from "@shared/schemas/student";
 import Input from "@/components/elements/Input";
 import Select from "@/components/elements/Select";
 import Button from "@/components/elements/Button";
@@ -61,10 +61,10 @@ const StudentView = () => {
             disabled
           />
           <Input
-            id="studentEmail"
+            id="email"
             label="メールアドレス"
             type="email"
-            value={student ? student.studentEmail : ""}
+            value={student ? student.email : ""}
             disabled
           />
           <Select

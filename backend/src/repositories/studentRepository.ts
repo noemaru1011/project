@@ -33,7 +33,7 @@ export const StudentRepository = {
         studentName: true,
         grade: true,
         departmentId: true,
-        studentEmail: true,
+        email: true,
         minorCategoryId: true,
       },
     });
@@ -41,7 +41,7 @@ export const StudentRepository = {
 
   async createStudent(data: {
     studentName: string;
-    studentEmail: string;
+    email: string;
     departmentId: number;
     minorCategoryId: number;
     grade: number;
@@ -51,7 +51,7 @@ export const StudentRepository = {
       const student = await tx.student.create({
         data: {
           studentName: data.studentName,
-          studentEmail: data.studentEmail,
+          email: data.email,
           departmentId: data.departmentId,
           minorCategoryId: data.minorCategoryId,
           grade: data.grade,

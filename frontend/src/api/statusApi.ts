@@ -1,5 +1,5 @@
 import { Api } from "./Api";
-import type { Status } from "@shared/schemas/Status";
+import type { Status } from "@shared/schemas/status";
 import { API_ROUTES } from "@/constants/apiRoutes";
 
 export const StatusAPi = {

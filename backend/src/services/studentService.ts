@@ -17,7 +17,7 @@ export const StudentService = {
 
   async createStudent(data: {
     studentName: string;
-    studentEmail: string;
+    email: string;
     departmentId: number;
     minorCategoryId: number;
     grade: number;
@@ -30,7 +30,7 @@ export const StudentService = {
       password: hashedPassword,
     });
     // メール送信
-    await sendAccountEmail(data.studentEmail, plainPassword);
+    await sendAccountEmail(data.email, plainPassword);
     return student;
   },
 

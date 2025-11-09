@@ -32,6 +32,7 @@ export async function Api<T>(path: string, options?: RequestInit): Promise<T> {
     // クライアント側エラー（権限なし）
     if (res.status == 403) {
       const message = (data as any).error || "権限がありません";
+      NavigationService.navigate(ROUTES.Error.FORBIDDEN);
       throw new Error(message);
     }
     // クライアント側エラー（未ログイン、トークン切れ、無効なトークン）

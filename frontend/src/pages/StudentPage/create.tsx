@@ -7,7 +7,7 @@ import Button from "@/components/elements/Button";
 import { gradeOptions } from "@/constants/grade";
 import { minorCategoryOptions } from "@/constants/minorCategory";
 import { departmentOptions } from "@/constants/department";
-import validation from "@shared/schemas/Student";
+import validation from "@shared/schemas/student";
 import { useStudent } from "@/hooks/StudentHooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loading } from "@/components/elements/Loading";
@@ -75,12 +75,12 @@ const StudentCreate = () => {
               {...register("minorCategoryId")}
             />
             <Input
-              id="studentEmail"
+              id="email"
               type="email"
               label="メールアドレス"
               required
-              error={errors.studentEmail?.message}
-              {...register("studentEmail")}
+              error={errors.email?.message}
+              {...register("email")}
             />
             <Select
               id="department"

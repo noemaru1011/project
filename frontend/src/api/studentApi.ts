@@ -1,5 +1,5 @@
 import { Api } from "./Api";
-import type { Student, StudentQuery } from "@shared/schemas/Student";
+import type { Student, StudentQuery } from "@shared/schemas/student";
 import { API_ROUTES } from "@/constants/apiRoutes";
 
 export const StudentApi = {

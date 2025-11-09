@@ -15,7 +15,7 @@ const validation = z.object({
       message: "学年は1〜4の範囲で指定してください。",
     }),
 
-  studentEmail: z
+  email: z
     .string()
     .nonempty("メールアドレスは必須です。")
     .email("有効なメールアドレスを入力してください"),

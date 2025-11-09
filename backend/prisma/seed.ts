@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
@@ -78,6 +79,16 @@ async function main() {
       create: status,
     });
   }
+
+  const plainPassword = "admin123";
+  const hashedPassword = await bcrypt.hash(plainPassword, 10);
+
+  await prisma.admin.create({
+    data: {
+      email: "admin@example.com",
+      password: hashedPassword,
+    },
+  });
 
   console.log("✅ Seed finished!");
 }

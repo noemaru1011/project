@@ -2,16 +2,18 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import session from "express-session";
-import { API_ROUTES } from "./constants/routes";
-import AuthRoutes from "./controllers/Auth";
+import { API_ROUTES } from "@/constants/routes";
+import loginRoutes from "@/routes/loginRoutes";
+import logoutRoutes from "@/routes/logoutRoutes";
 import categoryRoutes from "@/routes/categoryRoutes";
 import SubCategoryRoutes from "@/routes/subCategoryRoutes";
 import MinorCategoryRoutes from "@/routes/minorCategoryRoutes";
 import DepartmentRoutes from "@/routes/departmentRoutes";
 import statusRoutes from "@/routes/statusRoutes";
 import studentRoutes from "@/routes/studentRoutes";
-import { authMiddleware } from "./middleware/auth";
-import { csrfMiddleware } from "./middleware/csrf";
+import { securityMiddleware } from "@/middleware/securityMiddleware";
+import { authMiddleware, requireRole } from "@/middleware/authMiddleware";
+import { csrfMiddleware } from "@/middleware/csrfMiddleware";
 
 const app = express();
 app.use(
@@ -21,6 +23,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(securityMiddleware());
 app.use(cookieParser());
 app.use(
   session({
@@ -40,15 +43,41 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // 認証不要
-app.use(API_ROUTES.AUTH, AuthRoutes);
+app.use(API_ROUTES.LOGIN, loginRoutes);
+app.use(API_ROUTES.LOGOUT, logoutRoutes);
 
-// 認証必須
-app.use(API_ROUTES.CATEGORY, authMiddleware, categoryRoutes);
-app.use(API_ROUTES.SUBCATEGORY, authMiddleware, SubCategoryRoutes);
-app.use(API_ROUTES.MINOR_CATEGORY, authMiddleware, MinorCategoryRoutes);
-app.use(API_ROUTES.DEPARTMENT, authMiddleware, DepartmentRoutes);
-app.use(API_ROUTES.STATUS, authMiddleware, statusRoutes);
-app.use(API_ROUTES.STUDENT, authMiddleware, studentRoutes);
+// 認証必須かつ管理者専用
+app.use(
+  API_ROUTES.CATEGORY,
+  authMiddleware,
+  requireRole("ADMIN"),
+  categoryRoutes
+);
+app.use(
+  API_ROUTES.SUBCATEGORY,
+  authMiddleware,
+  requireRole("ADMIN"),
+  SubCategoryRoutes
+);
+app.use(
+  API_ROUTES.MINOR_CATEGORY,
+  authMiddleware,
+  requireRole("ADMIN"),
+  MinorCategoryRoutes
+);
+app.use(
+  API_ROUTES.DEPARTMENT,
+  authMiddleware,
+  requireRole("ADMIN"),
+  DepartmentRoutes
+);
+app.use(API_ROUTES.STATUS, authMiddleware, requireRole("ADMIN"), statusRoutes);
+app.use(
+  API_ROUTES.STUDENT,
+  authMiddleware,
+  requireRole("ADMIN"),
+  studentRoutes
+);
 
 const PORT = process.env.BACK_PORT;
 app.listen(PORT, () => {

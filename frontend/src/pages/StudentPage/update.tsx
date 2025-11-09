@@ -13,7 +13,7 @@ import { minorCategoryOptions } from "@/constants/minorCategory";
 import { departmentOptions } from "@/constants/department";
 import { ROUTES } from "@/constants/routes";
 import { useStudent } from "@/hooks/StudentHooks";
-import validation from "@shared/schemas/Student";
+import validation from "@shared/schemas/student";
 
 const StudentUpdate = () => {
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ const StudentUpdate = () => {
         if (!data) throw new Error("学生情報が取得できません");
         reset({
           studentName: data.studentName,
-          studentEmail: data.studentEmail,
+          email: data.email,
           grade: String(data.grade),
           minorCategoryId: String(data.minorCategoryId),
           departmentId: String(data.departmentId),
@@ -104,12 +104,12 @@ const StudentUpdate = () => {
               {...register("minorCategoryId")}
             />
             <Input
-              id="studentEmail"
+              id="email"
               type="email"
               label="メールアドレス"
               disabled
-              error={errors.studentEmail?.message}
-              {...register("studentEmail")}
+              error={errors.email?.message}
+              {...register("email")}
             />
             <Select
               id="department"

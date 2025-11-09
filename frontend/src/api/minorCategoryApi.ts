@@ -1,5 +1,5 @@
 import { Api } from "./Api";
-import type { MinorCategory } from "@shared/schemas/MinorCategory";
+import type { MinorCategory } from "@shared/schemas/minorCategory";
 import { API_ROUTES } from "@/constants/apiRoutes";
 
 export const MinorCategoryApi = {

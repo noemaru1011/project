@@ -1,12 +1,10 @@
 import { Api } from "./Api";
-import type { Auth } from "@shared/schemas/Auth";
 import { API_ROUTES } from "@/constants/apiRoutes";
 
 export const AuthApi = {
-  login: (data: Partial<Auth>) =>
-    Api<Auth>(API_ROUTES.AUTH.LOGIN, {
+  logout: () =>
+    Api<void>(API_ROUTES.AUTH.LOGOUT, {
       method: "POST",
       credentials: "include",
-      body: JSON.stringify(data),
     }),
 };

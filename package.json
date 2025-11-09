@@ -23,6 +23,7 @@
     "zod": "^4.1.12"
   },
   "dependencies": {
-    "@hookform/resolvers": "^5.2.2"
+    "@hookform/resolvers": "^5.2.2",
+    "helmet": "^8.1.0"
   }
 }

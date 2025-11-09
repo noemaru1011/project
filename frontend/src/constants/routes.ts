@@ -43,9 +43,9 @@ export const ROUTES = {
 
   //認証
   Auth: {
-    LOGIN: "/Auth/Login/",
-    LOGOUT: "/Auth/Logout/",
-    CHECK_AUTH: "/Auth/Check",
+    LOGIN: "/Login/",
+    LOGOUT: "/Logout/",
+    CHECK_AUTH: "/Check",
   },
 
   //エラーページ

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { AuthApi } from "@/api/authApi";
-import type { Auth } from "@shared/schemas/Auth";
+import { AuthApi } from "@/api/loginApi";
+import type { Auth } from "@shared/schemas/login";
 
 export function useAuth() {
   const [user, setUser] = useState<Partial<Auth> | null>(null);

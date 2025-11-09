@@ -1,5 +1,5 @@
 import { Api } from "./Api";
-import type { Category } from "@shared/schemas/Category";
+import type { Category } from "@shared/schemas/category";
 import { API_ROUTES } from "@/constants/apiRoutes";
 
 export const CategoryApi = {
