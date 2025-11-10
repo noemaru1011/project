@@ -61,4 +61,18 @@ export const StudentController = {
       res.status(500).json({ message: "予期せぬエラーが発生しました" });
     }
   },
+
+  async deleteStudet(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      if (!id) {
+        return res.status(404).json({ message: "学生が見つかりません" });
+      }
+      await StudentService.deleteStudent(id);
+      res.status(201).json({ message: "削除完了" });
+    } catch (err: any) {
+      console.error(err);
+      res.status(500).json({ message: "予期せぬエラーが発生しました" });
+    }
+  },
 };

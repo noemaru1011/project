@@ -46,4 +46,9 @@ export const StudentService = {
     const student = await StudentRepository.updateStudent(data, studentId);
     return student;
   },
+
+  async deleteStudent(studentId: string) {
+    const student = await StudentRepository.deleteStudent(studentId);
+    return student;
+  },
 };

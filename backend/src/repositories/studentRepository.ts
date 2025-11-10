@@ -95,4 +95,17 @@ export const StudentRepository = {
       },
     });
   },
+
+  async deleteStudent(studentId: string) {
+    return await prisma.student.update({
+      where: {
+        studentId,
+        deleteFlag: false,
+      },
+      data: {
+        deleteFlag: true,
+        updatedAt: new Date(),
+      },
+    });
+  },
 };
