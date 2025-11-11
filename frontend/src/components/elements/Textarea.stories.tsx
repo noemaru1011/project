@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import React from "react";
-import Textarea from "./Textarea";
+import { Textarea } from "./Textarea";
 
 const meta: Meta<typeof Textarea> = {
   component: Textarea,

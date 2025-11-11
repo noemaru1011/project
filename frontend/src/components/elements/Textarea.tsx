@@ -11,7 +11,7 @@ type Props = {
   error?: string;
 };
 
-const TextArea = React.forwardRef<HTMLTextAreaElement, Props>(
+export const Textarea = React.forwardRef<HTMLTextAreaElement, Props>(
   ({ id, label, error, required, disabled, value, onChange, onBlur }, ref) => {
     return (
       <div className="flex flex-col space-y-1">
@@ -36,5 +36,3 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, Props>(
     );
   }
 );
-
-export default TextArea;

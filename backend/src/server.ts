@@ -46,6 +46,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(API_ROUTES.LOGIN, loginRoutes);
 app.use(API_ROUTES.LOGOUT, logoutRoutes);
 
+//認証必須
+app.use(API_ROUTES.LOGOUT, logoutRoutes);
+
 // 認証必須かつ管理者専用
 app.use(
   API_ROUTES.CATEGORY,

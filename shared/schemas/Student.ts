@@ -1,7 +1,9 @@
 import { z } from "zod";
 
 const validMinorCategoryIds = Array.from({ length: 48 }, (_, i) => i + 1);
-const validation = z.object({
+export const validation = z.object({
+  studentId: z.string(),
+
   studentName: z
     .string()
     .nonempty("学生名は必須です。")
@@ -12,7 +14,7 @@ const validation = z.object({
     .nonempty("学年は必須です。")
     .transform((val) => Number(val))
     .refine((val) => [1, 2, 3, 4].includes(val), {
-      message: "学年は1〜4の範囲で指定してください。",
+      message: "学年は1,2,3,4の範囲で指定してください。",
     }),
 
   email: z
@@ -37,7 +39,6 @@ const validation = z.object({
     }),
 });
 
-export default validation;
 export type Student = z.infer<typeof validation>;
 
 export const studentQuery = z.object({

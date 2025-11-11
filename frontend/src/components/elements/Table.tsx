@@ -1,15 +1,15 @@
-import Button from "@/components/elements/Button";
+import type { DisplayLabels } from "@/types/ui";
 
 type Props<T> = {
-  labels: Record<string, string | object>;
+  labels: DisplayLabels;
   data: T[];
-  keyField: string;
-  showActions?: boolean;
+  keyField: keyof T & string;
 };
 
+// ─────────────────────────────
 // ネストされたオブジェクトをドット区切りキーで展開
-//toDO 要勉強
-function flattenObject(obj: any, prefix = "", res: any = {}): any {
+// ─────────────────────────────
+function flattenObject(obj: any, prefix = "", res: Record<string, any> = {}) {
   for (const key in obj) {
     if (!Object.prototype.hasOwnProperty.call(obj, key)) continue;
 
@@ -25,14 +25,14 @@ function flattenObject(obj: any, prefix = "", res: any = {}): any {
   return res;
 }
 
-// labels も data もネストを解決して使う
-export function Table<T extends Record<string, string | object>>({
+// ─────────────────────────────
+// Table 本体
+// ─────────────────────────────
+export function Table<T extends Record<string, any>>({
   labels,
   data,
   keyField,
-  showActions = true,
 }: Props<T>) {
-  // ラベルをフラット化して表示名マップを作る
   const flatLabels = flattenObject(labels);
   const labelKeys = Object.keys(flatLabels);
 
@@ -47,14 +47,13 @@ export function Table<T extends Record<string, string | object>>({
                   {flatLabels[key]}
                 </th>
               ))}
-              {showActions && (
-                <th className="p-2 text-center w-[240px]">操作</th>
-              )}
             </tr>
           </thead>
+
           <tbody>
             {data.map((row) => {
               const flatRow = flattenObject(row);
+
               return (
                 <tr
                   key={String(row[keyField])}
@@ -62,17 +61,9 @@ export function Table<T extends Record<string, string | object>>({
                 >
                   {labelKeys.map((key) => (
                     <td key={key} className="p-2 text-center">
-                      {flatRow[key] !== undefined ? String(flatRow[key]) : ""}
+                      {flatRow[key] ?? ""}
                     </td>
                   ))}
-
-                  {showActions && (
-                    <td className="p-2 flex justify-center gap-2">
-                      <Button variant="Read" />
-                      <Button variant="Update" />
-                      <Button variant="Delete" />
-                    </td>
-                  )}
                 </tr>
               );
             })}

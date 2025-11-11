@@ -9,7 +9,7 @@ type Props = {
   disabled?: boolean;
 } & React.InputHTMLAttributes<HTMLInputElement>; // ← react-hook-form用
 
-const Checkbox = React.forwardRef<HTMLInputElement, Props>(
+export const Checkbox = React.forwardRef<HTMLInputElement, Props>(
   ({ id, label, error, checked, required, disabled, ...rest }, ref) => {
     return (
       <div className="flex items-center space-x-2">
@@ -31,7 +31,3 @@ const Checkbox = React.forwardRef<HTMLInputElement, Props>(
     );
   }
 );
-
-Checkbox.displayName = "Checkbox";
-
-export default Checkbox;

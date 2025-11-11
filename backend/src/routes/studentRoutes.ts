@@ -1,7 +1,6 @@
 import { Router } from "express";
-import { PrismaClient } from "@prisma/client";
 import { validateBody } from "@/middleware/validateMiddleware";
-import validation from "@shared/schemas/Student";
+import { validation } from "@shared/schemas/Student";
 import { StudentController } from "@/controllers/studentController";
 
 const router = Router();

@@ -1,33 +1,21 @@
 import { useEffect } from "react";
-import { toast } from "react-toastify";
 import { Table } from "@/components/elements/Table";
 import { Loading } from "@/components/elements/Loading";
-import { useStudent } from "@/hooks/StudentHooks";
+import { Hooks } from "@/hooks/hooks";
 import { StudentLabels } from "@/types/student";
+import { StudentApi } from "@/api/studentApi";
+import type { Student } from "@shared/schemas/student";
 
 const StatusIndex = () => {
-  const { data: student, fetchAll, loading } = useStudent();
+  const { data: student, fetchAll, loading } = Hooks<Student>(StudentApi);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await fetchAll();
-      } catch (err: any) {
-        toast.error(err.message || "予期せぬエラーが発生しました");
-      }
-    };
-
-    fetchData();
+    fetchAll();
   }, [fetchAll]);
 
   return (
     <Loading loading={loading}>
-      <Table
-        labels={StudentLabels}
-        data={student}
-        keyField="studentId"
-        showActions={true}
-      />
+      <Table labels={StudentLabels} data={student} keyField="studentId" />
     </Loading>
   );
 };

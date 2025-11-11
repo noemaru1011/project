@@ -1,3 +1,5 @@
-export const DepartmentLabels: Record<string, string> = {
+import type { DisplayLabels } from "@/types/ui";
+
+export const DepartmentLabels: DisplayLabels = {
   departmentName: "学科名",
 };

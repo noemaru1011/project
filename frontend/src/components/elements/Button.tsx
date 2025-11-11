@@ -18,7 +18,13 @@ const VARIANT_STYLES = {
   Back: { bg: "bg-blue-400", label: "一覧に戻る" },
 } as const;
 
-const Button = ({ variant, disabled, onClick, type, className }: Props) => {
+export const Button = ({
+  variant,
+  disabled,
+  onClick,
+  type,
+  className,
+}: Props) => {
   const { bg, label } = VARIANT_STYLES[variant];
 
   return (
@@ -32,5 +38,3 @@ const Button = ({ variant, disabled, onClick, type, className }: Props) => {
     </button>
   );
 };
-
-export default Button;

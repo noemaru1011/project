@@ -1,5 +1,3 @@
-import { ROUTES } from "@/constants/routes";
-import { NavigationService } from "@/utils/NavigationService";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 /**
@@ -20,65 +18,29 @@ export async function Api<T>(path: string, options?: RequestInit): Promise<T> {
       ...options,
     });
 
-    // レスポンスを安全にJSON化
     const data = await res.json().catch(() => ({}));
-    console.log(data);
 
-    // サーバー側エラー
-    if (res.status >= 500) {
-      const message = (data as any).error || "予期せぬエラーが発生しました";
-      throw new Error(message);
-    }
-    // クライアント側エラー（権限なし）
-    if (res.status == 403) {
-      const message = (data as any).error || "権限がありません";
-      NavigationService.navigate(ROUTES.Error.FORBIDDEN);
-      throw new Error(message);
-    }
-    // クライアント側エラー（未ログイン、トークン切れ、無効なトークン）
-    if (res.status === 401) {
-      const { code, message } = data as any;
-      console.log(code);
-
-      // 状況に応じて挙動を分岐
-      switch (code) {
-        case "INVALID_CREDENTIALS":
-          // → メールアドレスかパスワードが違います
-          throw new Error(message || "メールアドレスかパスワードが違います");
-
-        case "TOKEN_EXPIRED":
-          // → Cookie／トークン切れ
-          NavigationService.navigate(ROUTES.Auth.LOGIN);
-          throw new Error(message || "ログインしてください");
-
-        case "INVALID_TOKEN":
-          // → 不正トークンや改ざんなど
-          NavigationService.navigate(ROUTES.Auth.LOGIN);
-          throw new Error(message || "無効なトークンです");
-
-        default:
-          // → その他不明な401
-          NavigationService.navigate(ROUTES.Auth.LOGIN);
-          throw new Error(message || "予期せぬエラーが発生しました");
-      }
-    }
-
+    // 通信成功でも、エラーコード付きなら throw する
     if (!res.ok) {
-      const message = (data as any).error || "予期せぬエラーが発生しました";
-      throw new Error(message);
+      throw {
+        status: res.status,
+        code: data.code,
+        message: data.error || data.message || "エラーが発生しました",
+      };
     }
 
-    return data;
-  } catch (error) {
-    let message = "予期せぬエラーが発生しました";
-    if (error instanceof Error) {
-      if (error.message === "Failed to fetch") {
-        message =
-          "サーバーに接続できません。ネットワークやサーバーの状態を確認してください";
-      } else {
-        message = error.message;
-      }
+    return data as T;
+  } catch (err: any) {
+    // fetch レベルの接続エラー
+    if (err instanceof TypeError) {
+      throw {
+        status: 0,
+        code: "NETWORK_ERROR",
+        message: "サーバーに接続できません。ネットワークをご確認ください。",
+      };
     }
-    throw new Error(message);
+
+    // すでに成形済みのオブジェクトならそのまま返す
+    throw err;
   }
 }

@@ -10,7 +10,7 @@ type Props = {
   disabled?: boolean;
 } & React.InputHTMLAttributes<HTMLInputElement>; // ← react-hook-form用
 
-const Input = React.forwardRef<HTMLInputElement, Props>(
+export const Input = React.forwardRef<HTMLInputElement, Props>(
   ({ id, label, type, error, required, disabled, ...rest }, ref) => {
     return (
       <div className="flex flex-col space-y-1">
@@ -37,5 +37,3 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
     );
   }
 );
-
-export default Input;

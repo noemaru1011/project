@@ -1,21 +1,22 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import type { Student } from "@shared/schemas/student";
-import Input from "@/components/elements/Input";
-import Select from "@/components/elements/Select";
-import Button from "@/components/elements/Button";
+import { Input } from "@/components/elements/Input";
+import { Select } from "@/components/elements/Select";
+import { Button } from "@/components/elements/Button";
 import { gradeOptions } from "@/constants/grade";
 import { minorCategoryOptions } from "@/constants/minorCategory";
 import { departmentOptions } from "@/constants/department";
-import { useStudent } from "@/hooks/StudentHooks";
+import { Hooks } from "@/hooks/hooks";
 import { Loading } from "@/components/elements/Loading";
 import { ROUTES } from "@/constants/routes";
 import { toast } from "react-toastify";
+import { StudentApi } from "@/api/studentApi";
 
 const StudentView = () => {
   const navigate = useNavigate();
   const { studentId } = useParams<{ studentId: string }>();
-  const { view, loading } = useStudent();
+  const { view, loading } = Hooks<Student>(StudentApi);
   const [student, setStudent] = useState<Student | null>(null);
 
   useEffect(() => {

@@ -4,21 +4,23 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import Input from "@/components/elements/Input";
-import Select from "@/components/elements/Select";
-import Button from "@/components/elements/Button";
+import { Input } from "@/components/elements/Input";
+import { Select } from "@/components/elements/Select";
+import { Button } from "@/components/elements/Button";
 import { Loading } from "@/components/elements/Loading";
 import { gradeOptions } from "@/constants/grade";
 import { minorCategoryOptions } from "@/constants/minorCategory";
 import { departmentOptions } from "@/constants/department";
 import { ROUTES } from "@/constants/routes";
-import { useStudent } from "@/hooks/StudentHooks";
-import validation from "@shared/schemas/student";
+import { Hooks } from "@/hooks/hooks";
+import { validation } from "@shared/schemas/student";
+import { StudentApi } from "@/api/studentApi";
+import type { Student } from "@shared/schemas/student";
 
 const StudentUpdate = () => {
   const navigate = useNavigate();
   const { studentId } = useParams<{ studentId: string }>();
-  const { view, update, loading } = useStudent();
+  const { view, update, loading } = Hooks<Student>(StudentApi);
 
   const {
     register,

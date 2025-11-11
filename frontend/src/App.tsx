@@ -20,10 +20,11 @@ import SubCategoryIndex from "@/pages/SubCategoryPage";
 import MinorCategoryIndex from "@/pages/MInorCategoryPage";
 import DepartmentIndex from "@/pages/DepartmentPage";
 import StatusIndex from "@/pages/StatusPage";
-import StudnetIndex from "./pages/StudentPage";
+import StudnetIndex from "@/pages/StudentPage";
 import StudentCreate from "@/pages/StudentPage/create";
-import StudentUpdate from "./pages/StudentPage/update";
-import StudentView from "./pages/StudentPage/view";
+import StudentUpdate from "@/pages/StudentPage/update";
+import StudentView from "@/pages/StudentPage/view";
+import StudentChange from "@/pages/StudentPage/change";
 
 import { NotFound } from "@/pages/ErrorPage/NotFound";
 import { ServerError } from "@/pages/ErrorPage/ServerError";
@@ -57,6 +58,7 @@ function NavigatorProvider() {
         <Route path={ROUTES.Student.CREATE} element={<StudentCreate />} />
         <Route path={ROUTES.Student.UPDATE()} element={<StudentUpdate />} />
         <Route path={ROUTES.Student.VIEW()} element={<StudentView />} />
+        <Route path={ROUTES.Student.CHANGE} element={<StudentChange />} />
 
         {/* エラー画面 */}
         <Route path={ROUTES.Status.INDEX} element={<StatusIndex />} />

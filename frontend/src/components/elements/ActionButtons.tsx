@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Button from "@/components/elements/Button";
+import { Button } from "@/components/elements/Button";
 import { toast } from "react-toastify";
 
 // props で keyField と row データを受け取る

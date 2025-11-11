@@ -1,21 +1,22 @@
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import Input from "@/components/elements/Input";
-import Select from "@/components/elements/Select";
-import Button from "@/components/elements/Button";
+import { Input } from "@/components/elements/Input";
+import { Select } from "@/components/elements/Select";
+import { Button } from "@/components/elements/Button";
 import { gradeOptions } from "@/constants/grade";
 import { minorCategoryOptions } from "@/constants/minorCategory";
 import { departmentOptions } from "@/constants/department";
-import validation from "@shared/schemas/student";
-import { useStudent } from "@/hooks/StudentHooks";
+import { validation } from "@shared/schemas/student";
+import { Hooks } from "@/hooks/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loading } from "@/components/elements/Loading";
 import { ROUTES } from "@/constants/routes";
+import { StudentApi } from "@/api/studentApi";
+import type { Student } from "@shared/schemas/student";
 
 const StudentCreate = () => {
   const navigate = useNavigate();
-  const { create, loading } = useStudent();
+  const { create, loading } = Hooks<Student>(StudentApi);
 
   const {
     register,
@@ -27,22 +28,14 @@ const StudentCreate = () => {
 
   // 送信処理
   const onSubmit = async (data: any) => {
-    try {
-      const payload = {
-        ...data,
-        grade: String(data.grade),
-        departmentId: String(data.departmentId),
-        minorCategoryId: String(data.minorCategoryId),
-      };
-      await create(payload);
-      toast.success("登録に成功しました！");
-      setTimeout(() => navigate(ROUTES.Student.INDEX), 1000);
-    } catch (err: any) {
-      toast.error(
-        "登録に失敗しました：" +
-          (err?.message || "予期せぬエラーが発生しました")
-      );
-    }
+    const payload = {
+      ...data,
+      grade: String(data.grade),
+      departmentId: String(data.departmentId),
+      minorCategoryId: String(data.minorCategoryId),
+    };
+    await create(payload);
+    setTimeout(() => navigate(ROUTES.Student.INDEX), 1000);
   };
 
   return (

@@ -33,7 +33,7 @@ export const ROUTES = {
     UPDATE: (studentId = ":studentId") => `/Student/Update/${studentId}`,
     VIEW: (studentId = ":studentId") => `/Student/View/${studentId}`,
     DELETE: (studentId = ":studentId") => `/Student/Delete/${studentId}`,
-    CHANGE: (studentId = ":studentId") => `/Student/Change/${studentId}`,
+    CHANGE: "/Student/Change/",
   },
 
   //事故一覧

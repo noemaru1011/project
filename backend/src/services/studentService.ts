@@ -1,4 +1,3 @@
-import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { StudentRepository } from "@/repositories/studentRepository";
 import { generatePassword } from "@/utils/generatePassword";

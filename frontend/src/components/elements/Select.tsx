@@ -10,7 +10,7 @@ type Props = {
   error?: string;
 } & React.SelectHTMLAttributes<HTMLSelectElement>; // ← react-hook-form用
 
-const Select = React.forwardRef<HTMLSelectElement, Props>(
+export const Select = React.forwardRef<HTMLSelectElement, Props>(
   ({ id, label, options, required, disabled, error, ...rest }, ref) => {
     return (
       <div className="flex flex-col space-y-1">
@@ -42,5 +42,3 @@ const Select = React.forwardRef<HTMLSelectElement, Props>(
     );
   }
 );
-
-export default Select;

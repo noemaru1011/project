@@ -9,7 +9,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const HeaderOptions: Option[] = [
   { value: ROUTES.HOME, label: "メインページへ" },
   { value: ROUTES.History.INDEX, label: "事故一覧" },
-  { value: ROUTES.Student.CREATE, label: "パスワード変更" },
+  { value: ROUTES.Student.CHANGE, label: "パスワード変更" },
   { value: `${API_BASE_URL}${API_ROUTES.AUTH.LOGOUT}`, label: "ログアウト" },
 ];
 

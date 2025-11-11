@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
-import Input from "@/components/elements/Input";
-import Button from "@/components/elements/Button";
+import { Input } from "@/components/elements/Input";
+import { Button } from "@/components/elements/Button";
 import { Loading } from "@/components/elements/Loading";
 import { validation } from "@shared/schemas/login";
 import { zodResolver } from "@hookform/resolvers/zod";

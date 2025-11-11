@@ -1,11 +1,17 @@
 import { useEffect } from "react";
 import { Table } from "@/components/elements/Table";
 import { Loading } from "@/components/elements/Loading";
-import { useMinorCategory } from "@/hooks/MinorCategoryHooks";
+import { Hooks } from "@/hooks/hooks";
 import { MinorCategoryLabels } from "@/types/minorCategory";
+import { MinorCategoryApi } from "@/api/minorCategoryApi";
+import type { MinorCategory } from "@shared/schemas/minorCategory";
 
 const MinorCategoryIndex = () => {
-  const { data: MinorCategories, fetchAll, loading } = useMinorCategory();
+  const {
+    data: MinorCategories,
+    fetchAll,
+    loading,
+  } = Hooks<MinorCategory>(MinorCategoryApi);
 
   useEffect(() => {
     fetchAll();
@@ -17,7 +23,6 @@ const MinorCategoryIndex = () => {
         labels={MinorCategoryLabels}
         data={MinorCategories}
         keyField="minorCategoryId"
-        showActions={false}
       />
     </Loading>
   );

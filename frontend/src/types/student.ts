@@ -1,5 +1,9 @@
-export const StudentLabels: Record<string, string | object> = {
+import type { DisplayLabels } from "@/types/ui";
+
+export const StudentLabels: DisplayLabels = {
   studentName: "学生名",
   grade: "学年",
-  minorCategory: { minorCategoryName: "小部類名" },
+  minorCategory: {
+    minorCategoryName: "小部類名",
+  },
 };
