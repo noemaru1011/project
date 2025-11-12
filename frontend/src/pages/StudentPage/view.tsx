@@ -7,16 +7,16 @@ import { Button } from "@/components/elements/Button";
 import { gradeOptions } from "@/constants/grade";
 import { minorCategoryOptions } from "@/constants/minorCategory";
 import { departmentOptions } from "@/constants/department";
-import { Hooks } from "@/hooks/hooks";
+import { useCrud } from "@/hooks/useCrud";
 import { Loading } from "@/components/elements/Loading";
 import { ROUTES } from "@/constants/routes";
 import { toast } from "react-toastify";
 import { StudentApi } from "@/api/studentApi";
 
-const StudentView = () => {
+export const StudentView = () => {
   const navigate = useNavigate();
   const { studentId } = useParams<{ studentId: string }>();
-  const { view, loading } = Hooks<Student>(StudentApi);
+  const { view, loading } = useCrud<Student>(StudentApi);
   const [student, setStudent] = useState<Student | null>(null);
 
   useEffect(() => {
@@ -87,5 +87,3 @@ const StudentView = () => {
     </Loading>
   );
 };
-
-export default StudentView;

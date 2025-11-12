@@ -11,6 +11,7 @@ import MinorCategoryRoutes from "@/routes/minorCategoryRoutes";
 import DepartmentRoutes from "@/routes/departmentRoutes";
 import statusRoutes from "@/routes/statusRoutes";
 import studentRoutes from "@/routes/studentRoutes";
+import passwordRoutes from "@/routes/passwordRoutes";
 import { securityMiddleware } from "@/middleware/securityMiddleware";
 import { authMiddleware, requireRole } from "@/middleware/authMiddleware";
 import { csrfMiddleware } from "@/middleware/csrfMiddleware";
@@ -47,7 +48,7 @@ app.use(API_ROUTES.LOGIN, loginRoutes);
 app.use(API_ROUTES.LOGOUT, logoutRoutes);
 
 //認証必須
-app.use(API_ROUTES.LOGOUT, logoutRoutes);
+app.use(API_ROUTES.PASSWORD, authMiddleware, passwordRoutes);
 
 // 認証必須かつ管理者専用
 app.use(

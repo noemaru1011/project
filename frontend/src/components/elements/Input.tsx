@@ -29,7 +29,7 @@ export const Input = React.forwardRef<HTMLInputElement, Props>(
           className={`border-b focus:outline-none focus:border-b-2 focus:border-indigo-500 disabled:bg-gray-100 disabled:text-gray-400
             ${error ? "border-red-500" : "border-gray-300"}`}
           autoComplete="off"
-          {...rest} // registerのonChange, onBlur, name, valueがここに入る
+          {...rest}
         />
 
         {error && <p className="text-red-500 text-sm ml-1">{error}</p>}

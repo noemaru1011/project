@@ -7,7 +7,6 @@ export const StudentController = {
       const students = await StudentService.getAllStudents();
       res.json(students);
     } catch (error) {
-      console.error(error);
       res.status(500).json({ message: "予期せぬエラーが発生しました" });
     }
   },
@@ -26,7 +25,6 @@ export const StudentController = {
 
       res.json(student);
     } catch (error) {
-      console.error(error);
       res.status(500).json({ message: "予期せぬエラーが発生しました" });
     }
   },
@@ -36,8 +34,6 @@ export const StudentController = {
       await StudentService.createStudent(req.body);
       res.status(201).json({ message: "追加完了" });
     } catch (err: any) {
-      console.error(err);
-
       if (err.code === "P2002" && err.meta?.target?.includes("studentEmail")) {
         return res
           .status(400)
@@ -57,7 +53,6 @@ export const StudentController = {
       await StudentService.updateStudent(req.body, id);
       res.status(201).json({ message: "更新完了" });
     } catch (err: any) {
-      console.error(err);
       res.status(500).json({ message: "予期せぬエラーが発生しました" });
     }
   },
@@ -71,7 +66,6 @@ export const StudentController = {
       await StudentService.deleteStudent(id);
       res.status(201).json({ message: "削除完了" });
     } catch (err: any) {
-      console.error(err);
       res.status(500).json({ message: "予期せぬエラーが発生しました" });
     }
   },

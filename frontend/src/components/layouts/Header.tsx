@@ -27,7 +27,6 @@ const Header = () => {
       });
 
       if (!res.ok) {
-        console.error("Logout failed:", res.status);
         alert("ログアウトに失敗しました");
         return;
       }
@@ -35,7 +34,6 @@ const Header = () => {
       // ✅ 成功したらログインへ戻す
       window.location.href = ROUTES.Auth.LOGIN;
     } catch (err) {
-      console.error(err);
       alert("ログアウトに失敗しました");
     }
   };

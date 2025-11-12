@@ -1,13 +1,17 @@
 import { useEffect } from "react";
 import { Table } from "@/components/elements/Table";
 import { Loading } from "@/components/elements/Loading";
-import { Hooks } from "@/hooks/hooks";
+import { useCrud } from "@/hooks/useCrud";
 import { CategoryLabels } from "@/types/category";
 import { CategoryApi } from "@/api/categoryApi";
 import type { Category } from "@shared/schemas/category";
 
-const CategoryIndex = () => {
-  const { data: Categories, fetchAll, loading } = Hooks<Category>(CategoryApi);
+export const CategoryIndex = () => {
+  const {
+    data: Categories,
+    fetchAll,
+    loading,
+  } = useCrud<Category>(CategoryApi);
 
   useEffect(() => {
     fetchAll();
@@ -19,5 +23,3 @@ const CategoryIndex = () => {
     </Loading>
   );
 };
-
-export default CategoryIndex;

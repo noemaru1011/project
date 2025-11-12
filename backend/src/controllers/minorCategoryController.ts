@@ -8,7 +8,6 @@ export const MinorCategoryController = {
         await MinorCategoryService.getAllMinorCategories();
       res.json(minorcategories);
     } catch (error) {
-      console.error(error);
       res.status(500).json({ message: "予期せぬエラーが発生しました" });
     }
   },

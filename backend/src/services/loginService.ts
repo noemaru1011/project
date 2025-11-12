@@ -26,8 +26,6 @@ export const LoginService = {
       });
       return { token, role: "ADMIN" };
     }
-
-    console.log("学生ですね");
     // 学生判定
     const student = await LoginRepository.findStudent(email);
     if (!student)

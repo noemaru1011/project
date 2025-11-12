@@ -6,7 +6,6 @@ export const LoginController = {
     const { email, password } = req.body;
     try {
       const result = await LoginService.login(email, password);
-      console.log(result.role);
 
       // Cookie に JWT をセット
       res.cookie("token", result.token, {

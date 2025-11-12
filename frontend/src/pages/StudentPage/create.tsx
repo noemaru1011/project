@@ -7,16 +7,16 @@ import { gradeOptions } from "@/constants/grade";
 import { minorCategoryOptions } from "@/constants/minorCategory";
 import { departmentOptions } from "@/constants/department";
 import { validation } from "@shared/schemas/student";
-import { Hooks } from "@/hooks/hooks";
+import { useCrud } from "@/hooks/useCrud";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loading } from "@/components/elements/Loading";
 import { ROUTES } from "@/constants/routes";
 import { StudentApi } from "@/api/studentApi";
 import type { Student } from "@shared/schemas/student";
 
-const StudentCreate = () => {
+export const StudentCreate = () => {
   const navigate = useNavigate();
-  const { create, loading } = Hooks<Student>(StudentApi);
+  const { create, loading } = useCrud<Student>(StudentApi);
 
   const {
     register,
@@ -91,5 +91,3 @@ const StudentCreate = () => {
     </Loading>
   );
 };
-
-export default StudentCreate;

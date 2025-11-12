@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { Table } from "@/components/elements/Table";
 import { Loading } from "@/components/elements/Loading";
-import { Hooks } from "@/hooks/hooks";
+import { useCrud } from "@/hooks/useCrud";
 import { StatusLabels } from "@/types/status";
 import { StatusAPi } from "@/api/statusApi";
 import type { Status } from "@shared/schemas/status";
 
-const StatusIndex = () => {
-  const { data: Status, fetchAll, loading } = Hooks<Status>(StatusAPi);
+export const StatusIndex = () => {
+  const { data: Status, fetchAll, loading } = useCrud<Status>(StatusAPi);
 
   useEffect(() => {
     fetchAll();
@@ -19,5 +19,3 @@ const StatusIndex = () => {
     </Loading>
   );
 };
-
-export default StatusIndex;

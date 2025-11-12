@@ -2,8 +2,6 @@ import { z } from "zod";
 
 const validMinorCategoryIds = Array.from({ length: 48 }, (_, i) => i + 1);
 export const validation = z.object({
-  studentId: z.string(),
-
   studentName: z
     .string()
     .nonempty("学生名は必須です。")
@@ -42,7 +40,6 @@ export const validation = z.object({
 export type Student = z.infer<typeof validation>;
 
 export const studentQuery = z.object({
-  studentId: z.string(),
   category: z.string().optional(),
   subCategory: z.string().optional(),
   minorCategory: z.string().optional(),

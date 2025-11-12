@@ -6,14 +6,11 @@ import { validation } from "@shared/schemas/login";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/constants/routes";
-import { toast } from "react-toastify";
-import { useAuth } from "@/hooks/AuthHooks";
-import { useCsrf } from "@/hooks/contexts/CSRF";
+import { useAuth } from "@/hooks/useLogin";
 
 const Login = () => {
   const navigate = useNavigate();
   const { login, loading } = useAuth();
-  const { setCsrfToken } = useCsrf();
 
   const {
     register,
@@ -24,26 +21,13 @@ const Login = () => {
   });
 
   const onSubmit = async (data: any) => {
-    try {
-      // ここでは email と password だけ送信
-      const res: any = await login(data);
+    // ここでは email と password だけ送信
+    const res: any = await login(data);
 
-      // レスポンスに role を含めてもらうとフロントで画面遷移制御可能
-      const { csrfToken, role } = res;
-      setCsrfToken(csrfToken);
-      sessionStorage.setItem("csrfToken", csrfToken);
-
-      toast.success("ログインに成功しました！");
-
-      // 管理者なら管理者ページ、学生ならホームページ
-      if (role === "admin") {
-        navigate(ROUTES.HOME);
-      } else {
-        navigate(ROUTES.HOME);
-      }
-    } catch (err: any) {
-      toast.error(err.message || "ログインに失敗しました。");
-    }
+    // レスポンスに role を含めてもらうとフロントで画面遷移制御可能
+    const { csrfToken } = res;
+    sessionStorage.setItem("csrfToken", csrfToken);
+    navigate(ROUTES.HOME);
   };
 
   return (

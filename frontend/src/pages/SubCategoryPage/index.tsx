@@ -1,17 +1,17 @@
 import { useEffect } from "react";
 import { Table } from "@/components/elements/Table";
 import { Loading } from "@/components/elements/Loading";
-import { Hooks } from "@/hooks/hooks";
+import { useCrud } from "@/hooks/useCrud";
 import { SubCategoryLabels } from "@/types/subCategory";
 import { SubCategoryApi } from "@/api/subCategoryApi";
 import type { SubCategory } from "@shared/schemas/subCategory";
 
-const SubCategoryIndex = () => {
+export const SubCategoryIndex = () => {
   const {
     data: subCategories,
     fetchAll,
     loading,
-  } = Hooks<SubCategory>(SubCategoryApi);
+  } = useCrud<SubCategory>(SubCategoryApi);
 
   useEffect(() => {
     fetchAll();
@@ -27,5 +27,3 @@ const SubCategoryIndex = () => {
     </Loading>
   );
 };
-
-export default SubCategoryIndex;

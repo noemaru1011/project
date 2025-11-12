@@ -4,14 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/elements/Input";
 import { Button } from "@/components/elements/Button";
 import { validation } from "@shared/schemas/password";
-
+import { usePassword } from "@/hooks/usePassword";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loading } from "@/components/elements/Loading";
 import { ROUTES } from "@/constants/routes";
 
-const StudentChange = () => {
+export const StudentChange = () => {
   const navigate = useNavigate();
-  const { create, loading } = useStudent();
+  const { updatePassword, loading } = usePassword();
 
   const {
     register,
@@ -24,8 +24,7 @@ const StudentChange = () => {
   // 送信処理
   const onSubmit = async (data: any) => {
     try {
-      await create(data);
-      toast.success("更新に成功しました！");
+      await updatePassword(data);
       setTimeout(() => navigate(ROUTES.HOME), 1000);
     } catch (err: any) {
       toast.error(
@@ -64,5 +63,3 @@ const StudentChange = () => {
     </Loading>
   );
 };
-
-export default StudentChange;

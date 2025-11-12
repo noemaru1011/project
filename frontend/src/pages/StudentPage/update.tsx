@@ -12,15 +12,15 @@ import { gradeOptions } from "@/constants/grade";
 import { minorCategoryOptions } from "@/constants/minorCategory";
 import { departmentOptions } from "@/constants/department";
 import { ROUTES } from "@/constants/routes";
-import { Hooks } from "@/hooks/hooks";
+import { useCrud } from "@/hooks/useCrud";
 import { validation } from "@shared/schemas/student";
 import { StudentApi } from "@/api/studentApi";
 import type { Student } from "@shared/schemas/student";
 
-const StudentUpdate = () => {
+export const StudentUpdate = () => {
   const navigate = useNavigate();
   const { studentId } = useParams<{ studentId: string }>();
-  const { view, update, loading } = Hooks<Student>(StudentApi);
+  const { view, update, loading } = useCrud<Student>(StudentApi);
 
   const {
     register,
@@ -66,7 +66,6 @@ const StudentUpdate = () => {
         minorCategoryId: String(data.minorCategoryId),
       };
       await update(studentId, payload);
-      toast.success("更新に成功しました！");
       setTimeout(() => navigate(ROUTES.Student.INDEX), 1000);
     } catch (err: any) {
       toast.error(
@@ -128,5 +127,3 @@ const StudentUpdate = () => {
     </Loading>
   );
 };
-
-export default StudentUpdate;

@@ -1,17 +1,17 @@
 import { useEffect } from "react";
 import { Table } from "@/components/elements/Table";
 import { Loading } from "@/components/elements/Loading";
-import { Hooks } from "@/hooks/hooks";
+import { useCrud } from "@/hooks/useCrud";
 import { DepartmentLabels } from "@/types/department";
 import { DepartmentAPi } from "@/api/departmentApi";
 import type { Department } from "@shared/schemas/department";
 
-const DepartmentIndex = () => {
+export const DepartmentIndex = () => {
   const {
     data: Departments,
     fetchAll,
     loading,
-  } = Hooks<Department>(DepartmentAPi);
+  } = useCrud<Department>(DepartmentAPi);
 
   useEffect(() => {
     fetchAll();
@@ -27,5 +27,3 @@ const DepartmentIndex = () => {
     </Loading>
   );
 };
-
-export default DepartmentIndex;

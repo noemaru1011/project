@@ -7,7 +7,6 @@ export const DepartmentController = {
       const departments = await DepartmentService.getAllDepartments();
       res.json(departments);
     } catch (error) {
-      console.error(error);
       res.status(500).json({ message: "予期せぬエラーが発生しました" });
     }
   },

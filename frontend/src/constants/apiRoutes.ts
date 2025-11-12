@@ -28,4 +28,7 @@ export const API_ROUTES = {
     LOGIN: "/api/login",
     LOGOUT: "/api/logout",
   },
+  PASSWORD: {
+    UPDATE: "/api/password",
+  },
 } as const;

@@ -7,7 +7,6 @@ export const CategoryController = {
       const categories = await CategoryService.getAllCategories();
       res.json(categories);
     } catch (error) {
-      console.error(error);
       res.status(500).json({ message: "予期せぬエラーが発生しました" });
     }
   },

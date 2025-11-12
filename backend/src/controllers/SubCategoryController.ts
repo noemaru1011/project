@@ -7,7 +7,6 @@ export const SubCategoryController = {
       const subCategories = await SubCategoryService.getAllSubCategories();
       res.json(subCategories);
     } catch (error) {
-      console.error(error);
       res.status(500).json({ message: "予期せぬエラーが発生しました" });
     }
   },
