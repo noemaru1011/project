@@ -40,12 +40,20 @@ export const StudentChange = () => {
               {...register("oldPassword")}
             />
             <Input
-              id="newPassword"
+              id="newPassword1"
               label="新しいパスワード"
               type="password"
-              error={errors.newPassword?.message}
+              error={errors.newPassword1?.message}
               required
-              {...register("newPassword")}
+              {...register("newPassword1")}
+            />
+            <Input
+              id="newPassword2"
+              label="新しいパスワード(確認)"
+              type="password"
+              error={errors.newPassword2?.message}
+              required
+              {...register("newPassword2")}
             />
 
             <Button type="submit" variant="Update" className="w-full mt-4" />

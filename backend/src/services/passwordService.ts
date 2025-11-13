@@ -3,7 +3,7 @@ import { PasswordRepository } from "@/repositories/passwordRepository";
 
 export const PasswordService = {
   async updatePassword(
-    data: { oldPassword: string; newPassword: string },
+    data: { oldPassword: string; newPassword1: string; newPassword2: string },
     studentId: string
   ) {
     const record = await PasswordRepository.findByStudentId(studentId);
@@ -22,7 +22,7 @@ export const PasswordService = {
         message: "現在のパスワードが違います",
       };
 
-    const hashedPassword = await bcrypt.hash(data.newPassword, 10);
+    const hashedPassword = await bcrypt.hash(data.newPassword2, 10);
     return PasswordRepository.updatePassword(studentId, hashedPassword);
   },
 };
