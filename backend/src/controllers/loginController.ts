@@ -15,6 +15,14 @@ export const LoginController = {
         maxAge: 3600 * 1000, // 1時間
       });
 
+      // フロントで読める role cookie (UX 用)
+      res.cookie("role", result.role, {
+        httpOnly: false, // フロントで読める
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 3600 * 1000,
+      });
+
       res.json({ code: "SUCCESS", message: "ログイン成功", role: result.role });
     } catch (err: any) {
       const code = err.code || "INTERNAL_ERROR";
