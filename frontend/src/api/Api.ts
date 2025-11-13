@@ -7,12 +7,10 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
  */
 export async function Api<T>(path: string, options?: RequestInit): Promise<T> {
   try {
-    const csrfToken = sessionStorage.getItem("csrfToken");
     const res = await fetch(`${API_BASE_URL}${path}`, {
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        ...(csrfToken ? { "X-CSRF-Token": csrfToken } : {}),
         ...(options?.headers || {}),
       },
       ...options,

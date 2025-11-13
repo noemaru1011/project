@@ -24,9 +24,13 @@ import { Forbidden } from "@/pages/ErrorPage/Forbidden";
 const AppRoutes = () => (
   <Routes>
     <Route path={ROUTES.Auth.LOGIN} element={<Login />} />
+    {/* エラー画面 */}
+    <Route path={ROUTES.Status.INDEX} element={<StatusIndex />} />
+    <Route path={ROUTES.Error.SERVER} element={<ServerError />} />
+    <Route path={ROUTES.Error.FORBIDDEN} element={<Forbidden />} />
+    <Route path={ROUTES.Error.NOTFOUND} element={<NotFound />} />
 
     <Route element={<Layout />}>
-      <Route path={ROUTES.HOME} element={<HomePage />} />
       <Route path={ROUTES.Category.INDEX} element={<CategoryIndex />} />
       <Route path={ROUTES.SubCategory.INDEX} element={<SubCategoryIndex />} />
       <Route
@@ -39,12 +43,6 @@ const AppRoutes = () => (
       <Route path={ROUTES.Student.UPDATE()} element={<StudentUpdate />} />
       <Route path={ROUTES.Student.VIEW()} element={<StudentView />} />
       <Route path={ROUTES.Student.CHANGE} element={<StudentChange />} />
-
-      {/* エラー画面 */}
-      <Route path={ROUTES.Status.INDEX} element={<StatusIndex />} />
-      <Route path={ROUTES.Error.SERVER} element={<ServerError />} />
-      <Route path={ROUTES.Error.FORBIDDEN} element={<Forbidden />} />
-      <Route path={ROUTES.Error.NOTFOUND} element={<NotFound />} />
     </Route>
   </Routes>
 );

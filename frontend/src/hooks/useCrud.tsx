@@ -38,6 +38,7 @@ export function useCrud<T, Q = any>(api: ApiMethods<T, Q>) {
         return result;
       } catch (err: any) {
         handleError(err);
+        throw err;
         return [];
       } finally {
         setLoading(false);
@@ -57,6 +58,7 @@ export function useCrud<T, Q = any>(api: ApiMethods<T, Q>) {
         return newItem;
       } catch (err: any) {
         handleError(err);
+        throw err;
       } finally {
         setLoading(false);
       }
@@ -82,6 +84,7 @@ export function useCrud<T, Q = any>(api: ApiMethods<T, Q>) {
         toast.success("更新しました！✏️");
       } catch (err: any) {
         handleError(err);
+        throw err;
       } finally {
         setLoading(false);
       }
@@ -99,6 +102,7 @@ export function useCrud<T, Q = any>(api: ApiMethods<T, Q>) {
         toast.success("削除しました🗑️");
       } catch (err: any) {
         handleError(err);
+        throw err;
       } finally {
         setLoading(false);
       }
@@ -115,6 +119,7 @@ export function useCrud<T, Q = any>(api: ApiMethods<T, Q>) {
         return result;
       } catch (err: any) {
         handleError(err);
+        throw err;
       } finally {
         setLoading(false);
       }

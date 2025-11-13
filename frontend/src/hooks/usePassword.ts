@@ -18,6 +18,8 @@ export function usePassword() {
       return result;
     } catch (err: any) {
       handleError(err);
+      handleError(err);
+      throw err;
     } finally {
       setLoading(false);
     }

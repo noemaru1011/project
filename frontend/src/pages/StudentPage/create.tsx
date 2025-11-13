@@ -28,14 +28,16 @@ export const StudentCreate = () => {
 
   // 送信処理
   const onSubmit = async (data: any) => {
-    const payload = {
-      ...data,
-      grade: String(data.grade),
-      departmentId: String(data.departmentId),
-      minorCategoryId: String(data.minorCategoryId),
-    };
-    await create(payload);
-    navigate(ROUTES.Student.INDEX);
+    try {
+      const payload = {
+        ...data,
+        grade: String(data.grade),
+        departmentId: String(data.departmentId),
+        minorCategoryId: String(data.minorCategoryId),
+      };
+      await create(payload);
+      navigate(ROUTES.Student.INDEX);
+    } catch (err: any) {}
   };
 
   return (

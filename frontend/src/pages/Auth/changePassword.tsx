@@ -1,13 +1,12 @@
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/elements/Input";
 import { Button } from "@/components/elements/Button";
 import { validation } from "@shared/schemas/password";
 import { usePassword } from "@/hooks/usePassword";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loading } from "@/components/elements/Loading";
 import { ROUTES } from "@/constants/routes";
+import { Loading } from "@/components/elements/Loading";
 
 export const StudentChange = () => {
   const navigate = useNavigate();
@@ -23,7 +22,10 @@ export const StudentChange = () => {
 
   // 送信処理
   const onSubmit = async (data: any) => {
-    await updatePassword(data);
+    try {
+      await updatePassword(data);
+      navigate(ROUTES.HOME);
+    } catch (err: any) {}
   };
 
   return (

@@ -57,16 +57,18 @@ export const StudentUpdate = () => {
 
   // 更新処理
   const onSubmit = async (data: any) => {
-    if (!studentId) return;
+    try {
+      if (!studentId) return;
 
-    const payload = {
-      ...data,
-      grade: String(data.grade),
-      departmentId: String(data.departmentId),
-      minorCategoryId: String(data.minorCategoryId),
-    };
-    await update(studentId, payload);
-    navigate(ROUTES.Student.INDEX);
+      const payload = {
+        ...data,
+        grade: String(data.grade),
+        departmentId: String(data.departmentId),
+        minorCategoryId: String(data.minorCategoryId),
+      };
+      await update(studentId, payload);
+      navigate(ROUTES.Student.INDEX);
+    } catch (err: any) {}
   };
 
   return (

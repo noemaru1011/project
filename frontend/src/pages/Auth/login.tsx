@@ -21,13 +21,10 @@ const Login = () => {
   });
 
   const onSubmit = async (data: any) => {
-    // ここでは email と password だけ送信
-    const res: any = await login(data);
-
-    // レスポンスに role を含めてもらうとフロントで画面遷移制御可能
-    const { csrfToken } = res;
-    sessionStorage.setItem("csrfToken", csrfToken);
-    navigate(ROUTES.HOME);
+    try {
+      await login(data);
+      navigate(ROUTES.HOME);
+    } catch (err: any) {}
   };
 
   return (
