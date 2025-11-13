@@ -20,9 +20,10 @@ const Login = () => {
     resolver: zodResolver(validation),
   });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: { email: string; password: string }) => {
     try {
-      await login(data);
+      const res = await login(data);
+      console.log(res);
       navigate(ROUTES.HOME);
     } catch (err: any) {}
   };

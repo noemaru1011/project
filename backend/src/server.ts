@@ -14,7 +14,6 @@ import studentRoutes from "@/routes/studentRoutes";
 import passwordRoutes from "@/routes/passwordRoutes";
 import { securityMiddleware } from "@/middleware/securityMiddleware";
 import { authMiddleware, requireRole } from "@/middleware/authMiddleware";
-import { csrfMiddleware } from "@/middleware/csrfMiddleware";
 
 const app = express();
 app.use(

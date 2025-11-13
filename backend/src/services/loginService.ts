@@ -1,12 +1,11 @@
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import { JwtUtil } from "@/utils/jwt";
 import { LoginRepository } from "@/repositories/loginRepository";
-
-const JWT_SECRET = process.env.JWT_SECRET!;
 
 interface LoginResult {
   token: string;
   role: "ADMIN" | "STUDENT";
+  passwordUpdateRequired?: boolean;
 }
 
 export const LoginService = {
@@ -21,11 +20,10 @@ export const LoginService = {
           message: "メールアドレスかパスワードが違います",
         };
 
-      const token = jwt.sign({ id: admin.adminId, role: "ADMIN" }, JWT_SECRET, {
-        expiresIn: "1h",
-      });
+      const token = JwtUtil.createToken(admin.adminId, "ADMIN");
       return { token, role: "ADMIN" };
     }
+
     // 学生判定
     const student = await LoginRepository.findStudent(email);
     if (!student)
@@ -50,11 +48,14 @@ export const LoginService = {
         message: "メールアドレスかパスワードが違います",
       };
 
-    const token = jwt.sign(
-      { id: student.studentId, role: "STUDENT" },
-      JWT_SECRET,
-      { expiresIn: "1h" }
-    );
-    return { token, role: "STUDENT" };
+    const now = new Date();
+    const lastChanged = studentPassword.updatedAt;
+    const minutesSinceUpdate =
+      (now.getTime() - lastChanged.getTime()) / (1000 * 60);
+    const passwordUpdateRequired =
+      !studentPassword.defaultChangeFlag || minutesSinceUpdate > 1;
+
+    const token = JwtUtil.createToken(student.studentId, "STUDENT");
+    return { token, role: "STUDENT", passwordUpdateRequired };
   },
 };

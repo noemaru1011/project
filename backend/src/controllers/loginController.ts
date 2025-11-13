@@ -12,18 +12,18 @@ export const LoginController = {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
-        maxAge: 3600 * 1000, // 1時間
+        maxAge: 3600 * 1000,
       });
 
-      // フロントで読める role cookie (UX 用)
+      // UX 用 role cookie
       res.cookie("role", result.role, {
-        httpOnly: false, // フロントで読める
+        httpOnly: false,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
         maxAge: 3600 * 1000,
       });
 
-      res.json({ code: "SUCCESS", message: "ログイン成功", role: result.role });
+      res.json({ code: "SUCCESS", message: "ログイン成功", ...result });
     } catch (err: any) {
       const code = err.code || "INTERNAL_ERROR";
       const message = err.message || "予期せぬエラーが発生しました";
