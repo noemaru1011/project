@@ -12,6 +12,17 @@ export const useErrorHandler = () => {
       const code = err?.code;
       const message = err?.message ?? "予期せぬエラーが発生しました";
 
+      if (status === 400) {
+        switch (code) {
+          case "INVALID_OLD_PASSWORD":
+            toast.error("現在のパスワードが違います");
+            return;
+          default:
+            toast.error(message);
+            return;
+        }
+      }
+
       if (status === 401) {
         switch (code) {
           case "INVALID_CREDENTIALS":

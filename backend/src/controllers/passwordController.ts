@@ -5,11 +5,22 @@ export const PasswordController = {
   async updatePassword(req: Request, res: Response) {
     try {
       const user = (req as any).user;
-      const studentId = user.id;
-      await PasswordService.updatePassword(req.body, studentId);
-      res.status(201).json({ message: "更新完了" });
+      await PasswordService.updatePassword(req.body, user.id);
+      res.status(200).json({ message: "パスワードを更新しました" });
     } catch (err: any) {
-      res.status(500).json({ message: "予期せぬエラーが発生しました" });
+      console.error(err);
+
+      if (err.status) {
+        return res.status(err.status).json({
+          code: err.code,
+          message: err.message,
+        });
+      }
+
+      res.status(500).json({
+        code: "INTERNAL_ERROR",
+        message: "予期せぬエラーが発生しました",
+      });
     }
   },
 };

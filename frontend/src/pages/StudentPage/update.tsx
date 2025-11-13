@@ -58,21 +58,15 @@ export const StudentUpdate = () => {
   // 更新処理
   const onSubmit = async (data: any) => {
     if (!studentId) return;
-    try {
-      const payload = {
-        ...data,
-        grade: String(data.grade),
-        departmentId: String(data.departmentId),
-        minorCategoryId: String(data.minorCategoryId),
-      };
-      await update(studentId, payload);
-      setTimeout(() => navigate(ROUTES.Student.INDEX), 1000);
-    } catch (err: any) {
-      toast.error(
-        "更新に失敗しました：" +
-          (err?.message || "予期せぬエラーが発生しました")
-      );
-    }
+
+    const payload = {
+      ...data,
+      grade: String(data.grade),
+      departmentId: String(data.departmentId),
+      minorCategoryId: String(data.minorCategoryId),
+    };
+    await update(studentId, payload);
+    navigate(ROUTES.Student.INDEX);
   };
 
   return (

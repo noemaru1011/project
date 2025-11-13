@@ -7,10 +7,20 @@ export const PasswordService = {
     studentId: string
   ) {
     const record = await PasswordRepository.findByStudentId(studentId);
-    if (!record) throw new Error("Student not found");
+    if (!record)
+      throw {
+        status: 404,
+        code: "STUDENT_NOT_FOUND",
+        message: "学生が見つかりません",
+      };
 
     const isMatch = await bcrypt.compare(data.oldPassword, record.password);
-    if (!isMatch) throw new Error("Old password is incorrect");
+    if (!isMatch)
+      throw {
+        status: 400,
+        code: "INVALID_OLD_PASSWORD",
+        message: "現在のパスワードが違います",
+      };
 
     const hashedPassword = await bcrypt.hash(data.newPassword, 10);
     return PasswordRepository.updatePassword(studentId, hashedPassword);

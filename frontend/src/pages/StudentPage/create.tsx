@@ -35,7 +35,7 @@ export const StudentCreate = () => {
       minorCategoryId: String(data.minorCategoryId),
     };
     await create(payload);
-    setTimeout(() => navigate(ROUTES.Student.INDEX), 1000);
+    navigate(ROUTES.Student.INDEX);
   };
 
   return (

@@ -23,15 +23,7 @@ export const StudentChange = () => {
 
   // 送信処理
   const onSubmit = async (data: any) => {
-    try {
-      await updatePassword(data);
-      setTimeout(() => navigate(ROUTES.HOME), 1000);
-    } catch (err: any) {
-      toast.error(
-        "更新に失敗しました：" +
-          (err?.message || "予期せぬエラーが発生しました")
-      );
-    }
+    await updatePassword(data);
   };
 
   return (
