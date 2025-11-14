@@ -24,9 +24,7 @@ const Header = () => {
       try {
         await logout();
         navigate(ROUTES.Auth.LOGIN, { replace: true });
-      } catch {
-        // 既に toast は useLogout 内で出している
-      }
+      } catch {}
       return;
     }
 

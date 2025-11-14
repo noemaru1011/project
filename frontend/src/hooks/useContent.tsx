@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import type { ReactNode } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import { ROUTES } from "@/constants/routes";
 
 interface ProtectedContentProps {
   children: ReactNode;
@@ -16,11 +17,11 @@ const ProtectedContent = ({
   const navigate = useNavigate();
 
   useEffect(() => {
-    const role = Cookies.get("role"); // UX用 role cookie
+    const role = Cookies.get("role") as "ADMIN" | "STUDENT" | undefined;
 
     if (!role) {
       // ログインしていない場合はログイン画面へ
-      navigate("/login", { replace: true });
+      navigate(ROUTES.Auth.LOGIN, { replace: true });
       toast.error("ログインしてください");
       return;
     }
@@ -31,7 +32,7 @@ const ProtectedContent = ({
       !allowedRoles.includes(role as any)
     ) {
       // 権限なしの場合は Forbidden 画面へ
-      navigate("/forbidden", { replace: true });
+      navigate(ROUTES.Error.FORBIDDEN, { replace: true });
       toast.error("権限がありません");
       return;
     }

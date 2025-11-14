@@ -58,7 +58,12 @@ export const StudentChange = () => {
               {...register("newPassword2")}
             />
 
-            <Button type="submit" variant="Update" className="w-full mt-4" />
+            <Button
+              type="submit"
+              variant="Update"
+              disabled={loading}
+              className="w-full mt-4"
+            />
           </form>
         </div>
       </div>

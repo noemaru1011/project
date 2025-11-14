@@ -86,7 +86,12 @@ export const StudentCreate = () => {
               {...register("departmentId")}
             />
 
-            <Button type="submit" variant="Create" className="w-full mt-4" />
+            <Button
+              type="submit"
+              variant="Create"
+              disabled={loading}
+              className="w-full mt-4"
+            />
           </form>
         </div>
       </div>

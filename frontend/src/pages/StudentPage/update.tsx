@@ -116,7 +116,12 @@ export const StudentUpdate = () => {
               error={errors.departmentId?.message}
               {...register("departmentId")}
             />
-            <Button type="submit" variant="Update" className="w-full mt-4" />
+            <Button
+              type="submit"
+              variant="Update"
+              disabled={loading}
+              className="w-full mt-4"
+            />
           </form>
         </div>
       </div>
