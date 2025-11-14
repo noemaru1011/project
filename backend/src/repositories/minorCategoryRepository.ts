@@ -9,6 +9,7 @@ export const MinorCategoryRepository = {
         minorCategoryId: true,
         minorCategoryName: true,
       },
+      orderBy: { minorCategoryId: "asc" },
     });
   },
 };

@@ -9,6 +9,7 @@ export const DepartmentRepository = {
         departmentId: true,
         departmentName: true,
       },
+      orderBy: { departmentId: "asc" },
     });
   },
 };

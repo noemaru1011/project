@@ -9,6 +9,7 @@ export const SubCategoryRepository = {
         subCategoryId: true,
         subCategoryName: true,
       },
+      orderBy: { subCategoryId: "asc" },
     });
   },
 };

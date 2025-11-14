@@ -9,6 +9,7 @@ export const CategoryRepository = {
         categoryId: true,
         categoryName: true,
       },
+      orderBy: { categoryId: "asc" },
     });
   },
 };

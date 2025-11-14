@@ -17,6 +17,10 @@ export const StudentRepository = {
           },
         },
       },
+      orderBy: [
+        { minorCategory: { minorCategoryName: "asc" } },
+        { grade: "desc" },
+      ],
     });
   },
 

@@ -9,6 +9,7 @@ export const StatusRepository = {
         statusId: true,
         statusName: true,
       },
+      orderBy: { statusId: "asc" },
     });
   },
 };
