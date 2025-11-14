@@ -71,7 +71,6 @@ model StudentPassword{
   studentId     String@id
   student           Student @relation(fields: [studentId], references: [studentId])
   password          String
-  defaultChangeFlag Boolean @default(false)
   createdAt         DateTime     @default(now())
   updatedAt         DateTime     @updatedAt
 }

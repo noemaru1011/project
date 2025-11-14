@@ -1,11 +1,14 @@
 import { Request, Response } from "express";
 import { LoginService } from "@/services/loginService";
+import { AppError } from "@/errors/AppError";
 
 export const LoginController = {
   async login(req: Request, res: Response) {
     const { email, password } = req.body;
     try {
+      console.log(req.body);
       const result = await LoginService.login(email, password);
+      console.log(result);
 
       // Cookie に JWT をセット
       res.cookie("token", result.token, {
@@ -24,12 +27,19 @@ export const LoginController = {
       });
 
       res.json({ code: "SUCCESS", message: "ログイン成功", ...result });
-    } catch (err: any) {
-      const code = err.code || "INTERNAL_ERROR";
-      const message = err.message || "予期せぬエラーが発生しました";
-      res
-        .status(code === "INVALID_CREDENTIALS" ? 401 : 500)
-        .json({ code, message });
+    } catch (err) {
+      if (err instanceof AppError) {
+        return res.status(err.status).json({
+          code: err.code,
+          message: err.message,
+        });
+      }
+
+      // 予期しないエラー
+      return res.status(500).json({
+        code: "INTERNAL_ERROR",
+        message: "予期せぬエラーが発生しました",
+      });
     }
   },
 };

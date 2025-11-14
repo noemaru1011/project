@@ -25,19 +25,6 @@ app.use(
 );
 app.use(securityMiddleware());
 app.use(cookieParser());
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET!, // セッションIDを署名する秘密鍵
-    resave: false, // リクエストごとにセッションを保存し直すか
-    saveUninitialized: false, // 初期化されていないセッションを保存するか
-    cookie: {
-      // セッションIDを保持するクッキーの設定
-      httpOnly: true, // JSからは読めない（XSS対策）
-      secure: false,
-      maxAge: 1000 * 60 * 60, // 1時間で有効期限切れ
-    },
-  })
-);
 //ネストされたJSONなどを解析できるようにパース
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -87,4 +74,6 @@ app.listen(PORT, () => {
   console.log(`🚀 Frontend connecting: ${process.env.FRONT_URL}`);
   console.log(`🚀 Backend running: ${process.env.BACK_URL}`);
   console.log(`🚀 DataBase connecting: ${process.env.DATABASE_URL}`);
+  console.log("🚀 JWT_SECRET:", process.env.JWT_SECRET);
+  console.log("🚀 RESEND_API_KEY:", process.env.RESEND_API_KEY);
 });
