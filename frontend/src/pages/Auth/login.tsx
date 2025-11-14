@@ -6,11 +6,11 @@ import { validation } from "@shared/schemas/login";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/constants/routes";
-import { useAuth } from "@/hooks/useLogin";
+import { useLogin } from "@/hooks/useLogin";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login, loading } = useAuth();
+  const { login, loading } = useLogin();
 
   const {
     register,

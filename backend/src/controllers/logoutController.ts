@@ -7,6 +7,11 @@ export const LogoutController = {
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
     });
+    res.clearCookie("role", {
+      httpOnly: false,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
 
     return res.json({ message: "ログアウトしました" });
   },

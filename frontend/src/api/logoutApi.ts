@@ -1,9 +1,13 @@
 import { Api } from "./Api";
 import { API_ROUTES } from "@/constants/apiRoutes";
 
-export const AuthApi = {
+interface LogoutResponse {
+  message: string;
+}
+
+export const LogoutApi = {
   logout: () =>
-    Api<void>(API_ROUTES.AUTH.LOGOUT, {
+    Api<LogoutResponse>(API_ROUTES.AUTH.LOGOUT, {
       method: "POST",
       credentials: "include",
     }),

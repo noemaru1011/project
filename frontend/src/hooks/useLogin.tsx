@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { AuthApi } from "@/api/loginApi";
+import { LoginApi } from "@/api/loginApi";
 import type { Auth } from "@shared/schemas/login";
 import { toast } from "react-toastify";
 import { useErrorHandler } from "./useErrorHandler";
 
-export function useAuth() {
+export function useLogin() {
   const [user, setUser] = useState<Partial<Auth> | null>(null);
   const [loading, setLoading] = useState(false);
   const handleError = useErrorHandler();
@@ -12,7 +12,7 @@ export function useAuth() {
   const login = async (data: Partial<Auth>) => {
     try {
       setLoading(true);
-      const result = await AuthApi.login(data);
+      const result = await LoginApi.login(data);
       setUser(result);
       toast.success("ログインに成功しました！");
       return result;
