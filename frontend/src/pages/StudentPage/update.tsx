@@ -48,7 +48,7 @@ export const StudentUpdate = () => {
         });
       } catch (err: any) {
         toast.error(err.message || "学生情報の取得に失敗しました");
-        navigate(ROUTES.Student.INDEX);
+        navigate(ROUTES.STUDENT.INDEX);
       }
     };
 
@@ -67,7 +67,7 @@ export const StudentUpdate = () => {
         minorCategoryId: String(data.minorCategoryId),
       };
       await update(studentId, payload);
-      navigate(ROUTES.Student.INDEX);
+      navigate(ROUTES.STUDENT.INDEX);
     } catch (err: any) {}
   };
 

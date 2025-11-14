@@ -7,8 +7,8 @@ import { useLogout } from "@/hooks/useLogout";
 
 const HeaderOptions: Option[] = [
   { value: ROUTES.HOME, label: "メインページへ" },
-  { value: ROUTES.History.INDEX, label: "事故一覧" },
-  { value: ROUTES.Student.CHANGE, label: "パスワード変更" },
+  { value: ROUTES.HISTORY.INDEX, label: "事故一覧" },
+  { value: ROUTES.STUDENT.CHANGE, label: "パスワード変更" },
   { value: "LOGOUT", label: "ログアウト" },
 ];
 
@@ -23,7 +23,7 @@ const Header = () => {
     if (opt.value === "LOGOUT") {
       try {
         await logout();
-        navigate(ROUTES.Auth.LOGIN, { replace: true });
+        navigate(ROUTES.AUTH.LOGIN, { replace: true });
       } catch {}
       return;
     }

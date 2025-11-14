@@ -4,12 +4,12 @@ import type { Option } from "@/types/ui";
 import { ROUTES } from "@/constants/routes";
 
 const MenuOptions: Option[] = [
-  { value: ROUTES.Category.INDEX, label: "大分類マスタ" },
-  { value: ROUTES.SubCategory.INDEX, label: "中分類マスタ" },
-  { value: ROUTES.MinorCategory.INDEX, label: "小分類マスタ" },
-  { value: ROUTES.Department.INDEX, label: "学科マスタ" },
-  { value: ROUTES.Status.INDEX, label: "状態区分" },
-  { value: ROUTES.Student.INDEX, label: "学生マスタ" },
+  { value: ROUTES.CATEGORY.INDEX, label: "大分類マスタ" },
+  { value: ROUTES.SUBCATEGORY.INDEX, label: "中分類マスタ" },
+  { value: ROUTES.MINORCategory.INDEX, label: "小分類マスタ" },
+  { value: ROUTES.DEPARTMENT.INDEX, label: "学科マスタ" },
+  { value: ROUTES.STATUS.INDEX, label: "状態区分" },
+  { value: ROUTES.STUDENT.INDEX, label: "学生マスタ" },
 ];
 
 type MenuProps = {

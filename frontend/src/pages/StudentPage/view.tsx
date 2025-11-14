@@ -29,7 +29,7 @@ export const StudentView = () => {
         setStudent(data);
       } catch (err: any) {
         toast.error(err.message || "学生情報の取得に失敗しました");
-        navigate(ROUTES.Student.INDEX);
+        navigate(ROUTES.STUDENT.INDEX);
       }
     };
 
@@ -80,7 +80,7 @@ export const StudentView = () => {
             type="button"
             variant="Back"
             className="w-full mt-4"
-            onClick={() => navigate(ROUTES.Student.INDEX)}
+            onClick={() => navigate(ROUTES.STUDENT.INDEX)}
           />
         </div>
       </div>

@@ -21,7 +21,7 @@ const ProtectedContent = ({
 
     if (!role) {
       // ログインしていない場合はログイン画面へ
-      navigate(ROUTES.Auth.LOGIN, { replace: true });
+      navigate(ROUTES.AUTH.LOGIN, { replace: true });
       toast.error("ログインしてください");
       return;
     }
@@ -32,7 +32,7 @@ const ProtectedContent = ({
       !allowedRoles.includes(role as any)
     ) {
       // 権限なしの場合は Forbidden 画面へ
-      navigate(ROUTES.Error.FORBIDDEN, { replace: true });
+      navigate(ROUTES.ERROR.FORBIDDEN, { replace: true });
       toast.error("権限がありません");
       return;
     }

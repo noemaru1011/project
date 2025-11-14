@@ -36,7 +36,7 @@ export const StudentCreate = () => {
         minorCategoryId: String(data.minorCategoryId),
       };
       await create(payload);
-      navigate(ROUTES.Student.INDEX);
+      navigate(ROUTES.STUDENT.INDEX);
     } catch (err: any) {}
   };
 

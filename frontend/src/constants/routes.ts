@@ -2,32 +2,32 @@ export const ROUTES = {
   HOME: "/",
 
   // 大分類マスタ
-  Category: {
+  CATEGORY: {
     INDEX: "/Category/Index",
   },
 
   //中分類マスタ
-  SubCategory: {
+  SUBCATEGORY: {
     INDEX: "/SubCategory/Index",
   },
 
   //小分類マスタ
-  MinorCategory: {
+  MINORCategory: {
     INDEX: "/MinorCategory/Index",
   },
 
   //状態区分
-  Status: {
+  STATUS: {
     INDEX: "/Status/Index/",
   },
 
   //学科マスタ
-  Department: {
+  DEPARTMENT: {
     INDEX: "/Department/Index/",
   },
 
   // 学生マスタ
-  Student: {
+  STUDENT: {
     INDEX: "/Student/Index/",
     CREATE: "/Student/Create/",
     UPDATE: (studentId = ":studentId") => `/Student/Update/${studentId}`,
@@ -37,18 +37,18 @@ export const ROUTES = {
   },
 
   //事故一覧
-  History: {
+  HISTORY: {
     INDEX: "/History/Index/",
   },
 
   //認証
-  Auth: {
+  AUTH: {
     LOGIN: "/Login/",
     LOGOUT: "/Logout/",
   },
 
   //エラーページ
-  Error: {
+  ERROR: {
     FORBIDDEN: "/Error/Forbidden",
     SERVER: "/Error/ServerError",
     NOTFOUND: "*",

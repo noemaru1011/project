@@ -24,34 +24,34 @@ import { Forbidden } from "@/pages/ErrorPage/Forbidden";
 
 const AppRoutes = () => (
   <Routes>
-    <Route path={ROUTES.Auth.LOGIN} element={<Login />} />
+    <Route path={ROUTES.AUTH.LOGIN} element={<Login />} />
     {/* エラー画面 */}
-    <Route path={ROUTES.Error.SERVER} element={<ServerError />} />
-    <Route path={ROUTES.Error.FORBIDDEN} element={<Forbidden />} />
-    <Route path={ROUTES.Error.NOTFOUND} element={<NotFound />} />
+    <Route path={ROUTES.ERROR.SERVER} element={<ServerError />} />
+    <Route path={ROUTES.ERROR.FORBIDDEN} element={<Forbidden />} />
+    <Route path={ROUTES.ERROR.NOTFOUND} element={<NotFound />} />
 
     <Route element={<Layout />}>
       <Route path={ROUTES.HOME} element={<HomePage />} />
-      <Route path={ROUTES.Status.INDEX} element={<StatusIndex />} />
-      <Route path={ROUTES.Category.INDEX} element={<CategoryIndex />} />
-      <Route path={ROUTES.SubCategory.INDEX} element={<SubCategoryIndex />} />
+      <Route path={ROUTES.STATUS.INDEX} element={<StatusIndex />} />
+      <Route path={ROUTES.CATEGORY.INDEX} element={<CategoryIndex />} />
+      <Route path={ROUTES.SUBCATEGORY.INDEX} element={<SubCategoryIndex />} />
       <Route
-        path={ROUTES.MinorCategory.INDEX}
+        path={ROUTES.MINORCategory.INDEX}
         element={<MinorCategoryIndex />}
       />
-      <Route path={ROUTES.Department.INDEX} element={<DepartmentIndex />} />
-      <Route path={ROUTES.Student.INDEX} element={<StudentIndex />} />
+      <Route path={ROUTES.DEPARTMENT.INDEX} element={<DepartmentIndex />} />
+      <Route path={ROUTES.STUDENT.INDEX} element={<StudentIndex />} />
       <Route
-        path={ROUTES.Student.CREATE}
+        path={ROUTES.STUDENT.CREATE}
         element={
           <ProtectedContent allowedRoles={["ADMIN"]}>
             <StudentCreate />
           </ProtectedContent>
         }
       />
-      <Route path={ROUTES.Student.UPDATE()} element={<StudentUpdate />} />
-      <Route path={ROUTES.Student.VIEW()} element={<StudentView />} />
-      <Route path={ROUTES.Student.CHANGE} element={<StudentChange />} />
+      <Route path={ROUTES.STUDENT.UPDATE()} element={<StudentUpdate />} />
+      <Route path={ROUTES.STUDENT.VIEW()} element={<StudentView />} />
+      <Route path={ROUTES.STUDENT.CHANGE} element={<StudentChange />} />
     </Route>
   </Routes>
 );

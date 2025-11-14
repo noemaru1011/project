@@ -30,24 +30,24 @@ export const useErrorHandler = () => {
             return;
           case "TOKEN_EXPIRED":
           case "INVALID_TOKEN":
-            navigate(ROUTES.Auth.LOGIN);
+            navigate(ROUTES.AUTH.LOGIN);
             toast.error("ログインしてください");
             return;
           default:
-            navigate(ROUTES.Auth.LOGIN);
+            navigate(ROUTES.AUTH.LOGIN);
             toast.error(message);
             return;
         }
       }
 
       if (status === 403) {
-        navigate(ROUTES.Error.FORBIDDEN);
+        navigate(ROUTES.ERROR.FORBIDDEN);
         toast.error("権限がありません");
         return;
       }
 
       if (status >= 500) {
-        navigate(ROUTES.Error.SERVER);
+        navigate(ROUTES.ERROR.SERVER);
         toast.error("サーバーエラーが発生しました");
         return;
       }
