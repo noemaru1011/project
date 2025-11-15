@@ -9,13 +9,13 @@ type Props = {
   disabled?: boolean;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
-export const Checkbox = React.forwardRef<HTMLInputElement, Props>(
+export const Radio = React.forwardRef<HTMLInputElement, Props>(
   ({ id, label, error, checked, required, disabled, ...rest }, ref) => {
     return (
       <div className="flex items-center space-x-2">
         <input
           id={id}
-          type="checkbox"
+          type="radio"
           ref={ref}
           disabled={disabled}
           checked={checked}

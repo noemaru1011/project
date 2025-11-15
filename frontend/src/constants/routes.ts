@@ -39,6 +39,7 @@ export const ROUTES = {
   //事故一覧
   HISTORY: {
     INDEX: "/History/Index/",
+    CREATE: "History/Create",
   },
 
   //認証

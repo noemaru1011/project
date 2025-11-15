@@ -17,6 +17,7 @@ import { StudentCreate } from "@/pages/StudentPage/create";
 import { StudentUpdate } from "@/pages/StudentPage/update";
 import { StudentView } from "@/pages/StudentPage/view";
 import { StudentChange } from "@/pages/Auth/changePassword";
+import { HistoryCreate } from "@/pages/HistoryPage/create";
 
 import { NotFound } from "@/pages/ErrorPage/NotFound";
 import { ServerError } from "@/pages/ErrorPage/ServerError";
@@ -24,14 +25,33 @@ import { Forbidden } from "@/pages/ErrorPage/Forbidden";
 
 const AppRoutes = () => (
   <Routes>
+    {/* ヘッダーなし */}
     <Route path={ROUTES.AUTH.LOGIN} element={<Login />} />
     {/* エラー画面 */}
     <Route path={ROUTES.ERROR.SERVER} element={<ServerError />} />
     <Route path={ROUTES.ERROR.FORBIDDEN} element={<Forbidden />} />
     <Route path={ROUTES.ERROR.NOTFOUND} element={<NotFound />} />
 
+    {/* ヘッダーあり */}
     <Route element={<Layout />}>
-      <Route path={ROUTES.HOME} element={<HomePage />} />
+      {/* リクエスト不要画面なのでフロントで制御 */}
+      <Route
+        path={ROUTES.HOME}
+        element={
+          <ProtectedContent allowedRoles={["ADMIN", "STUDENT"]}>
+            <HomePage />
+          </ProtectedContent>
+        }
+      />
+      <Route
+        path={ROUTES.HISTORY.CREATE}
+        element={
+          <ProtectedContent allowedRoles={["ADMIN", "STUDENT"]}>
+            <HistoryCreate />
+          </ProtectedContent>
+        }
+      />
+      {/* ここからaminのみしかし、student create以外は、page開くときにサーバーにリクエストするからわざわざフロントで記載する必要ない */}
       <Route path={ROUTES.STATUS.INDEX} element={<StatusIndex />} />
       <Route path={ROUTES.CATEGORY.INDEX} element={<CategoryIndex />} />
       <Route path={ROUTES.SUBCATEGORY.INDEX} element={<SubCategoryIndex />} />

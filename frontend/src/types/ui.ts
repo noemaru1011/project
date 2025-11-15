@@ -24,3 +24,9 @@ export type Option = {
 export interface DisplayLabels {
   [key: string]: string | DisplayLabels;
 }
+
+export type Category = {
+  value: string;
+  label: string;
+  subCategories?: Category[];
+};
