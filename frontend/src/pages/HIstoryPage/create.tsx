@@ -7,6 +7,7 @@ import { subCategoryOptions } from "@/constants/subCategory";
 import { minorCategoryOptions } from "@/constants/minorCategory";
 import { departmentOptions } from "@/constants/department";
 import { gradeOptions } from "@/constants/grade";
+import { statusOptions } from "@/constants/status";
 
 type FormValues = {
   categories: string[];
@@ -14,6 +15,7 @@ type FormValues = {
   minorCategories: string[];
   grade: string[];
   departments: string[];
+  status: string[];
 };
 
 export const HistoryCreate = () => {
@@ -24,6 +26,7 @@ export const HistoryCreate = () => {
       minorCategories: [],
       grade: [],
       departments: [],
+      status: [],
     },
   });
 
@@ -34,16 +37,17 @@ export const HistoryCreate = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex gap-3">
-        <fieldset>
-          <legend>大分類</legend>
+        <fieldset className="border border-gray-300 rounded-xl p-4 space-y-2">
+          <legend className="px-2 text-sm font-medium">大分類</legend>
           <CheckGroup
             name="categories"
             options={categoryOptions}
             control={control}
           />
         </fieldset>
-        <fieldset>
-          <legend>中分類</legend>
+
+        <fieldset className="border border-gray-300 rounded-xl p-4 space-y-2">
+          <legend className="px-2 text-sm font-medium">中分類</legend>
           <CheckGroup
             name="subCategories"
             options={subCategoryOptions}
@@ -51,28 +55,37 @@ export const HistoryCreate = () => {
             columns={4}
           />
         </fieldset>
-        <fieldset>
-          <legend>小分類</legend>
+
+        <fieldset className="border border-gray-300 rounded-xl p-4 space-y-2">
+          <legend className="px-2 text-sm font-medium">小分類</legend>
           <CheckGroup
             name="minorCategories"
             options={minorCategoryOptions}
             control={control}
-            columns={8}
+            columns={4}
           />
         </fieldset>
-        <fieldset>
-          <legend>学年</legend>
+
+        <fieldset className="border border-gray-300 rounded-xl p-4 space-y-2">
+          <legend className="px-2 text-sm font-medium">学年</legend>
           <CheckGroup name="grade" options={gradeOptions} control={control} />
         </fieldset>
-        <fieldset>
-          <legend>学科</legend>
+
+        <fieldset className="border border-gray-300 rounded-xl p-4 space-y-2">
+          <legend className="px-2 text-sm font-medium">学科</legend>
           <CheckGroup
             name="departments"
             options={departmentOptions}
             control={control}
           />
         </fieldset>
+
+        <fieldset className="border border-gray-300 rounded-xl p-4 space-y-2">
+          <legend className="px-2 text-sm font-medium">状態選択</legend>
+          <RadioGroup name="status" options={statusOptions} control={control} />
+        </fieldset>
       </div>
+
       <Button variant="Search" type="submit" />
     </form>
   );

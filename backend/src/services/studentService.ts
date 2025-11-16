@@ -50,4 +50,25 @@ export const StudentService = {
     const student = await StudentRepository.deleteStudent(studentId);
     return student;
   },
+
+  async searchStudents(filters: {
+    categories?: number[];
+    subCategories?: number[];
+    minorCategories?: number[];
+    departments?: number[];
+    grade?: number[];
+  }) {
+    // Repository に階層解決を完全に任せる
+    const minorCategoryIds = await StudentRepository.resolveMinorCategoryIds(
+      filters
+    );
+
+    const students = await StudentRepository.searchStudents({
+      minorCategoryIds,
+      departments: filters.departments,
+      grade: filters.grade,
+    });
+
+    return students;
+  },
 };

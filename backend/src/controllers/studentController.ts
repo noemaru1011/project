@@ -29,6 +29,15 @@ export const StudentController = {
     }
   },
 
+  async searchStudents(req: Request, res: Response) {
+    try {
+      const students = await StudentService.searchStudents(req.body);
+      res.json(students);
+    } catch (err: any) {
+      res.status(500).json({ message: "予期せぬエラーが発生しました" });
+    }
+  },
+
   async createStudent(req: Request, res: Response) {
     try {
       await StudentService.createStudent(req.body);

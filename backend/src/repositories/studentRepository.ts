@@ -110,4 +110,79 @@ export const StudentRepository = {
       },
     });
   },
+
+  async searchStudents(data: {
+    minorCategoryIds?: number[] | undefined;
+    departments?: number[] | undefined;
+    grade?: number[] | undefined;
+  }) {
+    const where: any = { deleteFlag: false };
+
+    if (data.minorCategoryIds?.length) {
+      where.minorCategoryId = { in: data.minorCategoryIds };
+    }
+    if (data.departments?.length) {
+      where.departmentId = { in: data.departments };
+    }
+    if (data.grade?.length) {
+      where.grade = { in: data.grade };
+    }
+
+    return await prisma.student.findMany({
+      where,
+      select: {
+        studentId: true,
+        studentName: true,
+        grade: true,
+        minorCategory: {
+          select: {
+            minorCategoryName: true,
+          },
+        },
+        department: {
+          select: {
+            departmentName: true,
+          },
+        },
+      },
+      orderBy: [
+        { minorCategory: { minorCategoryName: "asc" } },
+        { grade: "desc" },
+      ],
+    });
+  },
+
+  async resolveMinorCategoryIds(filters: {
+    categories?: number[];
+    subCategories?: number[];
+    minorCategories?: number[];
+  }): Promise<number[]> {
+    let ids: number[] = [];
+
+    if (filters.categories?.length) {
+      const mcs = await prisma.minorCategory.findMany({
+        where: {
+          subCategory: { categoryId: { in: filters.categories } },
+        },
+        select: { minorCategoryId: true },
+      });
+      ids.push(...mcs.map((m) => m.minorCategoryId));
+    }
+
+    if (filters.subCategories?.length) {
+      const mcs = await prisma.minorCategory.findMany({
+        where: {
+          subCategoryId: { in: filters.subCategories },
+        },
+        select: { minorCategoryId: true },
+      });
+      ids.push(...mcs.map((m) => m.minorCategoryId));
+    }
+
+    if (filters.minorCategories?.length) {
+      ids.push(...filters.minorCategories);
+    }
+
+    return [...new Set(ids)];
+  },
 };
