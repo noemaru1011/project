@@ -3,14 +3,20 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/constants/routes";
 
+type ApiError = {
+  status: number;
+  code?: string;
+  message: string;
+};
+
 export const useErrorHandler = () => {
   const navigate = useNavigate();
 
   return useCallback(
-    (err: any) => {
-      const status = err?.status;
-      const code = err?.code;
-      const message = err?.message ?? "予期せぬエラーが発生しました";
+    (err: ApiError) => {
+      const status = err.status;
+      const code = err.code;
+      const message = err.message ?? "予期せぬエラーが発生しました";
 
       if (status === 0) {
         navigate(ROUTES.ERROR.SERVER);
