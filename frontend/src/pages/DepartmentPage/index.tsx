@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Table } from "@/components/elements/Table";
 import { Loading } from "@/components/elements/Loading";
 import { useCrud } from "@/hooks/useCrud";
-import { DepartmentLabels } from "@/types/department";
+import { DepartmentLabels } from "@/types/departmentLabels";
 import { DepartmentAPi } from "@/api/departmentApi";
 import type { Department } from "@shared/schemas/department";
 

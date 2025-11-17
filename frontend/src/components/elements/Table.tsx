@@ -1,4 +1,6 @@
 import type { DisplayLabels } from "@/types/ui";
+import { TableHead } from "./TableHead";
+import { TableRow } from "./TableRow";
 
 type Props<T> = {
   labels: DisplayLabels;
@@ -25,9 +27,6 @@ function flattenObject(obj: any, prefix = "", res: Record<string, any> = {}) {
   return res;
 }
 
-// ─────────────────────────────
-// Table 本体
-// ─────────────────────────────
 export function Table<T extends Record<string, any>>({
   labels,
   data,
@@ -40,31 +39,18 @@ export function Table<T extends Record<string, any>>({
     <div className="flex justify-center m-4">
       <div className="overflow-hidden rounded-lg border border-gray-300 shadow-md">
         <table className="table-auto min-w-[200px]">
-          <thead className="bg-gray-100 border-b-2 border-gray-300">
-            <tr>
-              {labelKeys.map((key) => (
-                <th key={key} className="p-2 text-center">
-                  {flatLabels[key]}
-                </th>
-              ))}
-            </tr>
-          </thead>
+          <TableHead labelKeys={labelKeys} flatLabels={flatLabels} />
 
           <tbody>
             {data.map((row) => {
               const flatRow = flattenObject(row);
-
               return (
-                <tr
+                <TableRow
                   key={String(row[keyField])}
-                  className="border-b border-gray-300"
-                >
-                  {labelKeys.map((key) => (
-                    <td key={key} className="p-2 text-center">
-                      {flatRow[key] ?? ""}
-                    </td>
-                  ))}
-                </tr>
+                  rowKey={row[keyField]}
+                  labelKeys={labelKeys}
+                  flatRow={flatRow}
+                />
               );
             })}
           </tbody>

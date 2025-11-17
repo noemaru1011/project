@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Table } from "@/components/elements/Table";
 import { Loading } from "@/components/elements/Loading";
 import { useCrud } from "@/hooks/useCrud";
-import { SubCategoryLabels } from "@/types/subCategory";
+import { SubCategoryLabels } from "@/types/subCategoryLabels";
 import { SubCategoryApi } from "@/api/subCategoryApi";
 import type { SubCategory } from "@shared/schemas/subCategory";
 

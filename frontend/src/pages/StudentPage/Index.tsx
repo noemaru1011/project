@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Table } from "@/components/elements/Table";
 import { Loading } from "@/components/elements/Loading";
 import { useCrud } from "@/hooks/useCrud";
-import { StudentLabels } from "@/types/student";
+import { StudentLabels } from "@/types/studentLabels";
 import { StudentApi } from "@/api/studentApi";
 import type { Student } from "@shared/schemas/student";
 

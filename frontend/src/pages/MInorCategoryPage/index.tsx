@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Table } from "@/components/elements/Table";
 import { Loading } from "@/components/elements/Loading";
 import { useCrud } from "@/hooks/useCrud";
-import { MinorCategoryLabels } from "@/types/minorCategory";
+import { MinorCategoryLabels } from "@/types/minorCategoryLabels";
 import { MinorCategoryApi } from "@/api/minorCategoryApi";
 import type { MinorCategory } from "@shared/schemas/minorCategory";
 
