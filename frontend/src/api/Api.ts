@@ -19,7 +19,6 @@ export async function Api<T>(path: string, options?: RequestInit): Promise<T> {
     const data = await res.json().catch(() => ({}));
     console.log(data);
 
-    // 通信成功でも、エラーコード付きなら throw する
     if (!res.ok) {
       throw {
         status: res.status,

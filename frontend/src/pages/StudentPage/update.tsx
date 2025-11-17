@@ -2,8 +2,6 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-
 import { Input } from "@/components/elements/Input";
 import { Select } from "@/components/elements/Select";
 import { Button } from "@/components/elements/Button";
@@ -38,7 +36,6 @@ export const StudentUpdate = () => {
     const fetchStudent = async () => {
       try {
         const data: any = await view(studentId);
-        if (!data) throw new Error("学生情報が取得できません");
         reset({
           studentName: data.studentName,
           email: data.email,
@@ -46,10 +43,7 @@ export const StudentUpdate = () => {
           minorCategoryId: String(data.minorCategoryId),
           departmentId: String(data.departmentId),
         });
-      } catch (err: any) {
-        toast.error(err.message || "学生情報の取得に失敗しました");
-        navigate(ROUTES.STUDENT.INDEX);
-      }
+      } catch (err: any) {}
     };
 
     fetchStudent();

@@ -10,7 +10,6 @@ import { departmentOptions } from "@/constants/department";
 import { useCrud } from "@/hooks/useCrud";
 import { Loading } from "@/components/elements/Loading";
 import { ROUTES } from "@/constants/routes";
-import { toast } from "react-toastify";
 import { StudentApi } from "@/api/studentApi";
 
 export const StudentView = () => {
@@ -25,12 +24,8 @@ export const StudentView = () => {
     const fetchStudent = async () => {
       try {
         const data: any = await view(studentId);
-        if (!data) throw new Error("学生情報が取得できません");
         setStudent(data);
-      } catch (err: any) {
-        toast.error(err.message || "学生情報の取得に失敗しました");
-        navigate(ROUTES.STUDENT.INDEX);
-      }
+      } catch (err: any) {}
     };
 
     fetchStudent();
