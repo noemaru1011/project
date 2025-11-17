@@ -15,7 +15,6 @@ export function useLogout() {
       return result;
     } catch (err: any) {
       handleError(err);
-      throw err;
     } finally {
       setLoading(false);
     }

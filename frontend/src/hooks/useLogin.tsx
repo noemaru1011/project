@@ -19,7 +19,6 @@ export function useLogin() {
       navigate(ROUTES.HOME);
     } catch (err: any) {
       handleError(err);
-      throw err;
     } finally {
       setLoading(false);
     }
