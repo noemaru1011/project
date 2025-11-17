@@ -110,26 +110,27 @@ export const StudentRepository = {
       },
     });
   },
-
   async searchStudents(data: {
     minorCategoryIds?: number[] | undefined;
     departments?: number[] | undefined;
     grade?: number[] | undefined;
   }) {
-    const where: any = { deleteFlag: false };
+    const andConditions: any[] = [{ deleteFlag: false }];
 
     if (data.minorCategoryIds?.length) {
-      where.minorCategoryId = { in: data.minorCategoryIds };
+      andConditions.push({ minorCategoryId: { in: data.minorCategoryIds } });
     }
+
     if (data.departments?.length) {
-      where.departmentId = { in: data.departments };
+      andConditions.push({ departmentId: { in: data.departments } });
     }
+
     if (data.grade?.length) {
-      where.grade = { in: data.grade };
+      andConditions.push({ grade: { in: data.grade } });
     }
 
     return await prisma.student.findMany({
-      where,
+      where: { AND: andConditions },
       select: {
         studentId: true,
         studentName: true,

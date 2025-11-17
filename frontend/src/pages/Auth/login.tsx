@@ -4,12 +4,9 @@ import { Button } from "@/components/elements/Button";
 import { Loading } from "@/components/elements/Loading";
 import { validation } from "@shared/schemas/login";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
-import { ROUTES } from "@/constants/routes";
 import { useLogin } from "@/hooks/useLogin";
 
 const Login = () => {
-  const navigate = useNavigate();
   const { login, loading } = useLogin();
 
   const {
@@ -22,9 +19,7 @@ const Login = () => {
 
   const onSubmit = async (data: { email: string; password: string }) => {
     try {
-      const res = await login(data);
-      console.log(res);
-      navigate(ROUTES.HOME);
+      await login(data);
     } catch (err: any) {}
   };
 

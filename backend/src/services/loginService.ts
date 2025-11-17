@@ -41,7 +41,6 @@ export const LoginService = {
     );
 
     const token = JwtUtil.createToken(student.studentId, "STUDENT");
-    console.log(token);
     return { token, role: "STUDENT", passwordUpdateRequired };
   },
 };

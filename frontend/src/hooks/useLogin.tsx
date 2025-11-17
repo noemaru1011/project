@@ -3,19 +3,20 @@ import { LoginApi } from "@/api/loginApi";
 import type { Auth } from "@shared/schemas/login";
 import { toast } from "react-toastify";
 import { useErrorHandler } from "./useErrorHandler";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "@/constants/routes";
 
 export function useLogin() {
-  const [user, setUser] = useState<Partial<Auth> | null>(null);
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const handleError = useErrorHandler();
 
   const login = async (data: Partial<Auth>) => {
     try {
       setLoading(true);
-      const result = await LoginApi.login(data);
-      setUser(result);
+      await LoginApi.login(data);
       toast.success("ログインに成功しました！");
-      return result;
+      navigate(ROUTES.HOME);
     } catch (err: any) {
       handleError(err);
       throw err;
@@ -24,5 +25,5 @@ export function useLogin() {
     }
   };
 
-  return { user, login, loading };
+  return { login, loading };
 }

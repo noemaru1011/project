@@ -18,7 +18,9 @@ export const validation = z.object({
   email: z
     .string()
     .nonempty("メールアドレスは必須です。")
-    .email("有効なメールアドレスを入力してください"),
+    .refine((val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val), {
+      message: "有効なメールアドレスを入力してください",
+    }),
 
   minorCategoryId: z
     .string()
