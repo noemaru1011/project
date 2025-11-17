@@ -12,6 +12,8 @@ import DepartmentRoutes from "@/routes/departmentRoutes";
 import statusRoutes from "@/routes/statusRoutes";
 import studentRoutes from "@/routes/studentRoutes";
 import passwordRoutes from "@/routes/passwordRoutes";
+import { requestLogger } from "@/middleware/requestLogger";
+import { errorLogger } from "@/middleware/errorLogger";
 import { securityMiddleware } from "@/middleware/securityMiddleware";
 import { authMiddleware, requireRole } from "@/middleware/authMiddleware";
 
@@ -32,6 +34,8 @@ app.use(express.urlencoded({ extended: true }));
 // 認証不要
 app.use(API_ROUTES.LOGIN, loginRoutes);
 app.use(API_ROUTES.LOGOUT, logoutRoutes);
+// アクセスログ
+app.use(requestLogger);
 
 //認証必須
 app.use(API_ROUTES.PASSWORD, authMiddleware, passwordRoutes);
@@ -68,7 +72,8 @@ app.use(
   requireRole("ADMIN"),
   studentRoutes
 );
-
+// エラーログ
+app.use(errorLogger);
 const PORT = process.env.BACK_PORT;
 app.listen(PORT, () => {
   console.log(`🚀 Frontend connecting: ${process.env.FRONT_URL}`);
