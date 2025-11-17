@@ -15,6 +15,7 @@ export const API_ROUTES = {
   STUDENT: {
     //get
     INDEX: "/api/students",
+    SEARCH: "/api/students/search",
     //post
     CREATE: "/api/students",
     //put

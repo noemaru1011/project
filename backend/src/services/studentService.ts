@@ -59,6 +59,7 @@ export const StudentService = {
     grade?: number[];
   }) {
     // Repository に階層解決を完全に任せる
+
     const minorCategoryIds = await StudentRepository.resolveMinorCategoryIds(
       filters
     );

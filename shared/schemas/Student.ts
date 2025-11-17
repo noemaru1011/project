@@ -40,12 +40,11 @@ export const validation = z.object({
 export type Student = z.infer<typeof validation>;
 
 export const studentQuery = z.object({
-  category: z.string().optional(),
-  subCategory: z.string().optional(),
-  minorCategory: z.string().optional(),
-  studentName: z.string().optional(),
-  departmentId: z.coerce.number().optional(),
-  grade: z.coerce.number().optional(),
+  categories: z.array(z.number()).optional(),
+  subCategories: z.array(z.number()).optional(),
+  minorCategories: z.array(z.number()).optional(),
+  departmentIds: z.array(z.coerce.number()).optional(),
+  grades: z.array(z.coerce.number()).optional(),
 });
 
 export type StudentQuery = z.infer<typeof studentQuery>;
