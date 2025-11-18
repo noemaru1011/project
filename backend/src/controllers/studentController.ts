@@ -41,6 +41,7 @@ export const StudentController = {
 
   async createStudent(req: Request, res: Response) {
     try {
+      console.log(req.body);
       await StudentService.createStudent(req.body);
       res.status(201).json({ message: '追加完了' });
     } catch (err: any) {

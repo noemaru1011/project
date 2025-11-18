@@ -15,6 +15,7 @@ export function usePassword() {
       toast.success('パスワードを変更しました');
     } catch (err: any) {
       handleError(err);
+      throw err; // ← ここで再スローする
     } finally {
       setLoading(false);
     }

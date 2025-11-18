@@ -25,7 +25,9 @@ export const StudentChange = () => {
     try {
       await updatePassword(data);
       navigate(ROUTES.HOME);
-    } catch (err: any) {}
+    } catch (err: any) {
+      console.log('エラーです');
+    }
   };
 
   return (

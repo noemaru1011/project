@@ -15,7 +15,7 @@ export const SubCategoryIndex = () => {
 
   return (
     <Loading loading={loading}>
-      <Table labels={SubCategoryLabels} data={subCategories} keyField="subCategoryId" />
+      <Table labels={SubCategoryLabels} data={subCategories} keyField="subCategoryName" />
     </Loading>
   );
 };

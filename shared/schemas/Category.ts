@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 export const validation = z.object({
-  categoryId: z.string(),
   categoryName: z.string(),
 });
 

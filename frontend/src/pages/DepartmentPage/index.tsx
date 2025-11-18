@@ -15,7 +15,7 @@ export const DepartmentIndex = () => {
 
   return (
     <Loading loading={loading}>
-      <Table labels={DepartmentLabels} data={Departments} keyField="departmentId" />
+      <Table labels={DepartmentLabels} data={Departments} keyField="departmentName" />
     </Loading>
   );
 };

@@ -27,7 +27,8 @@ export const useErrorHandler = () => {
       if (status === 400) {
         switch (code) {
           case 'INVALID_OLD_PASSWORD':
-            toast.error('現在のパスワードが違います');
+            toast.error(message);
+            console.log('aaaa');
             return;
           default:
             toast.error(message);

@@ -15,7 +15,7 @@ export const StatusIndex = () => {
 
   return (
     <Loading loading={loading}>
-      <Table labels={StatusLabels} data={Status} keyField="statusId" />
+      <Table labels={StatusLabels} data={Status} keyField="statusName" />
     </Loading>
   );
 };

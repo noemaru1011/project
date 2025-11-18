@@ -15,7 +15,8 @@ export const StudentIndex = () => {
 
   return (
     <Loading loading={loading}>
-      <Table labels={StudentLabels} data={student} keyField="studentId" />
+      {/* id検討 */}
+      <Table labels={StudentLabels} data={student} keyField="email" />
     </Loading>
   );
 };

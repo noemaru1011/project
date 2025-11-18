@@ -15,6 +15,7 @@ export function useLogout() {
       return result;
     } catch (err: any) {
       handleError(err);
+      throw err; // ← ここで再スローする
     } finally {
       setLoading(false);
     }

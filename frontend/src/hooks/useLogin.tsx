@@ -19,6 +19,7 @@ export function useLogin() {
       navigate(ROUTES.HOME);
     } catch (err: any) {
       handleError(err);
+      throw err; // ← ここで再スローする
     } finally {
       setLoading(false);
     }
