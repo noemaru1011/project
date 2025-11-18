@@ -6,7 +6,7 @@ export const StudentApi = {
   index: () => Api<Student[]>(API_ROUTES.STUDENT.INDEX, { method: 'GET' }),
 
   search: (data: StudentQuery) =>
-    Api<any>(API_ROUTES.STUDENT.SEARCH, {
+    Api<Student[]>(API_ROUTES.STUDENT.SEARCH, {
       method: 'POST',
       body: JSON.stringify(data),
     }),

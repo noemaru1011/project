@@ -5,7 +5,10 @@ export const StudentController = {
   async getAllStudents(req: Request, res: Response) {
     try {
       const students = await StudentService.getAllStudents();
-      res.json(students);
+      res.json({
+        data: students,
+        message: '取得成功',
+      });
     } catch (error) {
       res.status(500).json({ message: '予期せぬエラーが発生しました' });
     }
@@ -23,7 +26,10 @@ export const StudentController = {
         return res.status(404).json({ message: '学生が見つかりません' });
       }
 
-      res.json(student);
+      res.json({
+        data: student,
+        message: '取得成功',
+      });
     } catch (error) {
       res.status(500).json({ message: '予期せぬエラーが発生しました' });
     }
@@ -31,9 +37,11 @@ export const StudentController = {
 
   async searchStudents(req: Request, res: Response) {
     try {
-      console.log(req.body);
       const students = await StudentService.searchStudents(req.body);
-      res.json(students);
+      res.json({
+        data: students,
+        message: '取得成功',
+      });
     } catch (err: any) {
       res.status(500).json({ message: '予期せぬエラーが発生しました' });
     }
@@ -41,7 +49,6 @@ export const StudentController = {
 
   async createStudent(req: Request, res: Response) {
     try {
-      console.log(req.body);
       await StudentService.createStudent(req.body);
       res.status(201).json({ message: '追加完了' });
     } catch (err: any) {

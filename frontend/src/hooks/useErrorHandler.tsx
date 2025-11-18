@@ -28,7 +28,6 @@ export const useErrorHandler = () => {
         switch (code) {
           case 'INVALID_OLD_PASSWORD':
             toast.error(message);
-            console.log('aaaa');
             return;
           default:
             toast.error(message);
@@ -42,6 +41,9 @@ export const useErrorHandler = () => {
             toast.error(message);
             return;
           case 'TOKEN_EXPIRED':
+            navigate(ROUTES.AUTH.LOGIN);
+            toast.error(message);
+            return;
           case 'INVALID_TOKEN':
             navigate(ROUTES.AUTH.LOGIN);
             toast.error(message);

@@ -5,7 +5,10 @@ export const DepartmentController = {
   async getAllDepartments(req: Request, res: Response) {
     try {
       const departments = await DepartmentService.getAllDepartments();
-      res.json(departments);
+      res.json({
+        data: departments,
+        message: '取得成功',
+      });
     } catch (error) {
       res.status(500).json({ message: '予期せぬエラーが発生しました' });
     }

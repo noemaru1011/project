@@ -6,9 +6,7 @@ export const LoginController = {
   async login(req: Request, res: Response) {
     const { email, password } = req.body;
     try {
-      console.log(req.body);
       const result = await LoginService.login(email, password);
-      console.log(result);
 
       // Cookie に JWT をセット
       res.cookie('token', result.token, {
@@ -26,7 +24,7 @@ export const LoginController = {
         maxAge: 3600 * 1000,
       });
 
-      res.json({ code: 'SUCCESS', message: 'ログイン成功', ...result });
+      res.json({ code: 'SUCCESS', message: 'ログイン成功', data: result });
     } catch (err) {
       if (err instanceof AppError) {
         return res.status(err.status).json({
@@ -37,7 +35,6 @@ export const LoginController = {
 
       // 予期しないエラー
       return res.status(500).json({
-        code: 'INTERNAL_ERROR',
         message: '予期せぬエラーが発生しました',
       });
     }

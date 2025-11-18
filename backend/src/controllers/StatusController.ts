@@ -5,7 +5,10 @@ export const StatusController = {
   async getAllStatuses(req: Request, res: Response) {
     try {
       const statuses = await StatusService.getAllstatuses();
-      res.json(statuses);
+      res.json({
+        data: statuses,
+        message: '取得成功',
+      });
     } catch (error) {
       res.status(500).json({ message: '予期せぬエラーが発生しました' });
     }

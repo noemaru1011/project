@@ -18,7 +18,6 @@ export const PasswordController = {
       }
 
       res.status(500).json({
-        code: 'INTERNAL_ERROR',
         message: '予期せぬエラーが発生しました',
       });
     }

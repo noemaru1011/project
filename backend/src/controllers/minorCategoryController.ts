@@ -5,7 +5,10 @@ export const MinorCategoryController = {
   async getAllMinorCategories(req: Request, res: Response) {
     try {
       const minorcategories = await MinorCategoryService.getAllMinorCategories();
-      res.json(minorcategories);
+      res.json({
+        data: minorcategories,
+        message: '取得成功',
+      });
     } catch (error) {
       res.status(500).json({ message: '予期せぬエラーが発生しました' });
     }
