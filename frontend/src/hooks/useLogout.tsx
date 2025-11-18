@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { LogoutApi } from "@/api/logoutApi";
-import { toast } from "react-toastify";
-import { useErrorHandler } from "./useErrorHandler";
+import { useState } from 'react';
+import { LogoutApi } from '@/api/logoutApi';
+import { toast } from 'react-toastify';
+import { useErrorHandler } from './useErrorHandler';
 
 export function useLogout() {
   const [loading, setLoading] = useState(false);
@@ -11,7 +11,7 @@ export function useLogout() {
     try {
       setLoading(true);
       const result = await LogoutApi.logout();
-      toast.success(result.message ?? "ログアウトしました");
+      toast.success(result.message ?? 'ログアウトしました');
       return result;
     } catch (err: any) {
       handleError(err);

@@ -1,5 +1,5 @@
-import React from "react";
-import type { InputType } from "@/types/ui";
+import React from 'react';
+import type { InputType } from '@/types/ui';
 
 type Props = {
   id: string;
@@ -27,7 +27,7 @@ export const Input = React.forwardRef<HTMLInputElement, Props>(
           ref={ref}
           disabled={disabled}
           className={`border-b focus:outline-none focus:border-b-2 focus:border-indigo-500 disabled:bg-gray-100 disabled:text-gray-400
-            ${error ? "border-red-500" : "border-gray-300"}`}
+            ${error ? 'border-red-500' : 'border-gray-300'}`}
           autoComplete="off"
           {...rest}
         />
@@ -35,5 +35,5 @@ export const Input = React.forwardRef<HTMLInputElement, Props>(
         {error && <p className="text-red-500 text-sm ml-1">{error}</p>}
       </div>
     );
-  }
+  },
 );

@@ -1,4 +1,4 @@
-import type { Option } from "@/types/ui";
+import type { Option } from '@/types/ui';
 
 const squads: Option[] = [];
 

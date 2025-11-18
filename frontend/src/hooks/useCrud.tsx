@@ -1,6 +1,6 @@
-import { useState, useCallback } from "react";
-import { toast } from "react-toastify";
-import { useErrorHandler } from "./useErrorHandler";
+import { useState, useCallback } from 'react';
+import { toast } from 'react-toastify';
+import { useErrorHandler } from './useErrorHandler';
 
 type ApiMethods<T> = {
   index?: () => Promise<T[]>;
@@ -34,14 +34,14 @@ export function useCrud<T>(api: ApiMethods<T>) {
       try {
         setLoading(true);
         await api.create(item);
-        toast.success("登録が完了しました！✅");
+        toast.success('登録が完了しました！✅');
       } catch (err: any) {
         handleError(err);
       } finally {
         setLoading(false);
       }
     },
-    [api, handleError]
+    [api, handleError],
   );
 
   const update = useCallback(
@@ -50,14 +50,14 @@ export function useCrud<T>(api: ApiMethods<T>) {
       try {
         setLoading(true);
         await api.update(id, updateData);
-        toast.success("更新しました！✏️");
+        toast.success('更新しました！✏️');
       } catch (err: any) {
         handleError(err);
       } finally {
         setLoading(false);
       }
     },
-    [api, handleError]
+    [api, handleError],
   );
 
   const remove = useCallback(
@@ -66,14 +66,14 @@ export function useCrud<T>(api: ApiMethods<T>) {
       try {
         setLoading(true);
         await api.delete(id);
-        toast.success("削除しました🗑️");
+        toast.success('削除しました🗑️');
       } catch (err: any) {
         handleError(err);
       } finally {
         setLoading(false);
       }
     },
-    [api, handleError]
+    [api, handleError],
   );
 
   const view = useCallback(
@@ -89,7 +89,7 @@ export function useCrud<T>(api: ApiMethods<T>) {
         setLoading(false);
       }
     },
-    [api, handleError]
+    [api, handleError],
   );
 
   return {

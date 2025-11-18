@@ -1,7 +1,7 @@
-import { useCallback } from "react";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { ROUTES } from "@/constants/routes";
+import { useCallback } from 'react';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/constants/routes';
 
 type ApiError = {
   status: number;
@@ -16,7 +16,7 @@ export const useErrorHandler = () => {
     (err: ApiError) => {
       const status = err.status;
       const code = err.code;
-      const message = err.message ?? "予期せぬエラーが発生しました";
+      const message = err.message ?? '予期せぬエラーが発生しました';
 
       if (status === 0) {
         navigate(ROUTES.ERROR.SERVER);
@@ -26,8 +26,8 @@ export const useErrorHandler = () => {
 
       if (status === 400) {
         switch (code) {
-          case "INVALID_OLD_PASSWORD":
-            toast.error("現在のパスワードが違います");
+          case 'INVALID_OLD_PASSWORD':
+            toast.error('現在のパスワードが違います');
             return;
           default:
             toast.error(message);
@@ -37,11 +37,11 @@ export const useErrorHandler = () => {
 
       if (status === 401) {
         switch (code) {
-          case "INVALID_CREDENTIALS":
+          case 'INVALID_CREDENTIALS':
             toast.error(message);
             return;
-          case "TOKEN_EXPIRED":
-          case "INVALID_TOKEN":
+          case 'TOKEN_EXPIRED':
+          case 'INVALID_TOKEN':
             navigate(ROUTES.AUTH.LOGIN);
             toast.error(message);
             return;
@@ -73,6 +73,6 @@ export const useErrorHandler = () => {
       navigate(ROUTES.ERROR.SERVER);
       toast.error(message);
     },
-    [navigate]
+    [navigate],
   );
 };

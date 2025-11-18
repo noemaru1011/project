@@ -1,18 +1,18 @@
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { Input } from "@/components/elements/Input";
-import { Select } from "@/components/elements/Select";
-import { Button } from "@/components/elements/Button";
-import { gradeOptions } from "@/constants/grade";
-import { minorCategoryOptions } from "@/constants/minorCategory";
-import { departmentOptions } from "@/constants/department";
-import { validation } from "@shared/schemas/student";
-import { useCrud } from "@/hooks/useCrud";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Loading } from "@/components/elements/Loading";
-import { ROUTES } from "@/constants/routes";
-import { StudentApi } from "@/api/studentApi";
-import type { Student } from "@shared/schemas/student";
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { Input } from '@/components/elements/Input';
+import { Select } from '@/components/elements/Select';
+import { Button } from '@/components/elements/Button';
+import { gradeOptions } from '@/constants/grade';
+import { minorCategoryOptions } from '@/constants/minorCategory';
+import { departmentOptions } from '@/constants/department';
+import { validation } from '@shared/schemas/student';
+import { useCrud } from '@/hooks/useCrud';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Loading } from '@/components/elements/Loading';
+import { ROUTES } from '@/constants/routes';
+import { StudentApi } from '@/api/studentApi';
+import type { Student } from '@shared/schemas/student';
 
 export const StudentCreate = () => {
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ export const StudentCreate = () => {
               type="text"
               error={errors.studentName?.message}
               required
-              {...register("studentName")}
+              {...register('studentName')}
             />
             <Select
               id="grade"
@@ -59,7 +59,7 @@ export const StudentCreate = () => {
               options={gradeOptions}
               required
               error={errors.grade?.message}
-              {...register("grade")}
+              {...register('grade')}
             />
             <Select
               id="minorCategory"
@@ -67,7 +67,7 @@ export const StudentCreate = () => {
               options={minorCategoryOptions}
               required
               error={errors.minorCategoryId?.message}
-              {...register("minorCategoryId")}
+              {...register('minorCategoryId')}
             />
             <Input
               id="email"
@@ -75,7 +75,7 @@ export const StudentCreate = () => {
               label="メールアドレス"
               required
               error={errors.email?.message}
-              {...register("email")}
+              {...register('email')}
             />
             <Select
               id="department"
@@ -83,15 +83,10 @@ export const StudentCreate = () => {
               options={departmentOptions}
               required
               error={errors.departmentId?.message}
-              {...register("departmentId")}
+              {...register('departmentId')}
             />
 
-            <Button
-              type="submit"
-              variant="Create"
-              disabled={loading}
-              className="w-full mt-4"
-            />
+            <Button type="submit" variant="Create" disabled={loading} className="w-full mt-4" />
           </form>
         </div>
       </div>

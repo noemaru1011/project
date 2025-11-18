@@ -1,12 +1,12 @@
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { Input } from "@/components/elements/Input";
-import { Button } from "@/components/elements/Button";
-import { validation } from "@shared/schemas/password";
-import { usePassword } from "@/hooks/usePassword";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ROUTES } from "@/constants/routes";
-import { Loading } from "@/components/elements/Loading";
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { Input } from '@/components/elements/Input';
+import { Button } from '@/components/elements/Button';
+import { validation } from '@shared/schemas/password';
+import { usePassword } from '@/hooks/usePassword';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ROUTES } from '@/constants/routes';
+import { Loading } from '@/components/elements/Loading';
 
 export const StudentChange = () => {
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ export const StudentChange = () => {
               type="password"
               error={errors.oldPassword?.message}
               required
-              {...register("oldPassword")}
+              {...register('oldPassword')}
             />
             <Input
               id="newPassword1"
@@ -47,7 +47,7 @@ export const StudentChange = () => {
               type="password"
               error={errors.newPassword1?.message}
               required
-              {...register("newPassword1")}
+              {...register('newPassword1')}
             />
             <Input
               id="newPassword2"
@@ -55,15 +55,10 @@ export const StudentChange = () => {
               type="password"
               error={errors.newPassword2?.message}
               required
-              {...register("newPassword2")}
+              {...register('newPassword2')}
             />
 
-            <Button
-              type="submit"
-              variant="Update"
-              disabled={loading}
-              className="w-full mt-4"
-            />
+            <Button type="submit" variant="Update" disabled={loading} className="w-full mt-4" />
           </form>
         </div>
       </div>

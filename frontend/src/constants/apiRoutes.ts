@@ -1,23 +1,23 @@
 export const API_ROUTES = {
   CATEGORY: {
-    INDEX: "/api/categories",
+    INDEX: '/api/categories',
   },
   SUBCATEGORY: {
-    INDEX: "/api/subCategories",
+    INDEX: '/api/subCategories',
   },
   MINORCATEGORY: {
-    INDEX: "/api/minor-categories",
+    INDEX: '/api/minor-categories',
   },
   DEPARTMENT: {
-    INDEX: "/api/departments",
+    INDEX: '/api/departments',
   },
-  STATUS: { INDEX: "/api/statuses" },
+  STATUS: { INDEX: '/api/statuses' },
   STUDENT: {
     //get
-    INDEX: "/api/students",
-    SEARCH: "/api/students/search",
+    INDEX: '/api/students',
+    SEARCH: '/api/students/search',
     //post
-    CREATE: "/api/students",
+    CREATE: '/api/students',
     //put
     UPDATE: (id: string) => `/api/students/${id}`,
     //get;id
@@ -26,10 +26,10 @@ export const API_ROUTES = {
     DELETE: (id: string) => `/api/students/${id}`,
   },
   AUTH: {
-    LOGIN: "/api/login",
-    LOGOUT: "/api/logout",
+    LOGIN: '/api/login',
+    LOGOUT: '/api/logout',
   },
   PASSWORD: {
-    UPDATE: "/api/password",
+    UPDATE: '/api/password',
   },
 } as const;

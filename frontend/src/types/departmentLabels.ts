@@ -1,5 +1,5 @@
-import type { DisplayLabels } from "@/types/ui";
+import type { DisplayLabels } from '@/types/ui';
 
 export const DepartmentLabels: DisplayLabels = {
-  departmentName: "学科名",
+  departmentName: '学科名',
 };

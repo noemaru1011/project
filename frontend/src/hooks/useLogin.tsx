@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { LoginApi } from "@/api/loginApi";
-import type { Auth } from "@shared/schemas/login";
-import { toast } from "react-toastify";
-import { useErrorHandler } from "./useErrorHandler";
-import { useNavigate } from "react-router-dom";
-import { ROUTES } from "@/constants/routes";
+import { useState } from 'react';
+import { LoginApi } from '@/api/loginApi';
+import type { Auth } from '@shared/schemas/login';
+import { toast } from 'react-toastify';
+import { useErrorHandler } from './useErrorHandler';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/constants/routes';
 
 export function useLogin() {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ export function useLogin() {
     try {
       setLoading(true);
       await LoginApi.login(data);
-      toast.success("ログインに成功しました！");
+      toast.success('ログインに成功しました！');
       navigate(ROUTES.HOME);
     } catch (err: any) {
       handleError(err);

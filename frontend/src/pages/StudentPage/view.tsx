@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import type { Student } from "@shared/schemas/student";
-import { Input } from "@/components/elements/Input";
-import { Select } from "@/components/elements/Select";
-import { Button } from "@/components/elements/Button";
-import { gradeOptions } from "@/constants/grade";
-import { minorCategoryOptions } from "@/constants/minorCategory";
-import { departmentOptions } from "@/constants/department";
-import { useCrud } from "@/hooks/useCrud";
-import { Loading } from "@/components/elements/Loading";
-import { ROUTES } from "@/constants/routes";
-import { StudentApi } from "@/api/studentApi";
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import type { Student } from '@shared/schemas/student';
+import { Input } from '@/components/elements/Input';
+import { Select } from '@/components/elements/Select';
+import { Button } from '@/components/elements/Button';
+import { gradeOptions } from '@/constants/grade';
+import { minorCategoryOptions } from '@/constants/minorCategory';
+import { departmentOptions } from '@/constants/department';
+import { useCrud } from '@/hooks/useCrud';
+import { Loading } from '@/components/elements/Loading';
+import { ROUTES } from '@/constants/routes';
+import { StudentApi } from '@/api/studentApi';
 
 export const StudentView = () => {
   const navigate = useNavigate();
@@ -39,35 +39,35 @@ export const StudentView = () => {
             id="studentName"
             label="学生名"
             type="text"
-            value={student ? student.studentName : ""}
+            value={student ? student.studentName : ''}
             disabled
           />
           <Select
             id="grade"
             label="学年"
             options={gradeOptions}
-            value={student ? String(student.grade) : ""}
+            value={student ? String(student.grade) : ''}
             disabled
           />
           <Select
             id="minorCategoryId"
             label="小分類名"
             options={minorCategoryOptions}
-            value={student ? String(student.minorCategoryId) : ""}
+            value={student ? String(student.minorCategoryId) : ''}
             disabled
           />
           <Input
             id="email"
             label="メールアドレス"
             type="email"
-            value={student ? student.email : ""}
+            value={student ? student.email : ''}
             disabled
           />
           <Select
             id="departmentId"
             label="学科名"
             options={departmentOptions}
-            value={student ? String(student.departmentId) : ""}
+            value={student ? String(student.departmentId) : ''}
             disabled
           />
 

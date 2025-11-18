@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { PasswordApi } from "@/api/passwordApi";
-import type { Password } from "@shared/schemas/password";
-import { useErrorHandler } from "./useErrorHandler";
-import { toast } from "react-toastify";
+import { useState } from 'react';
+import { PasswordApi } from '@/api/passwordApi';
+import type { Password } from '@shared/schemas/password';
+import { useErrorHandler } from './useErrorHandler';
+import { toast } from 'react-toastify';
 
 export function usePassword() {
   const [loading, setLoading] = useState(false);
@@ -12,7 +12,7 @@ export function usePassword() {
     try {
       setLoading(true);
       await PasswordApi.update(data);
-      toast.success("パスワードを変更しました");
+      toast.success('パスワードを変更しました');
     } catch (err: any) {
       handleError(err);
     } finally {

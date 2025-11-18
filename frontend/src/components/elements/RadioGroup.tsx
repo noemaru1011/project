@@ -1,7 +1,7 @@
-import { Controller } from "react-hook-form";
-import type { Control, FieldValues, Path } from "react-hook-form";
-import { Radio } from "./Radio";
-import type { Option } from "@/types/ui";
+import { Controller } from 'react-hook-form';
+import type { Control, FieldValues, Path } from 'react-hook-form';
+import { Radio } from './Radio';
+import type { Option } from '@/types/ui';
 
 type Props<T extends FieldValues> = {
   name: Path<T>;
@@ -9,11 +9,7 @@ type Props<T extends FieldValues> = {
   control: Control<T>;
 };
 
-export const RadioGroup = <T extends FieldValues>({
-  name,
-  options,
-  control,
-}: Props<T>) => {
+export const RadioGroup = <T extends FieldValues>({ name, options, control }: Props<T>) => {
   return (
     <Controller
       name={name}

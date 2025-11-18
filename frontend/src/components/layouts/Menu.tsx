@@ -1,15 +1,15 @@
-import menuIcon from "@/assets/menu.svg";
-import colseIcon from "@/assets/close.svg";
-import type { Option } from "@/types/ui";
-import { ROUTES } from "@/constants/routes";
+import menuIcon from '@/assets/menu.svg';
+import colseIcon from '@/assets/close.svg';
+import type { Option } from '@/types/ui';
+import { ROUTES } from '@/constants/routes';
 
 const MenuOptions: Option[] = [
-  { value: ROUTES.CATEGORY.INDEX, label: "大分類マスタ" },
-  { value: ROUTES.SUBCATEGORY.INDEX, label: "中分類マスタ" },
-  { value: ROUTES.MINORCategory.INDEX, label: "小分類マスタ" },
-  { value: ROUTES.DEPARTMENT.INDEX, label: "学科マスタ" },
-  { value: ROUTES.STATUS.INDEX, label: "状態区分" },
-  { value: ROUTES.STUDENT.INDEX, label: "学生マスタ" },
+  { value: ROUTES.CATEGORY.INDEX, label: '大分類マスタ' },
+  { value: ROUTES.SUBCATEGORY.INDEX, label: '中分類マスタ' },
+  { value: ROUTES.MINORCategory.INDEX, label: '小分類マスタ' },
+  { value: ROUTES.DEPARTMENT.INDEX, label: '学科マスタ' },
+  { value: ROUTES.STATUS.INDEX, label: '状態区分' },
+  { value: ROUTES.STUDENT.INDEX, label: '学生マスタ' },
 ];
 
 type MenuProps = {
@@ -21,21 +21,13 @@ const Menu = ({ open, onClick }: MenuProps) => {
   return (
     <div className="relative">
       {/* ハンバーガーアイコン */}
-      <img
-        src={menuIcon}
-        alt="メニュー"
-        onClick={onClick}
-        className="cursor-pointer w-6 h-6"
-      />
+      <img src={menuIcon} alt="メニュー" onClick={onClick} className="cursor-pointer w-6 h-6" />
 
       {/* メニュー表示中 */}
       {open && (
         <>
           {/* オーバーレイ（背景クリックで閉じる） */}
-          <div
-            className="fixed inset-0 backdrop-blur-sm"
-            onClick={onClick}
-          ></div>
+          <div className="fixed inset-0 backdrop-blur-sm" onClick={onClick}></div>
 
           {/* スライドインメニュー */}
           <div className="fixed top-0 right-0 h-full w-64 bg-white z-50">

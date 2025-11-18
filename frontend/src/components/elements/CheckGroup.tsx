@@ -1,7 +1,7 @@
-import { Controller } from "react-hook-form";
-import type { Control, FieldValues, Path } from "react-hook-form";
-import { Checkbox } from "./Checkbox";
-import type { Option } from "@/types/ui";
+import { Controller } from 'react-hook-form';
+import type { Control, FieldValues, Path } from 'react-hook-form';
+import { Checkbox } from './Checkbox';
+import type { Option } from '@/types/ui';
 
 type Props<T extends FieldValues> = {
   name: Path<T>;
@@ -44,9 +44,7 @@ export const CheckGroup = <T extends FieldValues>({
                   id={`${String(name)}_${value}`}
                   label={label}
                   checked={field.value?.includes(value)}
-                  onChange={() =>
-                    field.onChange(toggleValue(field.value, value))
-                  }
+                  onChange={() => field.onChange(toggleValue(field.value, value))}
                 />
               ))}
             </div>

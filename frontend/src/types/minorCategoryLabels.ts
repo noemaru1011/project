@@ -1,5 +1,5 @@
-import type { DisplayLabels } from "@/types/ui";
+import type { DisplayLabels } from '@/types/ui';
 
 export const MinorCategoryLabels: DisplayLabels = {
-  minorCategoryName: "小分類名",
+  minorCategoryName: '小分類名',
 };

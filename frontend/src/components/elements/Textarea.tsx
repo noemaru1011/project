@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 type Props = {
   id: string;
@@ -34,5 +34,5 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, Props>(
         {error && <p className="text-red-500 text-sm ml-1">{error}</p>}
       </div>
     );
-  }
+  },
 );

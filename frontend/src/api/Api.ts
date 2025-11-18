@@ -8,9 +8,9 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export async function Api<T>(path: string, options?: RequestInit): Promise<T> {
   try {
     const res = await fetch(`${API_BASE_URL}${path}`, {
-      credentials: "include",
+      credentials: 'include',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         ...(options?.headers || {}),
       },
       ...options,
@@ -24,7 +24,7 @@ export async function Api<T>(path: string, options?: RequestInit): Promise<T> {
       throw {
         status: res.status,
         code: data.code,
-        message: data.error || data.message || "エラーが発生しました",
+        message: data.error || data.message || 'エラーが発生しました',
       };
     }
 
@@ -34,8 +34,8 @@ export async function Api<T>(path: string, options?: RequestInit): Promise<T> {
     if (err instanceof TypeError) {
       throw {
         status: 0,
-        code: "NETWORK_ERROR",
-        message: "サーバーに接続できません。ネットワークをご確認ください。",
+        code: 'NETWORK_ERROR',
+        message: 'サーバーに接続できません。ネットワークをご確認ください。',
       };
     }
 

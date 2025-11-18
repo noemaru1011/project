@@ -1,5 +1,5 @@
-import React from "react";
-import type { Option } from "@/types/ui";
+import React from 'react';
+import type { Option } from '@/types/ui';
 
 type Props = {
   id: string;
@@ -26,7 +26,7 @@ export const Select = React.forwardRef<HTMLSelectElement, Props>(
           ref={ref}
           disabled={disabled}
           className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500  disabled:bg-gray-100 disabled:text-gray-400 
-            ${error ? "border-red-500" : "border-gray-300"}`}
+            ${error ? 'border-red-500' : 'border-gray-300'}`}
           {...rest} // registerのonChange, onBlur, name, valueがここに入る
         >
           <option value="">選択してください</option>
@@ -40,5 +40,5 @@ export const Select = React.forwardRef<HTMLSelectElement, Props>(
         {error && <p className="text-red-500 text-sm ml-1">{error}</p>}
       </div>
     );
-  }
+  },
 );

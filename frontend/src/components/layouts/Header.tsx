@@ -1,15 +1,15 @@
-import type { Option } from "@/types/ui";
-import { ROUTES } from "@/constants/routes";
-import Menu from "./Menu";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLogout } from "@/hooks/useLogout";
+import type { Option } from '@/types/ui';
+import { ROUTES } from '@/constants/routes';
+import Menu from './Menu';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLogout } from '@/hooks/useLogout';
 
 const HeaderOptions: Option[] = [
-  { value: ROUTES.HOME, label: "メインページへ" },
-  { value: ROUTES.HISTORY.INDEX, label: "事故一覧" },
-  { value: ROUTES.STUDENT.CHANGE, label: "パスワード変更" },
-  { value: "LOGOUT", label: "ログアウト" },
+  { value: ROUTES.HOME, label: 'メインページへ' },
+  { value: ROUTES.HISTORY.INDEX, label: '事故一覧' },
+  { value: ROUTES.STUDENT.CHANGE, label: 'パスワード変更' },
+  { value: 'LOGOUT', label: 'ログアウト' },
 ];
 
 const Header = () => {
@@ -20,7 +20,7 @@ const Header = () => {
   const [open, setOpen] = useState(false);
 
   const handleNavigate = async (opt: Option) => {
-    if (opt.value === "LOGOUT") {
+    if (opt.value === 'LOGOUT') {
       try {
         await logout();
         navigate(ROUTES.AUTH.LOGIN, { replace: true });
@@ -34,10 +34,7 @@ const Header = () => {
   return (
     <header className="border-b">
       <div className="px-5 py-4 flex flex-col sm:flex-row sm:justify-between items-center">
-        <button
-          onClick={() => handleNavigate(main)}
-          className="font-bold mb-2 sm:mb-0"
-        >
+        <button onClick={() => handleNavigate(main)} className="font-bold mb-2 sm:mb-0">
           {main.label}
         </button>
 
@@ -48,9 +45,9 @@ const Header = () => {
                 key={opt.value}
                 onClick={() => handleNavigate(opt)}
                 className={`font-bold mb-2 sm:mb-0 ${
-                  index < navOptions.length - 1 ? "sm:mr-5" : ""
+                  index < navOptions.length - 1 ? 'sm:mr-5' : ''
                 }`}
-                disabled={loading && opt.value === "LOGOUT"}
+                disabled={loading && opt.value === 'LOGOUT'}
               >
                 {opt.label}
               </button>

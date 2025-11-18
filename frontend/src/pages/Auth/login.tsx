@@ -1,10 +1,10 @@
-import { useForm } from "react-hook-form";
-import { Input } from "@/components/elements/Input";
-import { Button } from "@/components/elements/Button";
-import { Loading } from "@/components/elements/Loading";
-import { validation } from "@shared/schemas/login";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useLogin } from "@/hooks/useLogin";
+import { useForm } from 'react-hook-form';
+import { Input } from '@/components/elements/Input';
+import { Button } from '@/components/elements/Button';
+import { Loading } from '@/components/elements/Loading';
+import { validation } from '@shared/schemas/login';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useLogin } from '@/hooks/useLogin';
 
 const Login = () => {
   const { login, loading } = useLogin();
@@ -34,7 +34,7 @@ const Login = () => {
               label="メールアドレス"
               required
               error={errors.email?.message}
-              {...register("email")}
+              {...register('email')}
             />
             <Input
               id="studentPassword"
@@ -42,14 +42,9 @@ const Login = () => {
               label="パスワード"
               required
               error={errors.password?.message}
-              {...register("password")}
+              {...register('password')}
             />
-            <Button
-              type="submit"
-              variant="Login"
-              className="w-full mt-4"
-              disabled={loading}
-            />
+            <Button type="submit" variant="Login" className="w-full mt-4" disabled={loading} />
           </form>
         </div>
       </div>

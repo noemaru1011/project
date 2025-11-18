@@ -1,27 +1,27 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import ProtectedContent from "@/hooks/useContent";
-import { ROUTES } from "@/constants/routes";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import ProtectedContent from '@/hooks/useContent';
+import { ROUTES } from '@/constants/routes';
 
-import Layout from "@/components/layouts/Layout";
-import Login from "@/pages/Auth/login";
-import { HomePage } from "@/pages/Home/HomePage";
-import { CategoryIndex } from "@/pages/CategoryPage";
-import { SubCategoryIndex } from "@/pages/SubCategoryPage";
-import { MinorCategoryIndex } from "@/pages/MInorCategoryPage";
-import { DepartmentIndex } from "@/pages/DepartmentPage";
-import { StatusIndex } from "@/pages/StatusPage";
-import { StudentIndex } from "@/pages/StudentPage";
-import { StudentCreate } from "@/pages/StudentPage/create";
-import { StudentUpdate } from "@/pages/StudentPage/update";
-import { StudentView } from "@/pages/StudentPage/view";
-import { StudentChange } from "@/pages/Auth/changePassword";
-import { HistoryCreate } from "@/pages/HistoryPage/create";
+import Layout from '@/components/layouts/Layout';
+import Login from '@/pages/Auth/login';
+import { HomePage } from '@/pages/Home/HomePage';
+import { CategoryIndex } from '@/pages/CategoryPage';
+import { SubCategoryIndex } from '@/pages/SubCategoryPage';
+import { MinorCategoryIndex } from '@/pages/MInorCategoryPage';
+import { DepartmentIndex } from '@/pages/DepartmentPage';
+import { StatusIndex } from '@/pages/StatusPage';
+import { StudentIndex } from '@/pages/StudentPage';
+import { StudentCreate } from '@/pages/StudentPage/create';
+import { StudentUpdate } from '@/pages/StudentPage/update';
+import { StudentView } from '@/pages/StudentPage/view';
+import { StudentChange } from '@/pages/Auth/changePassword';
+import { HistoryCreate } from '@/pages/HistoryPage/create';
 
-import { NotFound } from "@/pages/ErrorPage/NotFound";
-import { ServerError } from "@/pages/ErrorPage/ServerError";
-import { Forbidden } from "@/pages/ErrorPage/Forbidden";
+import { NotFound } from '@/pages/ErrorPage/NotFound';
+import { ServerError } from '@/pages/ErrorPage/ServerError';
+import { Forbidden } from '@/pages/ErrorPage/Forbidden';
 
 const AppRoutes = () => (
   <Routes>
@@ -38,7 +38,7 @@ const AppRoutes = () => (
       <Route
         path={ROUTES.HOME}
         element={
-          <ProtectedContent allowedRoles={["ADMIN", "STUDENT"]}>
+          <ProtectedContent allowedRoles={['ADMIN', 'STUDENT']}>
             <HomePage />
           </ProtectedContent>
         }
@@ -46,7 +46,7 @@ const AppRoutes = () => (
       <Route
         path={ROUTES.HISTORY.CREATE}
         element={
-          <ProtectedContent allowedRoles={["ADMIN", "STUDENT"]}>
+          <ProtectedContent allowedRoles={['ADMIN', 'STUDENT']}>
             <HistoryCreate />
           </ProtectedContent>
         }
@@ -55,16 +55,13 @@ const AppRoutes = () => (
       <Route path={ROUTES.STATUS.INDEX} element={<StatusIndex />} />
       <Route path={ROUTES.CATEGORY.INDEX} element={<CategoryIndex />} />
       <Route path={ROUTES.SUBCATEGORY.INDEX} element={<SubCategoryIndex />} />
-      <Route
-        path={ROUTES.MINORCategory.INDEX}
-        element={<MinorCategoryIndex />}
-      />
+      <Route path={ROUTES.MINORCategory.INDEX} element={<MinorCategoryIndex />} />
       <Route path={ROUTES.DEPARTMENT.INDEX} element={<DepartmentIndex />} />
       <Route path={ROUTES.STUDENT.INDEX} element={<StudentIndex />} />
       <Route
         path={ROUTES.STUDENT.CREATE}
         element={
-          <ProtectedContent allowedRoles={["ADMIN"]}>
+          <ProtectedContent allowedRoles={['ADMIN']}>
             <StudentCreate />
           </ProtectedContent>
         }
@@ -81,7 +78,7 @@ const App = () => (
     <ToastContainer
       position="top-right"
       autoClose={3000}
-      toastStyle={{ width: "500px" }}
+      toastStyle={{ width: '500px' }}
       hideProgressBar={false}
       newestOnTop={false}
       closeOnClick

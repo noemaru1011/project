@@ -1,15 +1,15 @@
-import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { Button } from "@/components/elements/Button";
-import { CheckGroup } from "@/components/elements/CheckGroup";
-import { RadioGroup } from "@/components/elements/RadioGroup";
-import { categoryOptions } from "@/constants/category";
-import { subCategoryOptions } from "@/constants/subCategory";
-import { minorCategoryOptions } from "@/constants/minorCategory";
-import { departmentOptions } from "@/constants/department";
-import { gradeOptions } from "@/constants/grade";
-import { statusOptions } from "@/constants/status";
-import { StudentApi } from "@/api/studentApi";
+import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { Button } from '@/components/elements/Button';
+import { CheckGroup } from '@/components/elements/CheckGroup';
+import { RadioGroup } from '@/components/elements/RadioGroup';
+import { categoryOptions } from '@/constants/category';
+import { subCategoryOptions } from '@/constants/subCategory';
+import { minorCategoryOptions } from '@/constants/minorCategory';
+import { departmentOptions } from '@/constants/department';
+import { gradeOptions } from '@/constants/grade';
+import { statusOptions } from '@/constants/status';
+import { StudentApi } from '@/api/studentApi';
 
 type FormValues = {
   categories: string[];
@@ -56,11 +56,7 @@ export const HistoryCreate = () => {
         <div className="flex gap-3">
           <fieldset className="border border-gray-300 rounded-xl p-4 space-y-2">
             <legend className="px-2 text-sm font-medium">大分類</legend>
-            <CheckGroup
-              name="categories"
-              options={categoryOptions}
-              control={control}
-            />
+            <CheckGroup name="categories" options={categoryOptions} control={control} />
           </fieldset>
 
           <fieldset className="border border-gray-300 rounded-xl p-4 space-y-2">
@@ -90,20 +86,12 @@ export const HistoryCreate = () => {
 
           <fieldset className="border border-gray-300 rounded-xl p-4 space-y-2">
             <legend className="px-2 text-sm font-medium">学科</legend>
-            <CheckGroup
-              name="departments"
-              options={departmentOptions}
-              control={control}
-            />
+            <CheckGroup name="departments" options={departmentOptions} control={control} />
           </fieldset>
 
           <fieldset className="border border-gray-300 rounded-xl p-4 space-y-2">
             <legend className="px-2 text-sm font-medium">状態選択</legend>
-            <RadioGroup
-              name="status"
-              options={statusOptions}
-              control={control}
-            />
+            <RadioGroup name="status" options={statusOptions} control={control} />
           </fieldset>
         </div>
 
@@ -119,15 +107,10 @@ export const HistoryCreate = () => {
         ) : (
           <div className="space-y-2">
             {results.map((s) => (
-              <div
-                key={s.studentId}
-                className="p-3 border rounded-lg shadow-sm bg-white"
-              >
+              <div key={s.studentId} className="p-3 border rounded-lg shadow-sm bg-white">
                 <p>名前：{s.studentName}</p>
                 <p>学年：{s.grade}</p>
-                <p>
-                  大分類：{s.minorCategory?.subCategory?.category?.categoryName}
-                </p>
+                <p>大分類：{s.minorCategory?.subCategory?.category?.categoryName}</p>
                 <p>中分類：{s.minorCategory?.subCategory?.subCategoryName}</p>
                 <p>小分類：{s.minorCategory?.minorCategoryName}</p>
                 <p>学科：{s.department?.departmentName}</p>

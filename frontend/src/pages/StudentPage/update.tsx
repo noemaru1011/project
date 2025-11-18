@@ -1,19 +1,19 @@
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate, useParams } from "react-router-dom";
-import { Input } from "@/components/elements/Input";
-import { Select } from "@/components/elements/Select";
-import { Button } from "@/components/elements/Button";
-import { Loading } from "@/components/elements/Loading";
-import { gradeOptions } from "@/constants/grade";
-import { minorCategoryOptions } from "@/constants/minorCategory";
-import { departmentOptions } from "@/constants/department";
-import { ROUTES } from "@/constants/routes";
-import { useCrud } from "@/hooks/useCrud";
-import { validation } from "@shared/schemas/student";
-import { StudentApi } from "@/api/studentApi";
-import type { Student } from "@shared/schemas/student";
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Input } from '@/components/elements/Input';
+import { Select } from '@/components/elements/Select';
+import { Button } from '@/components/elements/Button';
+import { Loading } from '@/components/elements/Loading';
+import { gradeOptions } from '@/constants/grade';
+import { minorCategoryOptions } from '@/constants/minorCategory';
+import { departmentOptions } from '@/constants/department';
+import { ROUTES } from '@/constants/routes';
+import { useCrud } from '@/hooks/useCrud';
+import { validation } from '@shared/schemas/student';
+import { StudentApi } from '@/api/studentApi';
+import type { Student } from '@shared/schemas/student';
 
 export const StudentUpdate = () => {
   const navigate = useNavigate();
@@ -76,7 +76,7 @@ export const StudentUpdate = () => {
               type="text"
               error={errors.studentName?.message}
               required
-              {...register("studentName")}
+              {...register('studentName')}
             />
             <Select
               id="grade"
@@ -84,7 +84,7 @@ export const StudentUpdate = () => {
               options={gradeOptions}
               required
               error={errors.grade?.message}
-              {...register("grade")}
+              {...register('grade')}
             />
             <Select
               id="minorCategory"
@@ -92,7 +92,7 @@ export const StudentUpdate = () => {
               options={minorCategoryOptions}
               required
               error={errors.minorCategoryId?.message}
-              {...register("minorCategoryId")}
+              {...register('minorCategoryId')}
             />
             <Input
               id="email"
@@ -100,7 +100,7 @@ export const StudentUpdate = () => {
               label="メールアドレス"
               disabled
               error={errors.email?.message}
-              {...register("email")}
+              {...register('email')}
             />
             <Select
               id="department"
@@ -108,14 +108,9 @@ export const StudentUpdate = () => {
               options={departmentOptions}
               required
               error={errors.departmentId?.message}
-              {...register("departmentId")}
+              {...register('departmentId')}
             />
-            <Button
-              type="submit"
-              variant="Update"
-              disabled={loading}
-              className="w-full mt-4"
-            />
+            <Button type="submit" variant="Update" disabled={loading} className="w-full mt-4" />
           </form>
         </div>
       </div>

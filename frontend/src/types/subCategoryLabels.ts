@@ -1,5 +1,5 @@
-import type { DisplayLabels } from "@/types/ui";
+import type { DisplayLabels } from '@/types/ui';
 
 export const SubCategoryLabels: DisplayLabels = {
-  subCategoryName: "中分類名",
+  subCategoryName: '中分類名',
 };

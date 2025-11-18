@@ -1,9 +1,9 @@
-import type { DisplayLabels } from "@/types/ui";
+import type { DisplayLabels } from '@/types/ui';
 
 export const StudentLabels: DisplayLabels = {
-  studentName: "学生名",
-  grade: "学年",
+  studentName: '学生名',
+  grade: '学年',
   minorCategory: {
-    minorCategoryName: "小分類名",
+    minorCategoryName: '小分類名',
   },
 };

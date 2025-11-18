@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 type Props = {
   id: string;
@@ -29,5 +29,5 @@ export const Radio = React.forwardRef<HTMLInputElement, Props>(
         {error && <p className="text-red-500 text-sm ml-2">{error}</p>}
       </div>
     );
-  }
+  },
 );
