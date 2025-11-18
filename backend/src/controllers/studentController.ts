@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import { StudentService } from "@/services/studentService";
+import { Request, Response } from 'express';
+import { StudentService } from '@/services/studentService';
 
 export const StudentController = {
   async getAllStudents(req: Request, res: Response) {
@@ -7,7 +7,7 @@ export const StudentController = {
       const students = await StudentService.getAllStudents();
       res.json(students);
     } catch (error) {
-      res.status(500).json({ message: "予期せぬエラーが発生しました" });
+      res.status(500).json({ message: '予期せぬエラーが発生しました' });
     }
   },
 
@@ -15,17 +15,17 @@ export const StudentController = {
     try {
       const { id } = req.params;
       if (!id) {
-        return res.status(404).json({ message: "学生が見つかりません" });
+        return res.status(404).json({ message: '学生が見つかりません' });
       }
       const student = await StudentService.getStudent(id);
 
       if (!student) {
-        return res.status(404).json({ message: "学生が見つかりません" });
+        return res.status(404).json({ message: '学生が見つかりません' });
       }
 
       res.json(student);
     } catch (error) {
-      res.status(500).json({ message: "予期せぬエラーが発生しました" });
+      res.status(500).json({ message: '予期せぬエラーが発生しました' });
     }
   },
 
@@ -35,22 +35,20 @@ export const StudentController = {
       const students = await StudentService.searchStudents(req.body);
       res.json(students);
     } catch (err: any) {
-      res.status(500).json({ message: "予期せぬエラーが発生しました" });
+      res.status(500).json({ message: '予期せぬエラーが発生しました' });
     }
   },
 
   async createStudent(req: Request, res: Response) {
     try {
       await StudentService.createStudent(req.body);
-      res.status(201).json({ message: "追加完了" });
+      res.status(201).json({ message: '追加完了' });
     } catch (err: any) {
-      if (err.code === "P2002" && err.meta?.target?.includes("studentEmail")) {
-        return res
-          .status(400)
-          .json({ message: "このメールアドレスはすでに登録されています" });
+      if (err.code === 'P2002' && err.meta?.target?.includes('studentEmail')) {
+        return res.status(400).json({ message: 'このメールアドレスはすでに登録されています' });
       }
 
-      res.status(500).json({ message: "予期せぬエラーが発生しました" });
+      res.status(500).json({ message: '予期せぬエラーが発生しました' });
     }
   },
 
@@ -58,12 +56,12 @@ export const StudentController = {
     try {
       const { id } = req.params;
       if (!id) {
-        return res.status(404).json({ message: "学生が見つかりません" });
+        return res.status(404).json({ message: '学生が見つかりません' });
       }
       await StudentService.updateStudent(req.body, id);
-      res.status(201).json({ message: "更新完了" });
+      res.status(201).json({ message: '更新完了' });
     } catch (err: any) {
-      res.status(500).json({ message: "予期せぬエラーが発生しました" });
+      res.status(500).json({ message: '予期せぬエラーが発生しました' });
     }
   },
 
@@ -71,12 +69,12 @@ export const StudentController = {
     try {
       const { id } = req.params;
       if (!id) {
-        return res.status(404).json({ message: "学生が見つかりません" });
+        return res.status(404).json({ message: '学生が見つかりません' });
       }
       await StudentService.deleteStudent(id);
-      res.status(201).json({ message: "削除完了" });
+      res.status(201).json({ message: '削除完了' });
     } catch (err: any) {
-      res.status(500).json({ message: "予期せぬエラーが発生しました" });
+      res.status(500).json({ message: '予期せぬエラーが発生しました' });
     }
   },
 };

@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import { CategoryService } from "@/services/categoryService";
+import { Request, Response } from 'express';
+import { CategoryService } from '@/services/categoryService';
 
 export const CategoryController = {
   async getAllCategories(req: Request, res: Response) {
@@ -7,7 +7,7 @@ export const CategoryController = {
       const categories = await CategoryService.getAllCategories();
       res.json(categories);
     } catch (error) {
-      res.status(500).json({ message: "予期せぬエラーが発生しました" });
+      res.status(500).json({ message: '予期せぬエラーが発生しました' });
     }
   },
 };

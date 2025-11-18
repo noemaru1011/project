@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -9,7 +9,7 @@ export const CategoryRepository = {
         categoryId: true,
         categoryName: true,
       },
-      orderBy: { categoryId: "asc" },
+      orderBy: { categoryId: 'asc' },
     });
   },
 };

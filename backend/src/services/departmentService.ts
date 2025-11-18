@@ -1,4 +1,4 @@
-import { DepartmentRepository } from "@/repositories/departmentRepository";
+import { DepartmentRepository } from '@/repositories/departmentRepository';
 
 export const DepartmentService = {
   async getAllDepartments() {

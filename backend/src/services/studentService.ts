@@ -1,7 +1,7 @@
-import bcrypt from "bcrypt";
-import { StudentRepository } from "@/repositories/studentRepository";
-import { generatePassword } from "@/utils/generatePassword";
-import { sendAccountEmail } from "@/utils/sendAccountEmail";
+import bcrypt from 'bcrypt';
+import { StudentRepository } from '@/repositories/studentRepository';
+import { generatePassword } from '@/utils/generatePassword';
+import { sendAccountEmail } from '@/utils/sendAccountEmail';
 
 export const StudentService = {
   async getAllStudents() {
@@ -40,7 +40,7 @@ export const StudentService = {
       minorCategoryId: number;
       grade: number;
     },
-    studentId: string
+    studentId: string,
   ) {
     const student = await StudentRepository.updateStudent(data, studentId);
     return student;
@@ -58,9 +58,7 @@ export const StudentService = {
     departments?: number[];
     grade?: number[];
   }) {
-    const minorCategoryIds = await StudentRepository.resolveMinorCategoryIds(
-      filters
-    );
+    const minorCategoryIds = await StudentRepository.resolveMinorCategoryIds(filters);
 
     const students = await StudentRepository.searchStudents({
       minorCategoryIds,

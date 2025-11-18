@@ -1,8 +1,8 @@
-import { Router } from "express";
-import { LogoutController } from "@/controllers/logoutController";
+import { Router } from 'express';
+import { LogoutController } from '@/controllers/logoutController';
 
 const router = Router();
 
-router.post("/", LogoutController.logout);
+router.post('/', LogoutController.logout);
 
 export default router;

@@ -1,4 +1,4 @@
-import { SubCategoryRepository } from "@/repositories/subCategoryRepository";
+import { SubCategoryRepository } from '@/repositories/subCategoryRepository';
 
 export const SubCategoryService = {
   async getAllSubCategories() {

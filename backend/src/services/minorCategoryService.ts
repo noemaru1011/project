@@ -1,4 +1,4 @@
-import { MinorCategoryRepository } from "@/repositories/minorCategoryRepository";
+import { MinorCategoryRepository } from '@/repositories/minorCategoryRepository';
 
 export const MinorCategoryService = {
   async getAllMinorCategories() {

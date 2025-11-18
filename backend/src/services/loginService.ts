@@ -1,12 +1,12 @@
-import bcrypt from "bcrypt";
-import { InvalidCredentialsError } from "@/errors/AuthError";
-import { JwtUtil } from "@/utils/jwt";
-import { isPasswordUpdateRequired } from "@/utils/isPasswordUpdateRequired";
-import { LoginRepository } from "@/repositories/loginRepository";
+import bcrypt from 'bcrypt';
+import { InvalidCredentialsError } from '@/errors/AuthError';
+import { JwtUtil } from '@/utils/jwt';
+import { isPasswordUpdateRequired } from '@/utils/isPasswordUpdateRequired';
+import { LoginRepository } from '@/repositories/loginRepository';
 
 interface LoginResult {
   token: string;
-  role: "ADMIN" | "STUDENT";
+  role: 'ADMIN' | 'STUDENT';
   passwordUpdateRequired?: boolean;
 }
 
@@ -18,17 +18,15 @@ export const LoginService = {
       const match = await bcrypt.compare(password, admin.password);
       if (!match) throw new InvalidCredentialsError();
 
-      const token = JwtUtil.createToken(admin.adminId, "ADMIN");
-      return { token, role: "ADMIN" };
+      const token = JwtUtil.createToken(admin.adminId, 'ADMIN');
+      return { token, role: 'ADMIN' };
     }
 
     // 学生判定
     const student = await LoginRepository.findStudent(email);
     if (!student) throw new InvalidCredentialsError();
 
-    const studentPassword = await LoginRepository.getStudentPassword(
-      student.studentId
-    );
+    const studentPassword = await LoginRepository.getStudentPassword(student.studentId);
     if (!studentPassword) throw new InvalidCredentialsError();
 
     const match = await bcrypt.compare(password, studentPassword.password);
@@ -37,10 +35,10 @@ export const LoginService = {
     // パスワード変更が必要か
     const passwordUpdateRequired = isPasswordUpdateRequired(
       studentPassword.createdAt,
-      studentPassword.updatedAt
+      studentPassword.updatedAt,
     );
 
-    const token = JwtUtil.createToken(student.studentId, "STUDENT");
-    return { token, role: "STUDENT", passwordUpdateRequired };
+    const token = JwtUtil.createToken(student.studentId, 'STUDENT');
+    return { token, role: 'STUDENT', passwordUpdateRequired };
   },
 };

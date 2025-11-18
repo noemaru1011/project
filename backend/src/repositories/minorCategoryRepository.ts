@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -9,7 +9,7 @@ export const MinorCategoryRepository = {
         minorCategoryId: true,
         minorCategoryName: true,
       },
-      orderBy: { minorCategoryId: "asc" },
+      orderBy: { minorCategoryId: 'asc' },
     });
   },
 };

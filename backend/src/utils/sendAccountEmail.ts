@@ -1,12 +1,12 @@
-import { Resend } from "resend";
+import { Resend } from 'resend';
 
 export const sendAccountEmail = async (email: string, password: string) => {
   try {
     const resend = new Resend(process.env.RESEND_API_KEY!);
     await resend.emails.send({
-      from: "no-reply@resend.dev",
+      from: 'no-reply@resend.dev',
       to: email,
-      subject: "アカウント作成通知",
+      subject: 'アカウント作成通知',
       text: `学生アカウントが作成されました。\n\n
       ユーザー名: ${email}\n
       初回パスワード: ${password}\n\n
@@ -14,6 +14,6 @@ export const sendAccountEmail = async (email: string, password: string) => {
       本メールは送信専用のため返信できません。`,
     });
   } catch (error) {
-    throw new Error("メール送信に失敗しました。");
+    throw new Error('メール送信に失敗しました。');
   }
 };

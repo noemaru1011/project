@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const StudentRepository = {
@@ -17,10 +17,7 @@ export const StudentRepository = {
           },
         },
       },
-      orderBy: [
-        { minorCategory: { minorCategoryName: "asc" } },
-        { grade: "desc" },
-      ],
+      orderBy: [{ minorCategory: { minorCategoryName: 'asc' } }, { grade: 'desc' }],
     });
   },
 
@@ -82,7 +79,7 @@ export const StudentRepository = {
       minorCategoryId: number;
       grade: number;
     },
-    studentId: string
+    studentId: string,
   ) {
     return await prisma.student.update({
       where: {
@@ -156,10 +153,7 @@ export const StudentRepository = {
           },
         },
       },
-      orderBy: [
-        { minorCategory: { minorCategoryName: "asc" } },
-        { grade: "desc" },
-      ],
+      orderBy: [{ minorCategory: { minorCategoryName: 'asc' } }, { grade: 'desc' }],
     });
   },
 
