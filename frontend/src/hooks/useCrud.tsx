@@ -3,15 +3,16 @@ import { toast } from 'react-toastify';
 import { useErrorHandler } from './useErrorHandler';
 import type { ApiResponse } from '@/types/apiResponse';
 
-type ApiMethods<T> = {
+type ApiMethods<T, Q> = {
   index?: () => Promise<ApiResponse<T[]>>;
+  search?: (query: Partial<Q>) => Promise<ApiResponse<T[]>>;
   create?: (data: Partial<T>) => Promise<ApiResponse<T>>;
   update?: (id: string, data: Partial<T>) => Promise<ApiResponse<T>>;
   delete?: (id: string) => Promise<ApiResponse<void>>;
   view?: (id: string) => Promise<ApiResponse<T>>;
 };
 
-export function useCrud<T>(api: ApiMethods<T>) {
+export function useCrud<T, Q = unknown>(api: ApiMethods<T, Q>) {
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState(false);
   const handleError = useErrorHandler();
@@ -29,6 +30,24 @@ export function useCrud<T>(api: ApiMethods<T>) {
       setLoading(false);
     }
   }, [api, handleError]);
+
+  const fetchData = useCallback(
+    async (item: Partial<Q>) => {
+      if (!api.search) return;
+
+      try {
+        setLoading(true);
+        const response = await api.search(item);
+        if (response.data) setData(response.data);
+      } catch (err: any) {
+        handleError(err);
+        throw err;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [api, handleError],
+  );
 
   const create = useCallback(
     async (item: Partial<T>): Promise<void> => {
@@ -102,6 +121,7 @@ export function useCrud<T>(api: ApiMethods<T>) {
     data,
     loading,
     fetchAll,
+    fetchData,
     create,
     update,
     remove,

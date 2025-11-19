@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { LoginApi } from '@/api/loginApi';
-import type { Auth } from '@shared/schemas/login';
+import type { DisplayLogin } from '@/types/displayLogin';
 import { toast } from 'react-toastify';
 import { useErrorHandler } from './useErrorHandler';
 import { useNavigate } from 'react-router-dom';
@@ -11,11 +11,11 @@ export function useLogin() {
   const [loading, setLoading] = useState(false);
   const handleError = useErrorHandler();
 
-  const login = async (data: Partial<Auth>) => {
+  const login = async (data: DisplayLogin) => {
     try {
       setLoading(true);
-      await LoginApi.login(data);
-      toast.success('ログインに成功しました！');
+      const response = await LoginApi.login(data);
+      toast.success(response.message);
       navigate(ROUTES.HOME);
     } catch (err: any) {
       handleError(err);

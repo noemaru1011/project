@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import type { Student } from '@shared/schemas/student';
+import type { DisplayStudent } from '@/types/displayStudent';
 import { Input } from '@/components/elements/Input';
 import { Select } from '@/components/elements/Select';
 import { Button } from '@/components/elements/Button';
@@ -15,8 +15,8 @@ import { StudentApi } from '@/api/studentApi';
 export const StudentView = () => {
   const navigate = useNavigate();
   const { studentId } = useParams<{ studentId: string }>();
-  const { view, loading } = useCrud<Student>(StudentApi);
-  const [student, setStudent] = useState<Student | null>(null);
+  const { view, loading } = useCrud<DisplayStudent>(StudentApi);
+  const [student, setStudent] = useState<DisplayStudent | null>(null);
 
   useEffect(() => {
     if (!studentId) return;

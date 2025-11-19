@@ -25,13 +25,14 @@ export async function Api<T>(path: string, options?: RequestInit): Promise<ApiRe
       data: json.data,
       message: json.message || json.error || '予期せぬエラーが発生しました',
     };
+    console.log('API Response:', response);
 
     // HTTPステータスでokでない場合はthrow
     if (!res.ok) {
-      throw response;
+      throw { ...response, status: res.status };
     }
 
-    return response;
+    return { ...response, status: res.status };
   } catch (err: any) {
     if (err instanceof TypeError) {
       // ネットワーク接続エラー

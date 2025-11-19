@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { Table } from '@/components/elements/Table';
 import { Loading } from '@/components/elements/Loading';
 import { useCrud } from '@/hooks/useCrud';
-import { CategoryLabels } from '@/types/categoryLabels';
+import { CategoryLabels } from '@/constants/categoryLabels';
 import { CategoryApi } from '@/api/categoryApi';
-import type { Category } from '@shared/schemas/category';
+import type { DisplayCategory } from '@/types/displayCategory';
 
 export const CategoryIndex = () => {
-  const { data: Categories, fetchAll, loading } = useCrud<Category>(CategoryApi);
+  const { data: Categories, fetchAll, loading } = useCrud<DisplayCategory>(CategoryApi);
 
   useEffect(() => {
     fetchAll();
@@ -15,7 +15,7 @@ export const CategoryIndex = () => {
 
   return (
     <Loading loading={loading}>
-      <Table labels={CategoryLabels} data={Categories} keyField="categoryName" />
+      <Table labels={CategoryLabels} data={Categories} keyField="categoryId" />
     </Loading>
   );
 };

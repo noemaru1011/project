@@ -12,11 +12,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Loading } from '@/components/elements/Loading';
 import { ROUTES } from '@/constants/routes';
 import { StudentApi } from '@/api/studentApi';
-import type { Student } from '@shared/schemas/student';
+import type { DisplayStudent } from '@/types/displayStudent';
 
 export const StudentCreate = () => {
   const navigate = useNavigate();
-  const { create, loading } = useCrud<Student>(StudentApi);
+  const { create, loading } = useCrud<DisplayStudent>(StudentApi);
 
   const {
     register,

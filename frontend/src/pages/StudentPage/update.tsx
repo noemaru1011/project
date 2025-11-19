@@ -13,12 +13,12 @@ import { ROUTES } from '@/constants/routes';
 import { useCrud } from '@/hooks/useCrud';
 import { validation } from '@shared/schemas/student';
 import { StudentApi } from '@/api/studentApi';
-import type { Student } from '@shared/schemas/student';
+import type { DisplayStudent } from '@/types/displayStudent';
 
 export const StudentUpdate = () => {
   const navigate = useNavigate();
   const { studentId } = useParams<{ studentId: string }>();
-  const { view, update, loading } = useCrud<Student>(StudentApi);
+  const { view, update, loading } = useCrud<DisplayStudent>(StudentApi);
 
   const {
     register,

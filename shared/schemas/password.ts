@@ -21,5 +21,3 @@ export const validation = z
     message: "新しいパスワードが一致しません",
     path: ["newPassword2"], // どのフィールドにエラーを表示するか
   });
-
-export type Password = z.infer<typeof validation>;

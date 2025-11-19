@@ -1,24 +1,25 @@
 import { Api } from './Api';
-import type { Student, StudentQuery } from '@shared/schemas/student';
+import type { StudentQuery } from '@shared/schemas/student';
+import type { DisplayStudet } from '@/types/displayStudent';
 import { API_ROUTES } from '@/constants/apiRoutes';
 
 export const StudentApi = {
-  index: () => Api<Student[]>(API_ROUTES.STUDENT.INDEX, { method: 'GET' }),
+  index: () => Api<DisplayStudet[]>(API_ROUTES.STUDENT.INDEX, { method: 'GET' }),
 
   search: (data: StudentQuery) =>
-    Api<Student[]>(API_ROUTES.STUDENT.SEARCH, {
+    Api<DisplayStudet[]>(API_ROUTES.STUDENT.SEARCH, {
       method: 'POST',
       body: JSON.stringify(data),
     }),
 
-  create: (data: Partial<Student>) =>
-    Api<Student>(API_ROUTES.STUDENT.CREATE, {
+  create: (data: Partial<DisplayStudet>) =>
+    Api<DisplayStudet>(API_ROUTES.STUDENT.CREATE, {
       method: 'POST',
       body: JSON.stringify(data),
     }),
 
-  update: (id: string, data: Partial<Student>) =>
-    Api<Student>(API_ROUTES.STUDENT.UPDATE(id), {
+  update: (id: string, data: Partial<DisplayStudet>) =>
+    Api<DisplayStudet>(API_ROUTES.STUDENT.UPDATE(id), {
       method: 'PUT',
       body: JSON.stringify(data),
     }),
@@ -28,5 +29,5 @@ export const StudentApi = {
       method: 'DELETE',
     }),
 
-  view: (id: string) => Api<Student>(API_ROUTES.STUDENT.VIEW(id), { method: 'GET' }),
+  view: (id: string) => Api<DisplayStudet>(API_ROUTES.STUDENT.VIEW(id), { method: 'GET' }),
 };

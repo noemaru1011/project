@@ -10,7 +10,6 @@ export const StudentRepository = {
       select: {
         studentId: true,
         studentName: true,
-        email: true,
         grade: true,
         minorCategory: {
           select: {

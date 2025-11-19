@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { Table } from '@/components/elements/Table';
 import { Loading } from '@/components/elements/Loading';
 import { useCrud } from '@/hooks/useCrud';
-import { StatusLabels } from '@/types/statusLabels';
+import { StatusLabels } from '@/constants/statusLabels';
 import { StatusAPi } from '@/api/statusApi';
-import type { Status } from '@shared/schemas/status';
+import type { DisplayStatus } from '@/types/displayStatus';
 
 export const StatusIndex = () => {
-  const { data: Status, fetchAll, loading } = useCrud<Status>(StatusAPi);
+  const { data: Status, fetchAll, loading } = useCrud<DisplayStatus>(StatusAPi);
 
   useEffect(() => {
     fetchAll();

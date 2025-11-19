@@ -52,11 +52,11 @@ export const StudentController = {
       await StudentService.createStudent(req.body);
       res.status(201).json({ message: '追加完了' });
     } catch (err: any) {
-      if (err.code === 'P2002' && err.meta?.target?.includes('studentEmail')) {
+      // Prismaの一意制約違反（メール重複）なら 400
+      if (err.code === 'P2002' && err.meta?.target?.includes('email')) {
         return res.status(400).json({ message: 'このメールアドレスはすでに登録されています' });
       }
-
-      res.status(500).json({ message: '予期せぬエラーが発生しました' });
+      return res.status(500).json({ message: '予期せぬエラーが発生しました' });
     }
   },
 

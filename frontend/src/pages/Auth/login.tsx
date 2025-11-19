@@ -5,6 +5,7 @@ import { Loading } from '@/components/elements/Loading';
 import { validation } from '@shared/schemas/login';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useLogin } from '@/hooks/useLogin';
+import type { DisplayLogin } from '@/types/displayLogin';
 
 const Login = () => {
   const { login, loading } = useLogin();
@@ -17,7 +18,7 @@ const Login = () => {
     resolver: zodResolver(validation),
   });
 
-  const onSubmit = async (data: { email: string; password: string }) => {
+  const onSubmit = async (data: DisplayLogin) => {
     try {
       await login(data);
     } catch (err: any) {}

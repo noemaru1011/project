@@ -2,12 +2,16 @@ import { useEffect } from 'react';
 import { Table } from '@/components/elements/Table';
 import { Loading } from '@/components/elements/Loading';
 import { useCrud } from '@/hooks/useCrud';
-import { MinorCategoryLabels } from '@/types/minorCategoryLabels';
+import { MinorCategoryLabels } from '@/constants/minorCategoryLabels';
 import { MinorCategoryApi } from '@/api/minorCategoryApi';
-import type { MinorCategory } from '@shared/schemas/minorCategory';
+import type { DisplayMinorCategory } from '@/types/displayMinorCategory';
 
 export const MinorCategoryIndex = () => {
-  const { data: MinorCategories, fetchAll, loading } = useCrud<MinorCategory>(MinorCategoryApi);
+  const {
+    data: MinorCategories,
+    fetchAll,
+    loading,
+  } = useCrud<DisplayMinorCategory>(MinorCategoryApi);
 
   useEffect(() => {
     fetchAll();

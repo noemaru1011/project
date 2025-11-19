@@ -10,9 +10,8 @@ export function useLogout() {
   const logout = async () => {
     try {
       setLoading(true);
-      const result = await LogoutApi.logout();
-      toast.success(result.message ?? 'ログアウトしました');
-      return result;
+      const response = await LogoutApi.logout();
+      toast.success(response.message);
     } catch (err: any) {
       handleError(err);
       throw err; // ← ここで再スローする

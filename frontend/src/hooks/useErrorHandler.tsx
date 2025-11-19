@@ -30,6 +30,7 @@ export const useErrorHandler = () => {
             toast.error(message);
             return;
           default:
+            console.log('ここ通るはず');
             toast.error(message);
             return;
         }
@@ -73,6 +74,7 @@ export const useErrorHandler = () => {
         return;
       }
 
+      console.log('ここ通るかい？');
       navigate(ROUTES.ERROR.SERVER);
       toast.error(message);
     },

@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { Table } from '@/components/elements/Table';
 import { Loading } from '@/components/elements/Loading';
 import { useCrud } from '@/hooks/useCrud';
-import { StudentLabels } from '@/types/studentLabels';
+import { StudentLabels } from '@/constants/studentLabels';
 import { StudentApi } from '@/api/studentApi';
-import type { Student } from '@shared/schemas/student';
+import type { DisplayStudent } from '@/types/displayStudent';
 
 export const StudentIndex = () => {
-  const { data: student, fetchAll, loading } = useCrud<Student>(StudentApi);
+  const { data: student, fetchAll, loading } = useCrud<DisplayStudent>(StudentApi);
 
   useEffect(() => {
     fetchAll();
@@ -16,7 +16,7 @@ export const StudentIndex = () => {
   return (
     <Loading loading={loading}>
       {/* id検討 */}
-      <Table labels={StudentLabels} data={student} keyField="email" />
+      <Table labels={StudentLabels} data={student} keyField="studentId" />
     </Loading>
   );
 };

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { PasswordApi } from '@/api/passwordApi';
-import type { Password } from '@shared/schemas/password';
+import type { DisplayPassword } from '@/types/displayPassword';
 import { useErrorHandler } from './useErrorHandler';
 import { toast } from 'react-toastify';
 
@@ -8,11 +8,11 @@ export function usePassword() {
   const [loading, setLoading] = useState(false);
   const handleError = useErrorHandler();
 
-  const updatePassword = async (data: Partial<Password>) => {
+  const updatePassword = async (data: DisplayPassword) => {
     try {
       setLoading(true);
-      await PasswordApi.update(data);
-      toast.success('パスワードを変更しました');
+      const response = await PasswordApi.update(data);
+      toast.success(response.message);
     } catch (err: any) {
       handleError(err);
       throw err; // ← ここで再スローする

@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { Table } from '@/components/elements/Table';
 import { Loading } from '@/components/elements/Loading';
 import { useCrud } from '@/hooks/useCrud';
-import { DepartmentLabels } from '@/types/departmentLabels';
+import { DepartmentLabels } from '@/constants/departmentLabels';
 import { DepartmentAPi } from '@/api/departmentApi';
-import type { Department } from '@shared/schemas/department';
+import type { DisplayDepartment } from '@/types/displayDepartment';
 
 export const DepartmentIndex = () => {
-  const { data: Departments, fetchAll, loading } = useCrud<Department>(DepartmentAPi);
+  const { data: Departments, fetchAll, loading } = useCrud<DisplayDepartment>(DepartmentAPi);
 
   useEffect(() => {
     fetchAll();
@@ -15,7 +15,7 @@ export const DepartmentIndex = () => {
 
   return (
     <Loading loading={loading}>
-      <Table labels={DepartmentLabels} data={Departments} keyField="departmentName" />
+      <Table labels={DepartmentLabels} data={Departments} keyField="departmentId" />
     </Loading>
   );
 };

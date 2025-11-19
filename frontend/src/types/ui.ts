@@ -2,6 +2,7 @@ export type ButtonVariant = 'Create' | 'Read' | 'Update' | 'Delete' | 'Search' |
 
 export type InputType = 'text' | 'number' | 'email' | 'tel' | 'password' | 'url' | 'date';
 
+//インターフェイスにする予定
 export type Option = {
   value: string;
   label: string;
@@ -10,9 +11,3 @@ export type Option = {
 export interface DisplayLabels {
   [key: string]: string | DisplayLabels;
 }
-
-export type Category = {
-  value: string;
-  label: string;
-  subCategories?: Category[];
-};
