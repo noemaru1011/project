@@ -4,7 +4,7 @@ import { Checkbox } from './Checkbox';
 
 const meta: Meta<typeof Checkbox> = {
   component: Checkbox,
-  title: 'Elements/Checkbox',
+  title: 'Atoms/Checkbox',
   tags: ['autodocs'],
 };
 

@@ -11,7 +11,7 @@ const sampleOptions: Option[] = [
 ];
 const meta: Meta<typeof Select> = {
   component: Select,
-  title: 'Elements/Select',
+  title: 'Atoms/Select',
   tags: ['autodocs'],
 };
 export default meta;

@@ -4,7 +4,7 @@ import { Radio } from './Radio';
 
 const meta: Meta<typeof Radio> = {
   component: Radio,
-  title: 'Elements/Radio',
+  title: 'Atoms/Radio',
   tags: ['autodocs'],
 };
 

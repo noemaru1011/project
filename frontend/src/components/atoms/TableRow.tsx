@@ -9,7 +9,6 @@ export const TableRow = ({ labelKeys, flatRow, rowKey }: Props) => {
     <tr key={rowKey} className="border-b border-gray-300">
       {labelKeys.map((key) => (
         <td key={key} className="p-2 text-center">
-          {/* フラットしたobjectのvalue */}
           {flatRow[key] ?? ''}
         </td>
       ))}

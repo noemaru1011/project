@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { Button } from '@/components/elements/Button';
-import { CheckboxGroup } from '@/components/elements/CheckboxGroup';
-import { Loading } from '@/components/elements/Loading';
+import { Button } from '@/components/atoms/Button';
+import { CheckboxGroup } from '@/components/molecules/CheckboxGroup';
+import { Loading } from '@/components/atoms/Loading';
 import { categoryOptions } from '@/constants/category';
 import { subCategoryOptions } from '@/constants/subCategory';
 import { minorCategoryOptions } from '@/constants/minorCategory';

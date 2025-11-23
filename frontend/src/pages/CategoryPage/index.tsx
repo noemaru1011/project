@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { Table } from '@/components/elements/Table';
-import { Loading } from '@/components/elements/Loading';
+import { Table } from '@/components/molecules/Table';
+import { Loading } from '@/components/atoms/Loading';
 import { useCrud } from '@/hooks/useCrud';
 import { CategoryLabels } from '@/constants/categoryLabels';
 import { CategoryApi } from '@/api/categoryApi';

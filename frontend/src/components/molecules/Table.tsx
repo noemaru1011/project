@@ -1,9 +1,18 @@
 import type { DisplayLabels } from '@/types/ui';
-import { TableHead } from '@/components/elements/TableHead';
-import { TableRow } from '@/components/elements/TableRow';
+import { TableHead } from '@/components/atoms/TableHead';
+import { TableRow } from '@/components/atoms/TableRow';
 type Props<T> = {
+  /**
+   * 表示するラベルの定義オブジェクト(ネストも可)
+   */
   labels: DisplayLabels;
+  /**
+   * 表示するデータの配列
+   */
   data: T[];
+  /**
+   * 識別IDはdataに含まれる
+   */
   keyField: keyof T & string;
 };
 

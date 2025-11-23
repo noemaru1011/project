@@ -8,7 +8,7 @@ type Props = {
   required?: boolean;
   disabled?: boolean;
   error?: string;
-} & React.SelectHTMLAttributes<HTMLSelectElement>; // ← react-hook-form用
+} & React.SelectHTMLAttributes<HTMLSelectElement>;
 
 export const Select = React.forwardRef<HTMLSelectElement, Props>(
   ({ id, label, options, required, disabled, error, ...rest }, ref) => {
@@ -27,7 +27,7 @@ export const Select = React.forwardRef<HTMLSelectElement, Props>(
           disabled={disabled}
           className={`border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500  disabled:bg-gray-100 disabled:text-gray-400 
             ${error ? 'border-red-500' : 'border-gray-300'}`}
-          {...rest} // registerのonChange, onBlur, name, valueがここに入る
+          {...rest}
         >
           <option value="">選択してください</option>
           {options.map((opt) => (

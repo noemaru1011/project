@@ -9,7 +9,6 @@ export const TableHead = ({ labelKeys, flatLabels }: Props) => {
       <tr>
         {labelKeys.map((key) => (
           <th key={key} className="p-2 text-center">
-            {/* フラットしたobjectのvalue */}
             {flatLabels[key]}
           </th>
         ))}

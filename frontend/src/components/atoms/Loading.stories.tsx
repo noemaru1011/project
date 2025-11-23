@@ -3,7 +3,7 @@ import { Loading } from './Loading';
 
 const meta: Meta<typeof Loading> = {
   component: Loading,
-  title: 'Elements/Loading',
+  title: 'Atoms/Loading',
   tags: ['autodocs'],
 };
 

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { Table } from '@/components/elements/Table';
-import { Loading } from '@/components/elements/Loading';
+import { Table } from '@/components/atoms/Table';
+import { Loading } from '@/components/atoms/Loading';
 import { useCrud } from '@/hooks/useCrud';
 import { MinorCategoryLabels } from '@/constants/minorCategoryLabels';
 import { MinorCategoryApi } from '@/api/minorCategoryApi';

@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { DisplayStudent } from '@/types/displayStudent';
-import { Input } from '@/components/elements/Input';
-import { Select } from '@/components/elements/Select';
-import { Button } from '@/components/elements/Button';
+import { Input } from '@/components/atoms/Input';
+import { Select } from '@/components/atoms/Select';
+import { Button } from '@/components/atoms/Button';
 import { gradeOptions } from '@/constants/grade';
 import { minorCategoryOptions } from '@/constants/minorCategory';
 import { departmentOptions } from '@/constants/department';
 import { useCrud } from '@/hooks/useCrud';
-import { Loading } from '@/components/elements/Loading';
+import { Loading } from '@/components/atoms/Loading';
 import { ROUTES } from '@/constants/routes';
 import { StudentApi } from '@/api/studentApi';
 

@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
-import { Input } from '@/components/elements/Input';
-import { Button } from '@/components/elements/Button';
-import { Loading } from '@/components/elements/Loading';
+import { Input } from '@/components/atoms/Input';
+import { Button } from '@/components/atoms/Button';
+import { Loading } from '@/components/atoms/Loading';
 import { validation } from '@shared/schemas/login';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useLogin } from '@/hooks/useLogin';
