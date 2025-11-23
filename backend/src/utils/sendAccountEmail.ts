@@ -7,9 +7,9 @@ export const sendAccountEmail = async (email: string, password: string) => {
       from: 'no-reply@resend.dev',
       to: email,
       subject: 'アカウント作成通知',
-      text: `学生アカウントが作成されました。\n\n
+      text: `学生アカウントが作成されました。\n
       ユーザー名: ${email}\n
-      初回パスワード: ${password}\n\n
+      初回パスワード: ${password}\n
       心当たりがない場合はメールの削除をお願いします。\n
       本メールは送信専用のため返信できません。`,
     });

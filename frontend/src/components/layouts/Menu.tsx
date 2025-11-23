@@ -1,6 +1,7 @@
 import menuIcon from '@/assets/menu.svg';
 import colseIcon from '@/assets/close.svg';
 import type { Option } from '@/types/ui';
+import { Link } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
 
 const MenuOptions: Option[] = [
@@ -43,14 +44,14 @@ const Menu = ({ open, onClick }: MenuProps) => {
 
             <nav className="flex flex-col space-y-3 px-4">
               {MenuOptions.map((opt) => (
-                <a
+                <Link
                   key={opt.value}
-                  href={opt.value}
+                  to={opt.value}
                   className="font-bold border-b border-gray-300 py-2 hover:text-indigo-500"
                   onClick={onClick}
                 >
                   {opt.label}
-                </a>
+                </Link>
               ))}
             </nav>
           </div>

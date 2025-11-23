@@ -39,11 +39,10 @@ export const validation = z.object({
     }),
 });
 
-export const studentQuery = z.object({
-  categories: z.array(z.number()).optional(),
-  subCategories: z.array(z.number()).optional(),
-  minorCategories: z.array(z.number()).optional(),
-  departmentIds: z.array(z.coerce.number()).optional(),
-  grades: z.array(z.coerce.number()).optional(),
+export const queryValidation = z.object({
+  categories: z.array(z.number().positive()).optional(),
+  subCategories: z.array(z.number().positive()).optional(),
+  minorCategories: z.array(z.number().positive()).optional(),
+  departmentIds: z.array(z.number().positive()).optional(),
+  grades: z.array(z.number().int().min(1).max(4)).optional(),
 });
-export type StudentQuery = z.infer<typeof studentQuery>;

@@ -59,12 +59,14 @@ export const StudentService = {
     grade?: number[];
   }) {
     const minorCategoryIds = await StudentRepository.resolveMinorCategoryIds(filters);
+    console.log('minorCategoryIds', minorCategoryIds);
 
     const students = await StudentRepository.searchStudents({
       minorCategoryIds,
       departments: filters.departments,
       grade: filters.grade,
     });
+    console.log('students', students);
 
     return students;
   },
