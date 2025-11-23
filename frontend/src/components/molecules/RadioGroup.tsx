@@ -2,25 +2,18 @@ import React from 'react';
 import { useController } from 'react-hook-form';
 import type { Control } from 'react-hook-form';
 import type { Option } from '@/types/ui';
-import { Checkbox } from './Checkbox';
+import { Radio } from '@/components/elements/Radio';
 
 type Props = {
   name: string;
   control: Control<any>;
   options: Option[];
-  label?: string; // ここが全体のラベル
+  label?: string;
   error?: string;
   required?: boolean;
 };
 
-export const CheckboxGroup: React.FC<Props> = ({
-  name,
-  control,
-  options,
-  label,
-  error,
-  required,
-}) => {
+export const RadioGroup: React.FC<Props> = ({ name, control, options, label, error, required }) => {
   const { field } = useController({ name, control, rules: { required } });
 
   const handleChange = (value: string) => {
@@ -39,7 +32,7 @@ export const CheckboxGroup: React.FC<Props> = ({
         </legend>
       )}
       {options.map((option) => (
-        <Checkbox
+        <Radio
           key={option.value}
           id={`${name}-${option.value}`}
           label={option.label}

@@ -8,7 +8,7 @@ type Props = {
   error?: string;
   required?: boolean;
   disabled?: boolean;
-} & React.InputHTMLAttributes<HTMLInputElement>; // ← react-hook-form用
+} & React.InputHTMLAttributes<HTMLInputElement>;
 
 export const Input = React.forwardRef<HTMLInputElement, Props>(
   ({ id, label, type, error, required, disabled, ...rest }, ref) => {

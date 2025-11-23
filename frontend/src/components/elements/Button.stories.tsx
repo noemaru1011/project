@@ -9,34 +9,46 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const CreateButton: Story = {
+export const createButton: Story = {
   args: {
     variant: 'Create',
     onClick: () => alert('クリックされました！'),
   },
 };
-export const ReradButton: Story = {
+export const reradButton: Story = {
   args: {
     variant: 'Read',
     onClick: () => alert('クリックされました！'),
   },
 };
-export const UpdateButton: Story = {
+export const updateButton: Story = {
   args: {
     variant: 'Update',
     onClick: () => alert('クリックされました！'),
   },
 };
-export const DeleteButton: Story = {
+export const deleteButton: Story = {
   args: {
     variant: 'Delete',
     onClick: () => alert('クリックされました！'),
     disabled: true,
   },
 };
-export const SearchButton: Story = {
+export const searchButton: Story = {
   args: {
     variant: 'Search',
+    onClick: () => alert('クリックされました！'),
+  },
+};
+export const loginButton: Story = {
+  args: {
+    variant: 'Login',
+    onClick: () => alert('クリックされました！'),
+  },
+};
+export const returnButton: Story = {
+  args: {
+    variant: 'Back',
     onClick: () => alert('クリックされました！'),
   },
 };
@@ -50,6 +62,8 @@ export const GroupingButton: Story = {
       <Button variant="Update" onClick={() => alert('クリックされました！')} />
       <Button variant="Delete" onClick={() => alert('クリックされました！')} />
       <Button variant="Search" onClick={() => alert('クリックされました！')} />
+      <Button variant="Login" onClick={() => alert('クリックされました！')} />
+      <Button variant="Back" onClick={() => alert('クリックされました！')} />
     </div>
   ),
 };

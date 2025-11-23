@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { Checkbox } from './Checkbox';
+import { Radio } from './Radio';
 
-const meta: Meta<typeof Checkbox> = {
-  component: Checkbox,
-  title: 'Elements/Checkbox',
+const meta: Meta<typeof Radio> = {
+  component: Radio,
+  title: 'Elements/Radio',
   tags: ['autodocs'],
 };
 
@@ -14,11 +14,11 @@ type Story = StoryObj<typeof meta>;
 const Template: Story = {
   render: (args) => {
     const [value, setValue] = React.useState(args.value || '');
-    return <Checkbox {...args} value={value} onChange={(e) => setValue(e.target.value)} />;
+    return <Radio {...args} value={value} onChange={(e) => setValue(e.target.value)} />;
   },
 };
 
-export const defaultCheckbox: Story = {
+export const defaultRadio: Story = {
   ...Template,
   args: {
     id: 'textInput',
@@ -26,7 +26,7 @@ export const defaultCheckbox: Story = {
   },
 };
 
-export const disabledCheckbox: Story = {
+export const disabledRadio: Story = {
   ...Template,
   args: {
     id: 'textInput',

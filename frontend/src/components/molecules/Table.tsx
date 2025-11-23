@@ -1,7 +1,6 @@
 import type { DisplayLabels } from '@/types/ui';
-import { TableHead } from './TableHead';
-import { TableRow } from './TableRow';
-
+import { TableHead } from '@/components/elements/TableHead';
+import { TableRow } from '@/components/elements/TableRow';
 type Props<T> = {
   labels: DisplayLabels;
   data: T[];
