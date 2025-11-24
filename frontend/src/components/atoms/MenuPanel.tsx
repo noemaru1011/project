@@ -1,5 +1,5 @@
 import React from 'react';
-import colseIcon from '@/assets/close.svg';
+import { X } from 'lucide-react';
 import type { Option } from '@/types/ui';
 import { Link } from 'react-router-dom';
 
@@ -9,10 +9,14 @@ type Props = {
 };
 
 export const MenuPanel: React.FC<Props> = ({ options, onClick }) => (
-  <div className="fixed top-0 right-0 h-full w-64 bg-white z-50">
+  <div className="fixed top-0 right-0 h-full w-64 bg-white z-50 shadow-lg">
     <div className="flex justify-end p-4">
-      <img src={colseIcon} alt="閉じる" onClick={onClick} className="cursor-pointer w-6 h-6" />
+      <X
+        onClick={onClick}
+        className="cursor-pointer w-6 h-6 text-gray-700 hover:text-gray-900 transition"
+      />
     </div>
+
     <nav className="flex flex-col space-y-3 px-4">
       {options.map((opt) => (
         <Link

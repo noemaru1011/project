@@ -12,7 +12,9 @@ import { Lock, Eye, EyeOff } from 'lucide-react';
 
 export const ChangePassword = () => {
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+  const [showPassword3, setShowPassword3] = useState(false);
   const { updatePassword, loading } = usePassword();
 
   const {
@@ -39,16 +41,16 @@ export const ChangePassword = () => {
             <Input
               id="oldPassword"
               label="古いパスワード"
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword1 ? 'text' : 'password'}
               leftIcon={<Lock className="size-4" />}
               rightIcon={
                 <button
                   type="button"
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={() => setShowPassword1(!showPassword1)}
                   className="pointer-events-auto hover:text-gray-600 transition-colors"
                   tabIndex={-1}
                 >
-                  {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                  {showPassword1 ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                 </button>
               }
               error={errors.oldPassword?.message}
@@ -58,16 +60,16 @@ export const ChangePassword = () => {
             <Input
               id="newPassword1"
               label="新しいパスワード"
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword2 ? 'text' : 'password'}
               leftIcon={<Lock className="size-4" />}
               rightIcon={
                 <button
                   type="button"
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={() => setShowPassword2(!showPassword2)}
                   className="pointer-events-auto hover:text-gray-600 transition-colors"
                   tabIndex={-1}
                 >
-                  {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                  {showPassword2 ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                 </button>
               }
               error={errors.newPassword1?.message}
@@ -77,16 +79,16 @@ export const ChangePassword = () => {
             <Input
               id="newPassword2"
               label="新しいパスワード(確認)"
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword3 ? 'text' : 'password'}
               leftIcon={<Lock className="size-4" />}
               rightIcon={
                 <button
                   type="button"
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={() => setShowPassword3(!showPassword3)}
                   className="pointer-events-auto hover:text-gray-600 transition-colors"
                   tabIndex={-1}
                 >
-                  {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                  {showPassword3 ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                 </button>
               }
               error={errors.newPassword2?.message}
