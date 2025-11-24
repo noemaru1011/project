@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import Header from './Header';
+import { Header } from '@/components/organisms/Header';
 
 //フッター作るならここに追加
 const Layout = () => {

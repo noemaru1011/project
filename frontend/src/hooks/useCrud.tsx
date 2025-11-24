@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { useErrorHandler } from './useErrorHandler';
+import { useLoadingCounter } from './useLoading';
 import type { ApiResponse } from '@/types/apiResponse';
 
 type ApiMethods<T, Q> = {
@@ -14,20 +15,20 @@ type ApiMethods<T, Q> = {
 
 export function useCrud<T, Q = unknown>(api: ApiMethods<T, Q>) {
   const [data, setData] = useState<T[]>([]);
-  const [loading, setLoading] = useState(false);
+  const { loading, start, end } = useLoadingCounter();
   const handleError = useErrorHandler();
 
   const fetchAll = useCallback(async () => {
     if (!api.index) return;
+    start();
     try {
-      setLoading(true);
       const response = await api.index();
       if (response.data) setData(response.data);
     } catch (err: any) {
       handleError(err);
       throw err; // ← ここで再スローする
     } finally {
-      setLoading(false);
+      end();
     }
   }, [api, handleError]);
 
@@ -36,14 +37,14 @@ export function useCrud<T, Q = unknown>(api: ApiMethods<T, Q>) {
       if (!api.search) return;
 
       try {
-        setLoading(true);
+        start();
         const response = await api.search(item);
         if (response.data) setData(response.data);
       } catch (err: any) {
         handleError(err);
         throw err;
       } finally {
-        setLoading(false);
+        end();
       }
     },
     [api, handleError],
@@ -53,14 +54,14 @@ export function useCrud<T, Q = unknown>(api: ApiMethods<T, Q>) {
     async (item: Partial<T>): Promise<void> => {
       if (!api.create) return;
       try {
-        setLoading(true);
+        start();
         const response = await api.create(item);
         toast.success(response.message);
       } catch (err: any) {
         handleError(err);
         throw err;
       } finally {
-        setLoading(false);
+        end();
       }
     },
     [api, handleError],
@@ -70,14 +71,14 @@ export function useCrud<T, Q = unknown>(api: ApiMethods<T, Q>) {
     async (id: string, updateData: Partial<T>) => {
       if (!api.update) return;
       try {
-        setLoading(true);
+        start();
         const response = await api.update(id, updateData);
         toast.success(response.message);
       } catch (err: any) {
         handleError(err);
         throw err; // ← ここで再スローする
       } finally {
-        setLoading(false);
+        end();
       }
     },
     [api, handleError],
@@ -87,14 +88,14 @@ export function useCrud<T, Q = unknown>(api: ApiMethods<T, Q>) {
     async (id: string) => {
       if (!api.delete) return;
       try {
-        setLoading(true);
+        start();
         const response = await api.delete(id);
         toast.success(response.message);
       } catch (err: any) {
         handleError(err);
         throw err; // ← ここで再スローする
       } finally {
-        setLoading(false);
+        end();
       }
     },
     [api, handleError],
@@ -104,14 +105,14 @@ export function useCrud<T, Q = unknown>(api: ApiMethods<T, Q>) {
     async (id: string): Promise<T | undefined> => {
       if (!api.view) return;
       try {
-        setLoading(true);
+        start();
         const result = await api.view(id);
         return result.data;
       } catch (err: any) {
         handleError(err);
         throw err; // ← ここで再スローする
       } finally {
-        setLoading(false);
+        end();
       }
     },
     [api, handleError],

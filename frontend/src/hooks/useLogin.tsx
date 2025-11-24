@@ -1,19 +1,19 @@
-import { useState } from 'react';
 import { LoginApi } from '@/api/loginApi';
 import type { DisplayLogin } from '@/types/displayLogin';
 import { toast } from 'react-toastify';
+import { useLoadingCounter } from './useLoading';
 import { useErrorHandler } from './useErrorHandler';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
 
 export function useLogin() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const { loading, start, end } = useLoadingCounter();
   const handleError = useErrorHandler();
 
   const login = async (data: DisplayLogin) => {
     try {
-      setLoading(true);
+      start();
       const response = await LoginApi.login(data);
       toast.success(response.message);
       navigate(ROUTES.HOME);
@@ -21,7 +21,7 @@ export function useLogin() {
       handleError(err);
       throw err; // ← ここで再スローする
     } finally {
-      setLoading(false);
+      end();
     }
   };
 

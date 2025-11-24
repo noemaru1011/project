@@ -1,22 +1,27 @@
-import { useState } from 'react';
 import { LogoutApi } from '@/api/logoutApi';
 import { toast } from 'react-toastify';
+import { useLoadingCounter } from './useLoading';
+import { ROUTES } from '@/constants/routes';
+import { useNavigate } from 'react-router-dom';
 import { useErrorHandler } from './useErrorHandler';
 
+//pageがないためuseCrudではなくuseLogoutを作成
 export function useLogout() {
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const { loading, start, end } = useLoadingCounter();
   const handleError = useErrorHandler();
 
   const logout = async () => {
     try {
-      setLoading(true);
+      start();
       const response = await LogoutApi.logout();
+      navigate(ROUTES.AUTH.LOGIN);
       toast.success(response.message);
     } catch (err: any) {
       handleError(err);
       throw err; // ← ここで再スローする
     } finally {
-      setLoading(false);
+      end();
     }
   };
 

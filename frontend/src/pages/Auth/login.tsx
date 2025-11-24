@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 import { Input } from '@/components/atoms/Input';
 import { Button } from '@/components/atoms/Button';
 import { Loading } from '@/components/atoms/Loading';
@@ -6,8 +7,10 @@ import { validation } from '@shared/schemas/login';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useLogin } from '@/hooks/useLogin';
 import type { DisplayLogin } from '@/types/displayLogin';
+import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const { login, loading } = useLogin();
 
   const {
@@ -33,14 +36,26 @@ const Login = () => {
               id="email"
               type="email"
               label="メールアドレス"
+              leftIcon={<Mail className="size-4" />}
               required
               error={errors.email?.message}
               {...register('email')}
             />
             <Input
               id="studentPassword"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               label="パスワード"
+              leftIcon={<Lock className="size-4" />}
+              rightIcon={
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="pointer-events-auto hover:text-gray-600 transition-colors"
+                  tabIndex={-1}
+                >
+                  {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                </button>
+              }
               required
               error={errors.password?.message}
               {...register('password')}

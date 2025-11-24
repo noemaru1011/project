@@ -2,13 +2,13 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import type { Option } from '@/types/ui';
 
-type HeaderNavProps = {
+type Props = {
   options: Option[];
   onLogout: () => void;
   loading?: boolean;
 };
 
-export const HeaderNav: React.FC<HeaderNavProps> = ({ options, onLogout, loading }) => (
+export const HeaderNav: React.FC<Props> = ({ options, onLogout, loading }) => (
   <nav className="flex flex-col sm:flex-row">
     {options.map((opt, index) =>
       opt.value === 'LOGOUT' ? (

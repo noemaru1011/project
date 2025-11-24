@@ -13,6 +13,7 @@ import { Loading } from '@/components/atoms/Loading';
 import { ROUTES } from '@/constants/routes';
 import { StudentApi } from '@/api/studentApi';
 import type { DisplayStudent } from '@/types/displayStudent';
+import { Mail, User, BookUser, Library, Group } from 'lucide-react';
 
 export const StudentCreate = () => {
   const navigate = useNavigate();
@@ -49,6 +50,7 @@ export const StudentCreate = () => {
               id="studentName"
               label="学生名"
               type="text"
+              leftIcon={<User className="size-4" />}
               error={errors.studentName?.message}
               required
               {...register('studentName')}
@@ -57,6 +59,7 @@ export const StudentCreate = () => {
               id="grade"
               label="学年"
               options={gradeOptions}
+              leftIcon={<BookUser className="size-4" />}
               required
               error={errors.grade?.message}
               {...register('grade')}
@@ -65,6 +68,7 @@ export const StudentCreate = () => {
               id="minorCategory"
               label="小分類名"
               options={minorCategoryOptions}
+              leftIcon={<Group className="size-4" />}
               required
               error={errors.minorCategoryId?.message}
               {...register('minorCategoryId')}
@@ -73,6 +77,8 @@ export const StudentCreate = () => {
               id="email"
               type="email"
               label="メールアドレス"
+              helperText="メールアドレスは重複しないように"
+              leftIcon={<Mail className="size-4" />}
               required
               error={errors.email?.message}
               {...register('email')}
@@ -81,6 +87,7 @@ export const StudentCreate = () => {
               id="department"
               label="学科名"
               options={departmentOptions}
+              leftIcon={<Library className="size-4" />}
               required
               error={errors.departmentId?.message}
               {...register('departmentId')}

@@ -14,6 +14,7 @@ import { useCrud } from '@/hooks/useCrud';
 import { validation } from '@shared/schemas/student';
 import { StudentApi } from '@/api/studentApi';
 import type { DisplayStudent } from '@/types/displayStudent';
+import { Mail, User, BookUser, Library, Group } from 'lucide-react';
 
 export const StudentUpdate = () => {
   const navigate = useNavigate();
@@ -75,6 +76,7 @@ export const StudentUpdate = () => {
               label="学生名"
               type="text"
               error={errors.studentName?.message}
+              leftIcon={<User className="size-4" />}
               required
               {...register('studentName')}
             />
@@ -82,6 +84,7 @@ export const StudentUpdate = () => {
               id="grade"
               label="学年"
               options={gradeOptions}
+              leftIcon={<BookUser className="size-4" />}
               required
               error={errors.grade?.message}
               {...register('grade')}
@@ -90,6 +93,7 @@ export const StudentUpdate = () => {
               id="minorCategory"
               label="小分類名"
               options={minorCategoryOptions}
+              leftIcon={<Group className="size-4" />}
               required
               error={errors.minorCategoryId?.message}
               {...register('minorCategoryId')}
@@ -98,6 +102,8 @@ export const StudentUpdate = () => {
               id="email"
               type="email"
               label="メールアドレス"
+              helperText="メールアドレスは変更できません"
+              leftIcon={<Mail className="size-4" />}
               disabled
               error={errors.email?.message}
               {...register('email')}
@@ -106,6 +112,7 @@ export const StudentUpdate = () => {
               id="department"
               label="学科名"
               options={departmentOptions}
+              leftIcon={<Library className="size-4" />}
               required
               error={errors.departmentId?.message}
               {...register('departmentId')}

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Table } from '@/components/atoms/Table';
+import { Table } from '@/components/molecules/Table';
 import { Loading } from '@/components/atoms/Loading';
 import { useCrud } from '@/hooks/useCrud';
 import { SubCategoryLabels } from '@/constants/subCategoryLabels';

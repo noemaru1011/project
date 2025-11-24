@@ -11,6 +11,7 @@ import { useCrud } from '@/hooks/useCrud';
 import { Loading } from '@/components/atoms/Loading';
 import { ROUTES } from '@/constants/routes';
 import { StudentApi } from '@/api/studentApi';
+import { Mail, User, BookUser, Library, Group } from 'lucide-react';
 
 export const StudentView = () => {
   const navigate = useNavigate();
@@ -39,6 +40,7 @@ export const StudentView = () => {
             id="studentName"
             label="学生名"
             type="text"
+            leftIcon={<User className="size-4" />}
             value={student ? student.studentName : ''}
             disabled
           />
@@ -46,6 +48,7 @@ export const StudentView = () => {
             id="grade"
             label="学年"
             options={gradeOptions}
+            leftIcon={<BookUser className="size-4" />}
             value={student ? String(student.grade) : ''}
             disabled
           />
@@ -53,6 +56,7 @@ export const StudentView = () => {
             id="minorCategoryId"
             label="小分類名"
             options={minorCategoryOptions}
+            leftIcon={<Group className="size-4" />}
             value={student ? String(student.minorCategoryId) : ''}
             disabled
           />
@@ -60,6 +64,7 @@ export const StudentView = () => {
             id="email"
             label="メールアドレス"
             type="email"
+            leftIcon={<Mail className="size-4" />}
             value={student ? student.email : ''}
             disabled
           />
@@ -67,6 +72,7 @@ export const StudentView = () => {
             id="departmentId"
             label="学科名"
             options={departmentOptions}
+            leftIcon={<Library className="size-4" />}
             value={student ? String(student.departmentId) : ''}
             disabled
           />

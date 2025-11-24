@@ -16,7 +16,7 @@ import { StudentIndex } from '@/pages/StudentPage';
 import { StudentCreate } from '@/pages/StudentPage/create';
 import { StudentUpdate } from '@/pages/StudentPage/update';
 import { StudentView } from '@/pages/StudentPage/view';
-import { StudentChange } from '@/pages/Auth/changePassword';
+import { ChangePassword } from '@/pages/StudentPage/changePassword';
 import { HistoryCreate } from '@/pages/HistoryPage/create';
 
 import { NotFound } from '@/pages/ErrorPage/NotFound';
@@ -51,6 +51,14 @@ const AppRoutes = () => (
           </ProtectedContent>
         }
       />
+      <Route
+        path={ROUTES.STUDENT.CHANGE}
+        element={
+          <ProtectedContent allowedRoles={['ADMIN', 'STUDENT']}>
+            <ChangePassword />
+          </ProtectedContent>
+        }
+      />
       {/* ここからaminのみしかし、student create以外は、page開くときにサーバーにリクエストするからわざわざフロントで記載する必要ない */}
       <Route path={ROUTES.STATUS.INDEX} element={<StatusIndex />} />
       <Route path={ROUTES.CATEGORY.INDEX} element={<CategoryIndex />} />
@@ -68,7 +76,6 @@ const AppRoutes = () => (
       />
       <Route path={ROUTES.STUDENT.UPDATE()} element={<StudentUpdate />} />
       <Route path={ROUTES.STUDENT.VIEW()} element={<StudentView />} />
-      <Route path={ROUTES.STUDENT.CHANGE} element={<StudentChange />} />
     </Route>
   </Routes>
 );
