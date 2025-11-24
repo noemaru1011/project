@@ -2,19 +2,14 @@ import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
-
-type ApiError = {
-  status: number;
-  code?: string;
-  message: string;
-};
+import type { ApiResponse } from '@/types/apiResponse';
 
 export const useErrorHandler = () => {
   const navigate = useNavigate();
 
   return useCallback(
-    (err: ApiError) => {
-      const status = err.status;
+    (err: ApiResponse<unknown>) => {
+      const status = err.status ?? 0;
       const code = err.code;
       const message = err.message ?? '予期せぬエラーが発生しました';
 
@@ -73,8 +68,6 @@ export const useErrorHandler = () => {
         toast.error(message);
         return;
       }
-
-      console.log('ここ通るかい？');
       navigate(ROUTES.ERROR.SERVER);
       toast.error(message);
     },

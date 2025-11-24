@@ -5,6 +5,7 @@ import { Menu } from '@/components/molecules/Menu';
 import { useLogout } from '@/hooks/useLogout';
 import type { Option } from '@/types/ui';
 import { ROUTES } from '@/constants/routes';
+import { useLoginContext } from '@/hooks/useLoginContext';
 
 const HeaderOptions: Option[] = [
   { value: ROUTES.HOME, label: 'メインページへ' },
@@ -16,16 +17,21 @@ const HeaderOptions: Option[] = [
 export const Header: React.FC = () => {
   const { logout, loading } = useLogout();
   const main = HeaderOptions[0];
+  const { passwordUpdateRequired } = useLoginContext();
   const navOptions = HeaderOptions.slice(1);
   const [open, setOpen] = useState(false);
-
   return (
     <header className="border-b">
       <div className="px-5 py-4 flex flex-col sm:flex-row sm:justify-between items-center">
         <HeaderMain to={main.value} label={main.label} />
 
         <div className="flex flex-col sm:flex-row items-center">
-          <HeaderNav options={navOptions} onLogout={logout} loading={loading} />
+          <HeaderNav
+            options={navOptions}
+            onLogout={logout}
+            loading={loading}
+            passwordUpdateRequired={passwordUpdateRequired}
+          />
 
           <div className="ml-5 mt-2 sm:mt-0">
             <Menu open={open} onClick={() => setOpen(!open)} />

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ProtectedContent from '@/hooks/useContent';
+import ProtectedContent from '@/hooks/useRoleContent';
 import { ROUTES } from '@/constants/routes';
 
 import Layout from '@/components/layouts/Layout';

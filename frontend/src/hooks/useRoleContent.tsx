@@ -5,12 +5,12 @@ import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
 
-interface ProtectedContentProps {
+interface Props {
   children: ReactNode;
   allowedRoles?: ('ADMIN' | 'STUDENT')[];
 }
 
-const ProtectedContent = ({ children, allowedRoles }: ProtectedContentProps) => {
+const ProtectedContent = ({ children, allowedRoles }: Props) => {
   const navigate = useNavigate();
 
   useEffect(() => {

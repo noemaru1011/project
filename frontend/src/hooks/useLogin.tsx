@@ -5,16 +5,19 @@ import { useLoadingCounter } from './useLoading';
 import { useErrorHandler } from './useErrorHandler';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
+import { useLoginContext } from '@/hooks/useLoginContext';
 
 export function useLogin() {
   const navigate = useNavigate();
   const { loading, start, end } = useLoadingCounter();
+  const { setPasswordUpdateRequired } = useLoginContext();
   const handleError = useErrorHandler();
 
   const login = async (data: DisplayLogin) => {
     try {
       start();
       const response = await LoginApi.login(data);
+      setPasswordUpdateRequired(response.data?.passwordUpdateRequired ?? false);
       toast.success(response.message);
       navigate(ROUTES.HOME);
     } catch (err: any) {
@@ -24,6 +27,5 @@ export function useLogin() {
       end();
     }
   };
-
-  return { login, loading };
+  return { login, loading, setPasswordUpdateRequired };
 }
