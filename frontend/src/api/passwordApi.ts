@@ -1,4 +1,4 @@
-import { Api } from './Api';
+import { Api } from './api';
 import type { DisplayPassword } from '@/types/displayPassword';
 import { API_ROUTES } from '@/constants/apiRoutes';
 

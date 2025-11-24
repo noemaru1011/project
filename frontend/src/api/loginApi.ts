@@ -1,4 +1,4 @@
-import { Api } from './Api';
+import { Api } from './api';
 import type { DisplayLogin } from '@/types/displayLogin';
 import { API_ROUTES } from '@/constants/apiRoutes';
 

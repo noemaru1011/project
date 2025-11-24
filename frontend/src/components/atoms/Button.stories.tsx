@@ -53,6 +53,13 @@ export const returnButton: Story = {
   },
 };
 
+export const homeButton: Story = {
+  args: {
+    variant: 'Home',
+    onClick: () => alert('クリックされました！'),
+  },
+};
+
 /** ボタン類まとめ */
 export const GroupingButton: Story = {
   render: () => (
@@ -64,6 +71,7 @@ export const GroupingButton: Story = {
       <Button variant="Search" onClick={() => alert('クリックされました！')} />
       <Button variant="Login" onClick={() => alert('クリックされました！')} />
       <Button variant="Back" onClick={() => alert('クリックされました！')} />
+      <Button variant="Home" onClick={() => alert('クリックされました！')} />
     </div>
   ),
 };

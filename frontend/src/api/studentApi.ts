@@ -1,4 +1,4 @@
-import { Api } from './Api';
+import { Api } from './api';
 import type { StudentQuery } from '@shared/schemas/student';
 import type { DisplayStudent } from '@/types/displayStudent';
 import { API_ROUTES } from '@/constants/apiRoutes';

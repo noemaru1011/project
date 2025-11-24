@@ -1,4 +1,12 @@
-export type ButtonVariant = 'Create' | 'Read' | 'Update' | 'Delete' | 'Search' | 'Login' | 'Back';
+export type ButtonVariant =
+  | 'Create'
+  | 'Read'
+  | 'Update'
+  | 'Delete'
+  | 'Search'
+  | 'Login'
+  | 'Back'
+  | 'Home';
 
 export type InputType = 'text' | 'number' | 'email' | 'tel' | 'password' | 'url' | 'datetime-local';
 
