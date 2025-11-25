@@ -7,8 +7,8 @@ import type { ApiResponse } from '@/types/apiResponse';
 type ApiMethods<T, Q> = {
   index?: () => Promise<ApiResponse<T[]>>;
   search?: (query: Partial<Q>) => Promise<ApiResponse<T[]>>;
-  create?: (data: Partial<T>) => Promise<ApiResponse<T>>;
-  update?: (id: string, data: Partial<T>) => Promise<ApiResponse<T>>;
+  create?: (data: T) => Promise<ApiResponse<T>>;
+  update?: (id: string, data: T) => Promise<ApiResponse<T>>;
   delete?: (id: string) => Promise<ApiResponse<void>>;
   view?: (id: string) => Promise<ApiResponse<T>>;
 };
@@ -18,7 +18,10 @@ export function useCrud<T, Q = unknown>(api: ApiMethods<T, Q>) {
   const { loading, start, end } = useLoadingCounter();
   const handleError = useErrorHandler();
 
-  const fetchAll = useCallback(async () => {
+  // -----------------------------
+  // index
+  // -----------------------------
+  const fetchAll = useCallback(async (): Promise<void> => {
     if (!api.index) return;
     start();
     try {
@@ -26,19 +29,21 @@ export function useCrud<T, Q = unknown>(api: ApiMethods<T, Q>) {
       if (response.data) setData(response.data);
     } catch (err: any) {
       handleError(err);
-      throw err; // ← ここで再スローする
+      throw err;
     } finally {
       end();
     }
   }, [api, handleError]);
 
+  // -----------------------------
+  // search
+  // -----------------------------
   const fetchData = useCallback(
-    async (item: Partial<Q>) => {
+    async (query: Partial<Q>): Promise<void> => {
       if (!api.search) return;
-
+      start();
       try {
-        start();
-        const response = await api.search(item);
+        const response = await api.search(query);
         if (response.data) setData(response.data);
       } catch (err: any) {
         handleError(err);
@@ -50,11 +55,14 @@ export function useCrud<T, Q = unknown>(api: ApiMethods<T, Q>) {
     [api, handleError],
   );
 
+  // -----------------------------
+  // create
+  // -----------------------------
   const create = useCallback(
-    async (item: Partial<T>): Promise<void> => {
+    async (item: T): Promise<void> => {
       if (!api.create) return;
+      start();
       try {
-        start();
         const response = await api.create(item);
         toast.success(response.message);
       } catch (err: any) {
@@ -67,16 +75,19 @@ export function useCrud<T, Q = unknown>(api: ApiMethods<T, Q>) {
     [api, handleError],
   );
 
+  // -----------------------------
+  // update
+  // -----------------------------
   const update = useCallback(
-    async (id: string, updateData: Partial<T>) => {
+    async (id: string, updateData: T): Promise<void> => {
       if (!api.update) return;
+      start();
       try {
-        start();
         const response = await api.update(id, updateData);
         toast.success(response.message);
       } catch (err: any) {
         handleError(err);
-        throw err; // ← ここで再スローする
+        throw err;
       } finally {
         end();
       }
@@ -84,16 +95,19 @@ export function useCrud<T, Q = unknown>(api: ApiMethods<T, Q>) {
     [api, handleError],
   );
 
+  // -----------------------------
+  // delete
+  // -----------------------------
   const remove = useCallback(
-    async (id: string) => {
+    async (id: string): Promise<void> => {
       if (!api.delete) return;
+      start();
       try {
-        start();
         const response = await api.delete(id);
         toast.success(response.message);
       } catch (err: any) {
         handleError(err);
-        throw err; // ← ここで再スローする
+        throw err;
       } finally {
         end();
       }
@@ -101,16 +115,19 @@ export function useCrud<T, Q = unknown>(api: ApiMethods<T, Q>) {
     [api, handleError],
   );
 
+  // -----------------------------
+  // view
+  // -----------------------------
   const view = useCallback(
-    async (id: string): Promise<T | undefined> => {
-      if (!api.view) return;
+    async (id: string): Promise<T> => {
+      if (!api.view) return Promise.reject();
+      start();
       try {
-        start();
-        const result = await api.view(id);
-        return result.data;
+        const response = await api.view(id);
+        return response.data as T;
       } catch (err: any) {
         handleError(err);
-        throw err; // ← ここで再スローする
+        throw err;
       } finally {
         end();
       }

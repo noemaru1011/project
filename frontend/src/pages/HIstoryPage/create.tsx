@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { useState } from 'react';
 import { Button } from '@/components/atoms/Button';
 import { CheckboxGroup } from '@/components/molecules/CheckboxGroup';
@@ -14,12 +14,7 @@ import type { QueryStudent } from '@/types/queryStudent';
 import type { DisplayStudent } from '@/types/displayStudent';
 
 export const HistoryCreate = () => {
-  const {
-    handleSubmit,
-    control,
-    getValues,
-    formState: { errors },
-  } = useForm<QueryStudent>({
+  const { handleSubmit, control, getValues } = useForm<QueryStudent>({
     defaultValues: {
       categories: [],
       subCategories: [],
@@ -61,44 +56,84 @@ export const HistoryCreate = () => {
     <div className="p-4">
       {/* 検索フォーム */}
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-wrap gap-3 space-y-4">
-        <CheckboxGroup
+        {/* 大分類 */}
+        <Controller
           name="categories"
           control={control}
-          options={categoryOptions}
-          label="大分類"
-          error={errors.categories?.message}
+          render={({ field, fieldState }) => (
+            <CheckboxGroup
+              name={field.name}
+              value={field.value}
+              onChange={field.onChange}
+              options={categoryOptions}
+              label="大分類"
+              error={fieldState.error?.message}
+            />
+          )}
         />
 
-        <CheckboxGroup
+        {/* 中分類 */}
+        <Controller
           name="subCategories"
           control={control}
-          options={subCategoryOptions}
-          label="中分類"
-          error={errors.subCategories?.message}
+          render={({ field, fieldState }) => (
+            <CheckboxGroup
+              name={field.name}
+              value={field.value}
+              onChange={field.onChange}
+              options={subCategoryOptions}
+              label="中分類"
+              error={fieldState.error?.message}
+            />
+          )}
         />
 
-        <CheckboxGroup
+        {/* 小分類 */}
+        <Controller
           name="minorCategories"
           control={control}
-          options={minorCategoryOptions}
-          label="小分類"
-          error={errors.minorCategories?.message}
+          render={({ field, fieldState }) => (
+            <CheckboxGroup
+              name={field.name}
+              value={field.value}
+              onChange={field.onChange}
+              options={minorCategoryOptions}
+              label="小分類"
+              error={fieldState.error?.message}
+            />
+          )}
         />
 
-        <CheckboxGroup
+        {/* 学年 */}
+        <Controller
           name="grades"
           control={control}
-          options={gradeOptions}
-          label="学年"
-          error={errors.grades?.message}
+          render={({ field, fieldState }) => (
+            <CheckboxGroup
+              name={field.name}
+              value={field.value}
+              onChange={field.onChange}
+              options={gradeOptions}
+              label="学年"
+              error={fieldState.error?.message}
+            />
+          )}
         />
 
-        <CheckboxGroup
+        {/* 学科 */}
+        <Controller
           name="departments"
           control={control}
-          options={departmentOptions}
-          label="学科"
-          error={errors.departments?.message}
+          render={({ field, fieldState }) => (
+            <CheckboxGroup
+              name={field.name}
+              value={field.value}
+              onChange={field.onChange}
+              options={departmentOptions}
+              label="学科"
+              error={fieldState.error?.message}
+            />
+          )}
         />
 
         <Button variant="Search" type="submit" />

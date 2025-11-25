@@ -40,9 +40,9 @@ export const StudentUpdate = () => {
         reset({
           studentName: data.studentName,
           email: data.email,
-          grade: String(data.grade),
-          minorCategoryId: String(data.minorCategoryId),
-          departmentId: String(data.departmentId),
+          grade: data.grade,
+          minorCategoryId: data.minorCategoryId,
+          departmentId: data.departmentId,
         });
       } catch (err: any) {}
     };
@@ -54,14 +54,7 @@ export const StudentUpdate = () => {
   const onSubmit = async (data: any) => {
     try {
       if (!studentId) return;
-
-      const payload = {
-        ...data,
-        grade: String(data.grade),
-        departmentId: String(data.departmentId),
-        minorCategoryId: String(data.minorCategoryId),
-      };
-      await update(studentId, payload);
+      await update(studentId, data);
       navigate(ROUTES.STUDENT.INDEX);
     } catch (err: any) {}
   };

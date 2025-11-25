@@ -16,7 +16,7 @@ import { StudentIndex } from '@/pages/StudentPage';
 import { StudentCreate } from '@/pages/StudentPage/create';
 import { StudentUpdate } from '@/pages/StudentPage/update';
 import { StudentView } from '@/pages/StudentPage/view';
-import { ChangePassword } from '@/pages/StudentPage/changePassword';
+import { ChangePassword } from '@/pages/StudentPage/updatePassword';
 import { HistoryCreate } from '@/pages/HistoryPage/create';
 
 import { NotFound } from '@/pages/ErrorPage/NotFound';
