@@ -17,7 +17,7 @@ import { StudentCreate } from '@/pages/studentPage/create';
 import { StudentUpdate } from '@/pages/studentPage/update';
 import { StudentView } from '@/pages/studentPage/view';
 import { ChangePassword } from '@/pages/passwordPage/update';
-// import { HistoryCreate } from '@/pages/historyPage/create';
+import { HistoryCreate } from '@/pages/historyPage/create';
 
 import { NotFound } from '@/pages/errorPage/NotFound';
 import { ServerError } from '@/pages/errorPage/ServerError';
@@ -43,14 +43,14 @@ const AppRoutes = () => (
           </ProtectedContent>
         }
       />
-      {/* <Route
+      <Route
         path={ROUTES.HISTORY.CREATE}
         element={
           <ProtectedContent allowedRoles={['ADMIN', 'STUDENT']}>
             <HistoryCreate />
           </ProtectedContent>
         }
-      /> */}
+      />
       <Route
         path={ROUTES.STUDENT.CHANGE}
         element={

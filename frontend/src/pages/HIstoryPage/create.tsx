@@ -1,5 +1,4 @@
 import { useForm, Controller } from 'react-hook-form';
-import { useState } from 'react';
 import { Button } from '@/components/atoms/Button';
 import { CheckboxGroup } from '@/components/molecules/CheckboxGroup';
 import { Loading } from '@/components/atoms/Loading';
@@ -8,45 +7,34 @@ import { subCategoryOptions } from '@/constants/subCategory';
 import { minorCategoryOptions } from '@/constants/minorCategory';
 import { departmentOptions } from '@/constants/department';
 import { gradeOptions } from '@/constants/grade';
-import { StudentApi } from '@/api/studentApi';
-import { useCrud } from '@/hooks/useCrud';
-import type { QueryStudent } from '@/types/queryStudent';
-import type { DisplayStudent } from '@/types/displayStudent';
+import { StudentSearchApi } from '@/api/studentSearchApi';
+import { useSearch } from '@/hooks/useSearch';
+import type { StudentQuery } from '@/interface/studentQuery';
+import type { StudentForSearch } from '@/interface/student';
 
 export const HistoryCreate = () => {
-  const { handleSubmit, control, getValues } = useForm<QueryStudent>({
+  const { handleSubmit, control, getValues } = useForm<StudentQuery>({
     defaultValues: {
-      categories: [],
-      subCategories: [],
-      minorCategories: [],
-      departments: [],
-      grades: [],
+      categoryId: [],
+      subCategoryId: [],
+      minorCategoryId: [],
+      departmentId: [],
+      grade: [],
     },
   });
 
-  const { data: results, fetchData, loading } = useCrud<DisplayStudent, any>(StudentApi);
-  const [checkedRows, setCheckedRows] = useState<Record<number, boolean>>({});
-
-  const toggleCheck = (id: number) => {
-    setCheckedRows((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
+  const {
+    data: results,
+    loading,
+    search,
+  } = useSearch<StudentForSearch, StudentQuery>(StudentSearchApi.search);
 
   const onSubmit = async () => {
     const query = getValues();
 
-    // string[] を number[] に変換
-    const numericQuery = {
-      categories: query.categories.map(Number),
-      subCategories: query.subCategories.map(Number),
-      minorCategories: query.minorCategories.map(Number),
-      departmentIds: query.departments.map(Number),
-      grades: query.grades.map(Number),
-    };
-
     try {
-      console.log('Submitting query:', numericQuery);
-      await fetchData(numericQuery);
-      setCheckedRows({});
+      console.log('Submitting query:', query);
+      await search(query);
     } catch (err: any) {
       console.error(err);
     }
@@ -58,13 +46,13 @@ export const HistoryCreate = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-wrap gap-3 space-y-4">
         {/* 大分類 */}
         <Controller
-          name="categories"
+          name="categoryId"
           control={control}
           render={({ field, fieldState }) => (
             <CheckboxGroup
               name={field.name}
-              value={field.value}
-              onChange={field.onChange}
+              value={field.value.map(String)}
+              onChange={(vals) => field.onChange(vals.map(Number))}
               options={categoryOptions}
               label="大分類"
               error={fieldState.error?.message}
@@ -74,13 +62,13 @@ export const HistoryCreate = () => {
 
         {/* 中分類 */}
         <Controller
-          name="subCategories"
+          name="subCategoryId"
           control={control}
           render={({ field, fieldState }) => (
             <CheckboxGroup
               name={field.name}
-              value={field.value}
-              onChange={field.onChange}
+              value={field.value.map(String)}
+              onChange={(vals) => field.onChange(vals.map(Number))}
               options={subCategoryOptions}
               label="中分類"
               error={fieldState.error?.message}
@@ -90,13 +78,13 @@ export const HistoryCreate = () => {
 
         {/* 小分類 */}
         <Controller
-          name="minorCategories"
+          name="minorCategoryId"
           control={control}
           render={({ field, fieldState }) => (
             <CheckboxGroup
               name={field.name}
-              value={field.value}
-              onChange={field.onChange}
+              value={field.value.map(String)}
+              onChange={(vals) => field.onChange(vals.map(Number))}
               options={minorCategoryOptions}
               label="小分類"
               error={fieldState.error?.message}
@@ -106,13 +94,13 @@ export const HistoryCreate = () => {
 
         {/* 学年 */}
         <Controller
-          name="grades"
+          name="grade"
           control={control}
           render={({ field, fieldState }) => (
             <CheckboxGroup
               name={field.name}
-              value={field.value}
-              onChange={field.onChange}
+              value={field.value.map(String)}
+              onChange={(vals) => field.onChange(vals.map(Number))}
               options={gradeOptions}
               label="学年"
               error={fieldState.error?.message}
@@ -122,13 +110,13 @@ export const HistoryCreate = () => {
 
         {/* 学科 */}
         <Controller
-          name="departments"
+          name="departmentId"
           control={control}
           render={({ field, fieldState }) => (
             <CheckboxGroup
               name={field.name}
-              value={field.value}
-              onChange={field.onChange}
+              value={field.value.map(String)}
+              onChange={(vals) => field.onChange(vals.map(Number))}
               options={departmentOptions}
               label="学科"
               error={fieldState.error?.message}
@@ -145,7 +133,6 @@ export const HistoryCreate = () => {
           <table className="min-w-full border border-gray-300 divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-4 py-2 text-center">選択</th>
                 <th className="px-4 py-2 text-left">名前</th>
                 <th className="px-4 py-2 text-left">学年</th>
                 <th className="px-4 py-2 text-left">大分類</th>
@@ -164,26 +151,16 @@ export const HistoryCreate = () => {
                 </tr>
               ) : (
                 results.map((s) => {
-                  const checked = checkedRows[s.studentId] || false;
                   return (
-                    <tr key={s.studentId} className={checked ? 'bg-blue-100' : ''}>
-                      <td className="px-4 py-2 text-center">
-                        <input
-                          type="checkbox"
-                          checked={checked}
-                          onChange={() => toggleCheck(s.studentId)}
-                        />
-                      </td>
+                    <tr key={s.studentId}>
                       <td className="px-4 py-2">{s.studentName}</td>
                       <td className="px-4 py-2">{s.grade}</td>
                       <td className="px-4 py-2">
-                        {s.minorCategory?.subCategory?.category?.categoryName ?? '—'}
+                        {s.minorCategory.subCategory.category.categoryName}
                       </td>
-                      <td className="px-4 py-2">
-                        {s.minorCategory?.subCategory?.subCategoryName ?? '—'}
-                      </td>
-                      <td className="px-4 py-2">{s.minorCategory?.minorCategoryName ?? '—'}</td>
-                      <td className="px-4 py-2">{s.department?.departmentName ?? '—'}</td>
+                      <td className="px-4 py-2">{s.minorCategory.subCategory.subCategoryName}</td>
+                      <td className="px-4 py-2">{s.minorCategory.minorCategoryName}</td>
+                      <td className="px-4 py-2">{s.department.departmentName}</td>
                     </tr>
                   );
                 })

@@ -155,35 +155,35 @@ export const StudentRepository = {
     });
   },
 
-  async resolveMinorCategoryIds(filters: {
-    categories?: number[];
-    subCategories?: number[];
-    minorCategories?: number[];
+  async resolveMinorCategoryIds(data: {
+    minorCategoryId?: number[];
+    subCategoryId?: number[];
+    categoryId?: number[];
   }): Promise<number[]> {
     let ids: number[] = [];
 
-    if (filters.categories?.length) {
+    if (data.categoryId?.length) {
       const mcs = await prisma.minorCategory.findMany({
         where: {
-          subCategory: { categoryId: { in: filters.categories } },
+          subCategory: { categoryId: { in: data.categoryId } },
         },
         select: { minorCategoryId: true },
       });
       ids.push(...mcs.map((m) => m.minorCategoryId));
     }
 
-    if (filters.subCategories?.length) {
+    if (data.subCategoryId?.length) {
       const mcs = await prisma.minorCategory.findMany({
         where: {
-          subCategoryId: { in: filters.subCategories },
+          subCategoryId: { in: data.subCategoryId },
         },
         select: { minorCategoryId: true },
       });
       ids.push(...mcs.map((m) => m.minorCategoryId));
     }
 
-    if (filters.minorCategories?.length) {
-      ids.push(...filters.minorCategories);
+    if (data.minorCategoryId?.length) {
+      ids.push(...data.minorCategoryId);
     }
 
     return [...new Set(ids)];

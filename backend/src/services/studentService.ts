@@ -48,20 +48,20 @@ export const StudentService = {
     await StudentRepository.deleteStudent(studentId);
   },
 
-  async searchStudents(filters: {
-    categories?: number[];
-    subCategories?: number[];
-    minorCategories?: number[];
-    departments?: number[];
+  async searchStudents(data: {
+    minorCategoryId?: number[];
+    subCategoryId?: number[];
+    categoryId?: number[];
     grade?: number[];
+    departmentId?: number[];
   }) {
-    const minorCategoryIds = await StudentRepository.resolveMinorCategoryIds(filters);
+    const minorCategoryIds = await StudentRepository.resolveMinorCategoryIds(data);
     console.log('minorCategoryIds', minorCategoryIds);
 
     const students = await StudentRepository.searchStudents({
       minorCategoryIds,
-      departments: filters.departments,
-      grade: filters.grade,
+      departments: data.departmentId,
+      grade: data.grade,
     });
     console.log('students', students);
 

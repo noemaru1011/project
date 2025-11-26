@@ -37,7 +37,6 @@ export const StudentController = {
 
   async searchStudents(req: Request, res: Response) {
     try {
-      console.log('req.body', req.body);
       const students = await StudentService.searchStudents(req.body);
       res.json({
         data: students,
