@@ -1,5 +1,5 @@
 import { PasswordApi } from '@/api/passwordApi';
-import type { DisplayPassword } from '@/types/displayPassword';
+import type { Password } from '@shared/schemas/password';
 import { useLoadingCounter } from './useLoading';
 import { useErrorHandler } from './useErrorHandler';
 import { useLoginContext } from '@/hooks/useLoginContext';
@@ -11,7 +11,7 @@ export function usePassword() {
   const { setPasswordUpdateRequired } = useLoginContext();
   const handleError = useErrorHandler();
 
-  const updatePassword = async (data: DisplayPassword) => {
+  const update = async (data: Password) => {
     try {
       start();
       const response = await PasswordApi.update(data);
@@ -25,5 +25,5 @@ export function usePassword() {
     }
   };
 
-  return { updatePassword, loading };
+  return { update, loading };
 }

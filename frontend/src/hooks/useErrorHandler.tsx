@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
-import type { ApiResponse } from '@/types/apiResponse';
+import type { ApiResponse } from '@/interface/apiResponse';
 
 export const useErrorHandler = () => {
   const navigate = useNavigate();

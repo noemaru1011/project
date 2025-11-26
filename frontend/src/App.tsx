@@ -5,28 +5,28 @@ import ProtectedContent from '@/hooks/useRoleContent';
 import { ROUTES } from '@/constants/routes';
 
 import Layout from '@/components/layouts/Layout';
-import Login from '@/pages/Auth/login';
-import { HomePage } from '@/pages/Home/HomePage';
-import { CategoryIndex } from '@/pages/CategoryPage';
-import { SubCategoryIndex } from '@/pages/SubCategoryPage';
-import { MinorCategoryIndex } from '@/pages/MInorCategoryPage';
-import { DepartmentIndex } from '@/pages/DepartmentPage';
-import { StatusIndex } from '@/pages/StatusPage';
-import { StudentIndex } from '@/pages/StudentPage';
-import { StudentCreate } from '@/pages/StudentPage/create';
-import { StudentUpdate } from '@/pages/StudentPage/update';
-import { StudentView } from '@/pages/StudentPage/view';
-import { ChangePassword } from '@/pages/StudentPage/updatePassword';
-import { HistoryCreate } from '@/pages/HistoryPage/create';
+import { LoginPage } from '@/pages/auth/login';
+import { HomePage } from '@/pages/home/HomePage';
+import { CategoryIndex } from '@/pages/categoryPage';
+import { SubCategoryIndex } from '@/pages/subCategoryPage';
+import { MinorCategoryIndex } from '@/pages/mInorCategoryPage';
+import { DepartmentIndex } from '@/pages/departmentPage';
+import { StatusIndex } from '@/pages/statusPage';
+import { StudentIndex } from '@/pages/studentPage';
+import { StudentCreate } from '@/pages/studentPage/create';
+import { StudentUpdate } from '@/pages/studentPage/update';
+import { StudentView } from '@/pages/studentPage/view';
+import { ChangePassword } from '@/pages/passwordPage/update';
+import { HistoryCreate } from '@/pages/historyPage/create';
 
-import { NotFound } from '@/pages/ErrorPage/NotFound';
-import { ServerError } from '@/pages/ErrorPage/ServerError';
-import { Forbidden } from '@/pages/ErrorPage/Forbidden';
+import { NotFound } from '@/pages/errorPage/NotFound';
+import { ServerError } from '@/pages/errorPage/ServerError';
+import { Forbidden } from '@/pages/errorPage/Forbidden';
 
 const AppRoutes = () => (
   <Routes>
     {/* ヘッダーなし */}
-    <Route path={ROUTES.AUTH.LOGIN} element={<Login />} />
+    <Route path={ROUTES.AUTH.LOGIN} element={<LoginPage />} />
     {/* エラー画面 */}
     <Route path={ROUTES.ERROR.SERVER} element={<ServerError />} />
     <Route path={ROUTES.ERROR.FORBIDDEN} element={<Forbidden />} />

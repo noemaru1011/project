@@ -4,14 +4,10 @@ import { Loading } from '@/components/atoms/Loading';
 import { useCrud } from '@/hooks/useCrud';
 import { MinorCategoryLabels } from '@/constants/minorCategoryLabels';
 import { MinorCategoryApi } from '@/api/minorCategoryApi';
-import type { DisplayMinorCategory } from '@/types/displayMinorCategory';
+import type { MinorCategory } from '@/interface/minorCategory';
 
 export const MinorCategoryIndex = () => {
-  const {
-    data: MinorCategories,
-    fetchAll,
-    loading,
-  } = useCrud<DisplayMinorCategory>(MinorCategoryApi);
+  const { data: MinorCategories, fetchAll, loading } = useCrud<MinorCategory>(MinorCategoryApi);
 
   useEffect(() => {
     fetchAll();

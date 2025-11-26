@@ -1,4 +1,4 @@
-export type DisplaySubCategory = {
+export interface SubCategory {
   subCategoryId: number;
   subCategoryName: string;
-};
+}

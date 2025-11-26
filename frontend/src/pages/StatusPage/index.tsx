@@ -4,10 +4,10 @@ import { Loading } from '@/components/atoms/Loading';
 import { useCrud } from '@/hooks/useCrud';
 import { StatusLabels } from '@/constants/statusLabels';
 import { StatusAPi } from '@/api/statusApi';
-import type { DisplayStatus } from '@/types/displayStatus';
+import type { Status } from '@/interface/status';
 
 export const StatusIndex = () => {
-  const { data: Status, fetchAll, loading } = useCrud<DisplayStatus>(StatusAPi);
+  const { data: Status, fetchAll, loading } = useCrud<Status>(StatusAPi);
 
   useEffect(() => {
     fetchAll();

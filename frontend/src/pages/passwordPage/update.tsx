@@ -8,7 +8,7 @@ import { usePassword } from '@/hooks/usePassword';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ROUTES } from '@/constants/routes';
 import { Loading } from '@/components/atoms/Loading';
-import type { InputPassword } from '@shared/schemas/password';
+import type { Password } from '@shared/schemas/password';
 import { Lock, Eye, EyeOff } from 'lucide-react';
 
 export const ChangePassword = () => {
@@ -16,7 +16,7 @@ export const ChangePassword = () => {
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const [showPassword3, setShowPassword3] = useState(false);
-  const { updatePassword, loading } = usePassword();
+  const { update, loading } = usePassword();
 
   const {
     register,
@@ -27,11 +27,9 @@ export const ChangePassword = () => {
   });
 
   // 送信処理
-  const onSubmit = async (data: InputPassword) => {
-    try {
-      await updatePassword(data);
-      navigate(ROUTES.HOME);
-    } catch (err: any) {}
+  const onSubmit = async (data: Password) => {
+    await update(data);
+    navigate(ROUTES.HOME);
   };
 
   return (
@@ -73,9 +71,9 @@ export const ChangePassword = () => {
                   {showPassword2 ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                 </button>
               }
-              error={errors.newPassword1?.message}
+              error={errors.newPassword?.message}
               required
-              {...register('newPassword1')}
+              {...register('newPassword')}
             />
             <Input
               id="newPassword2"
@@ -92,9 +90,9 @@ export const ChangePassword = () => {
                   {showPassword3 ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                 </button>
               }
-              error={errors.newPassword2?.message}
+              error={errors.checkNewPassword?.message}
               required
-              {...register('newPassword2')}
+              {...register('checkNewPassword')}
             />
 
             <Button type="submit" variant="Update" disabled={loading} className="w-full mt-4" />

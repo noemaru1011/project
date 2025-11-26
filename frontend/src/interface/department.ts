@@ -1,4 +1,4 @@
-export type DisplayDepartment = {
+export interface Department {
   departmentId: number;
   departmentName: string;
-};
+}

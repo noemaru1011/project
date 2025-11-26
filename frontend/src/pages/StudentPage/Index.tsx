@@ -4,10 +4,10 @@ import { Loading } from '@/components/atoms/Loading';
 import { useCrud } from '@/hooks/useCrud';
 import { StudentLabels } from '@/constants/studentLabels';
 import { StudentApi } from '@/api/studentApi';
-import type { DisplayStudent } from '@shared/schemas/student';
+import type { Student } from '@/interface/student';
 
 export const StudentIndex = () => {
-  const { data: student, fetchAll, loading } = useCrud<DisplayStudent>(StudentApi);
+  const { data: student, fetchAll, loading } = useCrud<Student>(StudentApi);
 
   useEffect(() => {
     fetchAll();

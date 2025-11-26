@@ -4,10 +4,10 @@ import { Loading } from '@/components/atoms/Loading';
 import { useCrud } from '@/hooks/useCrud';
 import { SubCategoryLabels } from '@/constants/subCategoryLabels';
 import { SubCategoryApi } from '@/api/subCategoryApi';
-import type { DisplaySubCategory } from '@/types/displaySubCategory';
+import type { SubCategory } from '@/interface/subCategory';
 
 export const SubCategoryIndex = () => {
-  const { data: subCategories, fetchAll, loading } = useCrud<DisplaySubCategory>(SubCategoryApi);
+  const { data: subCategories, fetchAll, loading } = useCrud<SubCategory>(SubCategoryApi);
 
   useEffect(() => {
     fetchAll();

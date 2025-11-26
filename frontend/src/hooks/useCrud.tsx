@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { useErrorHandler } from './useErrorHandler';
 import { useLoadingCounter } from './useLoading';
-import type { ApiResponse } from '@/types/apiResponse';
+import type { ApiResponse } from '@/interface/apiResponse';
 
 type ApiMethods<T, Q> = {
   index?: () => Promise<ApiResponse<T[]>>;

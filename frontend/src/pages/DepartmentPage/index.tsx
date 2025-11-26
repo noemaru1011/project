@@ -4,10 +4,10 @@ import { Loading } from '@/components/atoms/Loading';
 import { useCrud } from '@/hooks/useCrud';
 import { DepartmentLabels } from '@/constants/departmentLabels';
 import { DepartmentAPi } from '@/api/departmentApi';
-import type { DisplayDepartment } from '@/types/displayDepartment';
+import type { Department } from '@/interface/department';
 
 export const DepartmentIndex = () => {
-  const { data: Departments, fetchAll, loading } = useCrud<DisplayDepartment>(DepartmentAPi);
+  const { data: Departments, fetchAll, loading } = useCrud<Department>(DepartmentAPi);
 
   useEffect(() => {
     fetchAll();

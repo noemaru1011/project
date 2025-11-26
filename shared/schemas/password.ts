@@ -16,12 +16,12 @@ export const validation = z
       .min(6, "パスワードは6文字以上で入力してください")
       .max(100, "パスワードは100文字以内で入力してください"),
 
-    newPassword1: strongPassword,
-    newPassword2: strongPassword,
+    newPassword: strongPassword,
+    checkNewPassword: strongPassword,
   })
-  .refine((data) => data.newPassword1 === data.newPassword2, {
+  .refine((data) => data.newPassword === data.checkNewPassword, {
     message: "新しいパスワードが一致しません",
-    path: ["newPassword2"], // どのフィールドにエラーを表示するか
+    path: ["checkNewPassword"], // どのフィールドにエラーを表示するか
   });
 
-export type InputPassword = z.infer<typeof validation>;
+export type Password = z.infer<typeof validation>;

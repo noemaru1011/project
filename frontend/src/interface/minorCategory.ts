@@ -1,4 +1,4 @@
-export type DisplayMinorCategory = {
+export interface MinorCategory {
   minorCategoryId: number;
   minorCategoryName: string;
-};
+}

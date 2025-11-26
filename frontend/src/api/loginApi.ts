@@ -1,15 +1,15 @@
 import { Api } from './api';
-import type { DisplayLogin } from '@/types/displayLogin';
+import type { Login } from '@shared/schemas/login';
 import { API_ROUTES } from '@/constants/apiRoutes';
 
-export type LoginResponseData = {
+export interface LoginResponseData {
   token: string;
   role: string;
   passwordUpdateRequired: boolean;
-};
+}
 
 export const LoginApi = {
-  login: (data: DisplayLogin) =>
+  login: (data: Login) =>
     Api<LoginResponseData>(API_ROUTES.AUTH.LOGIN, {
       method: 'POST',
       credentials: 'include',
