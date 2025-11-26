@@ -1,4 +1,4 @@
-import type { DisplayLabels } from '@/types/ui';
+import type { DisplayLabels } from '@/interface/ui';
 
 export const StudentLabels: DisplayLabels = {
   studentName: '学生名',

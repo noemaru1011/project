@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import type { Option } from '@/types/ui';
+import type { Option } from '@/interface/ui';
 import { Radio } from '@/components/atoms/Radio';
 
 type Props = {

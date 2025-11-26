@@ -1,4 +1,4 @@
-import type { Option } from '@/types/ui';
+import type { Option } from '@/interface/ui';
 
 export const statusOptions: Option[] = [
   { value: '1', label: '休務' },

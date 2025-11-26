@@ -2,7 +2,7 @@ import React from 'react';
 import { MenuToggle } from '@/components/atoms/MenuToggle';
 import { MenuOverlay } from '@/components/atoms/MenuOverlay';
 import { MenuPanel } from '@/components/atoms/MenuPanel';
-import type { Option } from '@/types/ui';
+import type { Option } from '@/interface/ui';
 import { ROUTES } from '@/constants/routes';
 
 export const MenuOptions: Option[] = [

@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { vi } from 'vitest';
 import { Select } from './Select';
-import type { Option } from '@/types/ui';
+import type { Option } from '@/interface/ui';
 
 const options: Option[] = [
   { value: '1', label: 'オプション1' },

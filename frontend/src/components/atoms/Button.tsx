@@ -1,4 +1,4 @@
-import type { ButtonVariant } from '@/types/ui';
+import type { ButtonVariant } from '@/interface/ui';
 
 type Props = {
   variant: ButtonVariant;

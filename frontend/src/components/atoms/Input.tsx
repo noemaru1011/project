@@ -1,5 +1,5 @@
 import React from 'react';
-import type { InputType } from '@/types/ui';
+import type { InputType } from '@/interface/ui';
 
 type Props = {
   id: string;

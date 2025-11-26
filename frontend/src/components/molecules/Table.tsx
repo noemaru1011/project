@@ -1,4 +1,4 @@
-import type { DisplayLabels } from '@/types/ui';
+import type { DisplayLabels } from '@/interface/ui';
 import { TableHead } from '@/components/atoms/TableHead';
 import { TableRow } from '@/components/atoms/TableRow';
 type Props<T> = {

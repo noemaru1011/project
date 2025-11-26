@@ -16,9 +16,9 @@ export function useLogin() {
   const login = async (data: LoginForm) => {
     try {
       start();
-      const response = await LoginApi.login(data);
-      setPasswordUpdateRequired(response.data?.passwordUpdateRequired ?? false);
-      toast.success(response.message);
+      const res = await LoginApi.login(data);
+      setPasswordUpdateRequired(res.data?.passwordUpdateRequired ?? false);
+      toast.success(res.message);
       navigate(ROUTES.HOME);
     } catch (err: any) {
       handleError(err);

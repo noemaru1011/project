@@ -1,4 +1,4 @@
-import type { Option } from '@/types/ui';
+import type { Option } from '@/interface/ui';
 
 export const departmentOptions: Option[] = [
   { value: '1', label: '経済学部' },

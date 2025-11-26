@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { vi } from 'vitest';
 import { Button } from './Button';
-import type { ButtonVariant } from '@/types/ui';
+import type { ButtonVariant } from '@/interface/ui';
 
 describe('Button', () => {
   const VARIANT_LABELS: Record<ButtonVariant, string> = {

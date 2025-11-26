@@ -3,7 +3,7 @@ import { HeaderMain } from '@/components/atoms/HeaderMain';
 import { HeaderNav } from '@/components/atoms/HeaderNav';
 import { Menu } from '@/components/molecules/Menu';
 import { useLogout } from '@/hooks/useLogout';
-import type { Option } from '@/types/ui';
+import type { Option } from '@/interface/ui';
 import { ROUTES } from '@/constants/routes';
 import { useLoginContext } from '@/hooks/useLoginContext';
 
