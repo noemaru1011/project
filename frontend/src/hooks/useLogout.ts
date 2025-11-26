@@ -14,9 +14,9 @@ export function useLogout() {
   const logout = async () => {
     try {
       start();
-      const response = await LogoutApi.logout();
+      const res = await LogoutApi.logout();
       navigate(ROUTES.AUTH.LOGIN);
-      toast.success(response.message);
+      toast.success(res.message);
     } catch (err: any) {
       handleError(err);
       throw err; // ← ここで再スローする

@@ -5,3 +5,7 @@ export interface Student {
   minorCategoryId: number;
   departmentId: number;
 }
+
+export interface StudentDetail extends Student {
+  email: string;
+}

@@ -1,5 +1,5 @@
 import { PasswordApi } from '@/api/passwordApi';
-import type { Password } from '@shared/schemas/password';
+import type { PasswordForm } from '@shared/schemas/password';
 import { useLoadingCounter } from './useLoading';
 import { useErrorHandler } from './useErrorHandler';
 import { useLoginContext } from '@/hooks/useLoginContext';
@@ -11,12 +11,12 @@ export function usePassword() {
   const { setPasswordUpdateRequired } = useLoginContext();
   const handleError = useErrorHandler();
 
-  const update = async (data: Password) => {
+  const update = async (data: PasswordForm) => {
     try {
       start();
-      const response = await PasswordApi.update(data);
+      const res = await PasswordApi.update(data);
       setPasswordUpdateRequired(false);
-      toast.success(response.message);
+      toast.success(res.message);
     } catch (err: any) {
       handleError(err);
       throw err; // ← ここで再スローする

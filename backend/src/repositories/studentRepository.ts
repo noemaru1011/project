@@ -46,7 +46,7 @@ export const StudentRepository = {
     grade: number;
     password: string;
   }) {
-    return prisma.$transaction(async (tx) => {
+    prisma.$transaction(async (tx) => {
       const student = await tx.student.create({
         data: {
           studentName: data.studentName,
@@ -67,8 +67,6 @@ export const StudentRepository = {
           updatedAt: new Date(),
         },
       });
-
-      return student;
     });
   },
 
@@ -81,7 +79,7 @@ export const StudentRepository = {
     },
     studentId: string,
   ) {
-    return await prisma.student.update({
+    await prisma.student.update({
       where: {
         studentId,
       },
@@ -96,7 +94,7 @@ export const StudentRepository = {
   },
 
   async deleteStudent(studentId: string) {
-    return await prisma.student.update({
+    await prisma.student.update({
       where: {
         studentId,
         deleteFlag: false,

@@ -45,8 +45,7 @@ export const validation = z.object({
   ),
 });
 
-export type InputStudent = z.infer<typeof validation>;
-export type DisplayStudent = InputStudent & { studentId: string };
+export type StudentForm = z.infer<typeof validation>;
 
 export const queryValidation = z.object({
   categories: z.array(z.number().positive()).optional(),

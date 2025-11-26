@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { Table } from '@/components/molecules/Table';
 import { Loading } from '@/components/atoms/Loading';
-import { useCrud } from '@/hooks/useCrud';
+import { useFetchAll } from '@/hooks/useFetchAll';
 import { SubCategoryLabels } from '@/constants/subCategoryLabels';
 import { SubCategoryApi } from '@/api/subCategoryApi';
 import type { SubCategory } from '@/interface/subCategory';
 
 export const SubCategoryIndex = () => {
-  const { data: subCategories, fetchAll, loading } = useCrud<SubCategory>(SubCategoryApi);
+  const { data: subCategories, fetchAll, loading } = useFetchAll<SubCategory>(SubCategoryApi.index);
 
   useEffect(() => {
     fetchAll();

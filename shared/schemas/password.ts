@@ -24,4 +24,4 @@ export const validation = z
     path: ["checkNewPassword"], // どのフィールドにエラーを表示するか
   });
 
-export type Password = z.infer<typeof validation>;
+export type PasswordForm = z.infer<typeof validation>;

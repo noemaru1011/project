@@ -4,12 +4,12 @@ import { Input } from '@/components/atoms/Input';
 import { Button } from '@/components/atoms/Button';
 import { Loading } from '@/components/atoms/Loading';
 import { validation } from '@shared/schemas/login';
-import type { Login } from '@shared/schemas/login';
+import type { LoginForm } from '@shared/schemas/login';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useLogin } from '@/hooks/useLogin';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 
-export const LoginPage = () => {
+export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { login, loading } = useLogin();
 
@@ -21,7 +21,7 @@ export const LoginPage = () => {
     resolver: zodResolver(validation),
   });
 
-  const onSubmit = async (data: Login) => {
+  const onSubmit = async (data: LoginForm) => {
     await login(data);
   };
 

@@ -1,31 +1,29 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import type { DisplayStudent } from '@/types/displayStudent';
 import { Input } from '@/components/atoms/Input';
 import { Select } from '@/components/atoms/Select';
 import { Button } from '@/components/atoms/Button';
 import { gradeOptions } from '@/constants/grade';
 import { minorCategoryOptions } from '@/constants/minorCategory';
 import { departmentOptions } from '@/constants/department';
-import { useCrud } from '@/hooks/useCrud';
+import { useView } from '@/hooks/useView';
 import { Loading } from '@/components/atoms/Loading';
 import { ROUTES } from '@/constants/routes';
+import type { StudentDetail } from '@/interface/student';
 import { StudentApi } from '@/api/studentApi';
 
 export const StudentView = () => {
   const navigate = useNavigate();
   const { studentId } = useParams<{ studentId: string }>();
-  const { view, loading } = useCrud<DisplayStudent>(StudentApi);
-  const [student, setStudent] = useState<DisplayStudent | null>(null);
+  const { view, loading } = useView<StudentDetail>(StudentApi.view);
+  const [student, setStudent] = useState<StudentDetail | null>(null);
 
   useEffect(() => {
     if (!studentId) return;
 
     const fetchStudent = async () => {
-      try {
-        const data: any = await view(studentId);
-        setStudent(data);
-      } catch (err: any) {}
+      const data: any = await view(studentId);
+      setStudent(data);
     };
 
     fetchStudent();

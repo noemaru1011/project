@@ -14,4 +14,4 @@ export const validation = z.object({
     .max(100, "パスワードは100文字以内で入力してください"),
 });
 
-export type Login = z.infer<typeof validation>;
+export type LoginForm = z.infer<typeof validation>;

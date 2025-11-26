@@ -24,13 +24,12 @@ export const StudentService = {
     const plainPassword = generatePassword();
     const hashedPassword = await bcrypt.hash(plainPassword, 10);
     // 学生テーブルに登録
-    const student = await StudentRepository.createStudent({
+    await StudentRepository.createStudent({
       ...data,
       password: hashedPassword,
     });
     // メール送信
     await sendAccountEmail(data.email, plainPassword);
-    return student;
   },
 
   async updateStudent(
@@ -42,13 +41,11 @@ export const StudentService = {
     },
     studentId: string,
   ) {
-    const student = await StudentRepository.updateStudent(data, studentId);
-    return student;
+    await StudentRepository.updateStudent(data, studentId);
   },
 
   async deleteStudent(studentId: string) {
-    const student = await StudentRepository.deleteStudent(studentId);
-    return student;
+    await StudentRepository.deleteStudent(studentId);
   },
 
   async searchStudents(filters: {

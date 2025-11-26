@@ -1,5 +1,5 @@
 import { LoginApi } from '@/api/loginApi';
-import type { Login } from '@shared/schemas/login';
+import type { LoginForm } from '@shared/schemas/login';
 import { toast } from 'react-toastify';
 import { useLoadingCounter } from './useLoading';
 import { useErrorHandler } from './useErrorHandler';
@@ -13,7 +13,7 @@ export function useLogin() {
   const { setPasswordUpdateRequired } = useLoginContext();
   const handleError = useErrorHandler();
 
-  const login = async (data: Login) => {
+  const login = async (data: LoginForm) => {
     try {
       start();
       const response = await LoginApi.login(data);

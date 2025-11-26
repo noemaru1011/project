@@ -5,7 +5,7 @@ import ProtectedContent from '@/hooks/useRoleContent';
 import { ROUTES } from '@/constants/routes';
 
 import Layout from '@/components/layouts/Layout';
-import { LoginPage } from '@/pages/auth/login';
+import { Login } from '@/pages/auth/login';
 import { HomePage } from '@/pages/home/HomePage';
 import { CategoryIndex } from '@/pages/categoryPage';
 import { SubCategoryIndex } from '@/pages/subCategoryPage';
@@ -17,7 +17,7 @@ import { StudentCreate } from '@/pages/studentPage/create';
 import { StudentUpdate } from '@/pages/studentPage/update';
 import { StudentView } from '@/pages/studentPage/view';
 import { ChangePassword } from '@/pages/passwordPage/update';
-import { HistoryCreate } from '@/pages/historyPage/create';
+// import { HistoryCreate } from '@/pages/historyPage/create';
 
 import { NotFound } from '@/pages/errorPage/NotFound';
 import { ServerError } from '@/pages/errorPage/ServerError';
@@ -26,7 +26,7 @@ import { Forbidden } from '@/pages/errorPage/Forbidden';
 const AppRoutes = () => (
   <Routes>
     {/* ヘッダーなし */}
-    <Route path={ROUTES.AUTH.LOGIN} element={<LoginPage />} />
+    <Route path={ROUTES.AUTH.LOGIN} element={<Login />} />
     {/* エラー画面 */}
     <Route path={ROUTES.ERROR.SERVER} element={<ServerError />} />
     <Route path={ROUTES.ERROR.FORBIDDEN} element={<Forbidden />} />
@@ -43,14 +43,14 @@ const AppRoutes = () => (
           </ProtectedContent>
         }
       />
-      <Route
+      {/* <Route
         path={ROUTES.HISTORY.CREATE}
         element={
           <ProtectedContent allowedRoles={['ADMIN', 'STUDENT']}>
             <HistoryCreate />
           </ProtectedContent>
         }
-      />
+      /> */}
       <Route
         path={ROUTES.STUDENT.CHANGE}
         element={

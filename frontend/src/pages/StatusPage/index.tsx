@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { Table } from '@/components/molecules/Table';
 import { Loading } from '@/components/atoms/Loading';
-import { useCrud } from '@/hooks/useCrud';
+import { useFetchAll } from '@/hooks/useFetchAll';
 import { StatusLabels } from '@/constants/statusLabels';
 import { StatusAPi } from '@/api/statusApi';
 import type { Status } from '@/interface/status';
 
 export const StatusIndex = () => {
-  const { data: Status, fetchAll, loading } = useCrud<Status>(StatusAPi);
+  const { data: Status, fetchAll, loading } = useFetchAll<Status>(StatusAPi.index);
 
   useEffect(() => {
     fetchAll();

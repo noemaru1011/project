@@ -7,17 +7,17 @@ import { gradeOptions } from '@/constants/grade';
 import { minorCategoryOptions } from '@/constants/minorCategory';
 import { departmentOptions } from '@/constants/department';
 import { validation } from '@shared/schemas/student';
-import { useCrud } from '@/hooks/useCrud';
+import { useCreate } from '@/hooks/useCreate';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loading } from '@/components/atoms/Loading';
 import { ROUTES } from '@/constants/routes';
 import { StudentApi } from '@/api/studentApi';
-import type { DisplayStudent } from '@/types/displayStudent';
+import type { StudentForm } from '@shared/schemas/student';
 import { Mail, User, BookUser, Library, Group } from 'lucide-react';
 
 export const StudentCreate = () => {
   const navigate = useNavigate();
-  const { create, loading } = useCrud<DisplayStudent>(StudentApi);
+  const { create, loading } = useCreate<StudentForm>(StudentApi.create);
 
   const {
     register,
@@ -29,10 +29,8 @@ export const StudentCreate = () => {
 
   // 送信処理
   const onSubmit = async (data: any) => {
-    try {
-      await create(data);
-      navigate(ROUTES.STUDENT.INDEX);
-    } catch (err: any) {}
+    await create(data);
+    navigate(ROUTES.STUDENT.INDEX);
   };
 
   return (

@@ -8,7 +8,7 @@ import { usePassword } from '@/hooks/usePassword';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ROUTES } from '@/constants/routes';
 import { Loading } from '@/components/atoms/Loading';
-import type { Password } from '@shared/schemas/password';
+import type { PasswordForm } from '@shared/schemas/password';
 import { Lock, Eye, EyeOff } from 'lucide-react';
 
 export const ChangePassword = () => {
@@ -27,7 +27,7 @@ export const ChangePassword = () => {
   });
 
   // 送信処理
-  const onSubmit = async (data: Password) => {
+  const onSubmit = async (data: PasswordForm) => {
     await update(data);
     navigate(ROUTES.HOME);
   };

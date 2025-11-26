@@ -10,16 +10,19 @@ import { gradeOptions } from '@/constants/grade';
 import { minorCategoryOptions } from '@/constants/minorCategory';
 import { departmentOptions } from '@/constants/department';
 import { ROUTES } from '@/constants/routes';
-import { useCrud } from '@/hooks/useCrud';
+import { useUpdate } from '@/hooks/useUpdate';
+import { useView } from '@/hooks/useView';
 import { validation } from '@shared/schemas/student';
 import { StudentApi } from '@/api/studentApi';
-import type { DisplayStudent } from '@/types/displayStudent';
+import type { StudentForm } from '@shared/schemas/student';
+import type { StudentDetail } from '@/interface/student';
 import { Mail, User, BookUser, Library, Group } from 'lucide-react';
 
 export const StudentUpdate = () => {
   const navigate = useNavigate();
   const { studentId } = useParams<{ studentId: string }>();
-  const { view, update, loading } = useCrud<DisplayStudent>(StudentApi);
+  const { update, loading } = useUpdate<StudentForm>(StudentApi.update);
+  const { view } = useView<StudentDetail>(StudentApi.view);
 
   const {
     register,
@@ -35,16 +38,14 @@ export const StudentUpdate = () => {
     if (!studentId) return;
 
     const fetchStudent = async () => {
-      try {
-        const data: any = await view(studentId);
-        reset({
-          studentName: data.studentName,
-          email: data.email,
-          grade: data.grade,
-          minorCategoryId: data.minorCategoryId,
-          departmentId: data.departmentId,
-        });
-      } catch (err: any) {}
+      const data: any = await view(studentId);
+      reset({
+        studentName: data.studentName,
+        email: data.email,
+        grade: data.grade,
+        minorCategoryId: data.minorCategoryId,
+        departmentId: data.departmentId,
+      });
     };
 
     fetchStudent();
@@ -52,11 +53,9 @@ export const StudentUpdate = () => {
 
   // 更新処理
   const onSubmit = async (data: any) => {
-    try {
-      if (!studentId) return;
-      await update(studentId, data);
-      navigate(ROUTES.STUDENT.INDEX);
-    } catch (err: any) {}
+    if (!studentId) return;
+    await update(studentId, data);
+    navigate(ROUTES.STUDENT.INDEX);
   };
 
   return (
