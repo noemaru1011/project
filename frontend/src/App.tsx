@@ -16,6 +16,7 @@ import { StudentIndex } from '@/pages/studentPage';
 import { StudentCreate } from '@/pages/studentPage/create';
 import { StudentUpdate } from '@/pages/studentPage/update';
 import { StudentView } from '@/pages/studentPage/view';
+import { StudentDelete } from './pages/studentPage/delete';
 import { ChangePassword } from '@/pages/passwordPage/update';
 import { HistoryCreate } from '@/pages/historyPage/create';
 
@@ -76,6 +77,7 @@ const AppRoutes = () => (
       />
       <Route path={ROUTES.STUDENT.UPDATE()} element={<StudentUpdate />} />
       <Route path={ROUTES.STUDENT.VIEW()} element={<StudentView />} />
+      <Route path={ROUTES.STUDENT.DELETE()} element={<StudentDelete />} />
     </Route>
   </Routes>
 );

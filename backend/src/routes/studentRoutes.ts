@@ -15,6 +15,6 @@ router.post('/', validateBody(validation), StudentController.createStudent);
 
 router.put('/:id', validateBody(validation), StudentController.updateStudent);
 
-router.delete('/;id', StudentController.deleteStudet);
+router.delete('/:id', StudentController.deleteStudet);
 
 export default router;

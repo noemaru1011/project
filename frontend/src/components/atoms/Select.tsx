@@ -11,6 +11,7 @@ type Props = {
   error?: string;
   leftIcon?: React.ReactNode;
   helperText?: string;
+  className?: string;
 } & React.SelectHTMLAttributes<HTMLSelectElement>;
 
 export const Select = React.forwardRef<HTMLSelectElement, Props>(

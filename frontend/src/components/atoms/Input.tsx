@@ -11,6 +11,7 @@ type Props = {
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   helperText?: string;
+  className?: string;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 export const Input = React.forwardRef<HTMLInputElement, Props>(

@@ -85,7 +85,15 @@ export const StudentCreate = () => {
               {...register('departmentId')}
             />
 
-            <Button type="submit" variant="Create" disabled={loading} className="w-full mt-4" />
+            <div className="flex justify-center gap-4 mt-4">
+              <Button type="submit" variant="Create" disabled={loading} className="w-32 mx-auto" />
+              <Button
+                type="button"
+                variant="Back"
+                onClick={() => navigate(ROUTES.STUDENT.INDEX)}
+                className="w-32 mx-auto"
+              />
+            </div>
           </form>
         </div>
       </div>

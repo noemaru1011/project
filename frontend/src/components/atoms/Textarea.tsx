@@ -6,10 +6,11 @@ type Props = {
   error?: string;
   required?: boolean;
   disabled?: boolean;
+  className?: string;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 export const Textarea = React.forwardRef<HTMLTextAreaElement, Props>(
-  ({ id, label, error, required, disabled }, ref) => {
+  ({ id, label, error, required, disabled, className }, ref) => {
     return (
       <div className="flex flex-col space-y-1">
         {label && (
@@ -22,7 +23,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, Props>(
           id={id}
           ref={ref}
           disabled={disabled}
-          className="w-full py-2 border-b focus:outline-none focus:border-b-2 focus:border-indigo-500 disabled:bg-gray-100 disabled:text-gray-400"
+          className={`${className}  w-full py-2 border-b focus:outline-none focus:border-b-2 focus:border-indigo-500 disabled:bg-gray-100 disabled:text-gray-400`}
         />
 
         {error && <p className="text-red-500 text-sm ml-1">{error}</p>}

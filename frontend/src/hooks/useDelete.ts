@@ -12,6 +12,7 @@ export function useDelete(deleteFn: (id: string) => Promise<ApiResponse<void>>) 
     async (id: string) => {
       start();
       try {
+        console.log(id);
         const res = await deleteFn(id);
         toast.success(res.message);
       } catch (err: any) {
