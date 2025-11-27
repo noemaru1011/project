@@ -3,11 +3,11 @@ export interface Student {
   studentName: string;
   grade: number;
   minorCategoryId: number;
-  departmentId: number;
 }
 
 export interface StudentDetail extends Student {
   email: string;
+  departmentId: number;
 }
 
 export interface StudentForSearch {

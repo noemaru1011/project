@@ -1,9 +1,12 @@
+import type { Action } from '@/components/molecules/RowActions';
+
 type Props = {
   labelKeys: string[];
   flatLabels: Record<string, string>;
+  actions?: Action[];
 };
 
-export const TableHead = ({ labelKeys, flatLabels }: Props) => {
+export const TableHead = ({ labelKeys, flatLabels, actions }: Props) => {
   return (
     <thead className="bg-gray-100 border-b-2 border-gray-300">
       <tr>
@@ -12,6 +15,7 @@ export const TableHead = ({ labelKeys, flatLabels }: Props) => {
             {flatLabels[key]}
           </th>
         ))}
+        {actions && <th>操作</th>}
       </tr>
     </thead>
   );
