@@ -1,12 +1,13 @@
 import { useForm, Controller } from 'react-hook-form';
 import { Button } from '@/components/atoms/Button';
 import { CheckboxGroup } from '@/components/molecules/CheckboxGroup';
+import { Accordion } from '@/components/molecules/Accordion';
 import { Loading } from '@/components/atoms/Loading';
-import { categoryOptions } from '@/constants/category';
-import { subCategoryOptions } from '@/constants/subCategory';
-import { minorCategoryOptions } from '@/constants/minorCategory';
-import { departmentOptions } from '@/constants/department';
-import { gradeOptions } from '@/constants/grade';
+import { categoryOptions } from '@/constants/categoryOptions';
+import { subCategoryOptions } from '@/constants/subCategoryOptions';
+import { minorCategoryOptions } from '@/constants/minorCategoryOptions';
+import { gradeOptions } from '@/constants/gradeOptions';
+import { departmentOptions } from '@/constants/departmentOptions';
 import { StudentSearchApi } from '@/api/studentSearchApi';
 import { useSearch } from '@/hooks/useSearch';
 import type { StudentQuery } from '@/interface/studentQuery';
@@ -31,20 +32,18 @@ export const HistoryCreate = () => {
 
   const onSubmit = async () => {
     const query = getValues();
-
     try {
-      console.log('Submitting query:', query);
       await search(query);
     } catch (err: any) {
       console.error(err);
     }
   };
 
-  return (
-    <div className="p-4">
-      {/* 検索フォーム */}
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-wrap gap-2">
-        {/* 大分類 */}
+  const accordionItems = [
+    {
+      id: 'category',
+      title: '大分類',
+      children: (
         <Controller
           name="categoryId"
           control={control}
@@ -54,14 +53,17 @@ export const HistoryCreate = () => {
               value={field.value.map(String)}
               onChange={(vals) => field.onChange(vals.map(Number))}
               options={categoryOptions}
-              label="大分類"
               error={fieldState.error?.message}
               row={4}
             />
           )}
         />
-
-        {/* 中分類 */}
+      ),
+    },
+    {
+      id: 'subCategory',
+      title: '中分類',
+      children: (
         <Controller
           name="subCategoryId"
           control={control}
@@ -71,14 +73,17 @@ export const HistoryCreate = () => {
               value={field.value.map(String)}
               onChange={(vals) => field.onChange(vals.map(Number))}
               options={subCategoryOptions}
-              label="中分類"
               error={fieldState.error?.message}
               row={4}
             />
           )}
         />
-
-        {/* 小分類 */}
+      ),
+    },
+    {
+      id: 'minorCategory',
+      title: '小分類',
+      children: (
         <Controller
           name="minorCategoryId"
           control={control}
@@ -88,14 +93,17 @@ export const HistoryCreate = () => {
               value={field.value.map(String)}
               onChange={(vals) => field.onChange(vals.map(Number))}
               options={minorCategoryOptions}
-              label="小分類"
               error={fieldState.error?.message}
               row={4}
             />
           )}
         />
-
-        {/* 学年 */}
+      ),
+    },
+    {
+      id: 'grade',
+      title: '学年',
+      children: (
         <Controller
           name="grade"
           control={control}
@@ -105,13 +113,16 @@ export const HistoryCreate = () => {
               value={field.value.map(String)}
               onChange={(vals) => field.onChange(vals.map(Number))}
               options={gradeOptions}
-              label="学年"
               error={fieldState.error?.message}
             />
           )}
         />
-
-        {/* 学科 */}
+      ),
+    },
+    {
+      id: 'department',
+      title: '学科',
+      children: (
         <Controller
           name="departmentId"
           control={control}
@@ -121,19 +132,27 @@ export const HistoryCreate = () => {
               value={field.value.map(String)}
               onChange={(vals) => field.onChange(vals.map(Number))}
               options={departmentOptions}
-              label="学科"
               error={fieldState.error?.message}
             />
           )}
         />
+      ),
+    },
+  ];
 
-        <Button variant="Search" type="submit" />
+  return (
+    <div className="p-4 flex flex-col items-center">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col w-full max-w-2xl gap-4 sm:gap-6"
+      >
+        <Accordion items={accordionItems} allowMultiple={true} className="w-full" />
+        <Button variant="Search" type="submit" className="self-end" />
       </form>
 
-      {/* 結果一覧 */}
       <Loading loading={loading}>
-        <div className="mt-6 overflow-x-auto">
-          <table className="min-w-full border border-gray-300 divide-y divide-gray-200">
+        <div className="mt-6 w-full overflow-x-auto">
+          <table className="min-w-full border border-gray-300 divide-y divide-gray-200 text-sm sm:text-base">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-4 py-2 text-left">名前</th>
@@ -144,29 +163,26 @@ export const HistoryCreate = () => {
                 <th className="px-4 py-2 text-left">学科</th>
               </tr>
             </thead>
-
             <tbody className="bg-white divide-y divide-gray-200">
               {results.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="text-center py-4 text-gray-500">
+                  <td colSpan={6} className="text-center py-4 text-gray-500">
                     データがありません
                   </td>
                 </tr>
               ) : (
-                results.map((s) => {
-                  return (
-                    <tr key={s.studentId}>
-                      <td className="px-4 py-2">{s.studentName}</td>
-                      <td className="px-4 py-2">{s.grade}</td>
-                      <td className="px-4 py-2">
-                        {s.minorCategory.subCategory.category.categoryName}
-                      </td>
-                      <td className="px-4 py-2">{s.minorCategory.subCategory.subCategoryName}</td>
-                      <td className="px-4 py-2">{s.minorCategory.minorCategoryName}</td>
-                      <td className="px-4 py-2">{s.department.departmentName}</td>
-                    </tr>
-                  );
-                })
+                results.map((s) => (
+                  <tr key={s.studentId}>
+                    <td className="px-4 py-2">{s.studentName}</td>
+                    <td className="px-4 py-2">{s.grade}</td>
+                    <td className="px-4 py-2">
+                      {s.minorCategory.subCategory.category.categoryName}
+                    </td>
+                    <td className="px-4 py-2">{s.minorCategory.subCategory.subCategoryName}</td>
+                    <td className="px-4 py-2">{s.minorCategory.minorCategoryName}</td>
+                    <td className="px-4 py-2">{s.department.departmentName}</td>
+                  </tr>
+                ))
               )}
             </tbody>
           </table>

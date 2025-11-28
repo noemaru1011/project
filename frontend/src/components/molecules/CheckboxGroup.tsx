@@ -78,17 +78,19 @@ export const CheckboxGroup = ({
   }, [options, row, column]);
 
   return (
-    <fieldset className="border p-2 rounded" disabled={disabled}>
+    <fieldset
+      className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm"
+      disabled={disabled}
+    >
       {label && (
-        <legend className="font-medium text-gray-700">
-          {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
+        <legend className="font-semibold text-gray-800 mb-2">
+          {label} {required && <span className="text-red-500">*</span>}
         </legend>
       )}
 
-      <div className="flex flex-col space-y-2">
+      <div className="flex flex-col space-y-3">
         {grid.map((rowOptions, rowIndex) => (
-          <div key={rowIndex} className="flex flex-row gap-4">
+          <div key={rowIndex} className="flex flex-row gap-6 whitespace-nowrap">
             {rowOptions.map((option) =>
               option.label ? (
                 <Checkbox
@@ -99,7 +101,6 @@ export const CheckboxGroup = ({
                   onChange={() => handleChange(option.value)}
                 />
               ) : (
-                // 空マス扱い（枠揃えのため）
                 <div key={option.value} className="w-28" />
               ),
             )}
@@ -107,7 +108,7 @@ export const CheckboxGroup = ({
         ))}
       </div>
 
-      {error && <p className="text-red-500 text-sm ml-1">{error}</p>}
+      {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
     </fieldset>
   );
 };

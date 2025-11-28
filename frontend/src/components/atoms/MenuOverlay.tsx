@@ -5,5 +5,5 @@ type Props = {
 };
 
 export const MenuOverlay: React.FC<Props> = ({ onClick }) => (
-  <div className="fixed inset-0 backdrop-blur-sm" onClick={onClick}></div>
+  <div className="fixed inset-0 backdrop-blur-sm  z-50" onClick={onClick}></div>
 );

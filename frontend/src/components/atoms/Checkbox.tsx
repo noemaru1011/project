@@ -14,11 +14,16 @@ export const Checkbox = React.forwardRef<HTMLInputElement, Props>(
         type="checkbox"
         ref={ref}
         disabled={disabled}
-        className="border rounded-sm accent-blue-600 disabled:bg-gray-100"
+        className={`
+          w-5 h-5 rounded-md accent-indigo-600
+          border-gray-300 hover:border-indigo-400
+          disabled:bg-gray-100 disabled:border-gray-200
+          transition-colors duration-200
+        `}
         {...rest}
       />
       {label && (
-        <label htmlFor={id} className="text-gray-700 font-medium">
+        <label htmlFor={id} className="text-gray-700 font-medium select-none">
           {label}
         </label>
       )}
