@@ -23,7 +23,7 @@ export const HeaderNav: React.FC<Props> = ({
         <button
           key={opt.value}
           onClick={onLogout}
-          className={`font-bold mb-2 sm:mb-0 ${index < options.length - 1 ? 'sm:mr-5' : ''}`}
+          className={`font-bold mb-2 sm:mb-0 cursor-pointer${index < options.length - 1 ? 'sm:mr-5' : ''}`}
           disabled={loading}
         >
           {opt.label}

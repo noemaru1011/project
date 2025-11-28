@@ -43,7 +43,7 @@ export const HistoryCreate = () => {
   return (
     <div className="p-4">
       {/* 検索フォーム */}
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-wrap gap-3 space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-wrap gap-2">
         {/* 大分類 */}
         <Controller
           name="categoryId"
@@ -56,6 +56,7 @@ export const HistoryCreate = () => {
               options={categoryOptions}
               label="大分類"
               error={fieldState.error?.message}
+              row={4}
             />
           )}
         />
@@ -72,6 +73,7 @@ export const HistoryCreate = () => {
               options={subCategoryOptions}
               label="中分類"
               error={fieldState.error?.message}
+              row={4}
             />
           )}
         />
@@ -88,6 +90,7 @@ export const HistoryCreate = () => {
               options={minorCategoryOptions}
               label="小分類"
               error={fieldState.error?.message}
+              row={4}
             />
           )}
         />

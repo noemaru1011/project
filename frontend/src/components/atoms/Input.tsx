@@ -52,7 +52,7 @@ export const Input = React.forwardRef<HTMLInputElement, Props>(
             type={type}
             ref={ref}
             disabled={disabled}
-            className={`w-full border-b transition-colors focus:outline-none focus:border-b-2 focus:border-indigo-500 disabled:bg-gray-100 disabled:text-gray-400 placeholder:text-gray-400
+            className={`w-full rounded-lg focus:ring focus:ring-indigo-100 border-b transition-colors focus:outline-none focus:border-b-2 focus:border-indigo-500 disabled:bg-gray-100 disabled:text-gray-400 placeholder:text-gray-400
               ${error ? 'border-red-500' : 'border-gray-300'}
               ${leftIcon ? 'pl-6' : ''}
               ${rightIcon ? 'pr-6' : ''}

@@ -39,7 +39,7 @@ export const Select = React.forwardRef<HTMLSelectElement, Props>(
             id={id}
             ref={ref}
             disabled={disabled}
-            className={`w-full appearance-none bg-white border rounded-lg px-3 py-2.5 pr-10 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed cursor-pointer
+            className={`w-full focus:ring focus:ring-indigo-100 focus:border-indigo-500  border-gray-300 appearance-none bg-white border rounded-lg px-3 py-2.5 pr-10 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed cursor-pointer
               ${error ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : 'border-gray-300'}
               ${leftIcon ? 'pl-10' : ''}
               ${className || ''}`}
