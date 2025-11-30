@@ -1,8 +1,8 @@
-import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Input } from '@/components/atoms/Input';
 import { Select } from '@/components/atoms/Select';
+import { RadioGroup } from '@/components/molecules/RadioGroup';
 import { Button } from '@/components/atoms/Button';
 import { gradeOptions } from '@/constants/gradeOptions';
 import { minorCategoryOptions } from '@/constants/minorCategoryOptions';
@@ -22,14 +22,16 @@ export const StudentView = () => {
 
   useEffect(() => {
     if (!studentId) return;
-
     const fetch = async () => {
-      const data = await view(studentId);
-      setStudent(data);
+      try {
+        const data = await view(studentId);
+        setStudent(data);
+      } catch (err: any) {
+        handleApiError(err, navigate);
+      }
     };
-
     fetch();
-  }, [studentId, view]);
+  }, []);
 
   return (
     <Loading loading={loading}>
@@ -43,11 +45,11 @@ export const StudentView = () => {
             value={student ? student.studentName : ''}
             disabled
           />
-          <Select
-            id="grade"
+          <RadioGroup
+            name="grade"
             label="学年"
             options={gradeOptions}
-            value={student ? String(student.grade) : ''}
+            value={student?.grade !== undefined ? String(student.grade) : undefined}
             disabled
           />
           <Select

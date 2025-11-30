@@ -41,9 +41,10 @@ export const ChangePassword = () => {
 
   return (
     <Loading loading={loading}>
-      <div className="mt-5 flex justify-center min-h-screen">
-        <div className="w-full max-w-md space-y-4">
-          <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="w-full max-w-lg p-8 bg-white rounded-2xl shadow-lg space-y-6">
+          <h2 className="text-2xl font-bold text-gray-800 text-center">パスワード変更</h2>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <Input
               id="oldPassword"
               label="古いパスワード"

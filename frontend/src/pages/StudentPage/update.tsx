@@ -1,9 +1,10 @@
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Input } from '@/components/atoms/Input';
+import { RadioGroup } from '@/components/molecules/RadioGroup';
 import { Select } from '@/components/atoms/Select';
 import { Button } from '@/components/atoms/Button';
 import { Loading } from '@/components/atoms/Loading';
@@ -18,7 +19,7 @@ import { StudentApi } from '@/api/studentApi';
 import type { StudentForm } from '@shared/schemas/student';
 import { handleApiError } from '@/utils/handleApiError';
 import type { StudentDetail } from '@/interface/student';
-import { Mail, User, BookUser, Library, Group } from 'lucide-react';
+import { Mail, User, Library, Group } from 'lucide-react';
 
 export const StudentUpdate = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ export const StudentUpdate = () => {
 
   const {
     register,
+    control,
     handleSubmit,
     reset,
     formState: { errors },
@@ -38,20 +40,22 @@ export const StudentUpdate = () => {
   // 初期値をロード
   useEffect(() => {
     if (!studentId) return;
-
     const fetchStudent = async () => {
-      const data: any = await view(studentId);
-      reset({
-        studentName: data.studentName,
-        email: data.email,
-        grade: data.grade,
-        minorCategoryId: data.minorCategoryId,
-        departmentId: data.departmentId,
-      });
+      try {
+        const data: StudentDetail = await view(studentId);
+        reset({
+          studentName: data.studentName,
+          email: data.email,
+          grade: data.grade,
+          minorCategoryId: data.minorCategoryId,
+          departmentId: data.departmentId,
+        });
+      } catch (err: any) {
+        handleApiError(err, navigate);
+      }
     };
-
     fetchStudent();
-  }, [studentId, view, reset, navigate]);
+  }, []);
 
   // 更新処理
   const onSubmit = async (data: StudentForm) => {
@@ -70,7 +74,7 @@ export const StudentUpdate = () => {
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="w-full max-w-lg p-8 bg-white rounded-2xl shadow-lg space-y-6">
           <h2 className="text-2xl font-bold text-gray-800 text-center">学生更新</h2>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <Input
               id="studentName"
               label="学生名"
@@ -80,14 +84,19 @@ export const StudentUpdate = () => {
               required
               {...register('studentName')}
             />
-            <Select
-              id="grade"
-              label="学年"
-              options={gradeOptions}
-              leftIcon={<BookUser className="size-4" />}
-              required
-              error={errors.grade?.message}
-              {...register('grade')}
+            <Controller
+              name="grade"
+              control={control}
+              render={({ field, fieldState }) => (
+                <RadioGroup
+                  label="学年"
+                  name={field.name}
+                  options={gradeOptions}
+                  value={field.value !== undefined ? String(field.value) : undefined}
+                  onChange={(val) => field.onChange(Number(val))}
+                  error={fieldState.error?.message}
+                />
+              )}
             />
             <Select
               id="minorCategory"

@@ -19,7 +19,7 @@ export const TableRow = ({ rowKey, labelKeys, row, actions, routeMap }: Props) =
       ))}
 
       {actions && routeMap && (
-        <td className="px-4 py-2 text-center">
+        <td className="px-4 py-2 flex justify-center">
           <RowActions rowKey={String(rowKey)} actions={actions} routeMap={routeMap} />
         </td>
       )}

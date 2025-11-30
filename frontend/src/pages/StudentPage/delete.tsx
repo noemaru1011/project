@@ -2,6 +2,7 @@ import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Input } from '@/components/atoms/Input';
+import { RadioGroup } from '@/components/molecules/RadioGroup';
 import { Select } from '@/components/atoms/Select';
 import { Button } from '@/components/atoms/Button';
 import { Loading } from '@/components/atoms/Loading';
@@ -14,7 +15,7 @@ import { useView } from '@/hooks/useView';
 import type { StudentDetail } from '@/interface/student';
 import { StudentApi } from '@/api/studentApi';
 import { handleApiError } from '@/utils/handleApiError';
-import { Mail, User, BookUser, Library, Group } from 'lucide-react';
+import { Mail, User, Library, Group } from 'lucide-react';
 
 export const StudentDelete = () => {
   const navigate = useNavigate();
@@ -25,14 +26,16 @@ export const StudentDelete = () => {
 
   useEffect(() => {
     if (!studentId) return;
-
     const fetch = async () => {
-      const data = await view(studentId);
-      setStudent(data);
+      try {
+        const data = await view(studentId);
+        setStudent(data);
+      } catch (err: any) {
+        handleApiError(err, navigate);
+      }
     };
-
     fetch();
-  }, [studentId, view]);
+  }, []);
 
   const handleDelete = async () => {
     try {
@@ -59,12 +62,11 @@ export const StudentDelete = () => {
             disabled
           />
 
-          <Select
-            id="grade"
+          <RadioGroup
+            name="grade"
             label="学年"
             options={gradeOptions}
-            value={String(student?.grade ?? '')}
-            leftIcon={<BookUser className="size-4" />}
+            value={student?.grade !== undefined ? String(student.grade) : undefined}
             disabled
           />
 
@@ -96,11 +98,16 @@ export const StudentDelete = () => {
           />
 
           <div className="flex justify-center gap-4 mt-4">
-            <Button type="button" variant="Delete" className="w-32" onClick={handleDelete} />
+            <Button
+              type="button"
+              variant="Delete"
+              className="w-32 mx-auto"
+              onClick={handleDelete}
+            />
             <Button
               type="button"
               variant="Back"
-              className="w-32"
+              className="w-32 mx-auto"
               onClick={() => navigate(ROUTES.STUDENT.INDEX)}
             />
           </div>

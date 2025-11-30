@@ -79,7 +79,7 @@ export const RadioGroup = ({
                   <Radio
                     key={option.value}
                     id={`${name}-${option.value}`}
-                    name={name} // ラジオは name を揃える
+                    name={name}
                     label={option.label}
                     checked={value === option.value}
                     onChange={() => handleChange(option.value)}

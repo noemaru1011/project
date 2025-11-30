@@ -1,8 +1,9 @@
 import { toast } from 'react-toastify';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Input } from '@/components/atoms/Input';
 import { Select } from '@/components/atoms/Select';
+import { RadioGroup } from '@/components/molecules/RadioGroup';
 import { Button } from '@/components/atoms/Button';
 import { gradeOptions } from '@/constants/gradeOptions';
 import { minorCategoryOptions } from '@/constants/minorCategoryOptions';
@@ -15,7 +16,7 @@ import { ROUTES } from '@/constants/routes';
 import { StudentApi } from '@/api/studentApi';
 import type { StudentForm } from '@shared/schemas/student';
 import { handleApiError } from '@/utils/handleApiError';
-import { Mail, User, BookUser, Library, Group } from 'lucide-react';
+import { Mail, User, Library, Group } from 'lucide-react';
 
 export const StudentCreate = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ export const StudentCreate = () => {
 
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -45,7 +47,7 @@ export const StudentCreate = () => {
         <div className="w-full max-w-lg p-8 bg-white rounded-2xl shadow-lg space-y-6">
           <h2 className="text-2xl font-bold text-gray-800 text-center">学生登録</h2>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <Input
               id="studentName"
               label="学生名"
@@ -55,14 +57,19 @@ export const StudentCreate = () => {
               required
               {...register('studentName')}
             />
-            <Select
-              id="grade"
-              label="学年"
-              options={gradeOptions}
-              leftIcon={<BookUser className="size-5 text-indigo-500" />}
-              required
-              error={errors.grade?.message}
-              {...register('grade')}
+            <Controller
+              name="grade"
+              control={control}
+              render={({ field, fieldState }) => (
+                <RadioGroup
+                  label="学年"
+                  name={field.name}
+                  options={gradeOptions}
+                  value={field.value !== undefined ? String(field.value) : undefined}
+                  onChange={(val) => field.onChange(Number(val))}
+                  error={fieldState.error?.message}
+                />
+              )}
             />
             <Select
               id="minorCategory"
