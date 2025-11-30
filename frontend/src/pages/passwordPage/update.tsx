@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ROUTES } from '@/constants/routes';
 import { Loading } from '@/components/atoms/Loading';
 import type { PasswordForm } from '@shared/schemas/password';
+import { handleApiError } from '@/utils/handleApiError';
 import { Lock, Eye, EyeOff } from 'lucide-react';
 
 export const ChangePassword = () => {
@@ -28,8 +30,13 @@ export const ChangePassword = () => {
 
   // 送信処理
   const onSubmit = async (data: PasswordForm) => {
-    await update(data);
-    navigate(ROUTES.HOME);
+    try {
+      const res = await update(data);
+      toast.success(res.message);
+      navigate(ROUTES.HOME);
+    } catch (err: any) {
+      handleApiError(err, navigate);
+    }
   };
 
   return (

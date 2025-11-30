@@ -29,7 +29,7 @@ export const Header: React.FC = () => {
     try {
       const res = await logout();
       toast.success(res.message);
-      navigate(ROUTES.HOME);
+      navigate(ROUTES.AUTH.LOGIN);
     } catch (err: any) {
       handleApiError(err, navigate);
     }
