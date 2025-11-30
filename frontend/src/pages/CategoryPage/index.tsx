@@ -25,7 +25,9 @@ export const CategoryIndex = () => {
 
   return (
     <Loading loading={loading}>
-      <Table labels={CategoryLabels} data={Categories} keyField="categoryId" />
+      <div className="max-w-lg mx-auto p-4">
+        <Table labels={CategoryLabels} data={Categories} keyField="categoryId" />
+      </div>
     </Loading>
   );
 };

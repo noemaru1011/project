@@ -31,16 +31,27 @@ export function Table<T extends Record<string, any>>({
           <TableHead labelKeys={labelKeys} labels={labels} actions={actions} />
 
           <tbody>
-            {data.map((row) => (
-              <TableRow
-                key={String(row[keyField])}
-                rowKey={String(row[keyField])}
-                labelKeys={labelKeys}
-                row={row}
-                actions={actions}
-                routeMap={routeMap}
-              />
-            ))}
+            {data.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={labelKeys.length + (actions ? 1 : 0)}
+                  className="text-center py-4 text-gray-500"
+                >
+                  データがありません
+                </td>
+              </tr>
+            ) : (
+              data.map((row) => (
+                <TableRow
+                  key={String(row[keyField])}
+                  rowKey={String(row[keyField])}
+                  labelKeys={labelKeys}
+                  row={row}
+                  actions={actions}
+                  routeMap={routeMap}
+                />
+              ))
+            )}
           </tbody>
         </table>
       </div>

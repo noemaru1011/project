@@ -6,27 +6,50 @@ type Props = {
   error?: string;
   required?: boolean;
   disabled?: boolean;
+  helperText?: string;
   className?: string;
-} & React.InputHTMLAttributes<HTMLInputElement>;
+} & React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 export const Textarea = React.forwardRef<HTMLTextAreaElement, Props>(
-  ({ id, label, error, required, disabled, className }, ref) => {
+  ({ id, label, error, required, disabled, helperText, className, ...props }, ref) => {
     return (
-      <div className="flex flex-col space-y-1">
+      <div className="flex flex-col space-y-1 w-full">
         {label && (
-          <label htmlFor={id} className="font-bold text-gray-700">
-            {label}
-            {required && <span className="text-red-500">*</span>}
+          <label htmlFor={id} className="text-sm font-medium text-gray-700">
+            {label} {required && <span className="text-red-500">*</span>}
           </label>
         )}
+
         <textarea
           id={id}
           ref={ref}
           disabled={disabled}
-          className={`${className}  w-full py-2 border-b focus:outline-none focus:border-b-2 focus:border-indigo-500 disabled:bg-gray-100 disabled:text-gray-400`}
+          className={`
+            ${className || ''}
+            w-full
+            min-h-[100px]
+            px-3 py-2
+            rounded-lg
+            border
+            border-gray-300
+            bg-white
+            text-gray-900
+            placeholder-gray-400
+            focus:outline-none
+            focus:ring-2
+            focus:ring-indigo-500
+            focus:border-indigo-500
+            disabled:bg-gray-100
+            disabled:text-gray-400
+            transition
+            duration-200
+            ease-in-out
+          `}
+          {...props}
         />
 
-        {error && <p className="text-red-500 text-sm ml-1">{error}</p>}
+        {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
+        {helperText && !error && <p className="text-gray-500 text-sm ml-1">{helperText}</p>}
       </div>
     );
   },

@@ -1,6 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { Button } from '@/components/atoms/Button';
+import { Input } from '@/components/atoms/Input';
+import { Textarea } from '@/components/atoms/Textarea';
+import { Table } from '@/components/molecules/Table';
 import { CheckboxGroup } from '@/components/molecules/CheckboxGroup';
+import { RadioGroup } from '@/components/molecules/RadioGroup';
 import { Accordion } from '@/components/molecules/Accordion';
 import { Loading } from '@/components/atoms/Loading';
 import { categoryOptions } from '@/constants/categoryOptions';
@@ -8,12 +13,16 @@ import { subCategoryOptions } from '@/constants/subCategoryOptions';
 import { minorCategoryOptions } from '@/constants/minorCategoryOptions';
 import { gradeOptions } from '@/constants/gradeOptions';
 import { departmentOptions } from '@/constants/departmentOptions';
+import { statusOptions } from '@/constants/statusOptions';
+import { History_StudentLabels } from '@/constants/studentLabels';
 import { StudentSearchApi } from '@/api/studentSearchApi';
 import { useSearch } from '@/hooks/useSearch';
 import type { StudentQuery } from '@/interface/studentQuery';
+import { handleApiError } from '@/utils/handleApiError';
 import type { StudentForSearch } from '@/interface/student';
 
 export const HistoryCreate = () => {
+  const navigate = useNavigate();
   const { handleSubmit, control, getValues } = useForm<StudentQuery>({
     defaultValues: {
       categoryId: [],
@@ -35,7 +44,7 @@ export const HistoryCreate = () => {
     try {
       await search(query);
     } catch (err: any) {
-      console.error(err);
+      handleApiError(err, navigate);
     }
   };
 
@@ -149,44 +158,33 @@ export const HistoryCreate = () => {
         <Accordion items={accordionItems} allowMultiple={true} className="w-full" />
         <Button variant="Search" type="submit" className="self-end" />
       </form>
+      <form>
+        <Controller
+          name="StatusId"
+          control={control}
+          render={({ field, fieldState }) => (
+            <RadioGroup
+              label="状況"
+              name={field.name}
+              options={statusOptions}
+              required
+              error={fieldState.error?.message}
+            />
+          )}
+        />
+        <Input id="startTime" type="datetime-local" label="有効開始日" required />
+        <Input
+          id="endTime"
+          type="datetime-local"
+          label="有効終了日"
+          helperText="未定の場合は時間を設定しないでください。"
+        />
+        <Textarea id="other" label="備考欄" helperText="例 「於:〇〇病院」" />
+        <Button variant="Create" type="submit" />
+      </form>
 
       <Loading loading={loading}>
-        <div className="mt-6 w-full overflow-x-auto">
-          <table className="min-w-full border border-gray-300 divide-y divide-gray-200 text-sm sm:text-base">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-4 py-2 text-left">名前</th>
-                <th className="px-4 py-2 text-left">学年</th>
-                <th className="px-4 py-2 text-left">大分類</th>
-                <th className="px-4 py-2 text-left">中分類</th>
-                <th className="px-4 py-2 text-left">小分類</th>
-                <th className="px-4 py-2 text-left">学科</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {results.length === 0 ? (
-                <tr>
-                  <td colSpan={6} className="text-center py-4 text-gray-500">
-                    データがありません
-                  </td>
-                </tr>
-              ) : (
-                results.map((s) => (
-                  <tr key={s.studentId}>
-                    <td className="px-4 py-2">{s.studentName}</td>
-                    <td className="px-4 py-2">{s.grade}</td>
-                    <td className="px-4 py-2">
-                      {s.minorCategory.subCategory.category.categoryName}
-                    </td>
-                    <td className="px-4 py-2">{s.minorCategory.subCategory.subCategoryName}</td>
-                    <td className="px-4 py-2">{s.minorCategory.minorCategoryName}</td>
-                    <td className="px-4 py-2">{s.department.departmentName}</td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+        <Table labels={History_StudentLabels} data={results} keyField="studentId" />
       </Loading>
     </div>
   );

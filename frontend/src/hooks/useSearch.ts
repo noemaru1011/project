@@ -6,7 +6,7 @@ export function useSearch<T, Query = void>(searchFn: (query: Query) => Promise<A
   const [data, setData] = useState<T[]>([]);
   const { loading, start, end } = useLoadingCounter();
 
-  const search = async (query: Query): Promise<void> => {
+  const search = async (query: Query) => {
     start();
     try {
       const res = await searchFn(query);

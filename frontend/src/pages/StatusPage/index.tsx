@@ -25,8 +25,8 @@ export const StatusIndex = () => {
 
   return (
     <Loading loading={loading}>
-      <div className="max-w-screen-lg mx-auto p-4">
-        <Table labels={StatusLabels} data={Status} keyField="statusName" />
+      <div className="max-w-lg mx-auto p-4">
+        <Table labels={StatusLabels} data={Status} keyField="statusId" />
       </div>
     </Loading>
   );

@@ -35,13 +35,15 @@ export const StudentIndex = () => {
 
   return (
     <Loading loading={loading}>
-      <Table
-        labels={StudentLabels}
-        data={student}
-        keyField="studentId"
-        actions={actions}
-        routeMap={routeMap}
-      />
+      <div className="max-w-lg mx-auto p-4">
+        <Table
+          labels={StudentLabels}
+          data={student}
+          keyField="studentId"
+          actions={actions}
+          routeMap={routeMap}
+        />
+      </div>
     </Loading>
   );
 };

@@ -25,6 +25,18 @@ export const API_ROUTES = {
     //delete:id
     DELETE: (id: string) => `/api/students/${id}`,
   },
+  HISTORY: {
+    //get
+    INDEX: '/api/history',
+    //post
+    CREATE: '/api/history',
+    //put
+    UPDATE: (id: string) => `/api/history/${id}`,
+    //get;id
+    VIEW: (id: string) => `/api/history/${id}`,
+    //delete:id
+    DELETE: (id: string) => `/api/history/${id}`,
+  },
   AUTH: {
     LOGIN: '/api/login',
     LOGOUT: '/api/logout',

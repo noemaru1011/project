@@ -76,8 +76,6 @@ export const StudentService = {
       studentName: s.studentName,
       grade: s.grade,
       departmentName: s.department?.departmentName ?? null,
-      categoryName: s.minorCategory?.subCategory?.category?.categoryName ?? null,
-      subCategoryName: s.minorCategory?.subCategory?.subCategoryName ?? null,
       minorCategoryName: s.minorCategory?.minorCategoryName ?? null,
     }));
 

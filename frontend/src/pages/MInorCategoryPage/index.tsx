@@ -29,7 +29,9 @@ export const MinorCategoryIndex = () => {
 
   return (
     <Loading loading={loading}>
-      <Table labels={MinorCategoryLabels} data={MinorCategories} keyField="minorCategoryId" />
+      <div className="max-w-lg mx-auto p-4">
+        <Table labels={MinorCategoryLabels} data={MinorCategories} keyField="minorCategoryId" />
+      </div>
     </Loading>
   );
 };
