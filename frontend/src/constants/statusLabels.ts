@@ -1,5 +1,3 @@
-import type { DisplayLabels } from '@/interface/ui';
-
-export const StatusLabels: DisplayLabels = {
+export const StatusLabels: Record<string, string> = {
   statusName: '状態名',
 };

@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Input } from '@/components/atoms/Input';
@@ -11,6 +12,7 @@ import { Loading } from '@/components/atoms/Loading';
 import { ROUTES } from '@/constants/routes';
 import type { StudentDetail } from '@/interface/student';
 import { StudentApi } from '@/api/studentApi';
+import { handleApiError } from '@/utils/handleApiError';
 
 export const StudentView = () => {
   const navigate = useNavigate();
@@ -31,8 +33,9 @@ export const StudentView = () => {
 
   return (
     <Loading loading={loading}>
-      <div className="mt-5 flex justify-center min-h-screen">
-        <div className="w-full max-w-md space-y-4">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="w-full max-w-lg p-8 bg-white rounded-2xl shadow-lg space-y-6">
+          <h2 className="text-2xl font-bold text-gray-800 text-center">学生参照</h2>
           <Input
             id="studentName"
             label="学生名"

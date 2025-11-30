@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Input } from '@/components/atoms/Input';
@@ -13,6 +14,7 @@ import { Loading } from '@/components/atoms/Loading';
 import { ROUTES } from '@/constants/routes';
 import { StudentApi } from '@/api/studentApi';
 import type { StudentForm } from '@shared/schemas/student';
+import { handleApiError } from '@/utils/handleApiError';
 import { Mail, User, BookUser, Library, Group } from 'lucide-react';
 
 export const StudentCreate = () => {
@@ -27,9 +29,14 @@ export const StudentCreate = () => {
     resolver: zodResolver(validation),
   });
 
-  const onSubmit = async (data: any) => {
-    await create(data);
-    navigate(ROUTES.STUDENT.INDEX);
+  const onSubmit = async (data: StudentForm) => {
+    try {
+      const res = await create(data);
+      toast.success(res.message);
+      navigate(ROUTES.STUDENT.INDEX);
+    } catch (err: any) {
+      handleApiError(err, navigate);
+    }
   };
 
   return (

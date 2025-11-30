@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { Input } from '@/components/atoms/Input';
@@ -7,9 +8,13 @@ import { validation } from '@shared/schemas/login';
 import type { LoginForm } from '@shared/schemas/login';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useLogin } from '@/hooks/useLogin';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/constants/routes';
+import { handleApiError } from '@/utils/handleApiError';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 
 export const Login = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const { login, loading } = useLogin();
 
@@ -22,7 +27,13 @@ export const Login = () => {
   });
 
   const onSubmit = async (data: LoginForm) => {
-    await login(data);
+    try {
+      const res = await login(data);
+      toast.success(res.message);
+      navigate(ROUTES.HOME);
+    } catch (err: any) {
+      handleApiError(err, navigate);
+    }
   };
 
   return (

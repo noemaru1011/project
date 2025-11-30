@@ -1,5 +1,3 @@
-import type { DisplayLabels } from '@/interface/ui';
-
-export const SubCategoryLabels: DisplayLabels = {
+export const SubCategoryLabels: Record<string, string> = {
   subCategoryName: '中分類名',
 };

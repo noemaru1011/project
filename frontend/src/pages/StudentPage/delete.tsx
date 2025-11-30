@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Input } from '@/components/atoms/Input';
@@ -12,6 +13,7 @@ import { useDelete } from '@/hooks/useDelete';
 import { useView } from '@/hooks/useView';
 import type { StudentDetail } from '@/interface/student';
 import { StudentApi } from '@/api/studentApi';
+import { handleApiError } from '@/utils/handleApiError';
 import { Mail, User, BookUser, Library, Group } from 'lucide-react';
 
 export const StudentDelete = () => {
@@ -33,15 +35,21 @@ export const StudentDelete = () => {
   }, [studentId, view]);
 
   const handleDelete = async () => {
-    if (!studentId) return;
-    await remove(studentId);
-    navigate(ROUTES.STUDENT.INDEX);
+    try {
+      if (!studentId) return;
+      const res = await remove(studentId);
+      toast.success(res.message);
+      navigate(ROUTES.STUDENT.INDEX);
+    } catch (err: any) {
+      handleApiError(err, navigate);
+    }
   };
 
   return (
     <Loading loading={loading}>
-      <div className="mt-5 flex justify-center min-h-screen">
-        <div className="w-full max-w-md space-y-4">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="w-full max-w-lg p-8 bg-white rounded-2xl shadow-lg space-y-6">
+          <h2 className="text-2xl font-bold text-gray-800 text-center">学生削除</h2>
           <Input
             id="studentName"
             label="学生名"

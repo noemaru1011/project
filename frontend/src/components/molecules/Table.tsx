@@ -1,11 +1,10 @@
-import type { DisplayLabels } from '@/interface/ui';
-import { TableHead } from '@/components/atoms/TableHead';
-import { TableRow } from '@/components/atoms/TableRow';
+import { TableHead } from '@/components/molecules/TableHead';
+import { TableRow } from '@/components/molecules/TableRow';
 import type { Action } from '@/components/molecules/RowActions';
 
 type Props<T> = {
-  /** 表示するラベルの定義オブジェクト(ネストも可)*/
-  labels: DisplayLabels;
+  /** 表示するラベルの定義オブジェクト*/
+  labels: Record<string, string>;
   /** 表示するデータの配列 */
   data: T[];
   /** 識別IDはdataに含まれる */
@@ -16,23 +15,6 @@ type Props<T> = {
   routeMap?: Record<Action, (id: string) => string>;
 };
 
-// ネストをフラットにする共通処理
-function flattenObject(obj: any, prefix = '', res: Record<string, any> = {}) {
-  for (const key in obj) {
-    if (!Object.prototype.hasOwnProperty.call(obj, key)) continue;
-
-    const value = obj[key];
-    const newKey = prefix ? `${prefix}.${key}` : key;
-
-    if (value && typeof value === 'object' && !Array.isArray(value)) {
-      flattenObject(value, newKey, res);
-    } else {
-      res[newKey] = value;
-    }
-  }
-  return res;
-}
-
 export function Table<T extends Record<string, any>>({
   labels,
   data,
@@ -40,29 +22,25 @@ export function Table<T extends Record<string, any>>({
   actions,
   routeMap,
 }: Props<T>) {
-  const flatLabels = flattenObject(labels);
-  const labelKeys = Object.keys(flatLabels);
+  const labelKeys = Object.keys(labels);
 
   return (
-    <div className="flex justify-center m-4">
-      <div className="overflow-hidden rounded-lg border border-gray-300 shadow-md">
-        <table className="table-auto min-w-[200px]">
-          <TableHead labelKeys={labelKeys} flatLabels={flatLabels} actions={actions} />
+    <div className="m-4">
+      <div className="overflow-x-auto rounded-lg border border-gray-300 shadow-md">
+        <table className="table-auto min-w-full sm:min-w-max w-full">
+          <TableHead labelKeys={labelKeys} labels={labels} actions={actions} />
 
           <tbody>
-            {data.map((row) => {
-              const flatRow = flattenObject(row);
-              return (
-                <TableRow
-                  key={String(row[keyField])}
-                  rowKey={String(row[keyField])}
-                  labelKeys={labelKeys}
-                  flatRow={flatRow}
-                  actions={actions}
-                  routeMap={routeMap}
-                />
-              );
-            })}
+            {data.map((row) => (
+              <TableRow
+                key={String(row[keyField])}
+                rowKey={String(row[keyField])}
+                labelKeys={labelKeys}
+                row={row}
+                actions={actions}
+                routeMap={routeMap}
+              />
+            ))}
           </tbody>
         </table>
       </div>

@@ -1,5 +1,3 @@
-import type { DisplayLabels } from '@/interface/ui';
-
-export const MinorCategoryLabels: DisplayLabels = {
+export const MinorCategoryLabels: Record<string, string> = {
   minorCategoryName: '小分類名',
 };

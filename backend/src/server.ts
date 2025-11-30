@@ -25,7 +25,7 @@ app.use(
     credentials: true,
   }),
 );
-app.use(securityMiddleware());
+//app.use(securityMiddleware());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

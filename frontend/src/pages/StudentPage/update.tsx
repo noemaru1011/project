@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -15,6 +16,7 @@ import { useView } from '@/hooks/useView';
 import { validation } from '@shared/schemas/student';
 import { StudentApi } from '@/api/studentApi';
 import type { StudentForm } from '@shared/schemas/student';
+import { handleApiError } from '@/utils/handleApiError';
 import type { StudentDetail } from '@/interface/student';
 import { Mail, User, BookUser, Library, Group } from 'lucide-react';
 
@@ -52,16 +54,22 @@ export const StudentUpdate = () => {
   }, [studentId, view, reset, navigate]);
 
   // 更新処理
-  const onSubmit = async (data: any) => {
-    if (!studentId) return;
-    await update(studentId, data);
-    navigate(ROUTES.STUDENT.INDEX);
+  const onSubmit = async (data: StudentForm) => {
+    try {
+      if (!studentId) return;
+      const res = await update(studentId, data);
+      toast.success(res.message);
+      navigate(ROUTES.STUDENT.INDEX);
+    } catch (err: any) {
+      handleApiError(err, navigate);
+    }
   };
 
   return (
     <Loading loading={loading}>
-      <div className="mt-5 flex justify-center min-h-screen">
-        <div className="w-full max-w-md space-y-4">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="w-full max-w-lg p-8 bg-white rounded-2xl shadow-lg space-y-6">
+          <h2 className="text-2xl font-bold text-gray-800 text-center">学生更新</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Input
               id="studentName"

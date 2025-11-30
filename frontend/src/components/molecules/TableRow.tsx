@@ -4,17 +4,17 @@ import { RowActions } from '@/components/molecules/RowActions';
 type Props = {
   rowKey: string;
   labelKeys: string[];
-  flatRow: Record<string, any>;
+  row: Record<string, string>;
   actions?: Action[];
   routeMap?: Record<Action, (id: string) => string>;
 };
 
-export const TableRow = ({ rowKey, labelKeys, flatRow, actions, routeMap }: Props) => {
+export const TableRow = ({ rowKey, labelKeys, row, actions, routeMap }: Props) => {
   return (
     <tr className="border-b">
       {labelKeys.map((key) => (
         <td key={key} className="px-4 py-2 text-center">
-          {flatRow[key]}
+          {row[key]}
         </td>
       ))}
 

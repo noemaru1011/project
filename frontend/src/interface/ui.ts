@@ -14,7 +14,3 @@ export interface Option {
   value: string;
   label: string;
 }
-
-export interface DisplayLabels {
-  [key: string]: string | DisplayLabels;
-}

@@ -6,7 +6,15 @@ import { sendAccountEmail } from '@/utils/sendAccountEmail';
 export const StudentService = {
   async getAllStudents() {
     const students = await StudentRepository.findAll();
-    return students;
+
+    const result = students.map((s) => ({
+      studentId: s.studentId,
+      studentName: s.studentName,
+      grade: s.grade,
+      minorCategoryName: s.minorCategory?.minorCategoryName ?? null,
+    }));
+
+    return result;
   },
 
   async getStudent(studentId: string) {
@@ -56,15 +64,23 @@ export const StudentService = {
     departmentId?: number[];
   }) {
     const minorCategoryIds = await StudentRepository.resolveMinorCategoryIds(data);
-    console.log('minorCategoryIds', minorCategoryIds);
 
     const students = await StudentRepository.searchStudents({
       minorCategoryIds,
       departments: data.departmentId,
       grade: data.grade,
     });
-    console.log('students', students);
 
-    return students;
+    const result = students.map((s) => ({
+      studentId: s.studentId,
+      studentName: s.studentName,
+      grade: s.grade,
+      departmentName: s.department?.departmentName ?? null,
+      categoryName: s.minorCategory?.subCategory?.category?.categoryName ?? null,
+      subCategoryName: s.minorCategory?.subCategory?.subCategoryName ?? null,
+      minorCategoryName: s.minorCategory?.minorCategoryName ?? null,
+    }));
+
+    return result;
   },
 };

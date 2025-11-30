@@ -1,12 +1,15 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Table } from '@/components/molecules/Table';
 import { Loading } from '@/components/atoms/Loading';
 import { useFetchAll } from '@/hooks/useFetchAll';
 import { MinorCategoryLabels } from '@/constants/minorCategoryLabels';
 import { MinorCategoryApi } from '@/api/minorCategoryApi';
 import type { MinorCategory } from '@/interface/minorCategory';
+import { handleApiError } from '@/utils/handleApiError';
 
 export const MinorCategoryIndex = () => {
+  const navigate = useNavigate();
   const {
     data: MinorCategories,
     fetchAll,
@@ -14,8 +17,15 @@ export const MinorCategoryIndex = () => {
   } = useFetchAll<MinorCategory>(MinorCategoryApi.index);
 
   useEffect(() => {
-    fetchAll();
-  }, [fetchAll]);
+    const fetchData = async () => {
+      try {
+        await fetchAll();
+      } catch (err: any) {
+        handleApiError(err, navigate);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <Loading loading={loading}>
