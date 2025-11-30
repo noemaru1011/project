@@ -12,7 +12,7 @@ test.describe('Login E2E Tests', () => {
 
   test('Student can login successfully', async ({ page }) => {
     await page.fill('#email', users.student.email);
-    await page.fill('#studentPassword', users.student.password);
+    await page.fill('#password', users.student.password);
     await page.click('button[type="submit"]');
     await page.waitForURL(ROUTES.HOME);
     //await expect(page.locator('h1')).toHaveText(/ダッシュボード/i);
@@ -20,7 +20,7 @@ test.describe('Login E2E Tests', () => {
 
   test('Admin can login successfully', async ({ page }) => {
     await page.fill('#email', users.admin.email);
-    await page.fill('#studentPassword', users.admin.password);
+    await page.fill('#password', users.admin.password);
     await page.click('button[type="submit"]');
     await page.waitForURL(ROUTES.HOME);
     //await expect(page.locator('h1')).toHaveText(/ダッシュボード/i);
@@ -28,7 +28,7 @@ test.describe('Login E2E Tests', () => {
 
   test('Student login fails with wrong password', async ({ page }) => {
     await page.fill('#email', users.student.email);
-    await page.fill('#studentPassword', 'wrong-password');
+    await page.fill('#password', 'wrong-password');
     await page.click('button[type="submit"]');
     // エラーメッセージ表示確認
     const toast = page.getByText('メールアドレスかパスワードが違います');
@@ -37,7 +37,7 @@ test.describe('Login E2E Tests', () => {
 
   test('Admin login fails with wrong password', async ({ page }) => {
     await page.fill('#email', users.admin.email);
-    await page.fill('#studentPassword', 'wrong-password');
+    await page.fill('#password', 'wrong-password');
     await page.click('button[type="submit"]');
     const toast = page.getByText('メールアドレスかパスワードが違います');
     await expect(toast).toBeVisible({ timeout: 5000 });

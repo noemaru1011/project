@@ -55,7 +55,7 @@ export const Login = () => {
             />
 
             <Input
-              id="studentPassword"
+              id="password"
               type={showPassword ? 'text' : 'password'}
               label="パスワード"
               leftIcon={<Lock className="size-5 text-indigo-500" />}

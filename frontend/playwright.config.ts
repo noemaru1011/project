@@ -36,17 +36,29 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { ...devices['Desktop Chrome'], storageState: 'storageState.json' },
     },
 
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      use: { ...devices['Desktop Firefox'], storageState: 'storageState.json' },
     },
 
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      use: { ...devices['Desktop Safari'], storageState: 'storageState.json' },
+    },
+    {
+      name: 'setup',
+      testMatch: /auth\.setup\.ts/,
+    },
+    {
+      name: 'e2e',
+      dependencies: ['setup'],
+      testMatch: '**/*.spec.ts',
+      use: {
+        storageState: 'storageState.json',
+      },
     },
 
     /* Test against mobile viewports. */
