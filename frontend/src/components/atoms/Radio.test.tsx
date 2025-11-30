@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { vi } from 'vitest';
+import React from 'react';
 import { Radio } from './Radio';
 
 describe('Radio', () => {
@@ -22,11 +23,26 @@ describe('Radio', () => {
   });
 
   it('calls onChange handler when clicked', () => {
-    const handleChange = vi.fn(); // vitest 用
+    const handleChange = vi.fn();
     render(<Radio id="radio1" label="クリック" onChange={handleChange} />);
     const radio = screen.getByRole('radio', { name: /クリック/i });
 
     fireEvent.click(radio);
     expect(handleChange).toHaveBeenCalledTimes(1);
+  });
+
+  it('toggles checked state when clicked', () => {
+    render(<Radio id="radio1" label="チェック" />);
+    const radio = screen.getByRole('radio', { name: /チェック/i }) as HTMLInputElement;
+
+    expect(radio.checked).toBe(false);
+    fireEvent.click(radio);
+    expect(radio.checked).toBe(true);
+  });
+
+  it('supports ref forwarding', () => {
+    const ref = React.createRef<HTMLInputElement>();
+    render(<Radio id="radio1" ref={ref} />);
+    expect(ref.current).toBeInstanceOf(HTMLInputElement);
   });
 });

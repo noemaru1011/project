@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { vi } from 'vitest';
+import React from 'react';
 import { Checkbox } from './Checkbox';
 
 describe('Checkbox', () => {
@@ -28,5 +29,22 @@ describe('Checkbox', () => {
 
     fireEvent.click(checkbox);
     expect(handleChange).toHaveBeenCalledTimes(1);
+  });
+
+  it('toggles checked state when clicked', () => {
+    render(<Checkbox id="test" label="チェック" />);
+    const checkbox = screen.getByRole('checkbox', { name: /チェック/i }) as HTMLInputElement;
+
+    expect(checkbox.checked).toBe(false);
+    fireEvent.click(checkbox);
+    expect(checkbox.checked).toBe(true);
+    fireEvent.click(checkbox);
+    expect(checkbox.checked).toBe(false);
+  });
+
+  it('supports ref forwarding', () => {
+    const ref = React.createRef<HTMLInputElement>();
+    render(<Checkbox id="test" ref={ref} />);
+    expect(ref.current).toBeInstanceOf(HTMLInputElement);
   });
 });

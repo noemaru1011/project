@@ -3,11 +3,7 @@ import { z } from "zod";
 const strongPassword = z
   .string()
   .min(6, "パスワードは6文字以上で入力してください")
-  .max(100, "パスワードは100文字以内で入力してください")
-  .regex(/[a-z]/, "小文字を1文字以上含めてください")
-  .regex(/[A-Z]/, "大文字を1文字以上含めてください")
-  .regex(/[0-9]/, "数字を1文字以上含めてください")
-  .regex(/[^A-Za-z0-9]/, "記号を1文字以上含めてください");
+  .max(100, "パスワードは100文字以内で入力してください");
 
 export const validation = z
   .object({

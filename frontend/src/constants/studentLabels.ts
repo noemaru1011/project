@@ -1,6 +1,4 @@
-import type { DisplayLabels } from '@/interface/ui';
-
-export const StudentLabels: DisplayLabels = {
+export const StudentLabels: Record<string, string> = {
   minorCategoryName: '小分類名',
   grade: '学年',
   studentName: '学生名',

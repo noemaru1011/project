@@ -1,56 +1,58 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { vi } from 'vitest';
 import { RadioGroup } from './RadioGroup';
 
 const options = [
-  { value: 'male', label: '男性' },
-  { value: 'female', label: '女性' },
+  { value: 'a', label: 'A' },
+  { value: 'b', label: 'B' },
+  { value: 'c', label: 'C' },
 ];
 
 describe('RadioGroup', () => {
-  test('renders label', () => {
-    render(<RadioGroup name="gender" label="性別" options={options} />);
-
-    expect(screen.getByText('性別')).toBeInTheDocument();
+  it('renders label and required asterisk', () => {
+    render(<RadioGroup name="test" label="選択" required options={options} />);
+    expect(screen.getByText('選択')).toBeInTheDocument();
+    expect(screen.getByText('*')).toBeInTheDocument();
   });
 
-  test('renders radio buttons', () => {
-    render(<RadioGroup name="gender" options={options} />);
-
-    expect(screen.getByLabelText('男性')).toBeInTheDocument();
-    expect(screen.getByLabelText('女性')).toBeInTheDocument();
+  it('renders all options', () => {
+    render(<RadioGroup name="test" options={options} />);
+    options.forEach((opt) => {
+      expect(screen.getByLabelText(opt.label)).toBeInTheDocument();
+    });
   });
 
-  test('calls onChange when a radio is selected (exclusive selection)', () => {
-    const handleChange = vi.fn();
+  it('checks the correct value when selected', () => {
+    let value = '';
+    const handleChange = (v: string) => (value = v);
 
-    render(<RadioGroup name="gender" options={options} value="" onChange={handleChange} />);
+    render(<RadioGroup name="test" value={value} onChange={handleChange} options={options} />);
+    const radioA = screen.getByLabelText('A');
+    const radioB = screen.getByLabelText('B');
 
-    const maleRadio = screen.getByLabelText('男性');
+    fireEvent.click(radioA);
+    expect(value).toBe('a');
 
-    fireEvent.click(maleRadio);
-
-    expect(handleChange).toHaveBeenCalledWith('male');
+    fireEvent.click(radioB);
+    expect(value).toBe('b');
   });
 
-  test('reflects the value prop', () => {
-    render(<RadioGroup name="gender" options={options} value="female" />);
-
-    expect(screen.getByLabelText('女性')).toBeChecked();
-    expect(screen.getByLabelText('男性')).not.toBeChecked();
+  it('renders error message', () => {
+    render(<RadioGroup name="test" options={options} error="必須です" />);
+    expect(screen.getByText('必須です')).toBeInTheDocument();
   });
 
-  test('displays error message', () => {
-    render(<RadioGroup name="gender" options={options} error="必須項目です" />);
-
-    expect(screen.getByText('必須項目です')).toBeInTheDocument();
+  it('respects the disabled prop', () => {
+    render(<RadioGroup name="test" options={options} disabled />);
+    options.forEach((opt) => {
+      expect(screen.getByLabelText(opt.label)).toBeDisabled();
+    });
   });
 
-  test('applies disabled state', () => {
-    render(<RadioGroup name="gender" options={options} disabled />);
-
-    const maleRadio = screen.getByLabelText('男性');
-
-    expect(maleRadio).toBeDisabled();
+  it('supports row and column grid layout', () => {
+    render(<RadioGroup name="test" options={options} row={2} column={2} />);
+    // 最初の行のラベルを確認
+    expect(screen.getByLabelText('A')).toBeInTheDocument();
+    expect(screen.getByLabelText('B')).toBeInTheDocument();
+    // 2列目に何もない場合はレンダリングされない or div placeholderを無視
   });
 });

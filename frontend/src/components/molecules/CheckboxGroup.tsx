@@ -40,28 +40,12 @@ export const CheckboxGroup = ({
    * options を row/column 指定に合わせて 2D 配列へ
    */
   const grid = useMemo(() => {
-    // 両方指定されている場合：そのマトリクスサイズに合わせる
-    if (row && column) {
-      const matrixSize = row * column;
-
-      // 数が足りなければ空データで埋める
-      const filled = [...options];
-      if (filled.length < matrixSize) {
-        const diff = matrixSize - filled.length;
-        for (let i = 0; i < diff; i++) {
-          filled.push({ label: '', value: `__empty-${i}`, disabled: true } as any);
-        }
-      }
-
-      const rows = [];
-      for (let r = 0; r < row; r++) {
-        rows.push(filled.slice(r * column, r * column + column));
-      }
-      return rows;
-    }
-
-    // 片方だけ指定 → 自動計算
     const total = options.length;
+
+    if (row && column) {
+      // 両方指定 → 行列のサイズに収まる範囲で slice
+      return Array.from({ length: row }, (_, r) => options.slice(r * column, r * column + column));
+    }
 
     if (column) {
       const rows = Math.ceil(total / column);
@@ -91,18 +75,18 @@ export const CheckboxGroup = ({
       <div className="flex flex-col space-y-3">
         {grid.map((rowOptions, rowIndex) => (
           <div key={rowIndex} className="flex flex-row gap-6 whitespace-nowrap">
-            {rowOptions.map((option) =>
-              option.label ? (
-                <Checkbox
-                  key={option.value}
-                  id={`${name ?? 'checkbox'}-${option.value}`}
-                  label={option.label}
-                  checked={value.includes(option.value)}
-                  onChange={() => handleChange(option.value)}
-                />
-              ) : (
-                <div key={option.value} className="w-28" />
-              ),
+            {rowOptions.map(
+              (option) =>
+                option.label && (
+                  <Checkbox
+                    key={option.value}
+                    id={`${name ?? 'checkbox'}-${option.value}`}
+                    label={option.label}
+                    checked={value.includes(option.value)}
+                    onChange={() => handleChange(option.value)}
+                    disabled={disabled}
+                  />
+                ),
             )}
           </div>
         ))}
