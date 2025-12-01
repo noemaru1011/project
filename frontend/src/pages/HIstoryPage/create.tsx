@@ -14,7 +14,7 @@ import { minorCategoryOptions } from '@/constants/minorCategoryOptions';
 import { gradeOptions } from '@/constants/gradeOptions';
 import { departmentOptions } from '@/constants/departmentOptions';
 import { statusOptions } from '@/constants/statusOptions';
-import { History_StudentLabels } from '@/constants/studentLabels';
+import { HistoryLabels } from '@/constants/historyLabels';
 import { StudentSearchApi } from '@/api/studentSearchApi';
 import { useSearch } from '@/hooks/useSearch';
 import type { StudentQuery } from '@/interface/studentQuery';
@@ -184,7 +184,7 @@ export const HistoryCreate = () => {
       </form>
 
       <Loading loading={loading}>
-        <Table labels={History_StudentLabels} data={results} keyField="studentId" />
+        <Table labels={HistoryLabels} data={results} keyField="studentId" />
       </Loading>
     </div>
   );
