@@ -44,62 +44,65 @@ export const HistoryCreate = () => {
   };
 
   return (
-    <div className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-6">
-      {/* 左側：検索とテーブル */}
-      <div className="w-full">
-        <StudentSearchPanel onSearch={search} />
-        <Loading loading={loading}>
-          <Table labels={HistoryLabels} data={data} keyField="studentId" />
-        </Loading>
-      </div>
-
-      {/* 右側：フォーム */}
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col gap-4">
-        <Controller
-          name="StatusId"
-          control={control}
-          render={({ field, fieldState }) => (
-            <RadioGroup
-              label="状況"
-              name={field.name}
-              options={statusOptions}
-              value={field.value !== undefined ? String(field.value) : undefined}
-              onChange={(val) => field.onChange(Number(val))}
-              required
-              error={fieldState.error?.message}
-            />
-          )}
-        />
-
-        <div className="flex flex-col sm:flex-row gap-4">
-          <Input
-            id="startTime"
-            type="datetime-local"
-            label="有効開始日"
-            required
-            error={errors.startTime?.message}
-            {...register('startTime')}
-          />
-          <Input
-            id="endTime"
-            type="datetime-local"
-            label="有効終了日"
-            error={errors.endTime?.message}
-            {...register('endTime')}
-            helperText="未定の場合は時間を設定しないでください。"
-          />
+    <div className="mx-auto p-4">
+      <h2 className="text-2xl font-bold text-gray-800 text-center mb-4">履歴作成</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {/* 左側：検索とテーブル */}
+        <div className="w-full">
+          <StudentSearchPanel onSearch={search} />
+          <Loading loading={loading}>
+            <Table labels={HistoryLabels} data={data} keyField="studentId" />
+          </Loading>
         </div>
 
-        <Textarea
-          id="other"
-          label="備考欄"
-          helperText="例 「於:〇〇病院」"
-          error={errors.other?.message}
-          {...register('other')}
-        />
+        {/* 右側：フォーム */}
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col gap-4">
+          <Controller
+            name="StatusId"
+            control={control}
+            render={({ field, fieldState }) => (
+              <RadioGroup
+                label="状況"
+                name={field.name}
+                options={statusOptions}
+                value={field.value !== undefined ? String(field.value) : undefined}
+                onChange={(val) => field.onChange(Number(val))}
+                required
+                error={fieldState.error?.message}
+              />
+            )}
+          />
 
-        <Button variant="Create" type="submit" className="mt-4 w-full sm:w-64 mx-auto py-2" />
-      </form>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Input
+              id="startTime"
+              type="datetime-local"
+              label="有効開始日"
+              required
+              error={errors.startTime?.message}
+              {...register('startTime')}
+            />
+            <Input
+              id="endTime"
+              type="datetime-local"
+              label="有効終了日"
+              error={errors.endTime?.message}
+              {...register('endTime')}
+              helperText="未定の場合は時間を設定しないでください。"
+            />
+          </div>
+
+          <Textarea
+            id="other"
+            label="備考欄"
+            helperText="例 「於:〇〇病院」"
+            error={errors.other?.message}
+            {...register('other')}
+          />
+
+          <Button variant="Create" type="submit" className="mt-4 w-full sm:w-64 mx-auto py-2" />
+        </form>
+      </div>
     </div>
   );
 };
