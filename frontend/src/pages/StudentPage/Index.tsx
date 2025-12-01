@@ -1,18 +1,18 @@
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 import { Table } from '@/components/molecules/Table';
 import { Loading } from '@/components/atoms/Loading';
-import { useFetchAll } from '@/hooks/useFetchAll';
 import { StudentLabels } from '@/constants/studentLabels';
-import { StudentApi } from '@/api/studentApi';
-import type { Student } from '@/interface/student';
+import { StudentSearchApi } from '@/api/studentSearchApi';
+import type { StudentForSearch } from '@/interface/student';
+import type { StudentQuery } from '@/interface/studentQuery';
 import { ROUTES } from '@/constants/routes';
-import { handleApiError } from '@/utils/handleApiError';
+import { useSearch } from '@/hooks/useSearch';
 import type { Action } from '@/components/molecules/RowActions';
+import { StudentSearchPanel } from '@/pages/studentPage/search';
 
 export const StudentIndex = () => {
-  const navigate = useNavigate();
-  const { data: student, fetchAll, loading } = useFetchAll<Student>(StudentApi.index);
+  const { data, loading, search } = useSearch<StudentForSearch, StudentQuery>(
+    StudentSearchApi.search,
+  );
 
   const actions: Action[] = ['Update', 'Read', 'Delete'];
 
@@ -22,28 +22,20 @@ export const StudentIndex = () => {
     Delete: (id) => ROUTES.STUDENT.DELETE(id),
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await fetchAll();
-      } catch (err: any) {
-        handleApiError(err, navigate);
-      }
-    };
-    fetchData();
-  }, []);
-
   return (
-    <Loading loading={loading}>
-      <div className="max-w-lg mx-auto p-4">
+    <div className="p-4 mx-auto max-w-4xl">
+      {/* 検索フォームを配置 */}
+      <StudentSearchPanel onSearch={search} />
+
+      <Loading loading={loading}>
         <Table
           labels={StudentLabels}
-          data={student}
+          data={data}
           keyField="studentId"
           actions={actions}
           routeMap={routeMap}
         />
-      </div>
-    </Loading>
+      </Loading>
+    </div>
   );
 };

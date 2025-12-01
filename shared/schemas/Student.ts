@@ -8,11 +8,22 @@ export const validation = z.object({
     .max(50, "学生名は50文字以内で入力してください。"),
 
   grade: z.preprocess(
-    (val) => Number(val),
+    (val) => {
+      if (val === undefined || val === null || val === "") {
+        return undefined;
+      }
+      const num = Number(val);
+      return isNaN(num) ? undefined : num;
+    },
     z
-      .number()
-      .int()
-      .refine((v) => [1, 2, 3, 4].includes(v), {
+      .any()
+      .refine((v) => v !== undefined, {
+        message: "学年は必須項目です。",
+      })
+      .refine((v) => typeof v === "number", {
+        message: "学年は数値で指定してください。",
+      })
+      .refine((v) => [1, 2, 3, 4].includes(v as number), {
         message: "学年は1〜4の範囲で指定してください。",
       })
   ),

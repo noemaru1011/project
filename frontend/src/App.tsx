@@ -6,7 +6,7 @@ import { ROUTES } from '@/constants/routes';
 
 import Layout from '@/components/layouts/Layout';
 import { Login } from '@/pages/auth/login';
-import { HomePage } from '@/pages/home/HomePage';
+import { HomePage } from '@/pages/home/homePage';
 import { CategoryIndex } from '@/pages/categoryPage';
 import { SubCategoryIndex } from '@/pages/subCategoryPage';
 import { MinorCategoryIndex } from '@/pages/mInorCategoryPage';
@@ -20,9 +20,9 @@ import { StudentDelete } from './pages/studentPage/delete';
 import { ChangePassword } from '@/pages/passwordPage/update';
 import { HistoryCreate } from '@/pages/historyPage/create';
 
-import { NotFound } from '@/pages/errorPage/NotFound';
-import { ServerError } from '@/pages/errorPage/ServerError';
-import { Forbidden } from '@/pages/errorPage/Forbidden';
+import { NotFound } from '@/pages/errorPage/notFound';
+import { ServerError } from '@/pages/errorPage/serverError';
+import { Forbidden } from '@/pages/errorPage/forbidden';
 
 const AppRoutes = () => (
   <Routes>

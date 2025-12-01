@@ -101,13 +101,13 @@ export const StudentDelete = () => {
             <Button
               type="button"
               variant="Delete"
-              className="w-32 mx-auto"
+              className="w-32 mx-auto py-2"
               onClick={handleDelete}
             />
             <Button
               type="button"
               variant="Back"
-              className="w-32 mx-auto"
+              className="w-32 mx-auto py-2"
               onClick={() => navigate(ROUTES.STUDENT.INDEX)}
             />
           </div>

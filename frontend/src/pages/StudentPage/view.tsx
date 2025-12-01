@@ -78,7 +78,7 @@ export const StudentView = () => {
             <Button
               type="button"
               variant="Back"
-              className="w-64"
+              className="w-64 py-2"
               onClick={() => navigate(ROUTES.STUDENT.INDEX)}
             />
           </div>

@@ -128,12 +128,17 @@ export const StudentUpdate = () => {
             />
 
             <div className="flex justify-center gap-4 mt-4">
-              <Button type="submit" variant="Update" disabled={loading} className="w-32 mx-auto" />
+              <Button
+                type="submit"
+                variant="Update"
+                disabled={loading}
+                className="w-32 mx-auto py-2"
+              />
               <Button
                 type="button"
                 variant="Back"
                 onClick={() => navigate(ROUTES.STUDENT.INDEX)}
-                className="w-32 mx-auto"
+                className="w-32 mx-auto py-2"
               />
             </div>
           </form>

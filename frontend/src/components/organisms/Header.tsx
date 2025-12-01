@@ -13,6 +13,7 @@ import { useLoginContext } from '@/hooks/useLoginContext';
 const HeaderOptions: Option[] = [
   { value: ROUTES.HOME, label: 'メインページへ' },
   { value: ROUTES.HISTORY.INDEX, label: '事故一覧' },
+  { value: ROUTES.HISTORY.CREATE, label: '事故作成' },
   { value: ROUTES.STUDENT.CHANGE, label: 'パスワード変更' },
   { value: 'LOGOUT', label: 'ログアウト' },
 ];

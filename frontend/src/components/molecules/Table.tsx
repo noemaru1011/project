@@ -27,7 +27,7 @@ export function Table<T extends Record<string, any>>({
   return (
     <div className="m-4">
       <div className="overflow-x-auto rounded-lg border border-gray-300 shadow-md">
-        <table className="table-auto min-w-full sm:min-w-max w-full">
+        <table className="table-auto min-w-full sm:min-w-max w-full overflow-x-auto">
           <TableHead labelKeys={labelKeys} labels={labels} actions={actions} />
 
           <tbody>
