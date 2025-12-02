@@ -3,17 +3,17 @@ export const ROUTES = {
 
   // 大分類マスタ
   CATEGORY: {
-    INDEX: '/Category/Index',
+    INDEX: '/Category/Index/',
   },
 
   //中分類マスタ
   SUBCATEGORY: {
-    INDEX: '/SubCategory/Index',
+    INDEX: '/SubCategory/Index/',
   },
 
   //小分類マスタ
   MINORCategory: {
-    INDEX: '/MinorCategory/Index',
+    INDEX: '/MinorCategory/Index/',
   },
 
   //状態区分
@@ -39,7 +39,7 @@ export const ROUTES = {
   //事故一覧
   HISTORY: {
     INDEX: '/History/Index/',
-    CREATE: 'History/Create',
+    CREATE: 'History/Create/',
   },
 
   //認証
@@ -50,8 +50,8 @@ export const ROUTES = {
 
   //エラーページ
   ERROR: {
-    FORBIDDEN: '/Error/Forbidden',
-    SERVER: '/Error/ServerError',
+    FORBIDDEN: '/Error/Forbidden/',
+    SERVER: '/Error/ServerError/',
     NOTFOUND: '*',
   },
 } as const;

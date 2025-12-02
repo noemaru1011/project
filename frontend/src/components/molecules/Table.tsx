@@ -1,6 +1,6 @@
 import { TableHead } from '@/components/molecules/TableHead';
 import { TableRow } from '@/components/molecules/TableRow';
-import type { Action } from '@/components/molecules/RowActions';
+import type { Action } from '@/components/molecules/TableRowActions';
 
 type Props<T> = {
   /** 表示するラベルの定義オブジェクト*/
@@ -13,6 +13,10 @@ type Props<T> = {
   actions?: Action[];
   /** 表示するアクションの種類 */
   routeMap?: Record<Action, (id: string) => string>;
+  /** チェックボックスの有無 */
+  showCheckbox?: boolean;
+  selectedIds?: string[];
+  onSelect?: (id: string, checked: boolean) => void;
 };
 
 export function Table<T extends Record<string, any>>({
@@ -21,6 +25,9 @@ export function Table<T extends Record<string, any>>({
   keyField,
   actions,
   routeMap,
+  showCheckbox = false,
+  selectedIds,
+  onSelect,
 }: Props<T>) {
   const labelKeys = Object.keys(labels);
 
@@ -28,7 +35,12 @@ export function Table<T extends Record<string, any>>({
     <div className="m-4">
       <div className="overflow-x-auto rounded-lg border border-gray-300 shadow-md">
         <table className="table-auto min-w-full sm:min-w-max w-full overflow-x-auto">
-          <TableHead labelKeys={labelKeys} labels={labels} actions={actions} />
+          <TableHead
+            labelKeys={labelKeys}
+            labels={labels}
+            actions={actions}
+            showCheckbox={showCheckbox}
+          />
 
           <tbody>
             {data.length === 0 ? (
@@ -49,6 +61,9 @@ export function Table<T extends Record<string, any>>({
                   row={row}
                   actions={actions}
                   routeMap={routeMap}
+                  showCheckbox={showCheckbox}
+                  selectedIds={selectedIds}
+                  onSelect={onSelect}
                 />
               ))
             )}

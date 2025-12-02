@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { Table } from './Table';
-import type { Action } from './RowActions'; // Action 型を import
+import type { Action } from './TableRowActions'; // Action 型を import
 
 // テスト用のラベル
 const StudentLabels: Record<string, string> = {

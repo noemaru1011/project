@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from 'react-hook-form';
 import { Button } from '@/components/atoms/Button';
@@ -33,6 +34,8 @@ export const HistoryCreate = () => {
     resolver: zodResolver(validation),
   });
 
+  const [selectedStudents, setSelectedStudents] = useState<{ id: string; name: string }[]>([]);
+
   const onSubmit = async (data: HistoryForm) => {
     try {
       console.log(data);
@@ -51,7 +54,23 @@ export const HistoryCreate = () => {
         <div className="w-full">
           <StudentSearchPanel onSearch={search} />
           <Loading loading={loading}>
-            <Table labels={HistoryLabels} data={data} keyField="studentId" />
+            <Table
+              labels={HistoryLabels}
+              data={data}
+              keyField="studentId"
+              showCheckbox={true}
+              selectedIds={selectedStudents.map((s) => s.id)}
+              onSelect={(id, checked) => {
+                const student = data.find((s) => String(s.studentId) === id);
+                if (!student) return;
+
+                setSelectedStudents((prev) =>
+                  checked
+                    ? [...prev, { id, name: student.studentName }]
+                    : prev.filter((x) => x.id !== id),
+                );
+              }}
+            />
           </Loading>
         </div>
 
@@ -103,6 +122,18 @@ export const HistoryCreate = () => {
           <Button variant="Create" type="submit" className="mt-4 w-full sm:w-64 mx-auto py-2" />
         </form>
       </div>
+      {selectedStudents.length > 0 && (
+        <div className="fixed bottom-4 right-4 bg-white shadow-xl border rounded-lg p-4 text-sm max-w-xs animate-slide-up">
+          <div className="font-bold mb-2 text-gray-700">
+            選択中の学生（{selectedStudents.length}）
+          </div>
+          <ul className="space-y-1 text-gray-600">
+            {selectedStudents.map((s) => (
+              <li key={s.id}>{s.name}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

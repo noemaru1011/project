@@ -6,7 +6,7 @@ import type { StudentForSearch } from '@/interface/student';
 import type { StudentQuery } from '@/interface/studentQuery';
 import { ROUTES } from '@/constants/routes';
 import { useSearch } from '@/hooks/useSearch';
-import type { Action } from '@/components/molecules/RowActions';
+import type { Action } from '@/components/molecules/TableRowActions';
 import { StudentSearchPanel } from '@/pages/studentPage/search';
 
 export const StudentIndex = () => {
