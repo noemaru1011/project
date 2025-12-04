@@ -60,13 +60,20 @@ const AppRoutes = () => (
           </ProtectedContent>
         }
       />
-      {/* ここからaminのみしかし、student create以外は、page開くときにサーバーにリクエストするからわざわざフロントで記載する必要ない */}
+      {/* ここからaminのみしかし、page開くと同時にサーバー通信しない場合はフロントでも制御 */}
       <Route path={ROUTES.STATUS.INDEX} element={<StatusIndex />} />
       <Route path={ROUTES.CATEGORY.INDEX} element={<CategoryIndex />} />
       <Route path={ROUTES.SUBCATEGORY.INDEX} element={<SubCategoryIndex />} />
       <Route path={ROUTES.MINORCategory.INDEX} element={<MinorCategoryIndex />} />
       <Route path={ROUTES.DEPARTMENT.INDEX} element={<DepartmentIndex />} />
-      <Route path={ROUTES.STUDENT.INDEX} element={<StudentIndex />} />
+      <Route
+        path={ROUTES.STUDENT.INDEX}
+        element={
+          <ProtectedContent allowedRoles={['ADMIN']}>
+            <StudentIndex />
+          </ProtectedContent>
+        }
+      />
       <Route
         path={ROUTES.STUDENT.CREATE}
         element={

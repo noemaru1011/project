@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -11,7 +12,9 @@ import { Loading } from '@/components/atoms/Loading';
 import { statusOptions } from '@/constants/statusOptions';
 import { HistoryLabels } from '@/constants/historyLabels';
 import { StudentSearchApi } from '@/api/studentSearchApi';
+import { HistoryApi } from '@/api/historyApi';
 import { useSearch } from '@/hooks/useSearch';
+import { useCreate } from '@/hooks/useCreate';
 import type { StudentQuery } from '@/interface/studentQuery';
 import { StudentSearchPanel } from '@/pages/studentPage/search';
 import type { StudentForSearch } from '@/interface/student';
@@ -21,26 +24,33 @@ import { handleApiError } from '@/utils/handleApiError';
 
 export const HistoryCreate = () => {
   const navigate = useNavigate();
-  // const { create, loading } = useCreate<StudentForm>(StudentApi.create);
-  const { data, loading, search } = useSearch<StudentForSearch, StudentQuery>(
-    StudentSearchApi.search,
-  );
+  const { create, loading: createLoading } = useCreate<HistoryForm>(HistoryApi.create);
+  const {
+    data,
+    loading: searchLoading,
+    search,
+  } = useSearch<StudentForSearch, StudentQuery>(StudentSearchApi.search);
   const {
     register,
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(validation),
+    defaultValues: {
+      studentIds: [],
+    },
   });
 
   const [selectedStudents, setSelectedStudents] = useState<{ id: string; name: string }[]>([]);
 
   const onSubmit = async (data: HistoryForm) => {
     try {
+      data.studentIds = selectedStudents.map((s) => s.id);
       console.log(data);
-      //const res = await create(data);
-      //toast.success(res.message);
+      const res = await create(data);
+      toast.success(res.message);
     } catch (err: any) {
       handleApiError(err, navigate);
     }
@@ -53,7 +63,10 @@ export const HistoryCreate = () => {
         {/* 左側：検索とテーブル */}
         <div className="w-full">
           <StudentSearchPanel onSearch={search} />
-          <Loading loading={loading}>
+          <Loading loading={searchLoading}>
+            {errors.studentIds && (
+              <p className="text-red-500 text-sm ml-4">{errors.studentIds.message}</p>
+            )}
             <Table
               labels={HistoryLabels}
               data={data}
@@ -63,64 +76,70 @@ export const HistoryCreate = () => {
               onSelect={(id, checked) => {
                 const student = data.find((s) => String(s.studentId) === id);
                 if (!student) return;
-
-                setSelectedStudents((prev) =>
-                  checked
+                setSelectedStudents((prev) => {
+                  const updated = checked
                     ? [...prev, { id, name: student.studentName }]
-                    : prev.filter((x) => x.id !== id),
-                );
+                    : prev.filter((x) => x.id !== id);
+                  setValue(
+                    'studentIds',
+                    updated.map((s) => s.id),
+                  );
+                  return updated;
+                });
               }}
             />
           </Loading>
         </div>
 
         {/* 右側：フォーム */}
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col gap-4">
-          <Controller
-            name="StatusId"
-            control={control}
-            render={({ field, fieldState }) => (
-              <RadioGroup
-                label="状況"
-                name={field.name}
-                options={statusOptions}
-                value={field.value !== undefined ? String(field.value) : undefined}
-                onChange={(val) => field.onChange(Number(val))}
+        <Loading loading={createLoading}>
+          <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col gap-4">
+            <Controller
+              name="StatusId"
+              control={control}
+              render={({ field, fieldState }) => (
+                <RadioGroup
+                  label="状況"
+                  name={field.name}
+                  options={statusOptions}
+                  value={field.value !== undefined ? String(field.value) : undefined}
+                  onChange={(val) => field.onChange(Number(val))}
+                  required
+                  error={fieldState.error?.message}
+                />
+              )}
+            />
+
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Input
+                id="startTime"
+                type="datetime-local"
+                label="有効開始日"
                 required
-                error={fieldState.error?.message}
+                error={errors.startTime?.message}
+                {...register('startTime')}
               />
-            )}
-          />
+              <Input
+                id="endTime"
+                type="datetime-local"
+                label="有効終了日"
+                error={errors.endTime?.message}
+                {...register('endTime')}
+                helperText="未定の場合は時間を設定しないでください。"
+              />
+            </div>
 
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Input
-              id="startTime"
-              type="datetime-local"
-              label="有効開始日"
-              required
-              error={errors.startTime?.message}
-              {...register('startTime')}
+            <Textarea
+              id="other"
+              label="備考欄"
+              helperText="例 「於:〇〇病院」"
+              error={errors.other?.message}
+              {...register('other')}
             />
-            <Input
-              id="endTime"
-              type="datetime-local"
-              label="有効終了日"
-              error={errors.endTime?.message}
-              {...register('endTime')}
-              helperText="未定の場合は時間を設定しないでください。"
-            />
-          </div>
 
-          <Textarea
-            id="other"
-            label="備考欄"
-            helperText="例 「於:〇〇病院」"
-            error={errors.other?.message}
-            {...register('other')}
-          />
-
-          <Button variant="Create" type="submit" className="mt-4 w-full sm:w-64 mx-auto py-2" />
-        </form>
+            <Button variant="Create" type="submit" className="mt-4 w-full sm:w-64 mx-auto py-2" />
+          </form>
+        </Loading>
       </div>
       {selectedStudents.length > 0 && (
         <div className="fixed bottom-4 right-4 bg-white shadow-xl border rounded-lg p-4 text-sm max-w-xs animate-slide-up">

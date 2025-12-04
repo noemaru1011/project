@@ -1,18 +1,10 @@
 import { Router } from 'express';
 import { validateBody } from '@/middleware/validateMiddleware';
-import { validation } from '@shared/schemas/Student';
-import { StudentController } from '@/controllers/studentController';
+import { validation } from '@shared/schemas/history';
+import { HistoryController } from '@/controllers/historyController';
 
 const router = Router();
 
-router.get('/', StudentController.getAllStudents);
-
-router.get('/:id', StudentController.getStudent);
-
-router.post('/', validateBody(validation), StudentController.createStudent);
-
-router.put('/:id', validateBody(validation), StudentController.updateStudent);
-
-router.delete('/;id', StudentController.deleteStudet);
+router.post('/', validateBody(validation), HistoryController.createHistory);
 
 export default router;

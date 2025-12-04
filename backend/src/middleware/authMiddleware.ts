@@ -23,7 +23,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
   }
 };
 
-// 🚀 完全版の権限チェック
+// 権限チェック
 export const requireRole = (role: 'ADMIN' | 'STUDENT') => {
   return (req: Request, res: Response, next: NextFunction) => {
     const user = (req as any).user;

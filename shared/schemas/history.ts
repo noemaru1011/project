@@ -1,6 +1,8 @@
 import { z } from "zod";
 
 export const validation = z.object({
+  studentIds: z.array(z.string()).min(1, "学生を1人以上選択してください"),
+
   StatusId: z.preprocess(
     (val) => {
       if (val === undefined || val === null || val === "") {

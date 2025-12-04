@@ -10,6 +10,7 @@ import MinorCategoryRoutes from '@/routes/minorCategoryRoutes';
 import DepartmentRoutes from '@/routes/departmentRoutes';
 import statusRoutes from '@/routes/statusRoutes';
 import studentRoutes from '@/routes/studentRoutes';
+import historyRoutes from '@/routes/historyRoutes';
 import passwordRoutes from '@/routes/passwordRoutes';
 import { requestLogger } from '@/middleware/requestLogger';
 import { errorLogger } from '@/middleware/errorLogger';
@@ -36,6 +37,8 @@ app.use(API_ROUTES.LOGOUT, logoutRoutes);
 
 // 認証必須ルートに logger を適用
 app.use(API_ROUTES.PASSWORD, authMiddleware, requestLogger, passwordRoutes);
+
+app.use(API_ROUTES.HISTORY, authMiddleware, requireRole('ADMIN'), requestLogger, historyRoutes);
 
 app.use(API_ROUTES.CATEGORY, authMiddleware, requireRole('ADMIN'), requestLogger, categoryRoutes);
 app.use(

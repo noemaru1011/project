@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { validateBody } from '@/middleware/validateMiddleware';
-import { validation } from '@shared/schemas/Student';
+import { validation } from '@shared/schemas/student';
 import { StudentController } from '@/controllers/studentController';
 
 const router = Router();
