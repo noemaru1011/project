@@ -27,15 +27,15 @@ export const API_ROUTES = {
   },
   HISTORY: {
     //get
-    INDEX: '/api/history',
+    INDEX: '/api/histories',
     //post
-    CREATE: '/api/history',
+    CREATE: '/api/histories',
     //put
-    UPDATE: (id: string) => `/api/history/${id}`,
+    UPDATE: (id: string) => `/api/histories/${id}`,
     //get;id
-    VIEW: (id: string) => `/api/history/${id}`,
+    VIEW: (id: string) => `/api/histories/${id}`,
     //delete:id
-    DELETE: (id: string) => `/api/history/${id}`,
+    DELETE: (id: string) => `/api/histories/${id}`,
   },
   AUTH: {
     LOGIN: '/api/login',

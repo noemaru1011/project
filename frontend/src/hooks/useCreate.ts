@@ -7,7 +7,6 @@ export function useCreate<I>(createFn: (data: I) => Promise<ApiResponse<void>>) 
   const create = async (data: I) => {
     start();
     try {
-      console.log(data);
       const res = await createFn(data);
       return res;
     } finally {

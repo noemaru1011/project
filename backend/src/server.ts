@@ -9,6 +9,7 @@ import SubCategoryRoutes from '@/routes/subCategoryRoutes';
 import MinorCategoryRoutes from '@/routes/minorCategoryRoutes';
 import DepartmentRoutes from '@/routes/departmentRoutes';
 import statusRoutes from '@/routes/statusRoutes';
+import studentSearchRoutes from '@/routes/studentSearchRoutes';
 import studentRoutes from '@/routes/studentRoutes';
 import historyRoutes from '@/routes/historyRoutes';
 import passwordRoutes from '@/routes/passwordRoutes';
@@ -31,39 +32,47 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 認証不要ルート（logger を通さない）
-app.use(API_ROUTES.LOGIN, loginRoutes);
-app.use(API_ROUTES.LOGOUT, logoutRoutes);
-
-// 認証必須ルートに logger を適用
+app.use(API_ROUTES.LOGIN, requestLogger, loginRoutes);
+app.use(API_ROUTES.LOGOUT, requestLogger, logoutRoutes);
 app.use(API_ROUTES.PASSWORD, authMiddleware, requestLogger, passwordRoutes);
-
-app.use(API_ROUTES.HISTORY, authMiddleware, requireRole('ADMIN'), requestLogger, historyRoutes);
-
-app.use(API_ROUTES.CATEGORY, authMiddleware, requireRole('ADMIN'), requestLogger, categoryRoutes);
+app.use(
+  API_ROUTES.HISTORY,
+  authMiddleware,
+  requireRole(['ADMIN', 'STUDENT']),
+  requestLogger,
+  historyRoutes,
+);
+app.use(API_ROUTES.CATEGORY, authMiddleware, requireRole(['ADMIN']), requestLogger, categoryRoutes);
 app.use(
   API_ROUTES.SUBCATEGORY,
   authMiddleware,
-  requireRole('ADMIN'),
+  requireRole(['ADMIN']),
   requestLogger,
   SubCategoryRoutes,
 );
 app.use(
   API_ROUTES.MINOR_CATEGORY,
   authMiddleware,
-  requireRole('ADMIN'),
+  requireRole(['ADMIN']),
   requestLogger,
   MinorCategoryRoutes,
 );
 app.use(
   API_ROUTES.DEPARTMENT,
   authMiddleware,
-  requireRole('ADMIN'),
+  requireRole(['ADMIN']),
   requestLogger,
   DepartmentRoutes,
 );
-app.use(API_ROUTES.STATUS, authMiddleware, requireRole('ADMIN'), requestLogger, statusRoutes);
-app.use(API_ROUTES.STUDENT, authMiddleware, requireRole('ADMIN'), requestLogger, studentRoutes);
+app.use(API_ROUTES.STATUS, authMiddleware, requireRole(['ADMIN']), requestLogger, statusRoutes);
+app.use(API_ROUTES.STUDENT, authMiddleware, requireRole(['ADMIN']), requestLogger, studentRoutes);
+app.use(
+  API_ROUTES.STUDENT_SEARCH,
+  authMiddleware,
+  requireRole(['ADMIN', 'STUDENT']),
+  requestLogger,
+  studentSearchRoutes,
+);
 
 // エラーログ
 app.use(errorLogger);

@@ -14,6 +14,7 @@ async function main() {
     });
 
     const subNumbers = ['1', '2', '3', '4'];
+    console.log('subCategory seed...');
     for (const sub of subNumbers) {
       const subCategoryName = `${category.categoryName.slice(0, 1)}${sub}中隊`; // 例: 11中隊
       const subCategory = await prisma.subCategory.upsert({
@@ -25,6 +26,7 @@ async function main() {
         },
       });
 
+      console.log('minorCategory seed...');
       for (let i = 1; i <= 3; i++) {
         const minorCategoryName = `${category.categoryName.slice(0, 1)}${sub}${i}小隊`; // 例: 111小隊
         await prisma.minorCategory.upsert({

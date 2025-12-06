@@ -4,7 +4,6 @@ import { HistoryService } from '@/services/historyService';
 export const HistoryController = {
   async createHistory(req: Request, res: Response) {
     try {
-      console.log(req.body);
       await HistoryService.createHistory(req.body);
       res.status(201).json({ message: '追加完了' });
     } catch (err: any) {

@@ -38,7 +38,7 @@ export const StudentController = {
   async searchStudents(req: Request, res: Response) {
     try {
       const students = await StudentService.searchStudents(req.body);
-      res.json({
+      res.status(201).json({
         data: students,
         message: '取得成功',
       });

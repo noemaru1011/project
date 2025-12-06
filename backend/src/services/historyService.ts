@@ -8,7 +8,6 @@ export const HistoryService = {
     startTime: Date;
     endTime?: Date | null;
   }) {
-    // 履歴テーブルに登録
     await HistoryRepository.createHistory(data);
   },
 };

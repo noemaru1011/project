@@ -33,7 +33,12 @@ export const validation = z.object({
       message: "正しい日時を入力してください。",
     }),
 
-  endTime: z.string().optional(),
+  endTime: z
+    .string()
+    .refine((val) => !isNaN(Date.parse(val)), {
+      message: "正しい日時を入力してください。",
+    })
+    .optional(),
 });
 
 export type HistoryForm = z.infer<typeof validation>;

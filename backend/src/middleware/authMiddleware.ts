@@ -24,16 +24,18 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
 };
 
 // 権限チェック
-export const requireRole = (role: 'ADMIN' | 'STUDENT') => {
+export const requireRole = (roles: Array<'ADMIN' | 'STUDENT'>) => {
   return (req: Request, res: Response, next: NextFunction) => {
     const user = (req as any).user;
-    if (!user)
+
+    if (!user) {
       return res.status(401).json({
         code: 'TOKEN_EXPIRED',
         message: 'ログインしてください',
       });
+    }
 
-    if (user.role !== role) {
+    if (!roles.includes(user.role)) {
       return res.status(403).json({
         code: 'FORBIDDEN',
         message: '権限がありません',
