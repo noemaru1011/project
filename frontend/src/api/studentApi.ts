@@ -1,5 +1,5 @@
 import { Api } from './api';
-import type { StudentForm } from '@shared/schemas/student';
+import type { StudentInput } from '@/schemas/student.Input';
 import type { Student } from '@/interface/student';
 import type { StudentDetail } from '@/interface/student';
 import { API_ROUTES } from '@/constants/apiRoutes';
@@ -7,13 +7,13 @@ import { API_ROUTES } from '@/constants/apiRoutes';
 export const StudentApi = {
   index: () => Api<Student[]>(API_ROUTES.STUDENT.INDEX, { method: 'GET' }),
 
-  create: (data: StudentForm) =>
+  create: (data: StudentInput) =>
     Api<void>(API_ROUTES.STUDENT.CREATE, {
       method: 'POST',
       body: JSON.stringify(data),
     }),
 
-  update: (id: string, data: StudentForm) =>
+  update: (id: string, data: StudentInput) =>
     Api<void>(API_ROUTES.STUDENT.UPDATE(id), {
       method: 'PUT',
       body: JSON.stringify(data),

@@ -14,9 +14,10 @@ import { departmentOptions } from '@/constants/departmentOptions';
 import { ROUTES } from '@/constants/routes';
 import { useUpdate } from '@/hooks/useUpdate';
 import { useView } from '@/hooks/useView';
-import { validation } from '@shared/schemas/student';
+import { studentInputSchema } from '@/schemas/student.Input';
 import { StudentApi } from '@/api/studentApi';
-import type { StudentForm } from '@shared/schemas/student';
+import type { StudentInput } from '@/schemas/student.Input';
+
 import { handleApiError } from '@/utils/handleApiError';
 import type { StudentDetail } from '@/interface/student';
 import { Mail, User, Library, Group } from 'lucide-react';
@@ -24,7 +25,7 @@ import { Mail, User, Library, Group } from 'lucide-react';
 export const StudentUpdate = () => {
   const navigate = useNavigate();
   const { studentId } = useParams<{ studentId: string }>();
-  const { update, loading } = useUpdate<StudentForm>(StudentApi.update);
+  const { update, loading } = useUpdate<StudentInput>(StudentApi.update);
   const { view } = useView<StudentDetail>(StudentApi.view);
 
   const {
@@ -34,7 +35,7 @@ export const StudentUpdate = () => {
     reset,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(validation),
+    resolver: zodResolver(studentInputSchema),
   });
 
   // 初期値をロード
@@ -45,10 +46,10 @@ export const StudentUpdate = () => {
         const data: StudentDetail = await view(studentId);
         reset({
           studentName: data.studentName,
+          grade: String(data.grade),
+          minorCategoryId: String(data.minorCategoryId),
+          departmentId: String(data.departmentId),
           email: data.email,
-          grade: data.grade,
-          minorCategoryId: data.minorCategoryId,
-          departmentId: data.departmentId,
         });
       } catch (err: any) {
         handleApiError(err, navigate);
@@ -58,7 +59,7 @@ export const StudentUpdate = () => {
   }, []);
 
   // 更新処理
-  const onSubmit = async (data: StudentForm) => {
+  const onSubmit = async (data: StudentInput) => {
     try {
       if (!studentId) return;
       const res = await update(studentId, data);
@@ -92,8 +93,8 @@ export const StudentUpdate = () => {
                   label="学年"
                   name={field.name}
                   options={gradeOptions}
-                  value={field.value !== undefined ? String(field.value) : undefined}
-                  onChange={(val) => field.onChange(Number(val))}
+                  value={field.value !== undefined ? String(field.value) : ''}
+                  onChange={field.onChange}
                   error={fieldState.error?.message}
                 />
               )}

@@ -25,7 +25,6 @@ export const StudentIndex = () => {
   return (
     <div className="p-4 mx-auto max-w-4xl">
       <h2 className="text-2xl font-bold text-gray-800 text-center">学生一覧</h2>
-      {/* 検索フォームを配置 */}
       <StudentSearchPanel onSearch={search} />
       <Loading loading={loading}>
         <Table

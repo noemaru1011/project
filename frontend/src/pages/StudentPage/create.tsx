@@ -8,19 +8,19 @@ import { Button } from '@/components/atoms/Button';
 import { gradeOptions } from '@/constants/gradeOptions';
 import { minorCategoryOptions } from '@/constants/minorCategoryOptions';
 import { departmentOptions } from '@/constants/departmentOptions';
-import { validation } from '@shared/schemas/student';
+import { studentInputSchema } from '@/schemas/student.Input';
 import { useCreate } from '@/hooks/useCreate';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loading } from '@/components/atoms/Loading';
 import { ROUTES } from '@/constants/routes';
 import { StudentApi } from '@/api/studentApi';
-import type { StudentForm } from '@shared/schemas/student';
+import type { StudentInput } from '@/schemas/student.Input';
 import { handleApiError } from '@/utils/handleApiError';
 import { Mail, User, Library, Group } from 'lucide-react';
 
 export const StudentCreate = () => {
   const navigate = useNavigate();
-  const { create, loading } = useCreate<StudentForm>(StudentApi.create);
+  const { create, loading } = useCreate<StudentInput>(StudentApi.create);
 
   const {
     register,
@@ -28,10 +28,10 @@ export const StudentCreate = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(validation),
+    resolver: zodResolver(studentInputSchema),
   });
 
-  const onSubmit = async (data: StudentForm) => {
+  const onSubmit = async (data: StudentInput) => {
     try {
       const res = await create(data);
       toast.success(res.message);
@@ -64,8 +64,8 @@ export const StudentCreate = () => {
                   label="学年"
                   name={field.name}
                   options={gradeOptions}
-                  value={field.value !== undefined ? String(field.value) : undefined}
-                  onChange={(val) => field.onChange(Number(val))}
+                  value={field.value !== undefined ? String(field.value) : ''}
+                  onChange={field.onChange}
                   error={fieldState.error?.message}
                 />
               )}
