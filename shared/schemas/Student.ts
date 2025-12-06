@@ -57,11 +57,3 @@ export const validation = z.object({
 });
 
 export type StudentForm = z.infer<typeof validation>;
-
-export const queryValidation = z.object({
-  categories: z.array(z.number().positive()).optional(),
-  subCategories: z.array(z.number().positive()).optional(),
-  minorCategories: z.array(z.number().positive()).optional(),
-  departmentIds: z.array(z.number().positive()).optional(),
-  grades: z.array(z.number().int().min(1).max(4)).optional(),
-});
