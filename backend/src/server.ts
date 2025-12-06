@@ -38,6 +38,7 @@ app.use(API_ROUTES.LOGOUT, logoutRoutes);
 // 認証必須ルートに logger を適用
 app.use(API_ROUTES.PASSWORD, authMiddleware, requestLogger, passwordRoutes);
 
+console.log('Registering history routes at:', API_ROUTES.HISTORY);
 app.use(API_ROUTES.HISTORY, authMiddleware, requireRole('ADMIN'), requestLogger, historyRoutes);
 
 app.use(API_ROUTES.CATEGORY, authMiddleware, requireRole('ADMIN'), requestLogger, categoryRoutes);
