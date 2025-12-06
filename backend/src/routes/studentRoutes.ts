@@ -5,8 +5,6 @@ import { StudentController } from '@/controllers/studentController';
 
 const router = Router();
 
-router.get('/', StudentController.getAllStudents);
-
 router.get('/:id', StudentController.getStudent);
 
 router.post('/', validateBody(validation), StudentController.createStudent);

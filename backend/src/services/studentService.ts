@@ -4,19 +4,6 @@ import { generatePassword } from '@/utils/generatePassword';
 import { sendAccountEmail } from '@/utils/sendAccountEmail';
 
 export const StudentService = {
-  async getAllStudents() {
-    const students = await StudentRepository.findAll();
-
-    const result = students.map((s) => ({
-      studentId: s.studentId,
-      studentName: s.studentName,
-      grade: s.grade,
-      minorCategoryName: s.minorCategory?.minorCategoryName ?? null,
-    }));
-
-    return result;
-  },
-
   async getStudent(studentId: string) {
     const student = await StudentRepository.find(studentId);
     return student;

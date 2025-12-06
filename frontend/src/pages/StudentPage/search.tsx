@@ -148,7 +148,7 @@ export const StudentSearchPanel = ({ onSearch }: Props) => {
         <div className="flex justify-center gap-4 mt-4">
           {pathname == ROUTES.STUDENT.INDEX && (
             <Button
-              type="submit"
+              type="button"
               variant="Create"
               className="w-64 mx-auto py-2"
               onClick={() => navigate(ROUTES.STUDENT.CREATE)}

@@ -2,25 +2,6 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const StudentRepository = {
-  async findAll() {
-    return await prisma.student.findMany({
-      where: {
-        deleteFlag: false,
-      },
-      select: {
-        studentId: true,
-        studentName: true,
-        grade: true,
-        minorCategory: {
-          select: {
-            minorCategoryName: true,
-          },
-        },
-      },
-      orderBy: [{ minorCategory: { minorCategoryName: 'asc' } }, { grade: 'desc' }],
-    });
-  },
-
   async find(studentId: string) {
     return await prisma.student.findFirst({
       where: {

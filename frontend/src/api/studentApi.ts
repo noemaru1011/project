@@ -1,12 +1,9 @@
 import { Api } from './api';
 import type { StudentForm } from '@shared/schemas/student';
-import type { Student } from '@/interface/student';
 import type { StudentDetail } from '@/interface/student';
 import { API_ROUTES } from '@/constants/apiRoutes';
 
 export const StudentApi = {
-  index: () => Api<Student[]>(API_ROUTES.STUDENT.INDEX, { method: 'GET' }),
-
   create: (data: StudentForm) =>
     Api<void>(API_ROUTES.STUDENT.CREATE, {
       method: 'POST',

@@ -2,18 +2,6 @@ import { Request, Response } from 'express';
 import { StudentService } from '@/services/studentService';
 
 export const StudentController = {
-  async getAllStudents(req: Request, res: Response) {
-    try {
-      const students = await StudentService.getAllStudents();
-      res.json({
-        data: students,
-        message: '取得成功',
-      });
-    } catch (error) {
-      res.status(500).json({ message: '予期せぬエラーが発生しました' });
-    }
-  },
-
   async getStudent(req: Request, res: Response) {
     try {
       const { id } = req.params;
