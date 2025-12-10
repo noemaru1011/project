@@ -10,7 +10,7 @@ export interface StudentDetail extends Student {
   departmentId: number;
 }
 
-export interface StudentForSearch {
+export interface StudentResult {
   studentId: string;
   studentName: string;
   grade: number;

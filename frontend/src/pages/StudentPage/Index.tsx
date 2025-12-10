@@ -2,7 +2,7 @@ import { Table } from '@/components/molecules/Table';
 import { Loading } from '@/components/atoms/Loading';
 import { StudentLabels } from '@/constants/studentLabels';
 import { StudentSearchApi } from '@/api/studentSearchApi';
-import type { StudentForSearch } from '@/interface/student';
+import type { StudentResult } from '@/interface/student';
 import type { StudentQuery } from '@/interface/studentQuery';
 import { ROUTES } from '@/constants/routes';
 import { useSearch } from '@/hooks/useSearch';
@@ -10,9 +10,7 @@ import type { Action } from '@/components/molecules/TableRowActions';
 import { StudentSearchPanel } from '@/pages/studentPage/search';
 
 export const StudentIndex = () => {
-  const { data, loading, search } = useSearch<StudentForSearch, StudentQuery>(
-    StudentSearchApi.search,
-  );
+  const { data, loading, search } = useSearch<StudentResult, StudentQuery>(StudentSearchApi.search);
 
   const actions: Action[] = ['Update', 'Read', 'Delete'];
 

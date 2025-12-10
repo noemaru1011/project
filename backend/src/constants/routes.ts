@@ -7,6 +7,7 @@ export const API_ROUTES = {
   DEPARTMENT: '/api/departments',
   STATUS: '/api/statuses',
   HISTORY: '/api/histories',
+  HISTORY_SEARCH: '/api/histories/search',
   PASSWORD: '/api/password',
   LOGIN: '/api/login',
   LOGOUT: '/api/logout',

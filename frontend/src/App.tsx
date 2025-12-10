@@ -9,7 +9,7 @@ import { Login } from '@/pages/auth/login';
 import { HomePage } from '@/pages/home/homePage';
 import { CategoryIndex } from '@/pages/categoryPage';
 import { SubCategoryIndex } from '@/pages/subCategoryPage';
-import { MinorCategoryIndex } from '@/pages/mInorCategoryPage';
+import { MinorCategoryIndex } from '@/pages/minorCategoryPage';
 import { DepartmentIndex } from '@/pages/departmentPage';
 import { StatusIndex } from '@/pages/statusPage';
 import { StudentIndex } from '@/pages/studentPage';
@@ -18,6 +18,7 @@ import { StudentUpdate } from '@/pages/studentPage/update';
 import { StudentView } from '@/pages/studentPage/view';
 import { StudentDelete } from './pages/studentPage/delete';
 import { ChangePassword } from '@/pages/passwordPage/update';
+import { HistoryIndex } from '@/pages/historyPage';
 import { HistoryCreate } from '@/pages/historyPage/create';
 
 import { NotFound } from '@/pages/errorPage/notFound';
@@ -49,6 +50,14 @@ const AppRoutes = () => (
         element={
           <ProtectedContent allowedRoles={['ADMIN', 'STUDENT']}>
             <HistoryCreate />
+          </ProtectedContent>
+        }
+      />
+      <Route
+        path={ROUTES.HISTORY.INDEX}
+        element={
+          <ProtectedContent allowedRoles={['ADMIN', 'STUDENT']}>
+            <HistoryIndex />
           </ProtectedContent>
         }
       />

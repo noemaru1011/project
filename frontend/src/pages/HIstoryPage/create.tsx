@@ -10,14 +10,14 @@ import { Table } from '@/components/molecules/Table';
 import { RadioGroup } from '@/components/molecules/RadioGroup';
 import { Loading } from '@/components/atoms/Loading';
 import { statusOptions } from '@/constants/statusOptions';
-import { HistoryLabels } from '@/constants/historyLabels';
+import { HistorySearchLabels } from '@/constants/historyLabels';
 import { StudentSearchApi } from '@/api/studentSearchApi';
 import { HistoryApi } from '@/api/historyApi';
 import { useSearch } from '@/hooks/useSearch';
 import { useCreate } from '@/hooks/useCreate';
 import type { StudentQuery } from '@/interface/studentQuery';
 import { StudentSearchPanel } from '@/pages/studentPage/search';
-import type { StudentForSearch } from '@/interface/student';
+import type { StudentResult } from '@/interface/student';
 import { validation } from '@shared/schemas/history';
 import type { HistoryForm } from '@shared/schemas/history';
 import { handleApiError } from '@/utils/handleApiError';
@@ -29,7 +29,7 @@ export const HistoryCreate = () => {
     data,
     loading: searchLoading,
     search,
-  } = useSearch<StudentForSearch, StudentQuery>(StudentSearchApi.search);
+  } = useSearch<StudentResult, StudentQuery>(StudentSearchApi.search);
   const {
     register,
     control,
@@ -67,7 +67,7 @@ export const HistoryCreate = () => {
               <p className="text-red-500 text-sm ml-4">{errors.studentIds.message}</p>
             )}
             <Table
-              labels={HistoryLabels}
+              labels={HistorySearchLabels}
               data={data}
               keyField="studentId"
               showCheckbox={true}

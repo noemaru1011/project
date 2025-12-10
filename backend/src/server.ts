@@ -12,6 +12,7 @@ import statusRoutes from '@/routes/statusRoutes';
 import studentSearchRoutes from '@/routes/studentSearchRoutes';
 import studentRoutes from '@/routes/studentRoutes';
 import historyRoutes from '@/routes/historyRoutes';
+import historySearchRoutes from '@/routes/historySearchRoutes';
 import passwordRoutes from '@/routes/passwordRoutes';
 import { requestLogger } from '@/middleware/requestLogger';
 import { errorLogger } from '@/middleware/errorLogger';
@@ -72,6 +73,13 @@ app.use(
   requireRole(['ADMIN', 'STUDENT']),
   requestLogger,
   studentSearchRoutes,
+);
+app.use(
+  API_ROUTES.HISTORY_SEARCH,
+  authMiddleware,
+  requireRole(['ADMIN', 'STUDENT']),
+  requestLogger,
+  historySearchRoutes,
 );
 
 // エラーログ

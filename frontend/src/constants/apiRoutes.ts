@@ -28,6 +28,7 @@ export const API_ROUTES = {
   HISTORY: {
     //get
     INDEX: '/api/histories',
+    SEARCH: '/api/histories/search',
     //post
     CREATE: '/api/histories',
     //put
