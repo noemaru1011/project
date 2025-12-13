@@ -8,6 +8,7 @@ export interface Student {
 export interface StudentDetail extends Student {
   email: string;
   departmentId: number;
+  updatedAt: string;
 }
 
 export interface StudentResult {

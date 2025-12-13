@@ -1,5 +1,5 @@
 import { Api } from './api';
-import type { StudentForm } from '@shared/schemas/student';
+import type { StudentForm, StudentUpdateForm } from '@shared/schemas/student';
 import type { StudentDetail } from '@/interface/student';
 import { API_ROUTES } from '@/constants/apiRoutes';
 
@@ -10,7 +10,7 @@ export const StudentApi = {
       body: JSON.stringify(data),
     }),
 
-  update: (id: string, data: StudentForm) =>
+  update: (id: string, data: StudentUpdateForm) =>
     Api<void>(API_ROUTES.STUDENT.UPDATE(id), {
       method: 'PUT',
       body: JSON.stringify(data),

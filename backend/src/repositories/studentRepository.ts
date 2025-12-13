@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { AppError } from '@/errors/AppError';
 const prisma = new PrismaClient();
 
 export const StudentRepository = {
@@ -16,10 +17,10 @@ export const StudentRepository = {
         departmentId: true,
         email: true,
         minorCategoryId: true,
+        updatedAt: true,
       },
     });
   },
-
   async createStudent(data: {
     studentName: string;
     email: string;
@@ -28,7 +29,7 @@ export const StudentRepository = {
     grade: number;
     password: string;
   }) {
-    prisma.$transaction(async (tx) => {
+    return prisma.$transaction(async (tx) => {
       const student = await tx.student.create({
         data: {
           studentName: data.studentName,
@@ -54,12 +55,14 @@ export const StudentRepository = {
       departmentId: number;
       minorCategoryId: number;
       grade: number;
+      updatedAt: Date;
     },
     studentId: string,
   ) {
-    await prisma.student.update({
+    const result = await prisma.student.updateMany({
       where: {
         studentId,
+        updatedAt: data.updatedAt, // ★ 楽観ロック条件
       },
       data: {
         studentName: data.studentName,
@@ -68,6 +71,14 @@ export const StudentRepository = {
         grade: data.grade,
       },
     });
+
+    if (result.count === 0) {
+      throw new AppError(
+        'CONFLICT',
+        '他のユーザーによって更新されています。再読み込みしてください。',
+        409,
+      );
+    }
   },
 
   async deleteStudent(studentId: string) {

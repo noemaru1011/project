@@ -8,7 +8,14 @@ export type ButtonVariant =
   | 'Back'
   | 'Home';
 
-export type InputType = 'text' | 'number' | 'email' | 'password' | 'url' | 'datetime-local';
+export type InputType =
+  | 'text'
+  | 'number'
+  | 'email'
+  | 'password'
+  | 'url'
+  | 'datetime-local'
+  | 'hidden';
 
 export interface Option {
   value: string;

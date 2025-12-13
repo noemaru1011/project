@@ -14,6 +14,6 @@ export interface HistoryResult {
   departmentName: string;
   statusName: string;
   other: string;
-  startTime: string; // ← フォーマット済み
+  startTime: string;
   endTime: string | null;
 }

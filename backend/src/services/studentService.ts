@@ -1,13 +1,14 @@
 import bcrypt from 'bcrypt';
+import { Prisma } from '@prisma/client';
 import { StudentRepository } from '@/repositories/studentRepository';
 import { MinorCategoryRepository } from '@/repositories/minorCategoryRepository';
 import { generatePassword } from '@/utils/generatePassword';
 import { sendAccountEmail } from '@/utils/sendAccountEmail';
+import { AppError } from '@/errors/AppError';
 
 export const StudentService = {
   async getStudent(studentId: string) {
-    const student = await StudentRepository.find(studentId);
-    return student;
+    return await StudentRepository.find(studentId);
   },
 
   async createStudent(data: {
@@ -17,15 +18,28 @@ export const StudentService = {
     minorCategoryId: number;
     grade: number;
   }) {
-    const plainPassword = generatePassword();
-    const hashedPassword = await bcrypt.hash(plainPassword, 10);
-    // 学生テーブルに登録
-    await StudentRepository.createStudent({
-      ...data,
-      password: hashedPassword,
-    });
-    // メール送信
-    await sendAccountEmail(data.email, plainPassword);
+    try {
+      const plainPassword = generatePassword();
+      const hashedPassword = await bcrypt.hash(plainPassword, 10);
+
+      await StudentRepository.createStudent({
+        ...data,
+        password: hashedPassword,
+      });
+
+      await sendAccountEmail(data.email, plainPassword);
+    } catch (err) {
+      if (err instanceof Prisma.PrismaClientKnownRequestError) {
+        if (
+          err.code === 'P2002' &&
+          Array.isArray(err.meta?.target) &&
+          err.meta.target.includes('email')
+        ) {
+          throw new AppError('EMAIL_DUPLICATE', 'このメールアドレスはすでに登録されています', 400);
+        }
+      }
+      throw err;
+    }
   },
 
   async updateStudent(
@@ -34,9 +48,11 @@ export const StudentService = {
       departmentId: number;
       minorCategoryId: number;
       grade: number;
+      updatedAt: Date;
     },
     studentId: string,
   ) {
+    console.log(data, studentId);
     await StudentRepository.updateStudent(data, studentId);
   },
 
@@ -59,14 +75,12 @@ export const StudentService = {
       grade: data.grade,
     });
 
-    const result = students.map((s) => ({
+    return students.map((s) => ({
       studentId: s.studentId,
       studentName: s.studentName,
       grade: s.grade,
       departmentName: s.department?.departmentName ?? null,
       minorCategoryName: s.minorCategory?.minorCategoryName ?? null,
     }));
-
-    return result;
   },
 };

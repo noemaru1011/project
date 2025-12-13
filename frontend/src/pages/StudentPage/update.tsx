@@ -14,9 +14,9 @@ import { departmentOptions } from '@/constants/departmentOptions';
 import { ROUTES } from '@/constants/routes';
 import { useUpdate } from '@/hooks/useUpdate';
 import { useView } from '@/hooks/useView';
-import { validation } from '@shared/schemas/student';
+import { updateValidation } from '@shared/schemas/student';
 import { StudentApi } from '@/api/studentApi';
-import type { StudentForm } from '@shared/schemas/student';
+import type { StudentUpdateForm } from '@shared/schemas/student';
 import { handleApiError } from '@/utils/handleApiError';
 import type { StudentDetail } from '@/interface/student';
 import { Mail, User, Library, Group } from 'lucide-react';
@@ -24,7 +24,7 @@ import { Mail, User, Library, Group } from 'lucide-react';
 export const StudentUpdate = () => {
   const navigate = useNavigate();
   const { studentId } = useParams<{ studentId: string }>();
-  const { update, loading } = useUpdate<StudentForm>(StudentApi.update);
+  const { update, loading } = useUpdate<StudentUpdateForm>(StudentApi.update);
   const { view } = useView<StudentDetail>(StudentApi.view);
 
   const {
@@ -34,7 +34,7 @@ export const StudentUpdate = () => {
     reset,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(validation),
+    resolver: zodResolver(updateValidation),
   });
 
   // 初期値をロード
@@ -49,6 +49,7 @@ export const StudentUpdate = () => {
           grade: data.grade,
           minorCategoryId: data.minorCategoryId,
           departmentId: data.departmentId,
+          updatedAt: data.updatedAt,
         });
       } catch (err: any) {
         handleApiError(err, navigate);
@@ -58,7 +59,7 @@ export const StudentUpdate = () => {
   }, []);
 
   // 更新処理
-  const onSubmit = async (data: StudentForm) => {
+  const onSubmit = async (data: StudentUpdateForm) => {
     try {
       if (!studentId) return;
       const res = await update(studentId, data);
@@ -125,6 +126,13 @@ export const StudentUpdate = () => {
               required
               error={errors.departmentId?.message}
               {...register('departmentId')}
+            />
+
+            <Input
+              id="updatedAt"
+              type="hidden"
+              error={errors.updatedAt?.message}
+              {...register('updatedAt')}
             />
 
             <div className="flex justify-center gap-4 mt-4">
