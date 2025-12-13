@@ -33,11 +33,12 @@ export const HistoryService = {
 
   async createHistory(data: {
     studentId: string[];
-    StatusId: number;
+    statusId: number;
     other: string;
     startTime: Date;
     endTime?: Date | null;
   }) {
+    console.log(data);
     await HistoryRepository.createHistory(data);
   },
 };

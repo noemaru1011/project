@@ -60,22 +60,21 @@ export const HistoryRepository = {
 
   async createHistory(data: {
     studentId: string[];
-    StatusId: number;
+    statusId: number;
     other: string;
     startTime: Date;
     endTime?: Date | null;
   }) {
     const records = data.studentId.map((id) => ({
       studentId: id,
-      statusId: data.StatusId,
+      statusId: data.statusId,
       other: data.other,
       startTime: data.startTime,
       endTime: data.endTime ?? null,
       validFlag: true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
     }));
 
+    console.log(records);
     return prisma.history.createMany({
       data: records,
     });

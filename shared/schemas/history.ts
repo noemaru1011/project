@@ -3,41 +3,36 @@ import { z } from "zod";
 export const validation = z.object({
   studentIds: z.array(z.string()).min(1, "学生を1人以上選択してください"),
 
-  StatusId: z.preprocess(
+  statusId: z.preprocess(
     (val) => {
-      if (val === undefined || val === null || val === "") {
-        return undefined;
-      }
+      if (val === undefined || val === null || val === "") return undefined;
       const num = Number(val);
       return isNaN(num) ? undefined : num;
     },
     z
-      .any()
-      .refine((v) => v !== undefined, {
+      .number({
         message: "状況は必須項目です。",
       })
-      .refine((v) => typeof v === "number", {
-        message: "状況は数値で指定してください。",
-      })
-      .refine((v) => [1, 2, 3, 4, 5, 6, 7].includes(v as number), {
-        message: "状況は1〜4の範囲で指定してください。",
+      .int()
+      .refine((v) => [1, 2, 3, 4, 5, 6, 7].includes(v), {
+        message: "状況は1〜7の範囲で指定してください。",
       })
   ),
 
-  other: z.string().max(200, "備考は200文字以内で入力してください。"),
+  other: z.string().max(50, "備考は50文字以内で入力してください。"),
 
-  startTime: z
-    .string()
-    .nonempty("有効開始日は必須です。")
-    .refine((val) => !isNaN(Date.parse(val)), {
-      message: "正しい日時を入力してください。",
-    }),
+  startTime: z.preprocess(
+    (val) => new Date(val as string),
+    z.date({
+      message: "有効開始日は必須です。",
+    })
+  ),
 
   endTime: z
-    .string()
-    .refine((val) => !isNaN(Date.parse(val)), {
-      message: "正しい日時を入力してください。",
-    })
+    .preprocess(
+      (val) => (val ? new Date(val as string) : null),
+      z.date({ message: "正しい日時を入力してください。" }).nullable()
+    )
     .optional(),
 });
 

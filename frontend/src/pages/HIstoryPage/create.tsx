@@ -48,6 +48,7 @@ export const HistoryCreate = () => {
   const onSubmit = async (data: HistoryForm) => {
     try {
       data.studentIds = selectedStudents.map((s) => s.id);
+      console.log(data);
       const res = await create(data);
       toast.success(res.message);
     } catch (err: any) {
@@ -94,7 +95,7 @@ export const HistoryCreate = () => {
         <Loading loading={createLoading}>
           <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col gap-4">
             <Controller
-              name="StatusId"
+              name="statusId"
               control={control}
               render={({ field, fieldState }) => (
                 <RadioGroup
