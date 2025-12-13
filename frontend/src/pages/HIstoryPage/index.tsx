@@ -30,7 +30,7 @@ export const HistoryIndex = () => {
         <Table
           labels={HistoryResultLabels}
           data={data}
-          keyField="studentId"
+          keyField="historyId"
           actions={actions}
           routeMap={routeMap}
         />

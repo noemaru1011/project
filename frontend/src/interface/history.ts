@@ -7,7 +7,7 @@ export interface History {
 }
 
 export interface HistoryResult {
-  HistoryId: number;
+  historyId: number;
   studentName: string;
   grade: number;
   minorCategoryName: string;

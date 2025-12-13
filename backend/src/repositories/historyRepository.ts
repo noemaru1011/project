@@ -59,13 +59,13 @@ export const HistoryRepository = {
   },
 
   async createHistory(data: {
-    studentId: string[];
+    studentIds: string[];
     statusId: number;
     other: string;
     startTime: Date;
     endTime?: Date | null;
   }) {
-    const records = data.studentId.map((id) => ({
+    const records = data.studentIds.map((id) => ({
       studentId: id,
       statusId: data.statusId,
       other: data.other,

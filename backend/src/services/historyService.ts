@@ -32,7 +32,7 @@ export const HistoryService = {
   },
 
   async createHistory(data: {
-    studentId: string[];
+    studentIds: string[];
     statusId: number;
     other: string;
     startTime: Date;
