@@ -1,7 +1,7 @@
 import { LogoutApi } from '@/api/logoutApi';
 import { useLoadingCounter } from './useLoading';
 
-//pageがないためuseCrudではなくuseLogoutを作成
+//pageがないためuseLogoutを作成
 export function useLogout() {
   const { loading, start, end } = useLoadingCounter();
 

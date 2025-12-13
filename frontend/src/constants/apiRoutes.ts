@@ -15,9 +15,9 @@ export const API_ROUTES = {
   STUDENT: {
     //get
     INDEX: '/api/students',
-    SEARCH: '/api/students/search',
     //post
     CREATE: '/api/students',
+    SEARCH: '/api/students/search',
     //put
     UPDATE: (id: string) => `/api/students/${id}`,
     //get;id
@@ -28,9 +28,9 @@ export const API_ROUTES = {
   HISTORY: {
     //get
     INDEX: '/api/histories',
-    SEARCH: '/api/histories/search',
     //post
     CREATE: '/api/histories',
+    SEARCH: '/api/histories/search',
     //put
     UPDATE: (id: string) => `/api/histories/${id}`,
     //get;id

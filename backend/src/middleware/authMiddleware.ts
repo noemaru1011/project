@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
+//パスワード変更時にトークン消すといいかもね
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies.token;
 
@@ -13,6 +14,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
 
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET!);
+    //toDO anyをやめる
     (req as any).user = payload; // { id, role }
     next();
   } catch {

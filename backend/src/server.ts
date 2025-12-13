@@ -21,7 +21,7 @@ import { authMiddleware, requireRole } from '@/middleware/authMiddleware';
 
 const app = express();
 
-// 基本ミドルウェア
+// オリジンの指定と認証を扱う
 app.use(
   cors({
     origin: process.env.FRONT_URL,

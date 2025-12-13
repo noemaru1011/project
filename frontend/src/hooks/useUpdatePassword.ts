@@ -3,7 +3,7 @@ import type { PasswordForm } from '@shared/schemas/password';
 import { useLoadingCounter } from './useLoading';
 import { useLoginContext } from '@/hooks/LoginContext';
 
-//IDが不要なためuseCrudではなくusePasswordを作成
+//IDが不要なためusePasswordを作成
 export function usePassword() {
   const { loading, start, end } = useLoadingCounter();
   const { setPasswordUpdateRequired } = useLoginContext();

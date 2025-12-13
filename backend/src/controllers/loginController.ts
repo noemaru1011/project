@@ -16,7 +16,7 @@ export const LoginController = {
         maxAge: 3600 * 1000,
       });
 
-      // UX 用 role cookie
+      // UXのためだけの role cookie、APIの認証には使わないです
       res.cookie('role', result.role, {
         httpOnly: false,
         secure: process.env.NODE_ENV === 'production',

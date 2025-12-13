@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Input } from '@/components/atoms/Input';
 import { Button } from '@/components/atoms/Button';
 import { validation } from '@shared/schemas/password';
-import { usePassword } from '@/hooks/usePassword';
+import { usePassword } from '@/hooks/useUpdatePassword';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ROUTES } from '@/constants/routes';
 import { Loading } from '@/components/atoms/Loading';
