@@ -60,11 +60,11 @@ export type StudentForm = z.infer<typeof validation>;
 
 export const updateValidation = validation.extend({
   updatedAt: z
-    .string()
-    .nonempty("有効開始日は必須です。")
-    .refine((val) => !isNaN(Date.parse(val)), {
-      message: "正しい日時を入力してください。",
-    }),
+    .preprocess(
+      (val) => (val ? new Date(val as string) : null),
+      z.date({ message: "正しい日時を入力してください。" }).nullable()
+    )
+    .optional(),
 });
 
 export type StudentUpdateForm = z.infer<typeof updateValidation>;
