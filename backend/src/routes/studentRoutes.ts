@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { validateBody } from '@/middleware/validateMiddleware';
-import { validation } from '@shared/schemas/student';
+import { validation, updateValidation } from '@shared/schemas/student';
 import { StudentController } from '@/controllers/studentController';
 
 const router = Router();
@@ -9,7 +9,7 @@ router.get('/:id', StudentController.getStudent);
 
 router.post('/', validateBody(validation), StudentController.createStudent);
 
-router.put('/:id', validateBody(validation), StudentController.updateStudent);
+router.put('/:id', validateBody(updateValidation), StudentController.updateStudent);
 
 router.delete('/:id', StudentController.deleteStudet);
 
