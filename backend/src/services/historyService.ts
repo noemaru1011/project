@@ -1,6 +1,6 @@
 import { StudentRepository } from '@/repositories/studentRepository';
 import { HistoryRepository } from '@/repositories/historyRepository';
-import { formatDateTime } from '@/utils/formatDatetime';
+import { FormatDateTime } from '@/utils/formatDateTime';
 
 export const HistoryService = {
   async searchHistoies(data: {
@@ -19,14 +19,14 @@ export const HistoryService = {
     });
 
     return histories.map((h) => ({
-      studentId: h.student.studentId,
+      historyId: h.historyId,
       studentName: h.student.studentName,
       grade: h.student.grade,
       departmentName: h.student.department?.departmentName ?? null,
       minorCategoryName: h.student.minorCategory?.minorCategoryName ?? null,
       other: h.other,
-      startTime: formatDateTime(h.startTime),
-      endTime: formatDateTime(h.endTime),
+      startTime: FormatDateTime(h.startTime),
+      endTime: FormatDateTime(h.endTime),
     }));
   },
 

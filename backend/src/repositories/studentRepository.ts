@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const StudentRepository = {
+  //学生1件取得
   async find(studentId: string) {
     return await prisma.student.findFirst({
       where: {
@@ -35,8 +36,6 @@ export const StudentRepository = {
           departmentId: data.departmentId,
           minorCategoryId: data.minorCategoryId,
           grade: data.grade,
-          createdAt: new Date(),
-          updatedAt: new Date(),
         },
       });
 
@@ -44,8 +43,6 @@ export const StudentRepository = {
         data: {
           studentId: student.studentId,
           password: data.password,
-          createdAt: new Date(),
-          updatedAt: new Date(),
         },
       });
     });
@@ -69,7 +66,6 @@ export const StudentRepository = {
         departmentId: data.departmentId,
         minorCategoryId: data.minorCategoryId,
         grade: data.grade,
-        updatedAt: new Date(),
       },
     });
   },
@@ -82,7 +78,6 @@ export const StudentRepository = {
       },
       data: {
         deleteFlag: true,
-        updatedAt: new Date(),
       },
     });
   },
@@ -134,39 +129,5 @@ export const StudentRepository = {
       },
       orderBy: [{ minorCategory: { minorCategoryName: 'asc' } }, { grade: 'desc' }],
     });
-  },
-
-  async resolveMinorCategoryIds(data: {
-    minorCategoryId?: number[];
-    subCategoryId?: number[];
-    categoryId?: number[];
-  }): Promise<number[]> {
-    let ids: number[] = [];
-
-    if (data.categoryId?.length) {
-      const mcs = await prisma.minorCategory.findMany({
-        where: {
-          subCategory: { categoryId: { in: data.categoryId } },
-        },
-        select: { minorCategoryId: true },
-      });
-      ids.push(...mcs.map((m) => m.minorCategoryId));
-    }
-
-    if (data.subCategoryId?.length) {
-      const mcs = await prisma.minorCategory.findMany({
-        where: {
-          subCategoryId: { in: data.subCategoryId },
-        },
-        select: { minorCategoryId: true },
-      });
-      ids.push(...mcs.map((m) => m.minorCategoryId));
-    }
-
-    if (data.minorCategoryId?.length) {
-      ids.push(...data.minorCategoryId);
-    }
-
-    return [...new Set(ids)];
   },
 };

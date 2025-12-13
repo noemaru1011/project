@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import { StudentRepository } from '@/repositories/studentRepository';
+import { MinorCategoryRepository } from '@/repositories/minorCategoryRepository';
 import { generatePassword } from '@/utils/generatePassword';
 import { sendAccountEmail } from '@/utils/sendAccountEmail';
 
@@ -50,7 +51,7 @@ export const StudentService = {
     grade?: number[];
     departmentId?: number[];
   }) {
-    const minorCategoryIds = await StudentRepository.resolveMinorCategoryIds(data);
+    const minorCategoryIds = await MinorCategoryRepository.resolveMinorCategoryIds(data);
 
     const students = await StudentRepository.searchStudents({
       minorCategoryIds,

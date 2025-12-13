@@ -10,7 +10,6 @@ export const PasswordRepository = {
       where: { studentId },
       data: {
         password: hashedPassword,
-        updatedAt: new Date(),
       },
     }),
 };

@@ -14,6 +14,7 @@ export const HistoryIndex = () => {
 
   const actions: Action[] = ['Update', 'Read', 'Delete'];
 
+  //studentのまま
   const routeMap: Record<Action, (id: string) => string> = {
     Update: (id) => ROUTES.STUDENT.UPDATE(id),
     Read: (id) => ROUTES.STUDENT.VIEW(id),

@@ -50,6 +50,7 @@ export const HistoryRepository = {
             },
           },
         },
+        historyId: true,
         other: true,
         startTime: true,
         endTime: true,

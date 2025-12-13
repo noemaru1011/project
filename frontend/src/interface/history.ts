@@ -7,11 +7,12 @@ export interface History {
 }
 
 export interface HistoryResult {
-  studentId: string;
+  HistoryId: number;
   studentName: string;
   grade: number;
   minorCategoryName: string;
   departmentName: string;
+  statusName: string;
   other: string;
   startTime: string; // ← フォーマット済み
   endTime: string | null;
