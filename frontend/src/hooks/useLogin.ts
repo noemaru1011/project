@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import type { ApiResponse } from '@/interface/apiResponse';
 import { ROUTES } from '@/constants/routes';
 import type { LoginResponse } from '@/interface/loginResponse';
-import { useLoginContext } from '@/hooks/useLoginContext';
+import { useLoginContext } from '@/hooks/LoginContext';
 
 export function useLogin() {
   const navigate = useNavigate();

@@ -48,6 +48,7 @@ const AccordionItem: React.FC<
   return (
     <div className="border-b border-gray-200 last:border-b-0">
       <button
+        type="button"
         onClick={onToggle}
         className={`
           w-full flex items-center justify-between px-5 py-4 

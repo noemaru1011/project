@@ -8,7 +8,8 @@ import { useLogout } from '@/hooks/useLogout';
 import type { Option } from '@/interface/ui';
 import { ROUTES } from '@/constants/routes';
 import { handleApiError } from '@/utils/handleApiError';
-import { useLoginContext } from '@/hooks/useLoginContext';
+import { useLoginContext } from '@/hooks/LoginContext';
+import { RoleGuard } from '@/hooks/RoleGuard ';
 
 const HeaderOptions: Option[] = [
   { value: ROUTES.HOME, label: 'メインページへ' },
@@ -49,9 +50,11 @@ export const Header: React.FC = () => {
             passwordUpdateRequired={passwordUpdateRequired}
           />
 
-          <div className="ml-5 mt-2 sm:mt-0">
-            <Menu open={open} onClick={() => setOpen(!open)} />
-          </div>
+          <RoleGuard allowedRoles={['ADMIN']}>
+            <div className="ml-5 mt-2 sm:mt-0">
+              <Menu open={open} onClick={() => setOpen(!open)} />
+            </div>
+          </RoleGuard>
         </div>
       </div>
     </header>

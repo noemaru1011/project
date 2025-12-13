@@ -1,5 +1,6 @@
 import { StudentRepository } from '@/repositories/studentRepository';
 import { HistoryRepository } from '@/repositories/historyRepository';
+import { MinorCategoryRepository } from '@/repositories/minorCategoryRepository';
 import { FormatDateTime } from '@/utils/formatDateTime';
 
 export const HistoryService = {
@@ -10,7 +11,7 @@ export const HistoryService = {
     grade?: number[];
     departmentId?: number[];
   }) {
-    const minorCategoryIds = await StudentRepository.resolveMinorCategoryIds(data);
+    const minorCategoryIds = await MinorCategoryRepository.resolveMinorCategoryIds(data);
 
     const histories = await HistoryRepository.searchHistoies({
       minorCategoryIds,

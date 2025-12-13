@@ -10,7 +10,7 @@ interface Props {
   allowedRoles?: ('ADMIN' | 'STUDENT')[];
 }
 
-const ProtectedContent = ({ children, allowedRoles }: Props) => {
+export const ProtectedContent = ({ children, allowedRoles }: Props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,5 +33,3 @@ const ProtectedContent = ({ children, allowedRoles }: Props) => {
 
   return <>{children}</>;
 };
-
-export default ProtectedContent;
