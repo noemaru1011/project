@@ -38,7 +38,6 @@ export const HistoryService = {
     startTime: Date;
     endTime?: Date | null;
   }) {
-    console.log(data);
     await HistoryRepository.createHistory(data);
   },
 };

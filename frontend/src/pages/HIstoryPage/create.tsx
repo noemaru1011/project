@@ -48,7 +48,6 @@ export const HistoryCreate = () => {
   const onSubmit = async (data: HistoryForm) => {
     try {
       data.studentIds = selectedStudents.map((s) => s.id);
-      console.log(data);
       const res = await create(data);
       toast.success(res.message);
     } catch (err: any) {

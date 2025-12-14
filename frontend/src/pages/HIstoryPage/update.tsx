@@ -81,7 +81,7 @@ export const HistoryUpdate = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* 状況 */}
             <Controller
-              name="StatusId"
+              name="statusId"
               control={control}
               render={({ field, fieldState }) => (
                 <RadioGroup

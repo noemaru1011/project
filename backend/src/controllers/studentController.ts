@@ -45,7 +45,6 @@ export const StudentController = {
       if (!id) {
         return res.status(404).json({ message: '学生が見つかりません' });
       }
-      console.log(req.body);
       await StudentService.updateStudent(req.body, id);
       return res.status(200).json({ message: '更新完了' });
     } catch (err) {

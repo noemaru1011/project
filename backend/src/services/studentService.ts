@@ -52,7 +52,6 @@ export const StudentService = {
     },
     studentId: string,
   ) {
-    console.log(data, studentId);
     await StudentRepository.updateStudent(data, studentId);
   },
 

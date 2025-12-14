@@ -62,7 +62,6 @@ export const StudentUpdate = () => {
   const onSubmit = async (data: StudentUpdateForm) => {
     try {
       if (!studentId) return;
-      console.log('submit data', data);
       const res = await update(studentId, data);
       toast.success(res.message);
       navigate(ROUTES.STUDENT.INDEX);
