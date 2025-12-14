@@ -15,6 +15,24 @@ export const HistoryController = {
     }
   },
 
+  async getHistory(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      if (!id) {
+        return res.status(404).json({ message: APIMESSAGE.NO_HISTORY });
+      }
+
+      const history = await HistoryService.getHistory(id);
+      if (!history) {
+        return res.status(404).json({ message: APIMESSAGE.NO_STUDENT });
+      }
+
+      return res.status(200).json({ data: history, message: APIMESSAGE.FETCH_SUCCESS });
+    } catch (error) {
+      return next(error);
+    }
+  },
+
   async createHistory(req: Request, res: Response, next: NextFunction) {
     try {
       await HistoryService.createHistory(req.body);

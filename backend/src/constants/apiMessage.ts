@@ -5,8 +5,9 @@ export const APIMESSAGE = {
   DELETE_SUCCESS: '削除完了',
   LOGIN_SUCCESS: 'ログインが成功しました',
   LOGOUT_SUCCESS: 'ログアウトしました',
-  NO_STUDENT: '学生が見つかりません',
   //以下エラーメッセージ
+  NO_STUDENT: '学生が見つかりません',
+  NO_HISTORY: '履歴が見つかりません',
   VALIDATE_ERROR: '入力エラー',
   INVALID_CREDENTIALS: 'メールアドレスかパスワードが違います',
   NOT_MACTH_PASSWORD: '古いメールアドレスが違います',

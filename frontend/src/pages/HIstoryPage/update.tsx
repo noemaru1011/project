@@ -56,7 +56,9 @@ export const HistoryUpdate = () => {
 
     const fetch = async () => {
       try {
+        console.log('historyId', historyId);
         const data: HistoryDetail = await view(historyId);
+        console.log('data', data);
         setStudentData({
           studentName: data.studentName,
           grade: data.grade,

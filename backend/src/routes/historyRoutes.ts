@@ -7,4 +7,6 @@ const router = Router();
 
 router.post('/', validateBody(validation), HistoryController.createHistory);
 
+router.get('/:id', HistoryController.getHistory);
+
 export default router;

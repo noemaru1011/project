@@ -2,6 +2,29 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const HistoryRepository = {
+  async find(historyId: string) {
+    return await prisma.history.findUnique({
+      where: {
+        historyId,
+      },
+      select: {
+        student: {
+          select: {
+            studentName: true,
+            departmentId: true,
+            grade: true,
+            minorCategoryId: true,
+          },
+        },
+        statusId: true,
+        startTime: true,
+        endTime: true,
+        other: true,
+        updatedAt: true,
+      },
+    });
+  },
+
   async searchHistoies(data: {
     minorCategoryIds?: number[] | undefined;
     departments?: number[] | undefined;

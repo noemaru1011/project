@@ -3,6 +3,22 @@ import { MinorCategoryRepository } from '@/repositories/minorCategoryRepository'
 import { formatDateTime } from '@/utils/formatDateTime';
 
 export const HistoryService = {
+  async getHistory(historyId: string) {
+    const history = await HistoryRepository.find(historyId);
+    if (!history) return null;
+    return {
+      studentName: history.student.studentName,
+      grade: history.student.grade,
+      departmentId: history.student.departmentId,
+      minorCategoryId: history.student.minorCategoryId,
+      statusId: history.statusId,
+      other: history.other,
+      startTime: formatDateTime(history.startTime),
+      endTime: formatDateTime(history.endTime),
+      updatedAt: history.updatedAt,
+    };
+  },
+
   async searchHistoies(data: {
     minorCategoryId?: number[];
     subCategoryId?: number[];
