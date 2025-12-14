@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { StatusService } from '@/services/statusService';
-import { apiMessage } from '@/constants/apiMessage';
+import { APIMESSAGE } from '@/constants/APIMESSAGE';
 
 export const StatusController = {
   async getAllStatuses(_req: Request, res: Response, next: NextFunction) {
@@ -8,7 +8,7 @@ export const StatusController = {
       const statuses = await StatusService.getAllstatuses();
       res.status(200).json({
         data: statuses,
-        message: apiMessage.FETCH_SUCCESS,
+        message: APIMESSAGE.FETCH_SUCCESS,
       });
     } catch (error) {
       return next(error);

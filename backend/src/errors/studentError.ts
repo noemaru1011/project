@@ -1,14 +1,14 @@
 import { appError } from './appError';
-import { apiMessage } from '@/constants/apiMessage';
+import { APIMESSAGE } from '@/constants/apiMessage';
 
 export class NoStudentError extends appError {
   constructor() {
-    super('NO_STUDENT', apiMessage.NO_STUDENT, 404);
+    super('NO_STUDENT', APIMESSAGE.NO_STUDENT, 404);
   }
 }
 
 export class EmailDuplicateError extends appError {
   constructor() {
-    super('EMAIL_DUPLICATE', apiMessage.EMAIL_DUPLICATE, 400);
+    super('EMAIL_DUPLICATE', APIMESSAGE.EMAIL_DUPLICATE, 400);
   }
 }

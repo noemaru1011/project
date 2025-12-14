@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { LoginService } from '@/services/loginService';
-import { apiMessage } from '@/constants/apiMessage';
+import { APIMESSAGE } from '@/constants/APIMESSAGE';
 
 export const LoginController = {
   async login(req: Request, res: Response, next: NextFunction) {
@@ -26,7 +26,7 @@ export const LoginController = {
 
       return res
         .status(200)
-        .json({ code: 'SUCCESS', message: apiMessage.LOGIN_SUCCESS, data: result });
+        .json({ code: 'SUCCESS', message: APIMESSAGE.LOGIN_SUCCESS, data: result });
     } catch (error) {
       return next(error);
     }

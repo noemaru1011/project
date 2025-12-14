@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { apiMessage } from '@/constants/apiMessage';
+import { APIMESSAGE } from '@/constants/APIMESSAGE';
 
 export const LogoutController = {
   logout(_req: Request, res: Response, next: NextFunction) {
@@ -15,7 +15,7 @@ export const LogoutController = {
         sameSite: 'strict',
       });
 
-      return res.status(200).json({ message: apiMessage.LOGOUT_SUCCESS });
+      return res.status(200).json({ message: APIMESSAGE.LOGOUT_SUCCESS });
     } catch (error) {
       return next(error);
     }

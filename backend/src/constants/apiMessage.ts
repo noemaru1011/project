@@ -1,4 +1,4 @@
-export const apiMessage = {
+export const APIMESSAGE = {
   FETCH_SUCCESS: '取得成功',
   CREATE_SUCCESS: '追加完了',
   UPDATE_SUCCESS: '更新完了',

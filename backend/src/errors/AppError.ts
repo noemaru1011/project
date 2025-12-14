@@ -1,4 +1,4 @@
-import { apiMessage } from '@/constants/apiMessage';
+import { APIMESSAGE } from '@/constants/apiMessage';
 
 //エラーを拡張
 export class appError extends Error {
@@ -15,6 +15,6 @@ export class appError extends Error {
 ///共通　楽観的ロック違反
 export class ConflictError extends appError {
   constructor() {
-    super('CONFLICT', apiMessage.CONFLICT, 400);
+    super('CONFLICT', APIMESSAGE.CONFLICT, 400);
   }
 }

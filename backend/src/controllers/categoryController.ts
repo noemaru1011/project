@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { CategoryService } from '@/services/categoryService';
-import { apiMessage } from '@/constants/apiMessage';
+import { APIMESSAGE } from '@/constants/APIMESSAGE';
 
 export const CategoryController = {
   async getAllCategories(_req: Request, res: Response, next: NextFunction) {
@@ -8,7 +8,7 @@ export const CategoryController = {
       const categories = await CategoryService.getAllCategories();
       return res.status(200).json({
         data: categories,
-        message: apiMessage.FETCH_SUCCESS,
+        message: APIMESSAGE.FETCH_SUCCESS,
       });
     } catch (error) {
       return next(error);

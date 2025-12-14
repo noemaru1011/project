@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { DepartmentService } from '@/services/departmentService';
-import { apiMessage } from '@/constants/apiMessage';
+import { APIMESSAGE } from '@/constants/APIMESSAGE';
 
 export const DepartmentController = {
   async getAllDepartments(_req: Request, res: Response, next: NextFunction) {
@@ -8,7 +8,7 @@ export const DepartmentController = {
       const departments = await DepartmentService.getAllDepartments();
       return res.status(200).json({
         data: departments,
-        message: apiMessage.FETCH_SUCCESS,
+        message: APIMESSAGE.FETCH_SUCCESS,
       });
     } catch (error) {
       return next(error);

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { PasswordService } from '@/services/passwordService';
-import { apiMessage } from '@/constants/apiMessage';
+import { APIMESSAGE } from '@/constants/APIMESSAGE';
 import { TokenError } from '@/errors/authError';
 
 export const PasswordController = {
@@ -9,7 +9,7 @@ export const PasswordController = {
       //cookieのidからstudentIdを特定
       if (!req.user) return next(new TokenError());
       await PasswordService.updatePassword(req.body, req.user.id);
-      res.status(200).json({ message: apiMessage.UPDATE_SUCCESS });
+      res.status(200).json({ message: APIMESSAGE.UPDATE_SUCCESS });
     } catch (error) {
       return next(error);
     }

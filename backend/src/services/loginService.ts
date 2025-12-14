@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { InvalidCredentialsError } from '@/errors/authError';
 import { jwtUtil } from '@/utils/jwt';
-import { role } from '@/constants/role';
+import { ROLE } from '@/constants/role';
 import type { LoginResponse } from '@/types/loginResponse';
 import { isPasswordUpdateRequired } from '@/utils/isPasswordUpdateRequired';
 import { LoginRepository } from '@/repositories/loginRepository';
@@ -14,8 +14,8 @@ export const LoginService = {
       const isMatch = await bcrypt.compare(password, admin.password);
       if (!isMatch) throw new InvalidCredentialsError();
 
-      const token = jwtUtil.createToken(admin.adminId, role.ADMIN);
-      return { token, role: role.ADMIN };
+      const token = jwtUtil.createToken(admin.adminId, ROLE.ADMIN);
+      return { token, role: ROLE.ADMIN };
     }
 
     // 学生判定
@@ -34,7 +34,7 @@ export const LoginService = {
       studentPassword.updatedAt,
     );
 
-    const token = jwtUtil.createToken(student.studentId, role.STUDENT);
-    return { token, role: role.STUDENT, passwordUpdateRequired };
+    const token = jwtUtil.createToken(student.studentId, ROLE.STUDENT);
+    return { token, role: ROLE.STUDENT, passwordUpdateRequired };
   },
 };

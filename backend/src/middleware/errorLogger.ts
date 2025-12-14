@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { appError } from '@/errors/appError';
-import { apiMessage } from '@/constants/apiMessage';
+import { APIMESSAGE } from '@/constants/APIMESSAGE';
 import { logger } from '@/utils/logger';
 
 export const errorLogger = (err: unknown, req: Request, res: Response) => {
@@ -23,6 +23,6 @@ export const errorLogger = (err: unknown, req: Request, res: Response) => {
 
   return res.status(500).json({
     code: 'INTERNAL_SERVER_ERROR',
-    message: apiMessage.INTERNAL_SERVER_ERROR,
+    message: APIMESSAGE.INTERNAL_SERVER_ERROR,
   });
 };

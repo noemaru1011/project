@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { API_ROUTES } from '@/constants/routes';
-import { role } from '@/constants/role';
+import { ROLE } from '@/constants/role';
 import loginRoutes from '@/routes/loginRoutes';
 import logoutRoutes from '@/routes/logoutRoutes';
 import categoryRoutes from '@/routes/categoryRoutes';
@@ -44,7 +44,7 @@ app.use(API_ROUTES.LOGOUT, authMiddleware, requestLogger, logoutRoutes);
 app.use(
   API_ROUTES.PASSWORD,
   authMiddleware,
-  requireRole([role.STUDENT]),
+  requireRole([ROLE.STUDENT]),
   requestLogger,
   passwordRoutes,
 );
@@ -52,21 +52,21 @@ app.use(
 app.use(
   API_ROUTES.HISTORY,
   authMiddleware,
-  requireRole([role.ADMIN, role.STUDENT]),
+  requireRole([ROLE.ADMIN, ROLE.STUDENT]),
   requestLogger,
   historyRoutes,
 );
 app.use(
   API_ROUTES.HISTORY_SEARCH,
   authMiddleware,
-  requireRole([role.ADMIN, role.STUDENT]),
+  requireRole([ROLE.ADMIN, ROLE.STUDENT]),
   requestLogger,
   historySearchRoutes,
 );
 app.use(
   API_ROUTES.STUDENT_SEARCH,
   authMiddleware,
-  requireRole([role.ADMIN, role.STUDENT]),
+  requireRole([ROLE.ADMIN, ROLE.STUDENT]),
   requestLogger,
   studentSearchRoutes,
 );
@@ -74,36 +74,36 @@ app.use(
 app.use(
   API_ROUTES.CATEGORY,
   authMiddleware,
-  requireRole([role.ADMIN]),
+  requireRole([ROLE.ADMIN]),
   requestLogger,
   categoryRoutes,
 );
 app.use(
   API_ROUTES.SUBCATEGORY,
   authMiddleware,
-  requireRole([role.ADMIN]),
+  requireRole([ROLE.ADMIN]),
   requestLogger,
   SubCategoryRoutes,
 );
 app.use(
   API_ROUTES.MINOR_CATEGORY,
   authMiddleware,
-  requireRole([role.ADMIN]),
+  requireRole([ROLE.ADMIN]),
   requestLogger,
   MinorCategoryRoutes,
 );
 app.use(
   API_ROUTES.DEPARTMENT,
   authMiddleware,
-  requireRole([role.ADMIN]),
+  requireRole([ROLE.ADMIN]),
   requestLogger,
   DepartmentRoutes,
 );
-app.use(API_ROUTES.STATUS, authMiddleware, requireRole([role.ADMIN]), requestLogger, statusRoutes);
+app.use(API_ROUTES.STATUS, authMiddleware, requireRole([ROLE.ADMIN]), requestLogger, statusRoutes);
 app.use(
   API_ROUTES.STUDENT,
   authMiddleware,
-  requireRole([role.ADMIN]),
+  requireRole([ROLE.ADMIN]),
   requestLogger,
   studentRoutes,
 );
