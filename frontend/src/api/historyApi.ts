@@ -17,4 +17,9 @@ export const HistoryApi = {
     }),
 
   view: (id: string) => Api<HistoryResult>(API_ROUTES.HISTORY.VIEW(id), { method: 'GET' }),
+
+  delete: (id: string) =>
+    Api<void>(API_ROUTES.HISTORY.DELETE(id), {
+      method: 'DELETE',
+    }),
 };
