@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { API_ROUTES } from '@/constants/routes';
+import { role } from '@/constants/role';
 import loginRoutes from '@/routes/loginRoutes';
 import logoutRoutes from '@/routes/logoutRoutes';
 import categoryRoutes from '@/routes/categoryRoutes';
@@ -28,61 +29,86 @@ app.use(
     credentials: true,
   }),
 );
+//今は開発中なので無効
 //app.use(securityMiddleware());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+//ログインは認証不要
 app.use(API_ROUTES.LOGIN, requestLogger, loginRoutes);
-app.use(API_ROUTES.LOGOUT, requestLogger, logoutRoutes);
-app.use(API_ROUTES.PASSWORD, authMiddleware, requestLogger, passwordRoutes);
+
+app.use(API_ROUTES.LOGOUT, authMiddleware, requestLogger, logoutRoutes);
+
+//パスワードの変更は学生のみ
+app.use(
+  API_ROUTES.PASSWORD,
+  authMiddleware,
+  requireRole([role.STUDENT]),
+  requestLogger,
+  passwordRoutes,
+);
+//学生・管理者両方使える
 app.use(
   API_ROUTES.HISTORY,
   authMiddleware,
-  requireRole(['ADMIN', 'STUDENT']),
+  requireRole([role.ADMIN, role.STUDENT]),
   requestLogger,
   historyRoutes,
 );
-app.use(API_ROUTES.CATEGORY, authMiddleware, requireRole(['ADMIN']), requestLogger, categoryRoutes);
+app.use(
+  API_ROUTES.HISTORY_SEARCH,
+  authMiddleware,
+  requireRole([role.ADMIN, role.STUDENT]),
+  requestLogger,
+  historySearchRoutes,
+);
+app.use(
+  API_ROUTES.STUDENT_SEARCH,
+  authMiddleware,
+  requireRole([role.ADMIN, role.STUDENT]),
+  requestLogger,
+  studentSearchRoutes,
+);
+//以下マスタは管理者のみ
+app.use(
+  API_ROUTES.CATEGORY,
+  authMiddleware,
+  requireRole([role.ADMIN]),
+  requestLogger,
+  categoryRoutes,
+);
 app.use(
   API_ROUTES.SUBCATEGORY,
   authMiddleware,
-  requireRole(['ADMIN']),
+  requireRole([role.ADMIN]),
   requestLogger,
   SubCategoryRoutes,
 );
 app.use(
   API_ROUTES.MINOR_CATEGORY,
   authMiddleware,
-  requireRole(['ADMIN']),
+  requireRole([role.ADMIN]),
   requestLogger,
   MinorCategoryRoutes,
 );
 app.use(
   API_ROUTES.DEPARTMENT,
   authMiddleware,
-  requireRole(['ADMIN']),
+  requireRole([role.ADMIN]),
   requestLogger,
   DepartmentRoutes,
 );
-app.use(API_ROUTES.STATUS, authMiddleware, requireRole(['ADMIN']), requestLogger, statusRoutes);
-app.use(API_ROUTES.STUDENT, authMiddleware, requireRole(['ADMIN']), requestLogger, studentRoutes);
+app.use(API_ROUTES.STATUS, authMiddleware, requireRole([role.ADMIN]), requestLogger, statusRoutes);
 app.use(
-  API_ROUTES.STUDENT_SEARCH,
+  API_ROUTES.STUDENT,
   authMiddleware,
-  requireRole(['ADMIN', 'STUDENT']),
+  requireRole([role.ADMIN]),
   requestLogger,
-  studentSearchRoutes,
-);
-app.use(
-  API_ROUTES.HISTORY_SEARCH,
-  authMiddleware,
-  requireRole(['ADMIN', 'STUDENT']),
-  requestLogger,
-  historySearchRoutes,
+  studentRoutes,
 );
 
-// エラーログ
+// エラーログ、最終的なレスポンス
 app.use(errorLogger);
 
 const PORT = process.env.BACK_PORT;

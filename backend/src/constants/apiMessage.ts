@@ -10,4 +10,5 @@ export const apiMessage = {
   INVALID_CREDENTIALS: 'メールアドレスかパスワードが違います',
   FORBIDDEN: '権限がありません',
   TOKEN_ERROR: 'ログインしてください',
+  INTERNAL_SERVER_ERROR: '予期せぬエラーが発生しました',
 } as const;

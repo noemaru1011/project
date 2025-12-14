@@ -1,3 +1,4 @@
+//エラーを拡張
 export class appError extends Error {
   public code: string;
   public status: number;
