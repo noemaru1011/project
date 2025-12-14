@@ -1,25 +1,26 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { HistoryService } from '@/services/historyService';
+import { apiMessage } from '@/constants/apiMessage';
 
 export const HistoryController = {
-  async searchHitories(req: Request, res: Response) {
+  async searchHitories(req: Request, res: Response, next: NextFunction) {
     try {
       const histories = await HistoryService.searchHistoies(req.body);
-      res.status(201).json({
+      return res.status(201).json({
         data: histories,
-        message: '取得成功',
+        message: apiMessage.FETCH_SUCCESS,
       });
-    } catch (err: any) {
-      res.status(500).json({ message: '予期せぬエラーが発生しました' });
+    } catch (error) {
+      return next(error);
     }
   },
 
-  async createHistory(req: Request, res: Response) {
+  async createHistory(req: Request, res: Response, next: NextFunction) {
     try {
       await HistoryService.createHistory(req.body);
-      res.status(201).json({ message: '追加完了' });
-    } catch (err: any) {
-      return res.status(500).json({ message: '予期せぬエラーが発生しました' });
+      return res.status(201).json({ message: apiMessage.CREATE_SUCCESS });
+    } catch (error) {
+      return next(error);
     }
   },
 };

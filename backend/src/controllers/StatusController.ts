@@ -1,16 +1,17 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { StatusService } from '@/services/statusService';
+import { apiMessage } from '@/constants/apiMessage';
 
 export const StatusController = {
-  async getAllStatuses(req: Request, res: Response) {
+  async getAllStatuses(_req: Request, res: Response, next: NextFunction) {
     try {
       const statuses = await StatusService.getAllstatuses();
-      res.json({
+      res.status(200).json({
         data: statuses,
-        message: '取得成功',
+        message: apiMessage.FETCH_SUCCESS,
       });
     } catch (error) {
-      res.status(500).json({ message: '予期せぬエラーが発生しました' });
+      return next(error);
     }
   },
 };

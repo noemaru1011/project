@@ -1,16 +1,17 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { SubCategoryService } from '@/services/subCategoryService';
+import { apiMessage } from '@/constants/apiMessage';
 
 export const SubCategoryController = {
-  async getAllSubCategories(req: Request, res: Response) {
+  async getAllSubCategories(_req: Request, res: Response, next: NextFunction) {
     try {
       const subCategories = await SubCategoryService.getAllSubCategories();
-      res.json({
+      res.status(200).json({
         data: subCategories,
-        message: '取得成功',
+        message: apiMessage.FETCH_SUCCESS,
       });
     } catch (error) {
-      res.status(500).json({ message: '予期せぬエラーが発生しました' });
+      return next(error);
     }
   },
 };

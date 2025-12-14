@@ -1,19 +1,23 @@
-import { AppError } from './AppError';
+import { appError } from './appError';
+import { apiMessage } from '@/constants/apiMessage';
 
-export class InvalidCredentialsError extends AppError {
+///ログイ失敗敗
+export class InvalidCredentialsError extends appError {
   constructor() {
-    super('INVALID_CREDENTIALS', 'メールアドレスかパスワードが違います', 401);
+    super('INVALID_CREDENTIALS', apiMessage.INVALID_CREDENTIALS, 401);
   }
 }
 
-export class ForbiddenError extends AppError {
+///権限がない場合
+export class ForbiddenError extends appError {
   constructor() {
-    super('FORBIDDEN', '権限がありません', 403);
+    super('FORBIDDEN', apiMessage.FORBIDDEN, 403);
   }
 }
 
-export class TokenExpiredError extends AppError {
+///トークンが期切れ、もしくはトークンなしなど、トークン系のエラー
+export class TokenError extends appError {
   constructor() {
-    super('TOKEN_EXPIRED', 'ログインしてください', 401);
+    super('TOKEN_ERROR', apiMessage.TOKEN_ERROR, 401);
   }
 }

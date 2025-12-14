@@ -4,7 +4,7 @@ import { StudentRepository } from '@/repositories/studentRepository';
 import { MinorCategoryRepository } from '@/repositories/minorCategoryRepository';
 import { generatePassword } from '@/utils/generatePassword';
 import { sendAccountEmail } from '@/utils/sendAccountEmail';
-import { AppError } from '@/errors/AppError';
+import { appError } from '@/errors/appError';
 
 export const StudentService = {
   async getStudent(studentId: string) {
@@ -35,7 +35,7 @@ export const StudentService = {
           Array.isArray(err.meta?.target) &&
           err.meta.target.includes('email')
         ) {
-          throw new AppError('EMAIL_DUPLICATE', 'このメールアドレスはすでに登録されています', 400);
+          throw new appError('EMAIL_DUPLICATE', 'このメールアドレスはすでに登録されています', 400);
         }
       }
       throw err;

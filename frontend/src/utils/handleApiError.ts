@@ -30,7 +30,7 @@ export const handleApiError = (err: ApiResponse<unknown>, navigate: NavigateFunc
         case 'INVALID_CREDENTIALS':
           toast.error(message);
           break;
-        case 'TOKEN_EXPIRED':
+        case 'TOKEN_ERROR':
         case 'INVALID_TOKEN':
         default:
           navigate(ROUTES.AUTH.LOGIN);

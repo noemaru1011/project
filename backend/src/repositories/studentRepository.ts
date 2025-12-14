@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { AppError } from '@/errors/AppError';
+import { appError } from '@/errors/appError';
 const prisma = new PrismaClient();
 
 export const StudentRepository = {
@@ -73,7 +73,7 @@ export const StudentRepository = {
     });
 
     if (result.count === 0) {
-      throw new AppError(
+      throw new appError(
         'CONFLICT',
         '他のユーザーによって更新されています。再読み込みしてください。',
         409,

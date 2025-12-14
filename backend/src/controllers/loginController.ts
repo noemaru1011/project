@@ -1,9 +1,9 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { LoginService } from '@/services/loginService';
-import { AppError } from '@/errors/AppError';
+import { apiMessage } from '@/constants/apiMessage';
 
 export const LoginController = {
-  async login(req: Request, res: Response) {
+  async login(req: Request, res: Response, next: NextFunction) {
     const { email, password } = req.body;
     try {
       const result = await LoginService.login(email, password);
@@ -24,19 +24,11 @@ export const LoginController = {
         maxAge: 3600 * 1000,
       });
 
-      res.json({ code: 'SUCCESS', message: 'ログイン成功', data: result });
-    } catch (err) {
-      if (err instanceof AppError) {
-        return res.status(err.status).json({
-          code: err.code,
-          message: err.message,
-        });
-      }
-
-      // 予期しないエラー
-      return res.status(500).json({
-        message: '予期せぬエラーが発生しました',
-      });
+      return res
+        .status(200)
+        .json({ code: 'SUCCESS', message: apiMessage.LOGIN_SUCCESS, data: result });
+    } catch (error) {
+      return next(error);
     }
   },
 };

@@ -1,16 +1,17 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { CategoryService } from '@/services/categoryService';
+import { apiMessage } from '@/constants/apiMessage';
 
 export const CategoryController = {
-  async getAllCategories(req: Request, res: Response) {
+  async getAllCategories(_req: Request, res: Response, next: NextFunction) {
     try {
       const categories = await CategoryService.getAllCategories();
-      res.json({
+      return res.status(200).json({
         data: categories,
-        message: '取得成功',
+        message: apiMessage.FETCH_SUCCESS,
       });
     } catch (error) {
-      res.status(500).json({ message: '予期せぬエラーが発生しました' });
+      return next(error);
     }
   },
 };

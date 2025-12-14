@@ -1,16 +1,17 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { DepartmentService } from '@/services/departmentService';
+import { apiMessage } from '@/constants/apiMessage';
 
 export const DepartmentController = {
-  async getAllDepartments(req: Request, res: Response) {
+  async getAllDepartments(_req: Request, res: Response, next: NextFunction) {
     try {
       const departments = await DepartmentService.getAllDepartments();
-      res.json({
+      return res.status(200).json({
         data: departments,
-        message: '取得成功',
+        message: apiMessage.FETCH_SUCCESS,
       });
     } catch (error) {
-      res.status(500).json({ message: '予期せぬエラーが発生しました' });
+      return next(error);
     }
   },
 };

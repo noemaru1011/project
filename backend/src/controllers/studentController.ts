@@ -1,82 +1,68 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { StudentService } from '@/services/studentService';
-import { AppError } from '@/errors/AppError';
+import { apiMessage } from '@/constants/apiMessage';
 
 export const StudentController = {
-  async getStudent(req: Request, res: Response) {
+  async getStudent(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
       if (!id) {
-        return res.status(404).json({ message: '学生が見つかりません' });
+        return res.status(404).json({ message: apiMessage.NO_STUDENT });
       }
 
       const student = await StudentService.getStudent(id);
       if (!student) {
-        return res.status(404).json({ message: '学生が見つかりません' });
+        return res.status(404).json({ message: apiMessage.NO_STUDENT });
       }
 
-      return res.json({ data: student, message: '取得成功' });
-    } catch (err) {
-      return handleError(err, res);
+      return res.status(200).json({ data: student, message: apiMessage.FETCH_SUCCESS });
+    } catch (error) {
+      return next(error);
     }
   },
 
-  async searchStudents(req: Request, res: Response) {
+  async searchStudents(req: Request, res: Response, next: NextFunction) {
     try {
       const students = await StudentService.searchStudents(req.body);
-      return res.status(200).json({ data: students, message: '取得成功' });
-    } catch (err) {
-      return handleError(err, res);
+      return res.status(200).json({ data: students, message: apiMessage.FETCH_SUCCESS });
+    } catch (error) {
+      return next(error);
     }
   },
 
-  async createStudent(req: Request, res: Response) {
+  async createStudent(req: Request, res: Response, next: NextFunction) {
     try {
       await StudentService.createStudent(req.body);
-      return res.status(201).json({ message: '追加完了' });
-    } catch (err) {
-      return handleError(err, res);
+      return res.status(201).json({ message: apiMessage.CREATE_SUCCESS });
+    } catch (error) {
+      return next(error);
     }
   },
 
-  async updateStudent(req: Request, res: Response) {
+  async updateStudent(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
       if (!id) {
-        return res.status(404).json({ message: '学生が見つかりません' });
+        return res.status(404).json({ message: apiMessage.NO_STUDENT });
       }
       await StudentService.updateStudent(req.body, id);
-      return res.status(200).json({ message: '更新完了' });
-    } catch (err) {
-      return handleError(err, res);
+      return res.status(200).json({ message: apiMessage.UPDATE_SUCCESS });
+    } catch (error) {
+      return next(error);
     }
   },
 
-  async deleteStudet(req: Request, res: Response) {
+  async deleteStudet(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
       if (!id) {
-        return res.status(404).json({ message: '学生が見つかりません' });
+        return res.status(404).json({ message: apiMessage.NO_STUDENT });
       }
 
       await StudentService.deleteStudent(id);
-      return res.status(200).json({ message: '削除完了' });
-    } catch (err) {
-      return handleError(err, res);
+      return res.status(200).json({ message: apiMessage.DELETE_SUCCESS });
+    } catch (error) {
+      return next(error);
     }
   },
 };
-
-function handleError(err: unknown, res: Response) {
-  if (err instanceof AppError) {
-    return res.status(err.status).json({
-      code: err.code,
-      message: err.message,
-    });
-  }
-
-  console.error(err);
-  return res.status(500).json({
-    message: '予期せぬエラーが発生しました',
-  });
-}

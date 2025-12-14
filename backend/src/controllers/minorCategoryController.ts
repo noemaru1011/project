@@ -1,16 +1,17 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { MinorCategoryService } from '@/services/minorCategoryService';
+import { apiMessage } from '@/constants/apiMessage';
 
 export const MinorCategoryController = {
-  async getAllMinorCategories(req: Request, res: Response) {
+  async getAllMinorCategories(_req: Request, res: Response, next: NextFunction) {
     try {
       const minorcategories = await MinorCategoryService.getAllMinorCategories();
       res.json({
         data: minorcategories,
-        message: '取得成功',
+        message: apiMessage.FETCH_SUCCESS,
       });
     } catch (error) {
-      res.status(500).json({ message: '予期せぬエラーが発生しました' });
+      return next(error);
     }
   },
 };

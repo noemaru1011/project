@@ -9,7 +9,7 @@
     // See also https://aka.ms/tsconfig/module
     "module": "CommonJS",
     "target": "Esnext",
-    "types": [],
+    //"types": [],
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
@@ -48,5 +48,6 @@
       "@/*": ["./src/*"],
       "@shared/*": ["../shared/*"]
     }
-  }
+  },
+  "include": ["src"]
 }

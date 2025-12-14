@@ -1,7 +1,6 @@
-import { StudentRepository } from '@/repositories/studentRepository';
 import { HistoryRepository } from '@/repositories/historyRepository';
 import { MinorCategoryRepository } from '@/repositories/minorCategoryRepository';
-import { FormatDateTime } from '@/utils/formatDateTime';
+import { formatDateTime } from '@/utils/formatDateTime';
 
 export const HistoryService = {
   async searchHistoies(data: {
@@ -27,8 +26,8 @@ export const HistoryService = {
       minorCategoryName: h.student.minorCategory.minorCategoryName,
       statusName: h.status.statusName,
       other: h.other,
-      startTime: FormatDateTime(h.startTime),
-      endTime: FormatDateTime(h.endTime),
+      startTime: formatDateTime(h.startTime),
+      endTime: formatDateTime(h.endTime),
     }));
   },
 
