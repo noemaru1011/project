@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { InvalidCredentialsError, ForbiddenError, TokenError } from '@/errors/authError';
 import { Role } from '@/types/role';
-import { JwtPayload } from '@/types/auth';
+import { JwtPayload } from '@/types/jwtPayload';
 import jwt from 'jsonwebtoken';
 
 //パスワード変更時にトークン消すといいかもね

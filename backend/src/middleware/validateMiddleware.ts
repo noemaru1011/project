@@ -1,11 +1,14 @@
 import { ZodType } from 'zod';
 import { Request, Response, NextFunction } from 'express';
+import { APIMESSAGE } from '@/constants/apiMessage';
+import type { ApiMessageKey } from '@/constants/apiMessage';
 
 export const validateBody =
   (schema: ZodType) => (req: Request, res: Response, next: NextFunction) => {
     const result = schema.safeParse(req.body);
     if (!result.success) {
-      return res.status(400).json({ message: '入力エラー' });
+      const key: ApiMessageKey = 'VALIDATE_ERROR';
+      return res.status(400).json({ code: key, message: APIMESSAGE.VALIDATE_ERROR });
     }
     req.body = result.data;
     next();

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { StatusService } from '@/services/statusService';
-import { APIMESSAGE } from '@/constants/APIMESSAGE';
+import { APIMESSAGE } from '@/constants/apiMessage';
 
 export const StatusController = {
   async getAllStatuses(_req: Request, res: Response, next: NextFunction) {

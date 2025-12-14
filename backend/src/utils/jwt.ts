@@ -1,5 +1,5 @@
 import jwt, { SignOptions } from 'jsonwebtoken';
-import type { JwtPayload } from '@/types/auth';
+import type { JwtPayload } from '@/types/jwtPayload';
 import type { Role } from '@/types/role';
 
 export const jwtUtil = {

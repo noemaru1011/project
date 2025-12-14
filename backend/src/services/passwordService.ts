@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { PasswordRepository } from '@/repositories/passwordRepository';
 import { NoStudentError } from '@/errors/studentError';
-import { InvalidCredentialsError } from '@/errors/authError';
+import { NotMatchPasswordError } from '@/errors/passwordError';
 
 export const PasswordService = {
   async updatePassword(
@@ -13,7 +13,7 @@ export const PasswordService = {
     if (!stundet) throw new NoStudentError();
 
     const isMatch = await bcrypt.compare(data.oldPassword, stundet.password);
-    if (!isMatch) throw new InvalidCredentialsError();
+    if (!isMatch) throw new NotMatchPasswordError();
 
     const hashedPassword = await bcrypt.hash(data.checkNewPassword, 10);
     return PasswordRepository.updatePassword(studentId, hashedPassword);

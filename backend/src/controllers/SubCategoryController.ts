@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { SubCategoryService } from '@/services/subCategoryService';
-import { APIMESSAGE } from '@/constants/APIMESSAGE';
+import { APIMESSAGE } from '@/constants/apiMessage';
 
 export const SubCategoryController = {
   async getAllSubCategories(_req: Request, res: Response, next: NextFunction) {

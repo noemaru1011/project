@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { LoginService } from '@/services/loginService';
-import { APIMESSAGE } from '@/constants/APIMESSAGE';
+import { APIMESSAGE } from '@/constants/apiMessage';
 
 export const LoginController = {
   async login(req: Request, res: Response, next: NextFunction) {
@@ -24,9 +24,7 @@ export const LoginController = {
         maxAge: 3600 * 1000,
       });
 
-      return res
-        .status(200)
-        .json({ code: 'SUCCESS', message: APIMESSAGE.LOGIN_SUCCESS, data: result });
+      return res.status(200).json({ message: APIMESSAGE.LOGIN_SUCCESS, data: result });
     } catch (error) {
       return next(error);
     }
