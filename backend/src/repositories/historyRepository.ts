@@ -51,6 +51,11 @@ export const HistoryRepository = {
           },
         },
         historyId: true,
+        status: {
+          select: {
+            statusName: true,
+          },
+        },
         other: true,
         startTime: true,
         endTime: true,

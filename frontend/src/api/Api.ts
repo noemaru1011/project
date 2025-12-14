@@ -59,6 +59,7 @@ export async function Api<T>(path: string, options?: RequestInit): Promise<ApiRe
     message: json?.message,
     status: res.status,
   };
+  console.log(response);
 
   // 【意図⑥】
   // HTTP的に失敗している場合は throw して

@@ -10,6 +10,7 @@ export const HistoryResultLabels: Record<string, string> = {
   grade: '学年',
   departmentName: '学科名',
   studentName: '学生名',
+  statusName: '状態',
   startTime: '有効開始日',
   endTime: '有効終了日',
   other: '備考',

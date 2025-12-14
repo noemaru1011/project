@@ -110,22 +110,27 @@ export const HistoryCreate = () => {
             />
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Input
-                id="startTime"
-                type="datetime-local"
-                label="有効開始日"
-                required
-                error={errors.startTime?.message}
-                {...register('startTime')}
-              />
-              <Input
-                id="endTime"
-                type="datetime-local"
-                label="有効終了日"
-                error={errors.endTime?.message}
-                {...register('endTime')}
-                helperText="未定の場合は時間を設定しないでください。"
-              />
+              <div className="w-full sm:w-1/2">
+                <Input
+                  id="startTime"
+                  type="datetime-local"
+                  label="有効開始日"
+                  required
+                  error={errors.startTime?.message}
+                  {...register('startTime')}
+                />
+              </div>
+
+              <div className="w-full sm:w-1/2">
+                <Input
+                  id="endTime"
+                  type="datetime-local"
+                  label="有効終了日"
+                  error={errors.endTime?.message}
+                  {...register('endTime')}
+                  helperText="未定の場合は時間を設定しないでください。"
+                />
+              </div>
             </div>
 
             <Textarea
