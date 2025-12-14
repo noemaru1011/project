@@ -1,11 +1,8 @@
-export interface Student {
+export interface StudentDetail {
   studentId: number;
   studentName: string;
   grade: number;
   minorCategoryId: number;
-}
-
-export interface StudentDetail extends Student {
   email: string;
   departmentId: number;
   updatedAt: string;

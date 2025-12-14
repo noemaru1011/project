@@ -1,6 +1,6 @@
 import { Api } from './api';
-import type { HistoryForm } from '@shared/schemas/history';
-import type { HistoryResult } from '@/interface/history';
+import type { HistoryForm, HistoryUpdateForm } from '@shared/schemas/history';
+import type { HistoryDetail } from '@/interface/history';
 import { API_ROUTES } from '@/constants/apiRoutes';
 
 export const HistoryApi = {
@@ -10,11 +10,11 @@ export const HistoryApi = {
       body: JSON.stringify(data),
     }),
 
-  update: (id: string, data: HistoryForm) =>
+  update: (id: string, data: HistoryUpdateForm) =>
     Api<void>(API_ROUTES.HISTORY.UPDATE(id), {
       method: 'PUT',
       body: JSON.stringify(data),
     }),
 
-  view: (id: string) => Api<HistoryResult>(API_ROUTES.HISTORY.VIEW(id), { method: 'GET' }),
+  view: (id: string) => Api<HistoryDetail>(API_ROUTES.HISTORY.VIEW(id), { method: 'GET' }),
 };

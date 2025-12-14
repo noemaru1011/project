@@ -28,12 +28,23 @@ export const validation = z.object({
     })
   ),
 
-  endTime: z
-    .preprocess(
-      (val) => (val ? new Date(val as string) : null),
-      z.date({ message: "正しい日時を入力してください。" }).nullable()
-    )
-    .optional(),
+  endTime: z.preprocess(
+    (val) => (val ? new Date(val as string) : null),
+    z.date({ message: "正しい日時を入力してください。" }).nullable()
+  ),
 });
 
 export type HistoryForm = z.infer<typeof validation>;
+
+export const updateValidation = validation
+  .omit({
+    studentIds: true,
+  })
+  .extend({
+    updatedAt: z.preprocess(
+      (val) => (val ? new Date(val as string) : undefined),
+      z.date({ message: "正しい日時を入力してください。" })
+    ),
+  });
+
+export type HistoryUpdateForm = z.infer<typeof updateValidation>;

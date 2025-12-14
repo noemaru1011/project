@@ -20,6 +20,7 @@ import { StudentDelete } from './pages/studentPage/delete';
 import { ChangePassword } from '@/pages/passwordPage/update';
 import { HistoryIndex } from '@/pages/historyPage';
 import { HistoryCreate } from '@/pages/historyPage/create';
+import { HistoryUpdate } from '@/pages/historyPage/update';
 
 import { NotFound } from '@/pages/errorPage/notFound';
 import { ServerError } from '@/pages/errorPage/serverError';
@@ -61,6 +62,7 @@ const AppRoutes = () => (
           </ProtectedContent>
         }
       />
+      <Route path={ROUTES.HISTORY.UPDATE()} element={<HistoryUpdate />} />
       <Route
         path={ROUTES.STUDENT.CHANGE}
         element={

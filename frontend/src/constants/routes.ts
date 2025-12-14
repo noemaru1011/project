@@ -36,10 +36,11 @@ export const ROUTES = {
     CHANGE: '/Student/Change/',
   },
 
-  //事故一覧
+  //履歴一覧
   HISTORY: {
     INDEX: '/History/Index/',
     CREATE: '/History/Create/',
+    UPDATE: (hisoryId = ':hisoryId') => `/History/Update/${hisoryId}`,
   },
 
   //認証

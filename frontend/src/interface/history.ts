@@ -1,9 +1,14 @@
-export interface History {
-  //現状はstudentと同じ
-  studentId: number;
+export interface HistoryDetail {
+  historyId: number;
   studentName: string;
   grade: number;
   minorCategoryId: number;
+  departmentId: number;
+  statusId: number;
+  other: string;
+  startTime: string;
+  endTime: string | null;
+  updatedAt: string;
 }
 
 export interface HistoryResult {
