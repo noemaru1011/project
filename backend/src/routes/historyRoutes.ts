@@ -1,16 +1,10 @@
 import { Router } from 'express';
 import { validateBody } from '@/middleware/validateMiddleware';
-import { validation, updateValidation } from '@shared/schemas/history';
+import { validation } from '@shared/schemas/history';
 import { HistoryController } from '@/controllers/historyController';
 
 const router = Router();
 
-router.get('/:id', HistoryController.getHistory);
-
 router.post('/', validateBody(validation), HistoryController.createHistory);
-
-router.put('/:id', validateBody(updateValidation), HistoryController.updateHistory);
-
-router.delete('/:id', HistoryController.deleteHistory);
 
 export default router;

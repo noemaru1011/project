@@ -20,8 +20,6 @@ import { StudentDelete } from './pages/studentPage/delete';
 import { ChangePassword } from '@/pages/passwordPage/update';
 import { HistoryIndex } from '@/pages/historyPage';
 import { HistoryCreate } from '@/pages/historyPage/create';
-import { HistoryUpdate } from '@/pages/historyPage/update';
-import { HistoryDelete } from '@/pages/historyPage/delete';
 
 import { NotFound } from '@/pages/errorPage/notFound';
 import { ServerError } from '@/pages/errorPage/serverError';
@@ -60,22 +58,6 @@ const AppRoutes = () => (
         element={
           <ProtectedContent allowedRoles={['ADMIN', 'STUDENT']}>
             <HistoryIndex />
-          </ProtectedContent>
-        }
-      />
-      <Route
-        path={ROUTES.HISTORY.UPDATE()}
-        element={
-          <ProtectedContent allowedRoles={['ADMIN', 'STUDENT']}>
-            <HistoryUpdate />
-          </ProtectedContent>
-        }
-      />
-      <Route
-        path={ROUTES.HISTORY.DELETE()}
-        element={
-          <ProtectedContent allowedRoles={['ADMIN', 'STUDENT']}>
-            <HistoryDelete />
           </ProtectedContent>
         }
       />

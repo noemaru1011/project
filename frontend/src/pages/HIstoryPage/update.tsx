@@ -14,8 +14,8 @@ import { Loading } from '@/components/atoms/Loading';
 import { statusOptions } from '@/constants/statusOptions';
 
 import { HistoryApi } from '@/api/historyApi';
-import type { HistoryUpdateForm, HistoryForm } from '@shared/schemas/history';
-import { updateValidation } from '@shared/schemas/history';
+import type { HistoryForm } from '@shared/schemas/history';
+import { validation } from '@shared/schemas/history';
 import type { HistoryResult } from '@/interface/history';
 
 import { handleApiError } from '@/utils/handleApiError';
@@ -25,7 +25,7 @@ export const HistoryUpdate = () => {
   const navigate = useNavigate();
   const { historyId } = useParams<{ historyId: string }>();
 
-  const { update, loading } = useUpdate<HistoryUpdateForm>(HistoryApi.update);
+  const { update, loading } = useUpdate<HistoryForm>(HistoryApi.update);
   const { view } = useView<HistoryResult>(HistoryApi.view);
 
   const {
@@ -34,8 +34,8 @@ export const HistoryUpdate = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<HistoryUpdateForm>({
-    resolver: zodResolver(updateValidation),
+  } = useForm<HistoryForm>({
+    resolver: zodResolver(validation),
   });
 
   // 初期値ロード
@@ -46,36 +46,28 @@ export const HistoryUpdate = () => {
       try {
         const data = await view(historyId);
 
-        // statusNameからstatusIdを取得
-        const statusOption = statusOptions.find((opt) => opt.label === data.statusName);
-        const statusId = statusOption ? Number(statusOption.value) : undefined;
-
         reset({
-          statusId: statusId,
+          StatusName data.statusName,
           other: data.other ?? '',
-          startTime: data.startTime ? new Date(data.startTime).toISOString().slice(0, 16) : '',
-          endTime: data.endTime ? new Date(data.endTime).toISOString().slice(0, 16) : undefined,
+          startTime: data.startTime,
+          endTime: data.endTime ?? undefined,
         });
-      } catch (err: any) {
+      } catch (err:any) {
         handleApiError(err, navigate);
       }
     };
 
     fetch();
-  }, [historyId, view, reset, navigate]);
+  }, [historyId]);
 
   // 更新処理
-  const onSubmit = async (form: HistoryUpdateForm) => {
+  const onSubmit = async (form: HistoryForm) => {
     try {
       if (!historyId) return;
-      // バックエンドAPIに合わせて、HistoryForm形式に変換（studentIdsは空配列）
-      await update(historyId, {
-        ...form,
-        studentIds: [],
-      } as HistoryForm);
+      await update(historyId, form);
       toast.success('更新しました');
       navigate(ROUTES.HISTORY.INDEX);
-    } catch (err: any) {
+    } catch (err:any) {
       handleApiError(err, navigate);
     }
   };
