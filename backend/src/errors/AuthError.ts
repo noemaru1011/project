@@ -1,7 +1,7 @@
 import { appError } from './appError';
 import { apiMessage } from '@/constants/apiMessage';
 
-///ログイ失敗敗
+///ログイン失敗敗
 export class InvalidCredentialsError extends appError {
   constructor() {
     super('INVALID_CREDENTIALS', apiMessage.INVALID_CREDENTIALS, 401);

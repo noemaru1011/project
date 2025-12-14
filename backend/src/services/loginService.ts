@@ -1,25 +1,21 @@
 import bcrypt from 'bcrypt';
 import { InvalidCredentialsError } from '@/errors/authError';
 import { jwtUtil } from '@/utils/jwt';
+import { role } from '@/constants/role';
+import type { LoginResponse } from '@/types/loginResponse';
 import { isPasswordUpdateRequired } from '@/utils/isPasswordUpdateRequired';
 import { LoginRepository } from '@/repositories/loginRepository';
 
-interface LoginResult {
-  token: string;
-  role: 'ADMIN' | 'STUDENT';
-  passwordUpdateRequired?: boolean;
-}
-
 export const LoginService = {
-  async login(email: string, password: string): Promise<LoginResult> {
+  async login(email: string, password: string): Promise<LoginResponse> {
     // 管理者判定
     const admin = await LoginRepository.findAdmin(email);
     if (admin) {
-      const match = await bcrypt.compare(password, admin.password);
-      if (!match) throw new InvalidCredentialsError();
+      const isMatch = await bcrypt.compare(password, admin.password);
+      if (!isMatch) throw new InvalidCredentialsError();
 
-      const token = jwtUtil.createToken(admin.adminId, 'ADMIN');
-      return { token, role: 'ADMIN' };
+      const token = jwtUtil.createToken(admin.adminId, role.ADMIN);
+      return { token, role: role.ADMIN };
     }
 
     // 学生判定
@@ -29,8 +25,8 @@ export const LoginService = {
     const studentPassword = await LoginRepository.getStudentPassword(student.studentId);
     if (!studentPassword) throw new InvalidCredentialsError();
 
-    const match = await bcrypt.compare(password, studentPassword.password);
-    if (!match) throw new InvalidCredentialsError();
+    const isMatch = await bcrypt.compare(password, studentPassword.password);
+    if (!isMatch) throw new InvalidCredentialsError();
 
     // パスワード変更が必要か
     const passwordUpdateRequired = isPasswordUpdateRequired(
@@ -38,7 +34,7 @@ export const LoginService = {
       studentPassword.updatedAt,
     );
 
-    const token = jwtUtil.createToken(student.studentId, 'STUDENT');
-    return { token, role: 'STUDENT', passwordUpdateRequired };
+    const token = jwtUtil.createToken(student.studentId, role.STUDENT);
+    return { token, role: role.STUDENT, passwordUpdateRequired };
   },
 };

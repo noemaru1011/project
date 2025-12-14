@@ -1,16 +1,17 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { PasswordService } from '@/services/passwordService';
-import { handleError } from '@/utils/handleError';
 import { apiMessage } from '@/constants/apiMessage';
+import { TokenError } from '@/errors/authError';
 
 export const PasswordController = {
-  async updatePassword(req: Request, res: Response) {
+  async updatePassword(req: Request, res: Response, next: NextFunction) {
     try {
-      const user = (req as any).user;
-      await PasswordService.updatePassword(req.body, user.id);
+      //cookieのidからstudentIdを特定
+      if (!req.user) return next(new TokenError());
+      await PasswordService.updatePassword(req.body, req.user.id);
       res.status(200).json({ message: apiMessage.UPDATE_SUCCESS });
-    } catch (error: any) {
-      return handleError(error, res);
+    } catch (error) {
+      return next(error);
     }
   },
 };

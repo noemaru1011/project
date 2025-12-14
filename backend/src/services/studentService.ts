@@ -4,7 +4,8 @@ import { StudentRepository } from '@/repositories/studentRepository';
 import { MinorCategoryRepository } from '@/repositories/minorCategoryRepository';
 import { generatePassword } from '@/utils/generatePassword';
 import { sendAccountEmail } from '@/utils/sendAccountEmail';
-import { appError } from '@/errors/appError';
+import { ConflictError } from '@/errors/appError';
+import { EmailDuplicateError } from '@/errors/studentError';
 
 export const StudentService = {
   async getStudent(studentId: string) {
@@ -28,14 +29,14 @@ export const StudentService = {
       });
 
       await sendAccountEmail(data.email, plainPassword);
-    } catch (err) {
+    } catch (err: unknown) {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         if (
           err.code === 'P2002' &&
           Array.isArray(err.meta?.target) &&
           err.meta.target.includes('email')
         ) {
-          throw new appError('EMAIL_DUPLICATE', 'このメールアドレスはすでに登録されています', 400);
+          throw new EmailDuplicateError();
         }
       }
       throw err;
@@ -52,7 +53,8 @@ export const StudentService = {
     },
     studentId: string,
   ) {
-    await StudentRepository.updateStudent(data, studentId);
+    const student = await StudentRepository.updateStudent(data, studentId);
+    if (student.count === 0) throw new ConflictError();
   },
 
   async deleteStudent(studentId: string) {

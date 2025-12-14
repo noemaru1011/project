@@ -13,6 +13,9 @@ export const MinorCategoryRepository = {
     });
   },
 
+  //大分類、中分類に紐づいた小分類を変えす関数
+  //例：1大隊→111,112,113,121...
+  //例：11中隊→111,112,113
   async resolveMinorCategoryIds(data: {
     minorCategoryId?: number[];
     subCategoryId?: number[];

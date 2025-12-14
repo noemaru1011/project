@@ -59,10 +59,10 @@ export const StudentRepository = {
     },
     studentId: string,
   ) {
-    const result = await prisma.student.updateMany({
+    return await prisma.student.updateMany({
       where: {
         studentId,
-        updatedAt: data.updatedAt, // ★ 楽観ロック条件
+        updatedAt: data.updatedAt,
       },
       data: {
         studentName: data.studentName,
@@ -71,14 +71,6 @@ export const StudentRepository = {
         grade: data.grade,
       },
     });
-
-    if (result.count === 0) {
-      throw new appError(
-        'CONFLICT',
-        '他のユーザーによって更新されています。再読み込みしてください。',
-        409,
-      );
-    }
   },
 
   async deleteStudent(studentId: string) {

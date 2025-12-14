@@ -1,9 +1,8 @@
-import { Request, Response } from 'express';
-import { handleError } from '@/utils/handleError';
+import { Request, Response, NextFunction } from 'express';
 import { apiMessage } from '@/constants/apiMessage';
 
 export const LogoutController = {
-  logout(req: Request, res: Response) {
+  logout(_req: Request, res: Response, next: NextFunction) {
     try {
       res.clearCookie('token', {
         httpOnly: true,
@@ -17,8 +16,8 @@ export const LogoutController = {
       });
 
       return res.status(200).json({ message: apiMessage.LOGOUT_SUCCESS });
-    } catch (error: any) {
-      return handleError(error, res);
+    } catch (error) {
+      return next(error);
     }
   },
 };
