@@ -50,5 +50,5 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "../shared/routes.ts"]
 }

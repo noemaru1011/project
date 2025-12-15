@@ -109,9 +109,6 @@ app.use(
   studentRoutes,
 );
 
-app.get('/', (req, res) => {
-  res.send('Server is running!');
-});
 // エラーログ、最終的なレスポンス
 app.use(errorLogger);
 
@@ -123,5 +120,3 @@ app.listen(PORT, () => {
   console.log('🚀 JWT_SECRET:', process.env.JWT_SECRET);
   console.log('🚀 RESEND_API_KEY:', process.env.RESEND_API_KEY);
 });
-
-setInterval(() => {}, 1000);
