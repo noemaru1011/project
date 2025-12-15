@@ -40,7 +40,7 @@ export const ROUTES = {
   HISTORY: {
     INDEX: '/History/Index/',
     CREATE: '/History/Create/',
-    UPDATE: (hisoryId = ':hisoryId') => `/History/Update/${hisoryId}`,
+    UPDATE: (historyId = ':historyId') => `/History/Update/${historyId}`,
   },
 
   //認証

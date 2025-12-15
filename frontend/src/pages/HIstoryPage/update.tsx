@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useUpdate } from '@/hooks/useUpdate';
 import { useView } from '@/hooks/useView';
-import { User, Library, Group } from 'lucide-react';
+import { User, Library, Group, X } from 'lucide-react';
 
 import { Input } from '@/components/atoms/Input';
 import { Textarea } from '@/components/atoms/Textarea';
@@ -56,9 +56,7 @@ export const HistoryUpdate = () => {
 
     const fetch = async () => {
       try {
-        console.log('historyId', historyId);
         const data: HistoryDetail = await view(historyId);
-        console.log('data', data);
         setStudentData({
           studentName: data.studentName,
           grade: data.grade,
@@ -66,6 +64,7 @@ export const HistoryUpdate = () => {
           departmentId: data.departmentId,
         });
         reset({
+          statusId: data.statusId,
           other: data.other ?? '',
           startTime: data.startTime,
           endTime: data.endTime ?? '',
@@ -83,107 +82,126 @@ export const HistoryUpdate = () => {
   const onSubmit = async (form: HistoryUpdateForm) => {
     try {
       if (!historyId) return;
-      await update(historyId, form);
-      toast.success('更新しました');
+      const res = await update(historyId, form);
+      toast.success(res.message);
       navigate(ROUTES.HISTORY.INDEX);
     } catch (err: any) {
       handleApiError(err, navigate);
     }
   };
 
+  const closeModal = () => {
+    navigate(ROUTES.HISTORY.INDEX);
+  };
   return (
     <Loading loading={loading}>
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="w-full max-w-lg p-8 bg-white rounded-2xl shadow-lg space-y-6">
+      {/* overlay */}
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+        onClick={closeModal}
+      >
+        {/* modal */}
+        <div
+          className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto p-8 bg-white rounded-2xl shadow-2xl space-y-6"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* ×ボタン */}
+          <button
+            type="button"
+            onClick={closeModal}
+            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+          >
+            <X className="w-6 h-6" />
+          </button>
           <h2 className="text-2xl font-bold text-center text-gray-800">履歴更新</h2>
-
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            <Input
-              id="studentName"
-              label="学生名"
-              type="text"
-              leftIcon={<User className="size-5 text-indigo-500" />}
-              value={studentData.studentName}
-              disabled
-            />
-            <RadioGroup
-              label="学年"
-              name="grade"
-              options={gradeOptions}
-              value={String(studentData.grade)}
-              disabled
-            />
-            <Select
-              id="minorCategory"
-              label="小分類名"
-              options={minorCategoryOptions}
-              leftIcon={<Group className="size-5 text-indigo-500" />}
-              value={String(studentData.minorCategoryId)}
-              disabled
-            />
-            <Select
-              id="department"
-              label="学科名"
-              options={departmentOptions}
-              leftIcon={<Library className="size-5 text-indigo-500" />}
-              value={String(studentData.departmentId)}
-              disabled
-            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* ===== 左：変更不可 ===== */}
+              <section className="space-y-4 p-4 bg-gray-50 rounded-xl">
+                <h3 className="text-lg font-semibold text-gray-700">基本情報（変更不可）</h3>
 
-            {/* 状況 */}
-            <Controller
-              name="statusId"
-              control={control}
-              render={({ field, fieldState }) => (
-                <RadioGroup
-                  label="状況"
-                  name={field.name}
-                  options={statusOptions}
-                  value={field.value !== undefined ? String(field.value) : undefined}
-                  onChange={(v) => field.onChange(Number(v))}
-                  required
-                  error={fieldState.error?.message}
+                <Input
+                  id="studentName"
+                  label="学生名"
+                  type="text"
+                  value={studentData.studentName}
+                  disabled
                 />
-              )}
-            />
 
-            {/* 時間 */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Input
-                id="startTime"
-                type="datetime-local"
-                label="有効開始日"
-                required
-                error={errors.startTime?.message}
-                {...register('startTime')}
-              />
-              <Input
-                id="endTime"
-                type="datetime-local"
-                label="有効終了日"
-                helperText="未定の場合は設定しないでください"
-                error={errors.endTime?.message}
-                {...register('endTime')}
-              />
+                <RadioGroup
+                  label="学年"
+                  name="grade"
+                  options={gradeOptions}
+                  value={String(studentData.grade)}
+                  disabled
+                />
+
+                <Select
+                  id="minorCategory"
+                  label="小分類名"
+                  options={minorCategoryOptions}
+                  value={String(studentData.minorCategoryId)}
+                  disabled
+                />
+
+                <Select
+                  id="department"
+                  label="学科名"
+                  options={departmentOptions}
+                  value={String(studentData.departmentId)}
+                  disabled
+                />
+              </section>
+
+              {/* ===== 右：編集可能 ===== */}
+              <section className="space-y-6 p-4 bg-white rounded-xl">
+                <h3 className="text-lg font-semibold text-gray-700">更新内容</h3>
+
+                <Controller
+                  name="statusId"
+                  control={control}
+                  render={({ field, fieldState }) => (
+                    <RadioGroup
+                      label="状況"
+                      name={field.name}
+                      options={statusOptions}
+                      value={field.value !== undefined ? String(field.value) : undefined}
+                      onChange={(v) => field.onChange(Number(v))}
+                      required
+                      error={fieldState.error?.message}
+                    />
+                  )}
+                />
+
+                <div className="flex flex-col gap-4">
+                  <Input
+                    id="startTime"
+                    type="datetime-local"
+                    label="有効開始日"
+                    required
+                    error={errors.startTime?.message}
+                    {...register('startTime')}
+                  />
+                  <Input
+                    id="endTime"
+                    type="datetime-local"
+                    label="有効終了日"
+                    error={errors.endTime?.message}
+                    {...register('endTime')}
+                  />
+                </div>
+
+                <Textarea
+                  id="other"
+                  label="備考欄"
+                  error={errors.other?.message}
+                  {...register('other')}
+                />
+              </section>
             </div>
 
-            {/* 備考 */}
-            <Textarea
-              id="other"
-              label="備考欄"
-              helperText="例：於：〇〇病院"
-              error={errors.other?.message}
-              {...register('other')}
-            />
-            <Input
-              id="updatedAt"
-              type="hidden"
-              error={errors.updatedAt?.message}
-              {...register('updatedAt')}
-            />
-
-            {/* ボタン */}
-            <div className="flex justify-center gap-4 mt-4">
+            {/* ===== ボタン ===== */}
+            <div className="flex justify-center gap-4 mt-6">
               <Button type="submit" variant="Update" className="w-32" />
               <Button
                 type="button"

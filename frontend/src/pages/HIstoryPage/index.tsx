@@ -12,7 +12,7 @@ import { StudentSearchPanel } from '@/pages/studentPage/search';
 export const HistoryIndex = () => {
   const { data, loading, search } = useSearch<HistoryResult, HistoryQuery>(HistorySearchApi.search);
 
-  const actions: Action[] = ['Update', 'Read', 'Delete'];
+  const actions: Action[] = ['Update'];
 
   //studentのまま
   const routeMap: Record<Action, (id: string) => string> = {

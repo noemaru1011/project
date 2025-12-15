@@ -1,2 +1,2 @@
-import { role } from '@/constants/role';
-export type Role = (typeof role)[keyof typeof role];
+import { ROLE } from '@/constants/role';
+export type Role = (typeof ROLE)[keyof typeof ROLE];

@@ -2,8 +2,8 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import { API_ROUTES } from '@/constants/routes';
-import { ROLE } from '@/constants/role';
+import { API_ROUTES } from './constants/routes';
+import { ROLE } from './constants/role';
 import loginRoutes from '@/routes/loginRoutes';
 import logoutRoutes from '@/routes/logoutRoutes';
 import categoryRoutes from '@/routes/categoryRoutes';
@@ -18,7 +18,7 @@ import historySearchRoutes from '@/routes/historySearchRoutes';
 import passwordRoutes from '@/routes/passwordRoutes';
 import { requestLogger } from '@/middleware/requestLogger';
 import { errorLogger } from '@/middleware/errorLogger';
-import { securityMiddleware } from '@/middleware/securityMiddleware';
+//import { securityMiddleware } from '@/middleware/securityMiddleware';
 import { authMiddleware, requireRole } from '@/middleware/authMiddleware';
 
 const app = express();
