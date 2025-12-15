@@ -2,8 +2,8 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import { API_ROUTES } from './constants/routes';
-import { ROLE } from './constants/role';
+import { API_ROUTES } from '../../shared/routes';
+import { ROLE } from '@/constants/role';
 import loginRoutes from '@/routes/loginRoutes';
 import logoutRoutes from '@/routes/logoutRoutes';
 import categoryRoutes from '@/routes/categoryRoutes';
@@ -109,6 +109,9 @@ app.use(
   studentRoutes,
 );
 
+app.get('/', (req, res) => {
+  res.send('Server is running!');
+});
 // エラーログ、最終的なレスポンス
 app.use(errorLogger);
 
@@ -120,3 +123,5 @@ app.listen(PORT, () => {
   console.log('🚀 JWT_SECRET:', process.env.JWT_SECRET);
   console.log('🚀 RESEND_API_KEY:', process.env.RESEND_API_KEY);
 });
+
+setInterval(() => {}, 1000);

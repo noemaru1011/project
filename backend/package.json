@@ -12,7 +12,6 @@
     "pg": "^8.16.3",
     "pkg": "^5.8.1",
     "resend": "^6.4.0",
-    "tsconfig-paths": "^4.2.0",
     "winston": "^3.18.3"
   },
   "devDependencies": {
@@ -33,7 +32,8 @@
     "nodemon": "^3.1.10",
     "prettier": "^3.6.2",
     "prisma": "^6.18.0",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0"
   },
   "name": "backend",
   "version": "1.0.0",

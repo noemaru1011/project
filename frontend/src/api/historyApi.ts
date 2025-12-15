@@ -1,20 +1,20 @@
 import { Api } from './api';
 import type { HistoryForm, HistoryUpdateForm } from '@shared/schemas/history';
 import type { HistoryDetail } from '@/interface/history';
-import { API_ROUTES } from '@/constants/apiRoutes';
+import { API_ROUTES } from '@shared/routes';
 
 export const HistoryApi = {
   create: (data: HistoryForm) =>
-    Api<void>(API_ROUTES.HISTORY.CREATE, {
+    Api<void>(API_ROUTES.HISTORY, {
       method: 'POST',
       body: JSON.stringify(data),
     }),
 
   update: (id: string, data: HistoryUpdateForm) =>
-    Api<void>(API_ROUTES.HISTORY.UPDATE(id), {
+    Api<void>(`${API_ROUTES.HISTORY}/${id}`, {
       method: 'PUT',
       body: JSON.stringify(data),
     }),
 
-  view: (id: string) => Api<HistoryDetail>(API_ROUTES.HISTORY.VIEW(id), { method: 'GET' }),
+  view: (id: string) => Api<HistoryDetail>(`${API_ROUTES.HISTORY}/${id}`, { method: 'GET' }),
 };

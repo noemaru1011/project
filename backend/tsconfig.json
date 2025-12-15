@@ -44,9 +44,10 @@
     "esModuleInterop": true,
     "verbatimModuleSyntax": false,
 
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@shared/*": ["../shared/*"]
+      "@shared/*": ["../shared/*"],
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src"]

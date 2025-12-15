@@ -1,9 +1,9 @@
 import { Api } from './api';
-import { API_ROUTES } from '@/constants/apiRoutes';
+import { API_ROUTES } from '@shared/routes';
 
 export const LogoutApi = {
   logout: () =>
-    Api(API_ROUTES.AUTH.LOGOUT, {
+    Api(API_ROUTES.LOGOUT, {
       method: 'POST',
       credentials: 'include',
     }),
