@@ -8,7 +8,7 @@ export const API_ROUTES = {
   STATUS: "/api/v1/statuses",
   HISTORY: "/api/v1/histories",
   HISTORY_SEARCH: "/api/v1/histories/search",
-  PASSWORD: "/api/v1/password",
+  PASSWORD: "/api/v1/passwords",
   LOGIN: "/api/v1/login",
   LOGOUT: "/api/v1/logout",
 } as const;

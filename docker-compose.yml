@@ -1,16 +1,15 @@
-version: "3.9"
-
 services:
   db:
     image: postgres:16
     container_name: db
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1372448
-      POSTGRES_DB: postgres
-    ports:
-      - "5432:5432"
+    env_file:
+      - .env
     volumes:
       - db_data:/var/lib/postgresql/data
 
@@ -23,13 +22,22 @@ services:
     ports:
       - "3000:3000"
     env_file:
+      - .env
       - backend/.env
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - ./shared:/project/shared
-      - ./backend/prisma:/project/backend/prisma ##開発用(DB設計中のため)
+      - ./backend/prisma:/project/backend/prisma
       - ./backend/src:/project/backend/src
+
+  # frontend:
+  #   build: ./frontend
+  #   ports:
+  #     - "5173:5173"
+  #   volumes:
+  #     - ./shared:/project/shared
 
 volumes:
   db_data:

@@ -1,26 +1,33 @@
 FROM node:22.21.1
 
-# 作業ディレクトリ
-WORKDIR /project/
+WORKDIR /project
 
-COPY package.json ./
+# ルート依存関係
+COPY package.json package-lock.json ./
+COPY tsconfig.json ./
 RUN npm install
 
+# backend 依存関係
 WORKDIR /project/backend
 COPY backend/package*.json ./
 COPY backend/tsconfig.json ./
 RUN npm install
 
-# backend のソースコードをコピー
+# ソース
 COPY backend/src ./src
 COPY backend/prisma ./prisma
 
-# shared は project 直下にコピー
-COPY shared ../shared
+# shared
+WORKDIR /project
+COPY shared ./shared
 
+# Prisma
+WORKDIR /project/backend
 RUN npx prisma generate
-# ポート開放
-EXPOSE 3000
 
-# 起動コマンド
-CMD ["npm", "run", "start"]
+ENV TS_NODE_PROJECT=/project/backend/tsconfig.json
+
+WORKDIR /project/backend
+
+EXPOSE 3000
+CMD ["npm", "run", "dev"]

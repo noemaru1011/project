@@ -2,7 +2,7 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import { API_ROUTES } from '../../shared/routes';
+import { API_ROUTES } from '@shared/routes';
 import { ROLE } from '@/constants/role';
 import loginRoutes from '@/routes/loginRoutes';
 import logoutRoutes from '@/routes/logoutRoutes';
@@ -112,11 +112,9 @@ app.use(
 // エラーログ、最終的なレスポンス
 app.use(errorLogger);
 
-const PORT = process.env.BACK_PORT;
+const PORT = Number(process.env.BACK_PORT);
 app.listen(PORT, () => {
-  console.log(`🚀 Frontend connecting: ${process.env.FRONT_URL}`);
   console.log(`🚀 Backend running: ${process.env.BACK_URL}`);
-  console.log(`🚀 DataBase connecting: ${process.env.DATABASE_URL}`);
   console.log('🚀 JWT_SECRET:', process.env.JWT_SECRET);
   console.log('🚀 RESEND_API_KEY:', process.env.RESEND_API_KEY);
 });
