@@ -1,6 +1,6 @@
 import jwt, { SignOptions } from 'jsonwebtoken';
 import type { JwtPayload } from '@/types/jwtPayload';
-import type { Role } from '@/types/role';
+import type { Role } from '@shared/role';
 
 export const jwtUtil = {
   createToken: (id: string, role: Role) => {
