@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { ProtectedContent } from '@/hooks/roleContent';
+import { RoleGuard } from '@/hooks/roleGuard';
 import { ROUTES } from '@/constants/routes';
 import { ROLE } from '@shared/role';
 
@@ -42,34 +42,34 @@ const AppRoutes = () => (
       <Route
         path={ROUTES.HOME}
         element={
-          <ProtectedContent allowedRoles={[ROLE.ADMIN, ROLE.STUDENT]}>
+          <RoleGuard allowedRoles={[ROLE.ADMIN, ROLE.STUDENT]}>
             <HomePage />
-          </ProtectedContent>
+          </RoleGuard>
         }
       />
       <Route
         path={ROUTES.HISTORY.CREATE}
         element={
-          <ProtectedContent allowedRoles={[ROLE.ADMIN, ROLE.STUDENT]}>
+          <RoleGuard allowedRoles={[ROLE.ADMIN, ROLE.STUDENT]}>
             <HistoryCreate />
-          </ProtectedContent>
+          </RoleGuard>
         }
       />
       <Route
         path={ROUTES.HISTORY.INDEX}
         element={
-          <ProtectedContent allowedRoles={[ROLE.ADMIN, ROLE.STUDENT]}>
+          <RoleGuard allowedRoles={[ROLE.ADMIN, ROLE.STUDENT]}>
             <HistoryIndex />
-          </ProtectedContent>
+          </RoleGuard>
         }
       />
       <Route path={ROUTES.HISTORY.UPDATE()} element={<HistoryUpdate />} />
       <Route
         path={ROUTES.STUDENT.CHANGE}
         element={
-          <ProtectedContent allowedRoles={[ROLE.ADMIN, ROLE.STUDENT]}>
+          <RoleGuard allowedRoles={[ROLE.ADMIN, ROLE.STUDENT]}>
             <ChangePassword />
-          </ProtectedContent>
+          </RoleGuard>
         }
       />
       {/* ここからaminのみしかし、page開くと同時にサーバー通信しない場合はフロントでも制御 */}
@@ -81,17 +81,17 @@ const AppRoutes = () => (
       <Route
         path={ROUTES.STUDENT.INDEX}
         element={
-          <ProtectedContent allowedRoles={[ROLE.ADMIN]}>
+          <RoleGuard allowedRoles={[ROLE.ADMIN]}>
             <StudentIndex />
-          </ProtectedContent>
+          </RoleGuard>
         }
       />
       <Route
         path={ROUTES.STUDENT.CREATE}
         element={
-          <ProtectedContent allowedRoles={[ROLE.ADMIN]}>
+          <RoleGuard allowedRoles={[ROLE.ADMIN]}>
             <StudentCreate />
-          </ProtectedContent>
+          </RoleGuard>
         }
       />
       <Route path={ROUTES.STUDENT.UPDATE()} element={<StudentUpdate />} />

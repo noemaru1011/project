@@ -1,7 +1,7 @@
 import { PasswordApi } from '@/api/passwordApi';
 import type { PasswordForm } from '@shared/schemas/password';
 import { useLoadingCounter } from './useLoading';
-import { useLoginContext } from '@/hooks/loginContext';
+import { useLoginContext } from '@/hooks/passwordUpdateContext';
 
 //IDが不要なためusePasswordを作成
 export function usePassword() {
