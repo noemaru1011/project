@@ -41,7 +41,9 @@ export const updateValidation = validation
     studentIds: true,
   })
   .extend({
-    validFlag: z.boolean(),
+    validFlag: z.coerce.boolean({
+      message: "ture か false を選択してください。",
+    }),
     updatedAt: z.preprocess(
       (val) => (val ? new Date(val as string) : undefined),
       z.date({ message: "正しい日時を入力してください。" })

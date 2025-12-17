@@ -103,9 +103,34 @@ export const HistoryRepository = {
       validFlag: true,
     }));
 
-    console.log(records);
     return prisma.history.createMany({
       data: records,
+    });
+  },
+
+  async updateHistory(
+    data: {
+      statusId: number;
+      other: string;
+      startTime: Date;
+      endTime?: Date | null;
+      validFlag: boolean;
+      updatedAt: Date;
+    },
+    historyId: string,
+  ) {
+    return await prisma.history.updateMany({
+      where: {
+        historyId,
+        updatedAt: data.updatedAt,
+      },
+      data: {
+        statusId: data.statusId,
+        other: data.other,
+        startTime: data.startTime,
+        endTime: data.endTime,
+        validFlag: data.validFlag,
+      },
     });
   },
 };

@@ -4,10 +4,12 @@ type Props = {
   id: string;
   label?: string;
   disabled?: boolean;
+  error?: string;
+  helperText?: string;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 export const Radio = React.forwardRef<HTMLInputElement, Props>(
-  ({ id, label, disabled, ...rest }, ref) => (
+  ({ id, label, disabled, error, helperText, ...rest }, ref) => (
     <div className="flex items-center space-x-2">
       <input
         id={id}
@@ -22,6 +24,8 @@ export const Radio = React.forwardRef<HTMLInputElement, Props>(
           {label}
         </label>
       )}
+      {error && <p className="text-red-500 text-sm ml-1">{error}</p>}
+      {helperText && !error && <p className="text-gray-500 text-sm ml-1">{helperText}</p>}
     </div>
   ),
 );

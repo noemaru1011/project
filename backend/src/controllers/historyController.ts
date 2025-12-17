@@ -24,7 +24,7 @@ export const HistoryController = {
 
       const history = await HistoryService.getHistory(id);
       if (!history) {
-        return res.status(404).json({ message: APIMESSAGE.NO_STUDENT });
+        return res.status(404).json({ message: APIMESSAGE.NO_HISTORY });
       }
 
       return res.status(200).json({ data: history, message: APIMESSAGE.FETCH_SUCCESS });
@@ -37,6 +37,19 @@ export const HistoryController = {
     try {
       await HistoryService.createHistory(req.body);
       return res.status(201).json({ message: APIMESSAGE.CREATE_SUCCESS });
+    } catch (error) {
+      return next(error);
+    }
+  },
+
+  async updateHistory(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      if (!id) {
+        return res.status(404).json({ message: APIMESSAGE.NO_HISTORY });
+      }
+      await HistoryService.updateHistory(req.body, id);
+      return res.status(200).json({ message: APIMESSAGE.UPDATE_SUCCESS });
     } catch (error) {
       return next(error);
     }

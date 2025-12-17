@@ -180,7 +180,12 @@ export const HistoryUpdate = () => {
                   {...register('other')}
                 />
 
-                <Checkbox id="validFlag" label="無効フラグ" {...register('validFlag')} />
+                <Checkbox
+                  id="validFlag"
+                  label="有効フラグ"
+                  error={errors.validFlag?.message}
+                  {...register('validFlag')}
+                />
               </section>
             </div>
 

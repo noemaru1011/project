@@ -32,6 +32,7 @@ export const HistoryCreate = () => {
   } = useSearch<StudentResult, StudentQuery>(StudentSearchApi.search);
   const {
     register,
+    reset,
     control,
     handleSubmit,
     setValue,
@@ -50,6 +51,14 @@ export const HistoryCreate = () => {
       data.studentIds = selectedStudents.map((s) => s.id);
       const res = await create(data);
       toast.success(res.message);
+      reset({
+        studentIds: [],
+        statusId: undefined,
+        startTime: undefined,
+        endTime: undefined,
+        other: '',
+      });
+      setSelectedStudents([]);
     } catch (err: any) {
       handleApiError(err, navigate);
     }

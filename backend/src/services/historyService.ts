@@ -1,6 +1,7 @@
 import { HistoryRepository } from '@/repositories/historyRepository';
 import { MinorCategoryRepository } from '@/repositories/minorCategoryRepository';
 import { formatDateTime } from '@/utils/formatDateTime';
+import { ConflictError } from '@/errors/appError';
 
 export const HistoryService = {
   async getHistory(historyId: string) {
@@ -56,5 +57,20 @@ export const HistoryService = {
     endTime?: Date | null;
   }) {
     await HistoryRepository.createHistory(data);
+  },
+
+  async updateHistory(
+    data: {
+      statusId: number;
+      other: string;
+      startTime: Date;
+      endTime?: Date | null;
+      validFlag: boolean;
+      updatedAt: Date;
+    },
+    historyId: string,
+  ) {
+    const history = await HistoryRepository.updateHistory(data, historyId);
+    if (history.count === 0) throw new ConflictError();
   },
 };
