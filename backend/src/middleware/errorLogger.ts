@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { appError } from '@/errors/appError';
-import { APIMESSAGE } from '@/constants/apiMessage';
-import type { ApiMessageKey } from '@/constants/apiMessage';
+import { APIMESSAGE } from '@shared/apiMessage';
+import type { ApiMessageKey } from '@shared/apiMessage';
 import { logger } from '@/utils/logger';
 
 export const errorLogger = (err: unknown, req: Request, res: Response, _next: NextFunction) => {

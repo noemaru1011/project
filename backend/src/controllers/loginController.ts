@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { LoginService } from '@/services/loginService';
-import { APIMESSAGE } from '@/constants/apiMessage';
+import { APIMESSAGE } from '@shared/apiMessage';
 
 export const LoginController = {
   async login(req: Request, res: Response, next: NextFunction) {

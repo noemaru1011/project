@@ -2,11 +2,12 @@ import { toast } from 'react-toastify';
 import type { NavigateFunction } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
 import type { ApiResponse } from '@/interface/apiResponse';
+import { APIMESSAGE } from '@shared/apiMessage';
 
 export const handleApiError = (err: ApiResponse<unknown>, navigate: NavigateFunction) => {
   const status = err.status ?? 0;
   const code = err.code;
-  const message = err.message ?? '予期せぬエラーが発生しました';
+  const message = err.message ?? APIMESSAGE.INTERNAL_SERVER_ERROR;
 
   switch (status) {
     case 0: // ネットワークエラーなど
@@ -16,7 +17,7 @@ export const handleApiError = (err: ApiResponse<unknown>, navigate: NavigateFunc
 
     case 400:
       switch (code) {
-        case 'INVALID_OLD_PASSWORD':
+        case APIMESSAGE.NOT_MACTH_PASSWORD:
           toast.error(message);
           break;
         default:
@@ -27,11 +28,10 @@ export const handleApiError = (err: ApiResponse<unknown>, navigate: NavigateFunc
 
     case 401:
       switch (code) {
-        case 'INVALID_CREDENTIALS':
+        case APIMESSAGE.INVALID_CREDENTIALS:
           toast.error(message);
           break;
-        case 'TOKEN_ERROR':
-        case 'INVALID_TOKEN':
+        case APIMESSAGE.TOKEN_ERROR:
         default:
           navigate(ROUTES.AUTH.LOGIN);
           toast.error(message);

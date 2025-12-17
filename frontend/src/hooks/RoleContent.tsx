@@ -1,32 +1,44 @@
 import { useEffect } from 'react';
-import { toast } from 'react-toastify';
 import type { ReactNode } from 'react';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/constants/routes';
+import { handleApiError } from '@/utils/handleApiError';
+import { APIMESSAGE } from '@shared/apiMessage';
+import type { ApiResponse } from '@/interface/apiResponse';
+import type { Role } from '@shared/role';
 
 interface Props {
   children: ReactNode;
-  allowedRoles?: ('ADMIN' | 'STUDENT')[];
+  allowedRoles?: Role[];
 }
 
 export const ProtectedContent = ({ children, allowedRoles }: Props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const role = Cookies.get('role') as 'ADMIN' | 'STUDENT' | undefined;
+    const role = Cookies.get('role') as Role | undefined;
 
+    // 未ログイン
     if (!role) {
-      // ログインしていない場合はログイン画面へ
-      navigate(ROUTES.AUTH.LOGIN, { replace: true });
-      toast.error('ログインしてください');
+      const err: ApiResponse<unknown> = {
+        status: 401,
+        code: APIMESSAGE.TOKEN_ERROR,
+        message: APIMESSAGE.TOKEN_ERROR,
+      };
+
+      handleApiError(err, navigate);
       return;
     }
 
-    if (allowedRoles && allowedRoles.length > 0 && !allowedRoles.includes(role as any)) {
-      // 権限なしの場合は Forbidden 画面へ
-      navigate(ROUTES.ERROR.FORBIDDEN, { replace: true });
-      toast.error('権限がありません');
+    // 権限なし
+    if (allowedRoles && allowedRoles.length > 0 && !allowedRoles.includes(role)) {
+      const err: ApiResponse<unknown> = {
+        status: 403,
+        code: APIMESSAGE.FORBIDDEN,
+        message: APIMESSAGE.FORBIDDEN,
+      };
+
+      handleApiError(err, navigate);
       return;
     }
   }, [allowedRoles, navigate]);

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { APIMESSAGE } from '@/constants/apiMessage';
+import { APIMESSAGE } from '@shared/apiMessage';
 
 export const LogoutController = {
   logout(_req: Request, res: Response, next: NextFunction) {

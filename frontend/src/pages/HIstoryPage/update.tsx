@@ -186,6 +186,13 @@ export const HistoryUpdate = () => {
                   error={errors.validFlag?.message}
                   {...register('validFlag')}
                 />
+
+                <Input
+                  id="updatedAt"
+                  type="hidden"
+                  error={errors.updatedAt?.message}
+                  {...register('updatedAt')}
+                />
               </section>
             </div>
 

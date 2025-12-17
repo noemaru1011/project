@@ -1,6 +1,6 @@
 import { appError } from './appError';
-import { APIMESSAGE } from '@/constants/apiMessage';
-import type { ApiMessageKey } from '@/constants/apiMessage';
+import { APIMESSAGE } from '@shared/apiMessage';
+import type { ApiMessageKey } from '@shared/apiMessage';
 
 export class NotMatchPasswordError extends appError {
   constructor() {

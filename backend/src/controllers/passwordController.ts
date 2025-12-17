@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { PasswordService } from '@/services/passwordService';
-import { APIMESSAGE } from '@/constants/apiMessage';
+import { APIMESSAGE } from '@shared/apiMessage';
 import { TokenError } from '@/errors/authError';
 
 export const PasswordController = {

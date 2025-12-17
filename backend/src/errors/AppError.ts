@@ -1,5 +1,5 @@
-import { APIMESSAGE } from '@/constants/apiMessage';
-import type { ApiMessageKey } from '@/constants/apiMessage';
+import { APIMESSAGE } from '@shared/apiMessage';
+import type { ApiMessageKey } from '@shared/apiMessage';
 
 //エラーを拡張
 export class appError extends Error {

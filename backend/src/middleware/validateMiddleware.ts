@@ -1,7 +1,7 @@
 import { ZodType } from 'zod';
 import { Request, Response, NextFunction } from 'express';
-import { APIMESSAGE } from '@/constants/apiMessage';
-import type { ApiMessageKey } from '@/constants/apiMessage';
+import { APIMESSAGE } from '@shared/apiMessage';
+import type { ApiMessageKey } from '@shared/apiMessage';
 
 export const validateBody =
   (schema: ZodType) => (req: Request, res: Response, next: NextFunction) => {

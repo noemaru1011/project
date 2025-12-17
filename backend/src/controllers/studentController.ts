@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { StudentService } from '@/services/studentService';
-import { APIMESSAGE } from '@/constants/apiMessage';
+import { APIMESSAGE } from '@shared/apiMessage';
 
 export const StudentController = {
   async getStudent(req: Request, res: Response, next: NextFunction) {

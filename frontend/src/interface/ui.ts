@@ -6,7 +6,8 @@ export type ButtonVariant =
   | 'Search'
   | 'Login'
   | 'Back'
-  | 'Home';
+  | 'Home'
+  | 'invalid';
 
 export type InputType =
   | 'text'

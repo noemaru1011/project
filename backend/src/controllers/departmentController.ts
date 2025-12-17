@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { DepartmentService } from '@/services/departmentService';
-import { APIMESSAGE } from '@/constants/apiMessage';
+import { APIMESSAGE } from '@shared/apiMessage';
 
 export const DepartmentController = {
   async getAllDepartments(_req: Request, res: Response, next: NextFunction) {

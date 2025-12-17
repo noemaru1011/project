@@ -1,8 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { ProtectedContent } from '@/hooks/RoleContent';
+import { ProtectedContent } from '@/hooks/roleContent';
 import { ROUTES } from '@/constants/routes';
+import { ROLE } from '@shared/role';
 
 import Layout from '@/components/layouts/Layout';
 import { Login } from '@/pages/auth/login';
@@ -41,7 +42,7 @@ const AppRoutes = () => (
       <Route
         path={ROUTES.HOME}
         element={
-          <ProtectedContent allowedRoles={['ADMIN', 'STUDENT']}>
+          <ProtectedContent allowedRoles={[ROLE.ADMIN, ROLE.STUDENT]}>
             <HomePage />
           </ProtectedContent>
         }
@@ -49,7 +50,7 @@ const AppRoutes = () => (
       <Route
         path={ROUTES.HISTORY.CREATE}
         element={
-          <ProtectedContent allowedRoles={['ADMIN', 'STUDENT']}>
+          <ProtectedContent allowedRoles={[ROLE.ADMIN, ROLE.STUDENT]}>
             <HistoryCreate />
           </ProtectedContent>
         }
@@ -57,7 +58,7 @@ const AppRoutes = () => (
       <Route
         path={ROUTES.HISTORY.INDEX}
         element={
-          <ProtectedContent allowedRoles={['ADMIN', 'STUDENT']}>
+          <ProtectedContent allowedRoles={[ROLE.ADMIN, ROLE.STUDENT]}>
             <HistoryIndex />
           </ProtectedContent>
         }
@@ -66,7 +67,7 @@ const AppRoutes = () => (
       <Route
         path={ROUTES.STUDENT.CHANGE}
         element={
-          <ProtectedContent allowedRoles={['ADMIN', 'STUDENT']}>
+          <ProtectedContent allowedRoles={[ROLE.ADMIN, ROLE.STUDENT]}>
             <ChangePassword />
           </ProtectedContent>
         }
@@ -80,7 +81,7 @@ const AppRoutes = () => (
       <Route
         path={ROUTES.STUDENT.INDEX}
         element={
-          <ProtectedContent allowedRoles={['ADMIN']}>
+          <ProtectedContent allowedRoles={[ROLE.ADMIN]}>
             <StudentIndex />
           </ProtectedContent>
         }
@@ -88,7 +89,7 @@ const AppRoutes = () => (
       <Route
         path={ROUTES.STUDENT.CREATE}
         element={
-          <ProtectedContent allowedRoles={['ADMIN']}>
+          <ProtectedContent allowedRoles={[ROLE.ADMIN]}>
             <StudentCreate />
           </ProtectedContent>
         }

@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { InvalidCredentialsError } from '@/errors/authError';
 import { jwtUtil } from '@/utils/jwt';
-import { ROLE } from '@/constants/role';
+import { ROLE } from '@shared/role';
 import type { LoginResponse } from '@/types/loginResponse';
 import { isPasswordUpdateRequired } from '@/utils/isPasswordUpdateRequired';
 import { LoginRepository } from '@/repositories/loginRepository';
