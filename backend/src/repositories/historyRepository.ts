@@ -20,6 +20,7 @@ export const HistoryRepository = {
         startTime: true,
         endTime: true,
         other: true,
+        validFlag: true,
         updatedAt: true,
       },
     });

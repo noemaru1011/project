@@ -6,10 +6,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useUpdate } from '@/hooks/useUpdate';
 import { useView } from '@/hooks/useView';
-import { User, Library, Group, X } from 'lucide-react';
 
 import { Input } from '@/components/atoms/Input';
 import { Textarea } from '@/components/atoms/Textarea';
+import { Checkbox } from '@/components/atoms/Checkbox';
 import { RadioGroup } from '@/components/molecules/RadioGroup';
 import { Button } from '@/components/atoms/Button';
 import { Select } from '@/components/atoms/Select';
@@ -68,6 +68,7 @@ export const HistoryUpdate = () => {
           other: data.other ?? '',
           startTime: data.startTime,
           endTime: data.endTime ?? '',
+          validFlag: data.validFlag,
           updatedAt: data.updatedAt,
         });
       } catch (err: any) {
@@ -90,29 +91,10 @@ export const HistoryUpdate = () => {
     }
   };
 
-  const closeModal = () => {
-    navigate(ROUTES.HISTORY.INDEX);
-  };
   return (
     <Loading loading={loading}>
-      {/* overlay */}
-      <div
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
-        onClick={closeModal}
-      >
-        {/* modal */}
-        <div
-          className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto p-8 bg-white rounded-2xl shadow-2xl space-y-6"
-          onClick={(e) => e.stopPropagation()}
-        >
-          {/* ×ボタン */}
-          <button
-            type="button"
-            onClick={closeModal}
-            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
-          >
-            <X className="w-6 h-6" />
-          </button>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="w-full max-w-4xl  p-8 bg-white rounded-2xl shadow-lg space-y-6">
           <h2 className="text-2xl font-bold text-center text-gray-800">履歴更新</h2>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -197,6 +179,8 @@ export const HistoryUpdate = () => {
                   error={errors.other?.message}
                   {...register('other')}
                 />
+
+                <Checkbox id="validFlag" label="無効フラグ" {...register('validFlag')} />
               </section>
             </div>
 

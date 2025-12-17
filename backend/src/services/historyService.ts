@@ -13,6 +13,7 @@ export const HistoryService = {
       minorCategoryId: history.student.minorCategoryId,
       statusId: history.statusId,
       other: history.other,
+      validFlag: history.validFlag,
       startTime: formatDateTime(history.startTime),
       endTime: formatDateTime(history.endTime),
       updatedAt: history.updatedAt,

@@ -24,6 +24,7 @@ COPY shared ./shared
 # Prisma
 WORKDIR /project/backend
 RUN npx prisma generate
+RUN npx prisma seed
 
 ENV TS_NODE_PROJECT=/project/backend/tsconfig.json
 

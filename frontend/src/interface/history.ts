@@ -8,6 +8,7 @@ export interface HistoryDetail {
   other: string;
   startTime: string;
   endTime: string | null;
+  validFlag: boolean;
   updatedAt: string;
 }
 
