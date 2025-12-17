@@ -41,6 +41,7 @@ export const ROUTES = {
     INDEX: '/History/Index/',
     CREATE: '/History/Create/',
     UPDATE: (historyId = ':historyId') => `/History/Update/${historyId}`,
+    DELETE: (historyId = ':historyId') => `/History/Delete/${historyId}`,
   },
 
   //認証
