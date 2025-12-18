@@ -54,4 +54,18 @@ export const HistoryController = {
       return next(error);
     }
   },
+
+  async deleteHistory(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      if (!id) {
+        return res.status(404).json({ message: APIMESSAGE.NO_HISTORY });
+      }
+
+      await HistoryService.deleteHistory(id);
+      return res.status(200).json({ message: APIMESSAGE.DELETE_SUCCESS });
+    } catch (error) {
+      return next(error);
+    }
+  },
 };

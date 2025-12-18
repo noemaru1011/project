@@ -133,4 +133,12 @@ export const HistoryRepository = {
       },
     });
   },
+
+  async deleteHistory(historyId: string) {
+    await prisma.history.delete({
+      where: {
+        historyId,
+      },
+    });
+  },
 };

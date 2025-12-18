@@ -73,4 +73,8 @@ export const HistoryService = {
     const history = await HistoryRepository.updateHistory(data, historyId);
     if (history.count === 0) throw new ConflictError();
   },
+
+  async deleteHistory(historyId: string) {
+    await HistoryRepository.deleteHistory(historyId);
+  },
 };

@@ -11,4 +11,6 @@ router.get('/:id', HistoryController.getHistory);
 
 router.put('/:id', validateBody(updateValidation), HistoryController.updateHistory);
 
+router.delete('/:id', HistoryController.deleteHistory);
+
 export default router;
