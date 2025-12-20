@@ -1,12 +1,10 @@
-import { Input } from '@/components/atoms/Input';
-import { RadioGroup } from '@/components/molecules/RadioGroup';
-import { Select } from '@/components/atoms/Select';
 import { Button } from '@/components/atoms/Button';
-import { gradeOptions } from '@/constants/gradeOptions';
-import { minorCategoryOptions } from '@/features/minorCategory/constants/options';
-import { departmentOptions } from '@/features/department/constants/options';
+import { StudentNameInput } from '@/features/student/components/StudentNameInput';
+import { StudentEmailInput } from '@/features/student/components/StudentEmailInput';
+import { GradeRadioGroup } from '@/features/student/components/GradeRadioGroup';
+import { MinorCategorySelect } from '@/features/minorCategory/components/MinorCategorySelect';
+import { DepartmentSelect } from '@/features/department/components/DepartmentSelect';
 import type { StudentDetail } from '@/features/student';
-import { Mail, User, Library, Group } from 'lucide-react';
 
 type Props = {
   student: StudentDetail;
@@ -17,49 +15,15 @@ type Props = {
 export const StudentDeleteView = ({ student, onDelete, onBack }: Props) => {
   return (
     <>
-      <Input
-        id="studentName"
-        label="学生名"
-        type="text"
-        value={student.studentName}
-        leftIcon={<User className="size-4" />}
-        disabled
-      />
+      <StudentNameInput label="学生名" value={student.studentName} disabled />
 
-      <RadioGroup
-        name="grade"
-        label="学年"
-        options={gradeOptions}
-        value={String(student.grade)}
-        disabled
-      />
+      <GradeRadioGroup name="grade" label="学年" value={String(student.grade)} disabled />
 
-      <Select
-        id="minorCategory"
-        label="小分類名"
-        options={minorCategoryOptions}
-        value={String(student.minorCategoryId)}
-        leftIcon={<Group className="size-4" />}
-        disabled
-      />
+      <MinorCategorySelect label="小分類名" value={String(student.minorCategoryId)} disabled />
 
-      <Input
-        id="email"
-        label="メールアドレス"
-        type="email"
-        value={student.email}
-        leftIcon={<Mail className="size-4" />}
-        disabled
-      />
+      <StudentEmailInput label="メールアドレス" value={student.email} disabled />
 
-      <Select
-        id="department"
-        label="学科名"
-        options={departmentOptions}
-        value={String(student.departmentId)}
-        leftIcon={<Library className="size-4" />}
-        disabled
-      />
+      <DepartmentSelect label="学科名" value={String(student.departmentId)} disabled />
 
       <div className="flex justify-center gap-4 mt-4">
         <Button type="button" variant="Delete" className="w-32 mx-auto py-2" onClick={onDelete} />

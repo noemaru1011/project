@@ -1,7 +1,7 @@
 import React from 'react';
 import type { AllowedInputType } from './InputType';
 
-type Props = {
+export type Props = {
   id: string;
   label?: string;
   type: AllowedInputType;

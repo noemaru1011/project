@@ -1,36 +1,35 @@
 import { Table } from '@/components/molecules/Table';
 import { Loading } from '@/components/atoms/Loading';
-import { HistoryResultLabels } from '@/constants/historyLabels';
-import { HistorySearchApi } from '@/api/historySearchApi';
-import type { HistoryResult } from '@/interface/history';
-import type { HistoryQuery } from '@/interface/historyQuery';
+import { studentLabels } from '@/features/student/constants';
+import { StudentSearchApi } from '@/api/studentSearchApi';
+import type { StudentResult } from '@/features/student/types';
+import type { StudentQuery } from '@/features/search/student/types';
 import { ROUTES } from '@/constants/routes';
 import { useSearch } from '@/hooks/useSearch';
 import type { Action } from '@/components/molecules/TableRowActions';
 import { StudentSearchPanel } from '@/features/search/student/components/search';
 
-export const HistoryIndex = () => {
-  const { data, loading, search } = useSearch<HistoryResult, HistoryQuery>(HistorySearchApi.search);
+export const StudentIndex = () => {
+  const { data, loading, search } = useSearch<StudentResult, StudentQuery>(StudentSearchApi.search);
 
-  const actions: Action[] = ['Update', 'Delete'];
+  const actions: Action[] = ['Update', 'Read', 'Delete'];
 
-  //studentのまま
   const routeMap: Record<Action, (id: string) => string> = {
-    Update: (id) => ROUTES.HISTORY.UPDATE(id),
+    Update: (id) => ROUTES.STUDENT.UPDATE(id),
     Read: (id) => ROUTES.STUDENT.VIEW(id),
-    Delete: (id) => ROUTES.HISTORY.DELETE(id),
+    Delete: (id) => ROUTES.STUDENT.DELETE(id),
   };
 
   return (
     <div className="p-4 mx-auto max-w-4xl">
-      <h2 className="text-2xl font-bold text-gray-800 text-center">履歴一覧</h2>
+      <h2 className="text-2xl font-bold text-gray-800 text-center">学生一覧</h2>
       {/* 検索フォームを配置 */}
       <StudentSearchPanel onSearch={search} />
       <Loading loading={loading}>
         <Table
-          labels={HistoryResultLabels}
+          labels={studentLabels}
           data={data}
-          keyField="historyId"
+          keyField="studentId"
           actions={actions}
           routeMap={routeMap}
         />

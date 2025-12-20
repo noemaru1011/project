@@ -1,18 +1,16 @@
-import { useForm, Controller } from 'react-hook-form';
-import type { StudentQuery } from '@/interface/studentQuery';
-
+import { Controller } from 'react-hook-form';
+import type { StudentQuery } from '@/features/search/student/types';
 import { Accordion } from '@/components/molecules/Accordion';
 import { CheckboxGroup } from '@/components/molecules/CheckboxGroup';
 import { Button } from '@/components/atoms/Button';
-
-import { categoryOptions } from '@/constants/categoryOptions';
+import { categoryOptions } from '@/features/category/constants/';
 import { subCategoryOptions } from '@/features/subCategory/constants/options';
 import { minorCategoryOptions } from '@/features/minorCategory/constants/options';
 import { gradeOptions } from '@/constants/gradeOptions';
 import { departmentOptions } from '@/features/department/constants/options';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { handleApiError } from '@/utils/handleApiError';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
+import { useStudentSearch } from '../hooks/useStudentSearch';
 
 type Props = {
   onSearch: (query: StudentQuery) => void | Promise<void>;
@@ -21,24 +19,7 @@ type Props = {
 export const StudentSearchPanel = ({ onSearch }: Props) => {
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
-  const { handleSubmit, control, getValues } = useForm<StudentQuery>({
-    defaultValues: {
-      categoryId: [],
-      subCategoryId: [],
-      minorCategoryId: [],
-      grade: [],
-      departmentId: [],
-    },
-  });
-
-  const handleSearch = async () => {
-    const query = getValues();
-    try {
-      await onSearch(query);
-    } catch (err: any) {
-      handleApiError(err, navigate);
-    }
-  };
+  const { control, handleSubmit, handleSearch } = useStudentSearch(onSearch);
 
   const accordionItems = [
     {
@@ -146,7 +127,7 @@ export const StudentSearchPanel = ({ onSearch }: Props) => {
       <form onSubmit={handleSubmit(handleSearch)} className="flex flex-col gap-4">
         <Accordion items={accordionItems} allowMultiple className="w-full" />
         <div className="flex justify-center gap-4 mt-4">
-          {pathname == ROUTES.STUDENT.INDEX && (
+          {pathname === ROUTES.STUDENT.INDEX && (
             <Button
               type="button"
               variant="Create"

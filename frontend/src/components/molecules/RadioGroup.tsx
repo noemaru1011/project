@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react';
 import type { Option } from '@/components/ui/option';
 import { Radio } from '@/components/atoms/Radio';
 
-type Props = {
+export type Props = {
   name: string;
   value?: string;
   onChange?: (value: string) => void;

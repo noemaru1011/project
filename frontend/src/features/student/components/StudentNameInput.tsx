@@ -1,0 +1,9 @@
+import { Input } from '@/components/atoms/Input';
+import { User } from 'lucide-react';
+import type { Props } from '@/components/atoms/Input';
+
+type StudentNameInputProps = Omit<Props, 'id' | 'type'>;
+
+export const StudentNameInput = ({ disabled, ...props }: StudentNameInputProps) => {
+  return <Input {...props} id="studentName" type="text" leftIcon={<User className="size-4" />} />;
+};
