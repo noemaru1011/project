@@ -7,7 +7,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
  * @param options - fetchのオプション
  * @returns - ApiResponse<T>でdataの中身を指定
  */
-export async function Api<T>(path: string, options?: RequestInit): Promise<ApiResponse<T>> {
+export async function api<T>(path: string, options?: RequestInit): Promise<ApiResponse<T>> {
   let res: Response;
 
   try {

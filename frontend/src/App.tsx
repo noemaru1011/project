@@ -9,7 +9,7 @@ import Layout from '@/components/layouts/Layout';
 import { Login } from '@/pages/auth/login';
 import { HomePage } from '@/pages/home/homePage';
 import { CategoryIndex } from '@/features/category/pages';
-import { SubCategoryIndex } from '@/pages/subCategoryPage';
+import { SubCategoryIndex } from '@/features/subCategory/pages';
 import { MinorCategoryIndex } from '@/pages/minorCategoryPage';
 import { DepartmentIndex } from '@/pages/departmentPage';
 import { StatusIndex } from '@/pages/statusPage';

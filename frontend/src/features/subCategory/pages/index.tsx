@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { Table } from '@/components/molecules/Table';
 import { Loading } from '@/components/atoms/Loading';
 import { useFetchAll } from '@/hooks/useFetchAll';
-import { SubCategoryLabels } from '@/constants/subCategoryLabels';
-import { SubCategoryApi } from '@/api/subCategoryApi';
-import type { SubCategory } from '@/interface/subCategory';
+import { subCategoryLabels } from '@/features/subCategory/constants/labels';
+import { subCategoryApi } from '@/features/subCategory';
+import type { SubCategory } from '@/features/subCategory/types';
 import { handleApiError } from '@/utils/handleApiError';
 
 export const SubCategoryIndex = () => {
   const navigate = useNavigate();
-  const { data: subCategories, fetchAll, loading } = useFetchAll<SubCategory>(SubCategoryApi.index);
+  const { data: subCategories, fetchAll, loading } = useFetchAll<SubCategory>(subCategoryApi.index);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,7 +27,7 @@ export const SubCategoryIndex = () => {
     <Loading loading={loading}>
       <div className="max-w-lg mx-auto p-4">
         <h2 className="text-2xl font-bold text-gray-800 text-center">中分類一覧</h2>
-        <Table labels={SubCategoryLabels} data={subCategories} keyField="subCategoryName" />
+        <Table labels={subCategoryLabels} data={subCategories} keyField="subCategoryName" />
       </div>
     </Loading>
   );

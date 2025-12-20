@@ -6,7 +6,7 @@ import { CheckboxGroup } from '@/components/molecules/CheckboxGroup';
 import { Button } from '@/components/atoms/Button';
 
 import { categoryOptions } from '@/constants/categoryOptions';
-import { subCategoryOptions } from '@/constants/subCategoryOptions';
+import { subCategoryOptions } from '@/features/subCategory/constants/options';
 import { minorCategoryOptions } from '@/constants/minorCategoryOptions';
 import { gradeOptions } from '@/constants/gradeOptions';
 import { departmentOptions } from '@/constants/departmentOptions';
