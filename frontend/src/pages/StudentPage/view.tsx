@@ -6,7 +6,7 @@ import { RadioGroup } from '@/components/molecules/RadioGroup';
 import { Button } from '@/components/atoms/Button';
 import { gradeOptions } from '@/constants/gradeOptions';
 import { minorCategoryOptions } from '@/features/minorCategory/constants/options';
-import { departmentOptions } from '@/constants/departmentOptions';
+import { departmentOptions } from '@/features/department/constants/options';
 import { useView } from '@/hooks/useView';
 import { Loading } from '@/components/atoms/Loading';
 import { ROUTES } from '@/constants/routes';

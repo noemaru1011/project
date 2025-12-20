@@ -1,7 +1,7 @@
 import { Table } from '@/components/molecules/Table';
 import { Loading } from '@/components/atoms/Loading';
 import { subCategoryLabels } from '@/features/subCategory/constants';
-import { useSubCategoryList } from '@/features/subCategory/hooks/useSubCategory';
+import { useSubCategoryList } from '@/features/subCategory/hooks/useSubCategoryList';
 
 export const SubCategoryTable = () => {
   const { data, loading } = useSubCategoryList();

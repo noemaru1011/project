@@ -16,7 +16,7 @@ import { Loading } from '@/components/atoms/Loading';
 import { statusOptions } from '@/constants/statusOptions';
 import { gradeOptions } from '@/constants/gradeOptions';
 import { minorCategoryOptions } from '@/features/minorCategory/constants/options';
-import { departmentOptions } from '@/constants/departmentOptions';
+import { departmentOptions } from '@/features/department/constants/options';
 
 import { HistoryApi } from '@/api/historyApi';
 

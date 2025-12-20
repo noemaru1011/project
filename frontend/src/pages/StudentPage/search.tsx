@@ -9,7 +9,7 @@ import { categoryOptions } from '@/constants/categoryOptions';
 import { subCategoryOptions } from '@/features/subCategory/constants/options';
 import { minorCategoryOptions } from '@/features/minorCategory/constants/options';
 import { gradeOptions } from '@/constants/gradeOptions';
-import { departmentOptions } from '@/constants/departmentOptions';
+import { departmentOptions } from '@/features/department/constants/options';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { handleApiError } from '@/utils/handleApiError';
 import { ROUTES } from '@/constants/routes';

@@ -7,7 +7,7 @@ import { RadioGroup } from '@/components/molecules/RadioGroup';
 import { Button } from '@/components/atoms/Button';
 import { gradeOptions } from '@/constants/gradeOptions';
 import { minorCategoryOptions } from '@/features/minorCategory/constants/options';
-import { departmentOptions } from '@/constants/departmentOptions';
+import { departmentOptions } from '@/features/department/constants/options';
 import { validation } from '@shared/schemas/student';
 import { useCreate } from '@/hooks/useCreate';
 import { zodResolver } from '@hookform/resolvers/zod';
