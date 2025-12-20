@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
-import type { Option } from '@/interface/ui';
+import type { Option } from '@/components/ui/option';
 import { ROUTES } from '@/constants/routes';
 import { AlertCircle } from 'lucide-react';
 

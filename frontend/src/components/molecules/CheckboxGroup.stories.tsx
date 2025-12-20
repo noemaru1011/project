@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { CheckboxGroup } from './CheckboxGroup';
-import type { Option } from '@/interface/ui';
+import type { Option } from '@/components/ui/option';
 
 export default {
   title: 'Molecules/CheckboxGroup',

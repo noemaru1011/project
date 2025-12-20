@@ -1,4 +1,4 @@
-import type { Option } from '@/interface/ui';
+import type { Option } from '@/components/ui/option';
 
 const squads: Option[] = [];
 

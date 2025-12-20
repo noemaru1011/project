@@ -1,6 +1,6 @@
 import React from 'react';
 import { X } from 'lucide-react';
-import type { Option } from '@/interface/ui';
+import type { Option } from '@/components/ui/option';
 import { Link } from 'react-router-dom';
 
 type Props = {

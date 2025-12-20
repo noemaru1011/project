@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import type { Option } from '@/interface/ui';
+import type { Option } from '@/components/ui/option';
 import { Radio } from '@/components/atoms/Radio';
 
 type Props = {

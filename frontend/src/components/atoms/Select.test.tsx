@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi } from 'vitest';
 import { Select } from './Select';
-import type { Option } from '@/interface/ui';
+import type { Option } from '@/components/ui/option';
 
 const options: Option[] = [
   { value: '1', label: 'オプション1' },

@@ -5,7 +5,7 @@ import { HeaderMain } from '@/components/atoms/HeaderMain';
 import { HeaderNav } from '@/components/atoms/HeaderNav';
 import { Menu } from '@/components/molecules/Menu';
 import { useLogout } from '@/hooks/useLogout';
-import type { Option } from '@/interface/ui';
+import type { Option } from '@/components/ui/option';
 import { ROUTES } from '@/constants/routes';
 import { handleApiError } from '@/utils/handleApiError';
 import { useLoginContext } from '@/hooks/passwordUpdateContext';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ChevronDown } from 'lucide-react';
-import type { Option } from '@/interface/ui';
+import type { Option } from '@/components/ui/option';
 
 type Props = {
   id: string;

@@ -1,4 +1,4 @@
-import type { Option } from '@/interface/ui';
+import type { Option } from '@/components/ui/option';
 
 export const subCategoryOptions: Option[] = [
   { value: '1', label: '11中隊' },

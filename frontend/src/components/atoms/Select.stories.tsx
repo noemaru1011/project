@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Select } from './Select';
 import React from 'react';
-import type { Option } from '@/interface/ui';
+import type { Option } from '@/components/ui/option';
 
 const sampleOptions: Option[] = [
   { value: '1', label: 'サンプル1' },

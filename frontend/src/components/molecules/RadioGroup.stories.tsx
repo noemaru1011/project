@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { RadioGroup } from './RadioGroup';
-import type { Option } from '@/interface/ui';
+import type { Option } from '@/components/ui/option';
 
 const meta: Meta<typeof RadioGroup> = {
   title: 'Molecules/RadioGroup',
