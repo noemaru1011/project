@@ -10,7 +10,7 @@ import { departmentOptions } from '@/features/department/constants/options';
 import { useView } from '@/hooks/useView';
 import { Loading } from '@/components/atoms/Loading';
 import { ROUTES } from '@/constants/routes';
-import type { StudentDetail } from '@/features/student/student';
+import type { StudentDetail } from '@/features/student/types';
 import { StudentApi } from '@/api/studentApi';
 import { handleApiError } from '@/utils/handleApiError';
 

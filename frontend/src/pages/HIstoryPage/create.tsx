@@ -17,7 +17,7 @@ import { useSearch } from '@/hooks/useSearch';
 import { useCreate } from '@/hooks/useCreate';
 import type { StudentQuery } from '@/interface/studentQuery';
 import { StudentSearchPanel } from '@/pages/studentPage/search';
-import type { StudentResult } from '@/features/student/student';
+import type { StudentResult } from '@/features/student/types';
 import { validation } from '@shared/schemas/history';
 import type { HistoryForm } from '@shared/schemas/history';
 import { handleApiError } from '@/utils/handleApiError';
