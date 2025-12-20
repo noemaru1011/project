@@ -1,6 +1,6 @@
 import { Table } from '@/components/molecules/Table';
 import { Loading } from '@/components/atoms/Loading';
-import { StudentLabels } from '@/constants/studentLabels';
+import { StudentLabels } from '@/features/status/constants/labels';
 import { StudentSearchApi } from '@/api/studentSearchApi';
 import type { StudentResult } from '@/interface/student';
 import type { StudentQuery } from '@/interface/studentQuery';

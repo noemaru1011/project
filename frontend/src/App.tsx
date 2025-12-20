@@ -12,7 +12,7 @@ import { CategoryIndexPage } from '@/pages/categoryPage';
 import { SubCategoryIndexPage } from '@/pages/subCategory';
 import { MinorCategoryIndexPage } from '@/pages/minorCategory';
 import { DepartmentIndexPage } from '@/pages/departmentPage';
-import { StatusIndex } from '@/pages/statusPage';
+import { StatusIndexPage } from '@/pages/statusPage';
 import { StudentIndex } from '@/pages/studentPage';
 import { StudentCreate } from '@/pages/studentPage/create';
 import { StudentUpdate } from '@/pages/studentPage/update';
@@ -75,7 +75,7 @@ const AppRoutes = () => (
         }
       />
       {/* ここからaminのみしかし、page開くと同時にサーバー通信しない場合はフロントでも制御 */}
-      <Route path={ROUTES.STATUS.INDEX} element={<StatusIndex />} />
+      <Route path={ROUTES.STATUS.INDEX} element={<StatusIndexPage />} />
       <Route path={ROUTES.CATEGORY.INDEX} element={<CategoryIndexPage />} />
       <Route path={ROUTES.SUBCATEGORY.INDEX} element={<SubCategoryIndexPage />} />
       <Route path={ROUTES.MINORCategory.INDEX} element={<MinorCategoryIndexPage />} />

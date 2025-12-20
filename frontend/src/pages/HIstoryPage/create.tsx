@@ -9,7 +9,7 @@ import { Textarea } from '@/components/atoms/Textarea';
 import { Table } from '@/components/molecules/Table';
 import { RadioGroup } from '@/components/molecules/RadioGroup';
 import { Loading } from '@/components/atoms/Loading';
-import { statusOptions } from '@/constants/statusOptions';
+import { statusOptions } from '@/features/status/constants/options';
 import { HistorySearchLabels } from '@/constants/historyLabels';
 import { StudentSearchApi } from '@/api/studentSearchApi';
 import { HistoryApi } from '@/api/historyApi';
