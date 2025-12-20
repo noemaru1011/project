@@ -12,7 +12,7 @@ import { departmentOptions } from '@/features/department/constants/options';
 import { ROUTES } from '@/constants/routes';
 import { useDelete } from '@/hooks/useDelete';
 import { useView } from '@/hooks/useView';
-import type { StudentDetail } from '@/interface/student';
+import type { StudentDetail } from '@/features/student/student';
 import { StudentApi } from '@/api/studentApi';
 import { handleApiError } from '@/utils/handleApiError';
 import { Mail, User, Library, Group } from 'lucide-react';

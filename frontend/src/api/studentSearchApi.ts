@@ -1,7 +1,7 @@
 import { Api } from './api';
 import { API_ROUTES } from '@shared/routes';
 import type { StudentQuery } from '@/interface/studentQuery';
-import type { StudentResult } from '@/interface/student';
+import type { StudentResult } from '@/features/student/student';
 
 export const StudentSearchApi = {
   search: (query: StudentQuery) =>

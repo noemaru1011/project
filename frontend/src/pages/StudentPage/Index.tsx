@@ -2,7 +2,7 @@ import { Table } from '@/components/molecules/Table';
 import { Loading } from '@/components/atoms/Loading';
 import { StudentLabels } from '@/features/status/constants/labels';
 import { StudentSearchApi } from '@/api/studentSearchApi';
-import type { StudentResult } from '@/interface/student';
+import type { StudentResult } from '@/features/student/student';
 import type { StudentQuery } from '@/interface/studentQuery';
 import { ROUTES } from '@/constants/routes';
 import { useSearch } from '@/hooks/useSearch';

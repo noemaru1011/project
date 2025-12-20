@@ -4,38 +4,38 @@ import { ROUTES } from '@/constants/routes';
 import type { ApiResponse } from '@/interface/apiResponse';
 import { APIMESSAGE } from '@shared/apiMessage';
 
-export const handleApiError = (err: ApiResponse<unknown>, navigate: NavigateFunction) => {
+const isApiResponse = (err: unknown): err is ApiResponse<unknown> => {
+  return typeof err === 'object' && err !== null && 'status' in err && 'message' in err;
+};
+
+export const handleApiError = (err: unknown, navigate: NavigateFunction) => {
+  if (!isApiResponse(err)) {
+    // 想定外エラー
+    navigate(ROUTES.ERROR.SERVER);
+    toast.error(APIMESSAGE.INTERNAL_SERVER_ERROR);
+    throw err;
+  }
+
   const status = err.status ?? 0;
   const code = err.code;
   const message = err.message ?? APIMESSAGE.INTERNAL_SERVER_ERROR;
 
   switch (status) {
-    case 0: // ネットワークエラーなど
+    case 0:
       navigate(ROUTES.ERROR.SERVER);
       toast.error(message);
       break;
 
     case 400:
-      switch (code) {
-        case APIMESSAGE.NOT_MACTH_PASSWORD:
-          toast.error(message);
-          break;
-        default:
-          toast.error(message);
-          break;
-      }
+      toast.error(message);
       break;
 
     case 401:
-      switch (code) {
-        case APIMESSAGE.INVALID_CREDENTIALS:
-          toast.error(message);
-          break;
-        case APIMESSAGE.TOKEN_ERROR:
-        default:
-          navigate(ROUTES.AUTH.LOGIN);
-          toast.error(message);
-          break;
+      if (code === APIMESSAGE.INVALID_CREDENTIALS) {
+        toast.error(message);
+      } else {
+        navigate(ROUTES.AUTH.LOGIN);
+        toast.error(message);
       }
       break;
 

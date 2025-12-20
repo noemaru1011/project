@@ -18,7 +18,7 @@ import { updateValidation } from '@shared/schemas/student';
 import { StudentApi } from '@/api/studentApi';
 import type { StudentUpdateForm } from '@shared/schemas/student';
 import { handleApiError } from '@/utils/handleApiError';
-import type { StudentDetail } from '@/interface/student';
+import type { StudentDetail } from '@/features/student/student';
 import { Mail, User, Library, Group } from 'lucide-react';
 
 export const StudentUpdate = () => {
