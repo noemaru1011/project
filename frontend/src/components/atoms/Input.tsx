@@ -1,10 +1,10 @@
 import React from 'react';
-import type { InputType } from '@/interface/ui';
+import type { AllowedInputType } from './InputType';
 
 type Props = {
   id: string;
   label?: string;
-  type: InputType;
+  type: AllowedInputType;
   error?: string;
   required?: boolean;
   disabled?: boolean;
