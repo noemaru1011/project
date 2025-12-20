@@ -10,7 +10,7 @@ export function useFetchAll<T>(indexFn: () => Promise<ApiResponse<T[]>>) {
     start();
     try {
       const res = await indexFn();
-      if (res.data) setData(res.data);
+      setData(res.data ?? []);
     } finally {
       end();
     }

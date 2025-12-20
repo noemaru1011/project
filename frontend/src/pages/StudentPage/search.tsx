@@ -7,7 +7,7 @@ import { Button } from '@/components/atoms/Button';
 
 import { categoryOptions } from '@/constants/categoryOptions';
 import { subCategoryOptions } from '@/features/subCategory/constants/options';
-import { minorCategoryOptions } from '@/constants/minorCategoryOptions';
+import { minorCategoryOptions } from '@/features/minorCategory/constants/options';
 import { gradeOptions } from '@/constants/gradeOptions';
 import { departmentOptions } from '@/constants/departmentOptions';
 import { useNavigate, useLocation } from 'react-router-dom';

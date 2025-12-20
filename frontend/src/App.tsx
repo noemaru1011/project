@@ -8,9 +8,9 @@ import { ROLE } from '@shared/role';
 import Layout from '@/components/layouts/Layout';
 import { Login } from '@/pages/auth/login';
 import { HomePage } from '@/pages/home/homePage';
-import { CategoryIndex } from '@/features/category/pages';
-import { SubCategoryIndex } from '@/features/subCategory/pages';
-import { MinorCategoryIndex } from '@/pages/minorCategoryPage';
+import { CategoryIndexPage } from '@/pages/category';
+import { SubCategoryIndex } from '@/pages/subCategory';
+import { MinorCategoryIndex } from '@/pages/minorCategory';
 import { DepartmentIndex } from '@/pages/departmentPage';
 import { StatusIndex } from '@/pages/statusPage';
 import { StudentIndex } from '@/pages/studentPage';
@@ -76,7 +76,7 @@ const AppRoutes = () => (
       />
       {/* ここからaminのみしかし、page開くと同時にサーバー通信しない場合はフロントでも制御 */}
       <Route path={ROUTES.STATUS.INDEX} element={<StatusIndex />} />
-      <Route path={ROUTES.CATEGORY.INDEX} element={<CategoryIndex />} />
+      <Route path={ROUTES.CATEGORY.INDEX} element={<CategoryIndexPage />} />
       <Route path={ROUTES.SUBCATEGORY.INDEX} element={<SubCategoryIndex />} />
       <Route path={ROUTES.MINORCategory.INDEX} element={<MinorCategoryIndex />} />
       <Route path={ROUTES.DEPARTMENT.INDEX} element={<DepartmentIndex />} />
