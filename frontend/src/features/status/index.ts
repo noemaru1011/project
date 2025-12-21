@@ -1,3 +1,3 @@
 export * from './types';
 export * from './api';
-export * from './components/StatusTable';
+export * from './mapper';

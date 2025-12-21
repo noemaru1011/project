@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Input } from '@/components/atoms/Input';
-import { Button } from '@/components/atoms/Button';
+import { Button } from '@/components/ui/Button/Button';
 import { validation } from '@shared/schemas/password';
 import { usePassword } from '@/hooks/useUpdatePassword';
 import { zodResolver } from '@hookform/resolvers/zod';

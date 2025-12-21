@@ -1,4 +1,4 @@
-import { Button } from '@/components/atoms/Button';
+import { Button } from '@/components/ui/Button/Button';
 import { StudentNameInput, StudentEmailInput } from '@/features/student/components';
 import { GradeRadioGroup } from '@/features/grade/components';
 import { MinorCategorySelect } from '@/features/minorCategory/components/MinorCategorySelect';

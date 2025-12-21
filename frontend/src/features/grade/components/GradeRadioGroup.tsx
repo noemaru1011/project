@@ -1,6 +1,6 @@
 import { RadioGroup } from '@/components/molecules/RadioGroup';
 import type { Props } from '@/components/molecules/RadioGroup';
-import { gradeOptions } from '@/constants/gradeOptions';
+import { gradeOptions } from '@/features/grade/constants/gradeOptions';
 
 type GradeRadioGroupProps = Omit<Props, 'options'>;
 

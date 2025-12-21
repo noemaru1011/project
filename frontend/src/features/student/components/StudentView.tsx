@@ -2,7 +2,7 @@ import { StudentNameInput, StudentEmailInput } from '@/features/student/componen
 import { GradeRadioGroup } from '@/features/grade/components';
 import { MinorCategorySelect } from '@/features/minorCategory/components/MinorCategorySelect';
 import { DepartmentSelect } from '@/features/department/components/DepartmentSelect';
-import { Button } from '@/components/atoms/Button';
+import { Button } from '@/components/ui/Button/Button';
 import type { StudentDetail } from '@/features/student/types';
 
 type Props = {

@@ -1,4 +1,4 @@
-import { CategoryTable } from '@/features/category';
+import { CategoryTable } from '@/features/category/components';
 
 export const CategoryIndexPage = () => {
   return (

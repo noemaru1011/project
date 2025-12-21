@@ -11,11 +11,11 @@ import { Input } from '@/components/atoms/Input';
 import { Textarea } from '@/components/atoms/Textarea';
 import { Checkbox } from '@/components/atoms/Checkbox';
 import { RadioGroup } from '@/components/molecules/RadioGroup';
-import { Button } from '@/components/atoms/Button';
+import { Button } from '@/components/ui/Button/Button';
 import { Select } from '@/components/atoms/Select';
 import { Loading } from '@/components/atoms/Loading';
 import { statusOptions } from '@/features/status/constants/options';
-import { gradeOptions } from '@/constants/gradeOptions';
+import { gradeOptions } from '@/features/grade/constants/gradeOptions';
 import { minorCategoryOptions } from '@/features/minorCategory/constants/options';
 import { departmentOptions } from '@/features/department/constants/options';
 

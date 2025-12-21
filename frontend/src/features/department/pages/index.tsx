@@ -1,4 +1,4 @@
-import { DepartmentTable } from '@/features/department';
+import { DepartmentTable } from '@/features/department/components';
 
 export const DepartmentIndexPage = () => {
   return (

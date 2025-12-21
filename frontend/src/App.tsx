@@ -17,16 +17,16 @@ import { StudentIndexPage } from '@/features/student/pages/';
 import { StudentCreatePage } from '@/features/student/pages/create';
 import { StudentUpdatePage } from '@/features/student/pages/update';
 import { StudentViewPage } from '@/features/student/pages/view';
-import { StudentDelete } from './pages/studentPage/delete';
+import { StudentDeletePage } from '@/features/student/pages/delete';
 import { ChangePassword } from '@/pages/passwordPage/update';
 import { HistoryIndex } from '@/pages/historyPage';
 import { HistoryCreate } from '@/pages/historyPage/create';
 import { HistoryUpdate } from '@/pages/historyPage/update';
 import { HistoryDelete } from '@/pages/historyPage/delete';
 
-import { NotFound } from '@/pages/errorPage/notFound';
-import { ServerError } from '@/pages/errorPage/serverError';
-import { Forbidden } from '@/pages/errorPage/forbidden';
+import { NotFound } from '@/pages/error/notFound';
+import { ServerError } from '@/pages/error/serverError';
+import { Forbidden } from '@/pages/error/forbidden';
 
 const AppRoutes = () => (
   <Routes>
@@ -98,7 +98,7 @@ const AppRoutes = () => (
       />
       <Route path={ROUTES.STUDENT.UPDATE()} element={<StudentUpdatePage />} />
       <Route path={ROUTES.STUDENT.VIEW()} element={<StudentViewPage />} />
-      <Route path={ROUTES.STUDENT.DELETE()} element={<StudentDelete />} />
+      <Route path={ROUTES.STUDENT.DELETE()} element={<StudentDeletePage />} />
     </Route>
   </Routes>
 );

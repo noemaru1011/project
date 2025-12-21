@@ -1,7 +1,7 @@
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/atoms/Input';
-import { Button } from '@/components/atoms/Button';
+import { Button } from '@/components/ui/Button/Button';
 import { StudentNameInput, StudentEmailInput } from '@/features/student/components';
 import { GradeRadioGroup } from '@/features/grade/components';
 import { MinorCategorySelect } from '@/features/minorCategory/components/MinorCategorySelect';

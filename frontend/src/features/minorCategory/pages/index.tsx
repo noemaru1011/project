@@ -1,4 +1,4 @@
-import { MinorCategoryTable } from '@/features/minorCategory';
+import { MinorCategoryTable } from '@/features/minorCategory/components';
 
 export const MinorCategoryIndexPage = () => {
   return (

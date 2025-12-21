@@ -1,4 +1,4 @@
-import { Button } from '@/components/atoms/Button';
+import { Button } from '@/components/ui/Button/Button';
 import type { ButtonVariant } from '@/interface/ui';
 import { useNavigate } from 'react-router-dom';
 

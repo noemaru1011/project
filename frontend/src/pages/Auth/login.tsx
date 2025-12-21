@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { Input } from '@/components/atoms/Input';
-import { Button } from '@/components/atoms/Button';
+import { Button } from '@/components/ui/Button/Button';
 import { Loading } from '@/components/atoms/Loading';
 import { validation } from '@shared/schemas/login';
 import type { LoginForm } from '@shared/schemas/login';

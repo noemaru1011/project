@@ -1,7 +1,7 @@
 import { Controller } from 'react-hook-form';
 import type { StudentQuery } from '@/features/search/student/types';
 import { Accordion } from '@/components/molecules/Accordion';
-import { Button } from '@/components/atoms/Button';
+import { Button } from '@/components/ui/Button/Button';
 import { CategoryCheckboxGroup } from '@/features/category/components';
 import { SubCategoryCheckboxGroup } from '@/features/subCategory/components';
 import { MinorCategoryCheckboxGroup } from '@/features/minorCategory/components';
@@ -9,7 +9,7 @@ import { GradeCheckboxGroup } from '@/features/grade/components';
 import { DepartmentCheckboxGroup } from '@/features/department/components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
-import { useStudentSearch } from '../hooks/useStudentSearch';
+import { useStudentSearch } from '@/features/search/student/hooks/useStudentSearch';
 
 type Props = {
   onSearch: (query: StudentQuery) => void | Promise<void>;
