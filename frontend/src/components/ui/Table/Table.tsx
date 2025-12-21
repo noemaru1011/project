@@ -12,7 +12,7 @@ type Props<T> = {
   /** 表示するアクションの種類 */
   actions?: Action[];
   /** 表示するアクションの種類 */
-  routeMap?: Record<Action, (id: string) => string>;
+  routeMap?: Partial<Record<Action, (id: string) => string>>;
   /** チェックボックスの有無 */
   showCheckbox?: boolean;
   selectedIds?: string[];

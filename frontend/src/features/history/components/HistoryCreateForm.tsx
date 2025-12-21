@@ -26,7 +26,7 @@ export const HistoryCreateForm = ({ selectedStudents }: Props) => {
     control,
     setValue,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitted },
   } = useForm({
     resolver: zodResolver(validation),
     defaultValues: { studentIds: [] },
@@ -101,7 +101,7 @@ export const HistoryCreateForm = ({ selectedStudents }: Props) => {
           disabled={loading}
         />
 
-        {errors.studentIds && (
+        {isSubmitted && errors.studentIds && (
           <p className="text-red-500 text-sm text-center mt-4">{errors.studentIds.message}</p>
         )}
         <div className="flex justify-center gap-4">

@@ -1,6 +1,6 @@
 import { Table } from '@/components/ui/Table/Table';
 import { Loading } from '@/components/ui/Loading/Loading';
-import { HistorySearchLabels } from '@/constants/historyLabels';
+import { historySearchLabels } from '@/features/history/constants/historyLabels';
 import { studentSearchApi } from '@/features/search/student';
 import { useSearch } from '@/hooks/useSearch';
 import type { StudentQuery } from '@/features/search/student/types';
@@ -21,7 +21,7 @@ export const StudentSearchSection = ({ selectedStudents, onChangeSelected }: Pro
 
       <Loading loading={loading}>
         <Table
-          labels={HistorySearchLabels}
+          labels={historySearchLabels}
           data={data}
           keyField="studentId"
           showCheckbox

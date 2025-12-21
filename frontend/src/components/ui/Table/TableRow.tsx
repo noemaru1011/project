@@ -6,7 +6,7 @@ type Props = {
   labelKeys: string[];
   row: Record<string, string>;
   actions?: Action[];
-  routeMap?: Record<Action, (id: string) => string>;
+  routeMap?: Partial<Record<Action, (id: string) => string>>;
   showCheckbox?: boolean;
   selectedIds?: string[];
   onSelect?: (id: string, checked: boolean) => void;

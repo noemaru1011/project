@@ -1,9 +1,9 @@
-import { api } from './api';
+import { api } from '@/api/api';
 import { API_ROUTES } from '@shared/routes';
 import type { HistoryQuery } from '@/features/search/history/types';
 import type { HistoryResult } from '@/features/history/types';
 
-export const HistorySearchApi = {
+export const historySearchApi = {
   search: (query: HistoryQuery) =>
     api<HistoryResult[]>(API_ROUTES.HISTORY_SEARCH, {
       method: 'POST',
