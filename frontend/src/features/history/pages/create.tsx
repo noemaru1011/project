@@ -13,7 +13,6 @@ export const HistoryCreatePage = () => {
       <StudentSearchSection
         selectedStudents={selectedStudents}
         onChangeSelected={setSelectedStudents}
-        setFormStudentIds={() => {}}
       />
 
       <HistoryCreateForm selectedStudents={selectedStudents} />

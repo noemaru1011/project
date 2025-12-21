@@ -10,14 +10,9 @@ import type { StudentResult } from '@/features/student/types';
 type Props = {
   selectedStudents: { id: string; name: string }[];
   onChangeSelected: (students: { id: string; name: string }[]) => void;
-  setFormStudentIds: (ids: string[]) => void;
 };
 
-export const StudentSearchSection = ({
-  selectedStudents,
-  onChangeSelected,
-  setFormStudentIds,
-}: Props) => {
+export const StudentSearchSection = ({ selectedStudents, onChangeSelected }: Props) => {
   const { search, data, loading } = useSearch<StudentResult, StudentQuery>(studentSearchApi.search);
 
   return (
@@ -40,7 +35,6 @@ export const StudentSearchSection = ({
               : selectedStudents.filter((x) => x.id !== id);
 
             onChangeSelected(updated);
-            setFormStudentIds(updated.map((s) => s.id));
           }}
         />
       </Loading>

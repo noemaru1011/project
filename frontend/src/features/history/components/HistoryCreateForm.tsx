@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -23,12 +24,24 @@ export const HistoryCreateForm = ({ selectedStudents }: Props) => {
     register,
     reset,
     control,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(validation),
     defaultValues: { studentIds: [] },
   });
+
+  useEffect(() => {
+    setValue(
+      'studentIds',
+      selectedStudents.map((s) => s.id),
+      {
+        shouldValidate: true,
+        shouldDirty: true,
+      },
+    );
+  }, [selectedStudents, setValue]);
 
   const onSubmit = async (data: HistoryForm) => {
     try {
