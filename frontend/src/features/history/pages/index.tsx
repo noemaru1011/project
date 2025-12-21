@@ -3,7 +3,7 @@ import type { HistoryResult } from '@/features/history/types';
 import type { HistoryQuery } from '@/features/search/history/types';
 import { useSearch } from '@/hooks/useSearch';
 import { StudentSearchPanel } from '@/features/search/student/components/StudentSearchForm';
-import { HistoryTable } from '@/features/history/components/HistoryTable';
+import { HistoryTable } from '@/features/history/components';
 
 export const HistoryIndexPage = () => {
   const { data, loading, search } = useSearch<HistoryResult, HistoryQuery>(historySearchApi.search);

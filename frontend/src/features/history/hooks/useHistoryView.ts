@@ -4,6 +4,7 @@ import type { StudentDetail } from '@/features/student/types';
 import { studentApi } from '@/features/student/';
 import { handleApiError } from '@/utils';
 import { useView } from '@/hooks/useView';
+import { ROUTES } from '@/constants/routes';
 
 export const useStudentView = () => {
   const navigate = useNavigate();
@@ -29,5 +30,6 @@ export const useStudentView = () => {
   return {
     student,
     loading,
+    goBack: () => navigate(ROUTES.STUDENT.INDEX),
   };
 };

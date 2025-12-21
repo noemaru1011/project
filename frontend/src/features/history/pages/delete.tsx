@@ -4,21 +4,18 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDelete } from '@/hooks/useDelete';
 import { useView } from '@/hooks/useView';
-import { User, Library, Group } from 'lucide-react';
 
-import { Input } from '@/components/ui/Input/Input';
-import { Textarea } from '@/components/ui/Textarea/Textarea';
 import { Checkbox } from '@/components/ui/Checkbox/Checkbox';
-import { RadioGroup } from '@/components/ui/RadioGroup/RadioGroup';
 import { Button } from '@/components/ui/Button/Button';
-import { Select } from '@/components/ui/Select/Select';
+import { StudentNameInput } from '@/features/student/components';
+import { GradeSelect } from '@/features/grade/components';
+import { MinorCategorySelect } from '@/features/minorCategory/components';
+import { DepartmentSelect } from '@/features/department/components';
+import { StatusRadioGroup } from '@/features/status/components';
+import { StartTimeInput, EndTimeInput, OtherTextarea } from '@/features/history/components';
 import { Loading } from '@/components/ui/Loading/Loading';
-import { statusOptions } from '@/features/status/constants/options';
-import { gradeOptions } from '@/features/grade/constants/gradeOptions';
-import { minorCategoryOptions } from '@/features/minorCategory/constants/options';
-import { departmentOptions } from '@/features/department/constants/options';
 
-import { HistoryApi } from '@/api/historyApi';
+import { historyApi } from '@/features/history';
 
 import type { HistoryDetail } from '@/features/history/types';
 
@@ -28,8 +25,8 @@ import { ROUTES } from '@/constants/routes';
 export const HistoryDelete = () => {
   const navigate = useNavigate();
   const { historyId } = useParams<{ historyId: string }>();
-  const { remove, loading } = useDelete(HistoryApi.delete);
-  const { view } = useView<HistoryDetail>(HistoryApi.view);
+  const { remove, loading } = useDelete(historyApi.delete);
+  const { view } = useView<HistoryDetail>(historyApi.view);
 
   const [history, setHistoryData] = useState<HistoryDetail | null>(null);
 
@@ -70,38 +67,23 @@ export const HistoryDelete = () => {
             <section className="space-y-4 p-4 bg-gray-50 rounded-xl">
               <h3 className="text-lg font-semibold text-gray-700">基本情報（変更不可）</h3>
 
-              <Input
-                id="studentName"
-                label="学生名"
-                type="text"
-                value={history?.studentName ?? ''}
-                leftIcon={<User className="size-4" />}
-                disabled
-              />
+              <StudentNameInput label="学生名" value={history?.studentName ?? ''} disabled />
 
-              <RadioGroup
-                name="grade"
+              <GradeSelect
                 label="学年"
-                options={gradeOptions}
                 value={history?.grade !== undefined ? String(history.grade) : undefined}
                 disabled
               />
 
-              <Select
-                id="minorCategory"
+              <MinorCategorySelect
                 label="小分類名"
-                options={minorCategoryOptions}
                 value={String(history?.minorCategoryId ?? '')}
-                leftIcon={<Group className="size-4" />}
                 disabled
               />
 
-              <Select
-                id="department"
+              <DepartmentSelect
                 label="学科名"
-                options={departmentOptions}
                 value={String(history?.departmentId ?? '')}
-                leftIcon={<Library className="size-4" />}
                 disabled
               />
             </section>
@@ -112,32 +94,19 @@ export const HistoryDelete = () => {
                 削除内容(データベースから削除されます。)
               </h3>
 
-              <RadioGroup
+              <StatusRadioGroup
                 name="statusId"
                 label="状況"
-                options={statusOptions}
                 value={history?.statusId !== undefined ? String(history.statusId) : undefined}
                 disabled
               />
 
               <div className="flex flex-col gap-4">
-                <Input
-                  id="startTime"
-                  type="datetime-local"
-                  value={history?.startTime}
-                  label="有効開始日"
-                  disabled
-                />
-                <Input
-                  id="endTime"
-                  type="datetime-local"
-                  value={history?.endTime ?? undefined}
-                  label="有効終了日"
-                  disabled
-                />
+                <StartTimeInput value={history?.startTime} label="有効開始日" disabled />
+                <EndTimeInput value={history?.endTime ?? undefined} label="有効終了日" disabled />
               </div>
 
-              <Textarea id="other" label="備考欄" value={history?.other} disabled />
+              <OtherTextarea label="備考欄" value={history?.other} disabled />
 
               <Checkbox id="validFlag" label="有効フラグ" checked={!!history?.validFlag} disabled />
             </section>
