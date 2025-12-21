@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useUpdate } from '@/hooks/useUpdate';
-import { handleApiError } from '@/utils/handleApiError';
+import { handleApiError } from '@/utils';
 import { studentApi } from '@/features/student';
 import type { StudentUpdateForm } from '@shared/schemas/student';
 

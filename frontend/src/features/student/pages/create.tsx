@@ -13,7 +13,7 @@ export const StudentCreatePage = () => {
   const onSubmit = async (data: StudentForm) => {
     try {
       const res = await createStudent(data);
-      toast.success(res.message);
+      toast.success(res!.message);
       navigate(ROUTES.STUDENT.INDEX);
     } catch {}
   };

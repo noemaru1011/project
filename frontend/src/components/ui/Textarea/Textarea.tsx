@@ -1,6 +1,6 @@
 import React from 'react';
 
-type Props = {
+export type Props = {
   id: string;
   label?: string;
   error?: string;

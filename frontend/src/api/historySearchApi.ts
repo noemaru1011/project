@@ -1,7 +1,7 @@
 import { api } from './api';
 import { API_ROUTES } from '@shared/routes';
-import type { HistoryQuery } from '@/interface/historyQuery';
-import type { HistoryResult } from '@/interface/history';
+import type { HistoryQuery } from '@/features/search/history/types';
+import type { HistoryResult } from '@/features/history/types';
 
 export const HistorySearchApi = {
   search: (query: HistoryQuery) =>

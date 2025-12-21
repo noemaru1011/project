@@ -3,7 +3,7 @@ import { API_ROUTES } from '@shared/routes';
 import type { StudentQuery } from '@/features/search/student/types';
 import type { StudentResult } from '@/features/student/types';
 
-export const StudentSearchApi = {
+export const studentSearchApi = {
   search: (query: StudentQuery) =>
     api<StudentResult[]>(API_ROUTES.STUDENT_SEARCH, {
       method: 'POST',

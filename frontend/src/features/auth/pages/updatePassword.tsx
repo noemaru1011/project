@@ -5,6 +5,7 @@ import { usePassword } from '@/features/auth/hooks/useUpdatePassword';
 import { ROUTES } from '@/constants/routes';
 import { Loading } from '@/components/ui/Loading/Loading';
 import type { PasswordForm } from '@shared/schemas/password';
+import { handleApiError } from '@/utils';
 
 export const ChangePassword = () => {
   const navigate = useNavigate();
@@ -16,7 +17,9 @@ export const ChangePassword = () => {
       const res = await update(data);
       toast.success(res.message);
       navigate(ROUTES.HOME);
-    } catch (err) {}
+    } catch (e) {
+      handleApiError(e, navigate);
+    }
   };
 
   return (

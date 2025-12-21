@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { studentApi } from '../api';
-import type { StudentDetail } from '../types';
-import { handleApiError } from '@/utils/handleApiError';
+import { studentApi } from '@/features/student';
+import type { StudentDetail } from '@/features/student';
+import { handleApiError } from '@/utils';
 import { useDelete } from '@/hooks/useDelete';
 import { useView } from '@/hooks/useView';
 

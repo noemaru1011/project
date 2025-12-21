@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useCreate } from '@/hooks/useCreate';
 import { studentApi } from '@/features/student';
-import { handleApiError } from '@/utils/handleApiError';
+import { handleApiError } from '@/utils';
 import type { StudentForm } from '@shared/schemas/student';
 
 export const useStudentCreate = () => {

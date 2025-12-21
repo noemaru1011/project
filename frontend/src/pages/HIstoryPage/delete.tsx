@@ -20,7 +20,7 @@ import { departmentOptions } from '@/features/department/constants/options';
 
 import { HistoryApi } from '@/api/historyApi';
 
-import type { HistoryDetail } from '@/interface/history';
+import type { HistoryDetail } from '@/features/history/types';
 
 import { handleApiError } from '@/utils/handleApiError';
 import { ROUTES } from '@/constants/routes';

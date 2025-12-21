@@ -1,9 +1,9 @@
-import { api } from './api';
+import { api } from '@/api/api';
 import type { HistoryForm, HistoryUpdateForm } from '@shared/schemas/history';
-import type { HistoryDetail } from '@/interface/history';
+import type { HistoryDetail } from '@/features/history/types';
 import { API_ROUTES } from '@shared/routes';
 
-export const HistoryApi = {
+export const historyApi = {
   create: (data: HistoryForm) =>
     api<void>(API_ROUTES.HISTORY, {
       method: 'POST',

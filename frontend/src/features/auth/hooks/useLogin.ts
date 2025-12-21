@@ -15,6 +15,8 @@ export function useLogin() {
       const res = await authApi.login(data);
       setPasswordUpdateRequired(res.data?.passwordUpdateRequired ?? false);
       return res;
+    } catch (e) {
+      throw e;
     } finally {
       end();
     }

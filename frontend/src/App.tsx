@@ -20,7 +20,7 @@ import { StudentViewPage } from '@/features/student/pages/view';
 import { StudentDeletePage } from '@/features/student/pages/delete';
 import { ChangePassword } from '@/features/auth/pages/updatePassword';
 // import { HistoryIndex } from '@/pages/historyPage';
-// import { HistoryCreate } from '@/pages/historyPage/create';
+import { HistoryCreatePage } from '@/features/history/pages/create';
 // import { HistoryUpdate } from '@/pages/historyPage/update';
 // import { HistoryDelete } from '@/pages/historyPage/delete';
 
@@ -48,14 +48,15 @@ const AppRoutes = () => (
           </RoleGuard>
         }
       />
-      {/* <Route
+      <Route
         path={ROUTES.HISTORY.CREATE}
         element={
           <RoleGuard allowedRoles={[ROLE.ADMIN, ROLE.STUDENT]}>
-            <HistoryCreate />
+            <HistoryCreatePage />
           </RoleGuard>
         }
       />
+      {/* 
       <Route
         path={ROUTES.HISTORY.INDEX}
         element={

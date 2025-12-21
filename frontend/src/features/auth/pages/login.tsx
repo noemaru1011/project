@@ -5,6 +5,7 @@ import { Loading } from '@/components/ui/Loading/Loading';
 import { useLogin } from '@/features/auth/hooks/useLogin';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
+import { handleApiError } from '@/utils';
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -15,7 +16,9 @@ export const Login = () => {
       const res = await login(data);
       toast.success(res.message);
       navigate(ROUTES.HOME);
-    } catch (err) {}
+    } catch (e) {
+      handleApiError(e, navigate);
+    }
   };
 
   return (

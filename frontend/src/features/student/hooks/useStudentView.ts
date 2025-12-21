@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { StudentDetail } from '@/features/student/types';
 import { studentApi } from '@/features/student/';
-import { handleApiError } from '@/utils/handleApiError';
+import { handleApiError } from '@/utils';
 import { useView } from '@/hooks/useView';
 import { ROUTES } from '@/constants/routes';
 

@@ -14,6 +14,8 @@ export function usePassword() {
       const res = await authApi.updatePassword(data);
       setPasswordUpdateRequired(false);
       return res;
+    } catch (e) {
+      throw e;
     } finally {
       end();
     }
