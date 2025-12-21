@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { ApiResponse } from '@/interface/apiResponse';
-import { useLoadingCounter } from './useLoading';
+import { useLoadingCounter } from './useLoadingCounter';
 
 export function useSearch<T, Query = void>(searchFn: (query: Query) => Promise<ApiResponse<T[]>>) {
   const [data, setData] = useState<T[]>([]);

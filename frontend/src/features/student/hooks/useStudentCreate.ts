@@ -13,7 +13,6 @@ export const useStudentCreate = () => {
       return await create(data);
     } catch (err) {
       handleApiError(err, navigate);
-      throw err;
     }
   };
 

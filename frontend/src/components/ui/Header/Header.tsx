@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { HeaderMain } from '@/components/ui/Header/HeaderMain';
 import { HeaderNav } from '@/components/ui/Header/HeaderNav';
 import { Menu } from '@/components/ui/Menu/Menu';
-import { useLogout } from '@/hooks/useLogout';
+import { useLogout } from '@/features/auth/hooks/useLogout';
 import type { Option } from '@/components/ui/option';
 import { ROUTES } from '@/constants/routes';
 import { handleApiError } from '@/utils/handleApiError';

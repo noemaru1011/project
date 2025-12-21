@@ -1,7 +1,7 @@
 import { api } from '@/api/api';
-import type { minorCategory } from '@/features/minorCategory/types';
+import type { MinorCategory } from '@/features/minorCategory';
 import { API_ROUTES } from '@shared/routes';
 
 export const minorCategoryApi = {
-  index: () => api<minorCategory[]>(API_ROUTES.MINOR_CATEGORY, { method: 'GET' }),
+  index: () => api<MinorCategory[]>(API_ROUTES.MINOR_CATEGORY, { method: 'GET' }),
 };

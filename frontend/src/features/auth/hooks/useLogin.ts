@@ -1,8 +1,8 @@
-import { LoginApi } from '@/api/loginApi';
+import { authApi } from '@/features/auth/api';
 import type { LoginForm } from '@shared/schemas/login';
-import { useLoadingCounter } from './useLoading';
+import { useLoadingCounter } from '@/hooks/useLoadingCounter';
 import type { ApiResponse } from '@/interface/apiResponse';
-import type { LoginResponse } from '@/interface/loginResponse';
+import type { LoginResponse } from '@/features/auth/types';
 import { useLoginContext } from '@/hooks/passwordUpdateContext';
 
 export function useLogin() {
@@ -12,7 +12,7 @@ export function useLogin() {
   const login = async (data: LoginForm): Promise<ApiResponse<LoginResponse>> => {
     start();
     try {
-      const res = await LoginApi.login(data);
+      const res = await authApi.login(data);
       setPasswordUpdateRequired(res.data?.passwordUpdateRequired ?? false);
       return res;
     } finally {

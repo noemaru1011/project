@@ -25,7 +25,6 @@ export const useStudentDelete = (studentId?: string) => {
       return await remove(studentId);
     } catch (err) {
       handleApiError(err, navigate);
-      throw err;
     }
   };
 

@@ -1,5 +1,5 @@
-import { LogoutApi } from '@/api/logoutApi';
-import { useLoadingCounter } from './useLoading';
+import { authApi } from '@/features/auth/api';
+import { useLoadingCounter } from '@/hooks/useLoadingCounter';
 
 //pageがないためuseLogoutを作成
 export function useLogout() {
@@ -8,7 +8,7 @@ export function useLogout() {
   const logout = async () => {
     start();
     try {
-      const res = await LogoutApi.logout();
+      const res = await authApi.logout();
       return res;
     } finally {
       end();

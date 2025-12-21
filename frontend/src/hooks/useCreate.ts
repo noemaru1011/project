@@ -1,5 +1,5 @@
 import type { ApiResponse } from '@/interface/apiResponse';
-import { useLoadingCounter } from './useLoading';
+import { useLoadingCounter } from './useLoadingCounter';
 
 export function useCreate<I>(createFn: (data: I) => Promise<ApiResponse<void>>) {
   const { loading, start, end } = useLoadingCounter();

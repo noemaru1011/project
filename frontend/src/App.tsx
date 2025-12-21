@@ -6,7 +6,7 @@ import { ROUTES } from '@/constants/routes';
 import { ROLE } from '@shared/role';
 
 import Layout from '@/components/layouts/Layout';
-import { Login } from '@/pages/auth/login';
+import { Login } from '@/features/auth/pages/login';
 import { HomePage } from '@/pages/home/homePage';
 import { CategoryIndexPage } from '@/features/category/pages';
 import { SubCategoryIndexPage } from '@/features/subCategory/pages';
@@ -18,11 +18,11 @@ import { StudentCreatePage } from '@/features/student/pages/create';
 import { StudentUpdatePage } from '@/features/student/pages/update';
 import { StudentViewPage } from '@/features/student/pages/view';
 import { StudentDeletePage } from '@/features/student/pages/delete';
-import { ChangePassword } from '@/pages/passwordPage/update';
-import { HistoryIndex } from '@/pages/historyPage';
-import { HistoryCreate } from '@/pages/historyPage/create';
-import { HistoryUpdate } from '@/pages/historyPage/update';
-import { HistoryDelete } from '@/pages/historyPage/delete';
+import { ChangePassword } from '@/features/auth/pages/updatePassword';
+// import { HistoryIndex } from '@/pages/historyPage';
+// import { HistoryCreate } from '@/pages/historyPage/create';
+// import { HistoryUpdate } from '@/pages/historyPage/update';
+// import { HistoryDelete } from '@/pages/historyPage/delete';
 
 import { NotFound } from '@/pages/error/notFound';
 import { ServerError } from '@/pages/error/serverError';
@@ -48,7 +48,7 @@ const AppRoutes = () => (
           </RoleGuard>
         }
       />
-      <Route
+      {/* <Route
         path={ROUTES.HISTORY.CREATE}
         element={
           <RoleGuard allowedRoles={[ROLE.ADMIN, ROLE.STUDENT]}>
@@ -65,7 +65,7 @@ const AppRoutes = () => (
         }
       />
       <Route path={ROUTES.HISTORY.UPDATE()} element={<HistoryUpdate />} />
-      <Route path={ROUTES.HISTORY.DELETE()} element={<HistoryDelete />} />
+      <Route path={ROUTES.HISTORY.DELETE()} element={<HistoryDelete />} /> */}
       <Route
         path={ROUTES.STUDENT.CHANGE}
         element={

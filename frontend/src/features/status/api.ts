@@ -1,5 +1,5 @@
 import { api } from '@/api/api';
-import type { Status } from '@/features/status/types';
+import type { Status } from '@/features/status';
 import { API_ROUTES } from '@shared/routes';
 
 export const statusApi = {

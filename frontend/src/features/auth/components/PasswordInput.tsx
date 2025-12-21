@@ -4,9 +4,9 @@ import { Lock, Eye, EyeOff } from 'lucide-react';
 import type { Props } from '@/components/ui/Input/Input';
 
 type PasswordInputProps = Omit<Props, 'required' | 'type'>;
-const [showPassword, setShowPassword] = useState(false);
 
 export const PasswordInput = ({ disabled, ...props }: PasswordInputProps) => {
+  const [showPassword, setShowPassword] = useState(false);
   return (
     <Input
       {...props}

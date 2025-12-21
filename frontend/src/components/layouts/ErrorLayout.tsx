@@ -21,6 +21,7 @@ export const ErrorLayout = ({
   bgVia = 'white',
   bgTo = 'orange-100',
 }: Props) => {
+  const bg = `from-${bgFrom} via-${bgVia} to-${bgTo}`;
   const floatAnimation = {
     y: [0, -15, 0],
     transition: { duration: 3, repeat: Infinity, ease: 'easeInOut' as const },
@@ -28,7 +29,7 @@ export const ErrorLayout = ({
 
   return (
     <div
-      className={`min-h-screen flex flex-col items-center justify-center relative bg-gradient-to-br from-${bgFrom} via-${bgVia} to-${bgTo} px-4 overflow-hidden`}
+      className={`min-h-screen flex flex-col items-center justify-center relative bg-gradient-to-br ${bg} px-4 overflow-hidden`}
     >
       {/* 背景丸 */}
       <motion.div

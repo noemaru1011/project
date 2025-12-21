@@ -1,5 +1,5 @@
 import { api } from '@/api/api';
-import type { SubCategory } from '@/features/subCategory/types';
+import type { SubCategory } from '@/features/subCategory';
 import { API_ROUTES } from '@shared/routes';
 
 export const subCategoryApi = {

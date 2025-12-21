@@ -37,7 +37,7 @@ export const StudentUpdatePage = () => {
   const handleSubmit = async (data: FormType) => {
     if (!studentId) return;
     const res = await updateStudent(studentId, data);
-    toast.success(res.message);
+    toast.success(res!.message);
     navigate(ROUTES.STUDENT.INDEX);
   };
 

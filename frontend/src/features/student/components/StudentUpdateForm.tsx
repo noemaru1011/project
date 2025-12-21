@@ -50,11 +50,18 @@ export const StudentUpdateForm = ({ defaultValues, loading, onSubmit, onBack }: 
         )}
       />
 
-      <MinorCategorySelect
-        label="小分類名"
-        required
-        error={errors.minorCategoryId?.message}
-        {...register('minorCategoryId')}
+      <Controller
+        name="minorCategoryId"
+        control={control}
+        render={({ field, fieldState }) => (
+          <MinorCategorySelect
+            label="小分類名"
+            required
+            value={field.value as number | undefined}
+            onChange={field.onChange}
+            error={fieldState.error?.message}
+          />
+        )}
       />
 
       <StudentEmailInput
@@ -65,11 +72,18 @@ export const StudentUpdateForm = ({ defaultValues, loading, onSubmit, onBack }: 
         {...register('email')}
       />
 
-      <DepartmentSelect
-        label="学科名"
-        required
-        error={errors.departmentId?.message}
-        {...register('departmentId')}
+      <Controller
+        name="departmentId"
+        control={control}
+        render={({ field, fieldState }) => (
+          <DepartmentSelect
+            label="学科名"
+            required
+            value={field.value as number | undefined}
+            onChange={field.onChange}
+            error={fieldState.error?.message}
+          />
+        )}
       />
 
       <Input

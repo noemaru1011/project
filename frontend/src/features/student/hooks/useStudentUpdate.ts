@@ -1,8 +1,8 @@
-import { useNavigate } from "react-router-dom";
-import { useUpdate } from "@/hooks/useUpdate";
-import { handleApiError } from "@/utils/handleApiError";
-import { studentApi } from "@/features/student";
-import type { StudentUpdateForm } from "@shared/schemas/student";
+import { useNavigate } from 'react-router-dom';
+import { useUpdate } from '@/hooks/useUpdate';
+import { handleApiError } from '@/utils/handleApiError';
+import { studentApi } from '@/features/student';
+import type { StudentUpdateForm } from '@shared/schemas/student';
 
 export const useStudentUpdate = () => {
   const navigate = useNavigate();
@@ -13,7 +13,6 @@ export const useStudentUpdate = () => {
       return await update(id, data);
     } catch (err) {
       handleApiError(err, navigate);
-      throw err;
     }
   };
 

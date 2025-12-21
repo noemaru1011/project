@@ -1,4 +1,4 @@
-import { StatusTable } from '@/features/status';
+import { StatusTable } from '@/features/status/components';
 
 export const StatusIndexPage = () => {
   return (
