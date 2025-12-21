@@ -22,8 +22,8 @@ export const HistoryDeletePage = () => {
 
   const handleDelete = async () => {
     if (!history) return;
-    await deleteHistory(history.historyId);
-    toast.success('削除しました');
+    const res = await deleteHistory(history.historyId);
+    toast.success(res!.message);
     navigate(ROUTES.HISTORY.INDEX);
   };
 

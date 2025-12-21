@@ -9,7 +9,7 @@ export const useHistoryDelete = () => {
 
   const deleteHistory = async (historyId: string) => {
     try {
-      await remove(historyId);
+      return await remove(historyId);
     } catch (err) {
       handleApiError(err, navigate);
     }
