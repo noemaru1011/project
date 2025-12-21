@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import type { NavigateFunction } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
-import type { ApiResponse } from '@/interface/apiResponse';
+import type { ApiResponse } from '@/api/types';
 import { APIMESSAGE } from '@shared/apiMessage';
 
 const isApiResponse = (err: unknown): err is ApiResponse<unknown> => {

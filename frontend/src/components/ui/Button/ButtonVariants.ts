@@ -31,6 +31,14 @@ export const VARIANT_STYLES = {
     bg: 'bg-gray-500 hover:bg-gray-600 transition-colors shadow-md',
     label: 'ホームに戻る',
   },
+  Retry: {
+    bg: 'bg-slate-200 hover:bg-slate-300 transition-colors shadow-md',
+    label: '再試行',
+  },
+  LastPage: {
+    bg: 'bg-gray-500 hover:bg-gray-600 transition-colors shadow-md',
+    label: '戻る',
+  },
 } as const;
 
 export type ButtonVariant = keyof typeof VARIANT_STYLES;

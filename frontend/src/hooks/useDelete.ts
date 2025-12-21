@@ -1,4 +1,4 @@
-import type { ApiResponse } from '@/interface/apiResponse';
+import type { ApiResponse } from '@/api/types';
 import { useLoadingCounter } from './useLoadingCounter';
 
 export function useDelete(deleteFn: (id: string) => Promise<ApiResponse<void>>) {

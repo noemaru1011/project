@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { ServerCrash } from 'lucide-react';
 import { ErrorLayout } from '@/components/layouts/ErrorLayout';
 import { ROUTES } from '@/constants/routes';
 
@@ -8,13 +7,10 @@ export const ServerError = () => {
 
   return (
     <ErrorLayout
-      code="500"
-      message="サーバーエラーが発生しました。"
-      icon={<ServerCrash className="w-16 h-16 text-orange-500" strokeWidth={1.5} />}
-      onButtonClick={() => navigate(ROUTES.HOME)}
-      bgFrom="orange-50"
-      bgVia="white"
-      bgTo="orange-100"
+      type="500"
+      onGoHome={() => navigate(ROUTES.HOME)}
+      onGoBack={() => navigate(-1)}
+      onRetry={() => window.location.reload()}
     />
   );
 };

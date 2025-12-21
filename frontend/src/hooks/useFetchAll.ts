@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { ApiResponse } from '@/interface/apiResponse';
+import type { ApiResponse } from '@/api/types';
 import { useLoadingCounter } from './useLoadingCounter';
 
 export function useFetchAll<T>(indexFn: () => Promise<ApiResponse<T[]>>) {

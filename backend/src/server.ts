@@ -71,36 +71,36 @@ app.use(
   requestLogger,
   studentSearchRoutes,
 );
-//以下マスタは管理者のみ
 app.use(
   API_ROUTES.CATEGORY,
   authMiddleware,
-  requireRole([ROLE.ADMIN]),
+  requireRole([ROLE.ADMIN, ROLE.STUDENT]),
   requestLogger,
   categoryRoutes,
 );
 app.use(
   API_ROUTES.SUBCATEGORY,
   authMiddleware,
-  requireRole([ROLE.ADMIN]),
+  requireRole([ROLE.ADMIN, ROLE.STUDENT]),
   requestLogger,
   SubCategoryRoutes,
 );
 app.use(
   API_ROUTES.MINOR_CATEGORY,
   authMiddleware,
-  requireRole([ROLE.ADMIN]),
+  requireRole([ROLE.ADMIN, ROLE.STUDENT]),
   requestLogger,
   MinorCategoryRoutes,
 );
 app.use(
   API_ROUTES.DEPARTMENT,
   authMiddleware,
-  requireRole([ROLE.ADMIN]),
+  requireRole([ROLE.ADMIN, ROLE.STUDENT]),
   requestLogger,
   DepartmentRoutes,
 );
 app.use(API_ROUTES.STATUS, authMiddleware, requireRole([ROLE.ADMIN]), requestLogger, statusRoutes);
+//管理者のみ
 app.use(
   API_ROUTES.STUDENT,
   authMiddleware,

@@ -7,11 +7,7 @@ const strongPassword = z
 
 export const validation = z
   .object({
-    oldPassword: z
-      .string()
-      .min(6, "パスワードは6文字以上で入力してください")
-      .max(100, "パスワードは100文字以内で入力してください"),
-
+    oldPassword: strongPassword,
     newPassword: strongPassword,
     checkNewPassword: strongPassword,
   })
