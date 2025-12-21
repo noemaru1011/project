@@ -1,13 +1,13 @@
 import { Table } from '@/components/molecules/Table';
 import { Loading } from '@/components/atoms/Loading';
 import { studentLabels } from '@/features/student/constants';
-import { StudentSearchApi } from '@/api/studentSearchApi';
+import { StudentSearchApi } from '@/features/search/student/api';
 import type { StudentResult } from '@/features/student/types';
 import type { StudentQuery } from '@/features/search/student/types';
 import { ROUTES } from '@/constants/routes';
 import { useSearch } from '@/hooks/useSearch';
 import type { Action } from '@/components/molecules/TableRowActions';
-import { StudentSearchPanel } from '@/features/search/student/components/search';
+import { StudentSearchPanel } from '@/features/search/student/components/StudentSearchForm';
 
 export const StudentIndex = () => {
   const { data, loading, search } = useSearch<StudentResult, StudentQuery>(StudentSearchApi.search);

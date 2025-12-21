@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import { Loading } from "@/components/atoms/Loading";
-import { ROUTES } from "@/constants/routes";
-import { useView } from "@/hooks/useView";
-import { StudentUpdateForm } from "@/features/student/components/StudentUpdateForm";
-import { useStudentUpdate } from "@/features/student/hooks/useStudentUpdate";
-import type { StudentDetail } from "@/features/student/types";
-import type { StudentUpdateForm as FormType } from "@shared/schemas/student";
-import { studentApi } from "@/features/student";
-import { handleApiError } from "@/utils/handleApiError";
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { Loading } from '@/components/atoms/Loading';
+import { ROUTES } from '@/constants/routes';
+import { useView } from '@/hooks/useView';
+import { StudentUpdateForm } from '@/features/student/components/StudentUpdateForm';
+import { useStudentUpdate } from '@/features/student/hooks/useStudentUpdate';
+import type { StudentDetail } from '@/features/student/types';
+import type { StudentUpdateForm as FormType } from '@shared/schemas/student';
+import { studentApi } from '@/features/student';
+import { handleApiError } from '@/utils/handleApiError';
 
 export const StudentUpdatePage = () => {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ export const StudentUpdatePage = () => {
           minorCategoryId: data.minorCategoryId,
           departmentId: data.departmentId,
           updatedAt: new Date(data.updatedAt),
-        })
+        }),
       )
       .catch((err) => handleApiError(err, navigate));
   }, []);

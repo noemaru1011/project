@@ -16,7 +16,7 @@ import { HistoryApi } from '@/api/historyApi';
 import { useSearch } from '@/hooks/useSearch';
 import { useCreate } from '@/hooks/useCreate';
 import type { StudentQuery } from '@/features/search/student/types';
-import { StudentSearchPanel } from '@/features/search/student/components/search';
+import { StudentSearchPanel } from '@/features/search/student/components/StudentSearchForm';
 import type { StudentResult } from '@/features/student/types';
 import { validation } from '@shared/schemas/history';
 import type { HistoryForm } from '@shared/schemas/history';

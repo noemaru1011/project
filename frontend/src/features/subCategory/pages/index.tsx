@@ -1,4 +1,4 @@
-import { SubCategoryTable } from '@/features/subCategory';
+import { SubCategoryTable } from '@/features/subCategory/components';
 
 export const SubCategoryIndexPage = () => {
   return (

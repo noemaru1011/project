@@ -1,13 +1,12 @@
 import { Controller } from 'react-hook-form';
 import type { StudentQuery } from '@/features/search/student/types';
 import { Accordion } from '@/components/molecules/Accordion';
-import { CheckboxGroup } from '@/components/molecules/CheckboxGroup';
 import { Button } from '@/components/atoms/Button';
-import { categoryOptions } from '@/features/category/constants/';
-import { subCategoryOptions } from '@/features/subCategory/constants/options';
-import { minorCategoryOptions } from '@/features/minorCategory/constants/options';
-import { gradeOptions } from '@/constants/gradeOptions';
-import { departmentOptions } from '@/features/department/constants/options';
+import { CategoryCheckboxGroup } from '@/features/category/components';
+import { SubCategoryCheckboxGroup } from '@/features/subCategory/components';
+import { MinorCategoryCheckboxGroup } from '@/features/minorCategory/components';
+import { GradeCheckboxGroup } from '@/features/grade/components';
+import { DepartmentCheckboxGroup } from '@/features/department/components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
 import { useStudentSearch } from '../hooks/useStudentSearch';
@@ -30,11 +29,10 @@ export const StudentSearchPanel = ({ onSearch }: Props) => {
           name="categoryId"
           control={control}
           render={({ field, fieldState }) => (
-            <CheckboxGroup
+            <CategoryCheckboxGroup
               name={field.name}
               value={field.value.map(String)}
               onChange={(vals) => field.onChange(vals.map(Number))}
-              options={categoryOptions}
               error={fieldState.error?.message}
               row={1}
             />
@@ -50,11 +48,10 @@ export const StudentSearchPanel = ({ onSearch }: Props) => {
           name="subCategoryId"
           control={control}
           render={({ field, fieldState }) => (
-            <CheckboxGroup
+            <SubCategoryCheckboxGroup
               name={field.name}
               value={field.value.map(String)}
               onChange={(vals) => field.onChange(vals.map(Number))}
-              options={subCategoryOptions}
               error={fieldState.error?.message}
               row={4}
             />
@@ -70,11 +67,10 @@ export const StudentSearchPanel = ({ onSearch }: Props) => {
           name="minorCategoryId"
           control={control}
           render={({ field, fieldState }) => (
-            <CheckboxGroup
+            <MinorCategoryCheckboxGroup
               name={field.name}
               value={field.value.map(String)}
               onChange={(vals) => field.onChange(vals.map(Number))}
-              options={minorCategoryOptions}
               error={fieldState.error?.message}
               row={4}
             />
@@ -90,11 +86,10 @@ export const StudentSearchPanel = ({ onSearch }: Props) => {
           name="grade"
           control={control}
           render={({ field, fieldState }) => (
-            <CheckboxGroup
+            <GradeCheckboxGroup
               name={field.name}
               value={field.value.map(String)}
               onChange={(vals) => field.onChange(vals.map(Number))}
-              options={gradeOptions}
               error={fieldState.error?.message}
             />
           )}
@@ -109,11 +104,10 @@ export const StudentSearchPanel = ({ onSearch }: Props) => {
           name="departmentId"
           control={control}
           render={({ field, fieldState }) => (
-            <CheckboxGroup
+            <DepartmentCheckboxGroup
               name={field.name}
               value={field.value.map(String)}
               onChange={(vals) => field.onChange(vals.map(Number))}
-              options={departmentOptions}
               error={fieldState.error?.message}
             />
           )}

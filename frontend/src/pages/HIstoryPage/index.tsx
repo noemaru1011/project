@@ -7,7 +7,7 @@ import type { HistoryQuery } from '@/interface/historyQuery';
 import { ROUTES } from '@/constants/routes';
 import { useSearch } from '@/hooks/useSearch';
 import type { Action } from '@/components/molecules/TableRowActions';
-import { StudentSearchPanel } from '@/features/search/student/components/search';
+import { StudentSearchPanel } from '@/features/search/student/components/StudentSearchForm';
 
 export const HistoryIndex = () => {
   const { data, loading, search } = useSearch<HistoryResult, HistoryQuery>(HistorySearchApi.search);

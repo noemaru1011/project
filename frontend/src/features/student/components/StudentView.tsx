@@ -1,13 +1,12 @@
-import { StudentNameInput } from '@/features/student/components/StudentNameInput';
-import { StudentEmailInput } from '@/features/student/components/StudentEmailInput';
-import { GradeRadioGroup } from '@/features/student/components/GradeRadioGroup';
+import { StudentNameInput, StudentEmailInput } from '@/features/student/components';
+import { GradeRadioGroup } from '@/features/grade/components';
 import { MinorCategorySelect } from '@/features/minorCategory/components/MinorCategorySelect';
 import { DepartmentSelect } from '@/features/department/components/DepartmentSelect';
 import { Button } from '@/components/atoms/Button';
 import type { StudentDetail } from '@/features/student/types';
 
 type Props = {
-  student: StudentDetail;
+  student: StudentDetail | null;
   onBack: () => void;
 };
 
