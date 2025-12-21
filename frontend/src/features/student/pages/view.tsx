@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { ROUTES } from '@/constants/routes';
 import { StudentView } from '@/features/student/components/StudentView';
@@ -6,7 +6,8 @@ import { useStudentView } from '@/features/student/hooks/useStudentView';
 
 export const StudentViewPage = () => {
   const navigate = useNavigate();
-  const { student, loading } = useStudentView();
+  const { studentId } = useParams<{ studentId: string }>();
+  const { student, loading } = useStudentView(studentId);
 
   return (
     <Loading loading={loading}>

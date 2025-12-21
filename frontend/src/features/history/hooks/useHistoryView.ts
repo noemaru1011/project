@@ -1,35 +1,22 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import type { StudentDetail } from '@/features/student/types';
-import { studentApi } from '@/features/student/';
+import { useNavigate } from 'react-router-dom';
+import type { HistoryDetail } from '@/features/history';
+import { historyApi } from '@/features/history';
 import { handleApiError } from '@/utils';
 import { useView } from '@/hooks/useView';
-import { ROUTES } from '@/constants/routes';
 
-export const useStudentView = () => {
+export const useHistoryView = (historyId?: string) => {
   const navigate = useNavigate();
-  const { studentId } = useParams<{ studentId: string }>();
-  const { view, loading } = useView<StudentDetail>(studentApi.view);
-  const [student, setStudent] = useState<StudentDetail | null>(null);
+  const { view, loading } = useView<HistoryDetail>(historyApi.view);
+  const [history, setHistory] = useState<HistoryDetail | null>(null);
 
   useEffect(() => {
-    if (!studentId) return;
+    if (!historyId) return;
 
-    const fetchStudent = async () => {
-      try {
-        const data = await view(studentId);
-        setStudent(data);
-      } catch (err) {
-        handleApiError(err, navigate);
-      }
-    };
+    view(historyId)
+      .then(setHistory)
+      .catch((err) => handleApiError(err, navigate));
+  }, [historyId]);
 
-    fetchStudent();
-  }, [studentId]);
-
-  return {
-    student,
-    loading,
-    goBack: () => navigate(ROUTES.STUDENT.INDEX),
-  };
+  return { history, loading };
 };

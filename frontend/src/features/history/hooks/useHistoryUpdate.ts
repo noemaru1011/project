@@ -8,9 +8,9 @@ export const useHistoryUpdate = () => {
   const navigate = useNavigate();
   const { update, loading } = useUpdate<HistoryUpdateForm>(historyApi.update);
 
-  const updateHistory = async (id: string, data: HistoryUpdateForm) => {
+  const updateHistory = async (historyId: string, data: HistoryUpdateForm) => {
     try {
-      return await update(id, data);
+      return await update(historyId, data);
     } catch (err) {
       handleApiError(err, navigate);
     }

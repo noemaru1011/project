@@ -9,7 +9,7 @@ export const useStudentDelete = () => {
 
   const deleteStudent = async (studentId: string) => {
     try {
-      await remove(studentId);
+      return await remove(studentId);
     } catch (err) {
       handleApiError(err, navigate);
     }

@@ -8,9 +8,9 @@ export const useStudentUpdate = () => {
   const navigate = useNavigate();
   const { update, loading } = useUpdate<StudentUpdateForm>(studentApi.update);
 
-  const updateStudent = async (id: string, data: StudentUpdateForm) => {
+  const updateStudent = async (studentId: string, data: StudentUpdateForm) => {
     try {
-      return await update(id, data);
+      return await update(studentId, data);
     } catch (err) {
       handleApiError(err, navigate);
     }

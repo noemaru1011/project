@@ -1,33 +1,22 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import type { StudentDetail } from '@/features/student/types';
 import { studentApi } from '@/features/student/';
 import { handleApiError } from '@/utils';
 import { useView } from '@/hooks/useView';
 
-export const useStudentView = () => {
+export const useStudentView = (studentId?: string) => {
   const navigate = useNavigate();
-  const { studentId } = useParams<{ studentId: string }>();
   const { view, loading } = useView<StudentDetail>(studentApi.view);
   const [student, setStudent] = useState<StudentDetail | null>(null);
 
   useEffect(() => {
     if (!studentId) return;
 
-    const fetchStudent = async () => {
-      try {
-        const data = await view(studentId);
-        setStudent(data);
-      } catch (err) {
-        handleApiError(err, navigate);
-      }
-    };
-
-    fetchStudent();
+    view(studentId)
+      .then(setStudent)
+      .catch((err) => handleApiError(err, navigate));
   }, [studentId]);
 
-  return {
-    student,
-    loading,
-  };
+  return { student, loading };
 };

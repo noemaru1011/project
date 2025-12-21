@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { ROUTES } from '@/constants/routes';
@@ -9,7 +9,9 @@ import type { StudentUpdateForm as FormType } from '@shared/schemas/student';
 
 export const StudentUpdatePage = () => {
   const navigate = useNavigate();
-  const { student, loading } = useStudentView();
+  const { studentId } = useParams<{ studentId: string }>();
+
+  const { student, loading } = useStudentView(studentId);
   const { updateStudent, loading: updating } = useStudentUpdate();
 
   if (!student) {

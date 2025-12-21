@@ -61,7 +61,7 @@ export const RadioGroup = ({
 
   return (
     <fieldset
-      className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm"
+      className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm disabled:cursor-not-allowed"
       disabled={disabled}
     >
       {label && (

@@ -16,7 +16,7 @@ export const Radio = React.forwardRef<HTMLInputElement, Props>(
         type="radio"
         ref={ref}
         disabled={disabled}
-        className="border rounded-sm accent-blue-600 disabled:bg-gray-100"
+        className="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
         {...rest}
       />
       {label && (

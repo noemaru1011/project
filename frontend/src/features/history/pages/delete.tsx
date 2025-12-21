@@ -1,9 +1,7 @@
 import { toast } from 'react-toastify';
-import { useEffect } from 'react';
-import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useDelete } from '@/hooks/useDelete';
-import { useView } from '@/hooks/useView';
+import { useHistoryDelete } from '../hooks/useHistoryDelete';
+import { useHistoryView } from '../hooks/useHistoryView';
 
 import { Checkbox } from '@/components/ui/Checkbox/Checkbox';
 import { Button } from '@/components/ui/Button/Button';
@@ -14,51 +12,23 @@ import { DepartmentSelect } from '@/features/department/components';
 import { StatusRadioGroup } from '@/features/status/components';
 import { StartTimeInput, EndTimeInput, OtherTextarea } from '@/features/history/components';
 import { Loading } from '@/components/ui/Loading/Loading';
-
-import { historyApi } from '@/features/history';
-
-import type { HistoryDetail } from '@/features/history/types';
-
-import { handleApiError } from '@/utils/handleApiError';
 import { ROUTES } from '@/constants/routes';
 
-export const HistoryDelete = () => {
+export const HistoryDeletePage = () => {
   const navigate = useNavigate();
   const { historyId } = useParams<{ historyId: string }>();
-  const { remove, loading } = useDelete(historyApi.delete);
-  const { view } = useView<HistoryDetail>(historyApi.view);
-
-  const [history, setHistoryData] = useState<HistoryDetail | null>(null);
-
-  // 初期値ロード
-  useEffect(() => {
-    if (!historyId) return;
-
-    const fetch = async () => {
-      if (!historyId) return;
-      try {
-        const data: HistoryDetail = await view(historyId);
-        setHistoryData(data);
-      } catch (err: any) {
-        handleApiError(err, navigate);
-      }
-    };
-    fetch();
-  }, []);
+  const { history, loading } = useHistoryView(historyId);
+  const { deleteHistory, loading: deleting } = useHistoryDelete();
 
   const handleDelete = async () => {
-    try {
-      if (!historyId) return;
-      const res = await remove(historyId);
-      toast.success(res.message);
-      navigate(ROUTES.HISTORY.INDEX);
-    } catch (err: any) {
-      handleApiError(err, navigate);
-    }
+    if (!history) return;
+    await deleteHistory(history.historyId);
+    toast.success('削除しました');
+    navigate(ROUTES.HISTORY.INDEX);
   };
 
   return (
-    <Loading loading={loading}>
+    <Loading loading={deleting || loading}>
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="w-full max-w-4xl  p-8 bg-white rounded-2xl shadow-lg space-y-6">
           <h2 className="text-2xl font-bold text-center text-gray-800">履歴削除</h2>

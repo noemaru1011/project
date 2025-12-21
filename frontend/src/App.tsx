@@ -22,7 +22,7 @@ import { ChangePassword } from '@/features/auth/pages/updatePassword';
 import { HistoryIndexPage } from '@/features/history/pages';
 import { HistoryCreatePage } from '@/features/history/pages/create';
 // import { HistoryUpdate } from '@/pages/historyPage/update';
-// import { HistoryDelete } from '@/pages/historyPage/delete';
+import { HistoryDeletePage } from '@/features/history/pages/delete';
 
 import { NotFound } from '@/pages/error/notFound';
 import { ServerError } from '@/pages/error/serverError';
@@ -66,8 +66,8 @@ const AppRoutes = () => (
         }
       />
       {/* 
-      <Route path={ROUTES.HISTORY.UPDATE()} element={<HistoryUpdate />} />
-      <Route path={ROUTES.HISTORY.DELETE()} element={<HistoryDelete />} /> */}
+      <Route path={ROUTES.HISTORY.UPDATE()} element={<HistoryUpdate />} />*/}
+      <Route path={ROUTES.HISTORY.DELETE()} element={<HistoryDeletePage />} />
       <Route
         path={ROUTES.STUDENT.CHANGE}
         element={

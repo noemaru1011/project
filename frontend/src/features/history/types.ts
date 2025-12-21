@@ -1,5 +1,5 @@
 export interface HistoryDetail {
-  historyId: number;
+  historyId: string;
   studentName: string;
   grade: number;
   minorCategoryId: number;

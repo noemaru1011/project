@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { ROUTES } from '@/constants/routes';
 import { StudentDeleteView } from '@/features/student/components/StudentDeleteView';
@@ -7,14 +7,15 @@ import { useStudentDelete } from '@/features/student/hooks/useStudentDelete';
 import { useStudentView } from '@/features/student/hooks/useStudentView';
 
 export const StudentDeletePage = () => {
-  const { student, loading } = useStudentView();
+  const { studentId } = useParams<{ studentId: string }>();
+  const { student, loading } = useStudentView(studentId);
   const { deleteStudent, loading: deleting } = useStudentDelete();
   const navigate = useNavigate();
 
   const handleDelete = async () => {
     if (!student) return;
-    await deleteStudent(student.studentId);
-    toast.success('削除しました');
+    const res = await deleteStudent(student.studentId);
+    toast.success(res!.message);
     navigate(ROUTES.STUDENT.INDEX);
   };
 

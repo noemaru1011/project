@@ -1,4 +1,4 @@
 export interface MinorCategory {
-  minorCategoryId: number;
+  minorCategoryId: string;
   minorCategoryName: string;
 }
