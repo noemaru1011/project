@@ -1,6 +1,6 @@
-import { Input } from '@/components/atoms/Input';
+import { Input } from '@/components/ui/Input/Input';
 import { User } from 'lucide-react';
-import type { Props } from '@/components/atoms/Input';
+import type { Props } from '@/components/ui/Input/Input';
 
 type StudentNameInputProps = Omit<Props, 'id' | 'type'>;
 

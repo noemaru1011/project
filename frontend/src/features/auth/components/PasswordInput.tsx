@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Input } from '@/components/atoms/Input';
+import { Input } from '@/components/ui/Input/Input';
 import { Lock, Eye, EyeOff } from 'lucide-react';
-import type { Props } from '@/components/atoms/Input';
+import type { Props } from '@/components/ui/Input/Input';
 
 type PasswordInputProps = Omit<Props, 'required' | 'type'>;
 const [showPassword, setShowPassword] = useState(false);

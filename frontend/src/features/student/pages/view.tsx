@@ -1,4 +1,4 @@
-import { Loading } from '@/components/atoms/Loading';
+import { Loading } from '@/components/ui/Loading/Loading';
 import { StudentView } from '@/features/student/components/StudentView';
 import { useStudentView } from '@/features/student/hooks/useStudentView';
 

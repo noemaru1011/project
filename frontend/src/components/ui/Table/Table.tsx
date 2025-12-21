@@ -1,6 +1,6 @@
-import { TableHead } from '@/components/molecules/TableHead';
-import { TableRow } from '@/components/molecules/TableRow';
-import type { Action } from '@/components/molecules/TableRowActions';
+import { TableHead } from '@/components/ui/Table/TableHead';
+import { TableRow } from '@/components/ui/Table/TableRow';
+import type { Action } from '@/components/ui/Table/TableRowActions';
 
 type Props<T> = {
   /** 表示するラベルの定義オブジェクト*/

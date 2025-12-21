@@ -1,5 +1,5 @@
-import { RadioGroup } from '@/components/molecules/RadioGroup';
-import type { Props } from '@/components/molecules/RadioGroup';
+import { RadioGroup } from '@/components/ui/RadioGroup/RadioGroup';
+import type { Props } from '@/components/ui/RadioGroup/RadioGroup';
 import { gradeOptions } from '@/features/grade/constants/gradeOptions';
 
 type GradeRadioGroupProps = Omit<Props, 'options'>;

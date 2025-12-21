@@ -1,8 +1,8 @@
-import { Table } from '@/components/molecules/Table';
-import { Loading } from '@/components/atoms/Loading';
+import { Table } from '@/components/ui/Table/Table';
+import { Loading } from '@/components/ui/Loading/Loading';
 import { studentLabels } from '@/features/student/constants';
 import type { StudentResult } from '@/features/student/types';
-import type { Action } from '@/components/molecules/TableRowActions';
+import type { Action } from '@/components/ui/Table/TableRowActions';
 import { ROUTES } from '@/constants/routes';
 
 type Props = {

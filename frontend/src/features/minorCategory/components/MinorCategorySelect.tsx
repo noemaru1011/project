@@ -1,6 +1,6 @@
-import { Select } from '@/components/atoms/Select';
+import { Select } from '@/components/ui/Select/Select';
 import { Group } from 'lucide-react';
-import type { Props } from '@/components/atoms/Select';
+import type { Props } from '@/components/ui/Select/Select';
 import { useMinorCategoryOptions } from '@/features/minorCategory/hooks/useMinorCategoryOptions';
 
 type MinorCategorySelectProps = Omit<Props, 'id' | 'options'> & { disabled?: boolean };

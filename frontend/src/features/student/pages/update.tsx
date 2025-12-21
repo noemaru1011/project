@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Loading } from '@/components/atoms/Loading';
+import { Loading } from '@/components/ui/Loading/Loading';
 import { ROUTES } from '@/constants/routes';
 import { useView } from '@/hooks/useView';
 import { StudentUpdateForm } from '@/features/student/components/StudentUpdateForm';

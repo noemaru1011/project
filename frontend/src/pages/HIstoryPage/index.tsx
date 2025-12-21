@@ -1,12 +1,12 @@
-import { Table } from '@/components/molecules/Table';
-import { Loading } from '@/components/atoms/Loading';
+import { Table } from '@/components/ui/Table/Table';
+import { Loading } from '@/components/ui/Loading/Loading';
 import { HistoryResultLabels } from '@/constants/historyLabels';
 import { HistorySearchApi } from '@/api/historySearchApi';
 import type { HistoryResult } from '@/interface/history';
 import type { HistoryQuery } from '@/interface/historyQuery';
 import { ROUTES } from '@/constants/routes';
 import { useSearch } from '@/hooks/useSearch';
-import type { Action } from '@/components/molecules/TableRowActions';
+import type { Action } from '@/components/ui/Table/TableRowActions';
 import { StudentSearchPanel } from '@/features/search/student/components/StudentSearchForm';
 
 export const HistoryIndex = () => {

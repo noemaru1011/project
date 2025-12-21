@@ -1,9 +1,9 @@
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { Input } from '@/components/atoms/Input';
+import { Input } from '@/components/ui/Input/Input';
 import { Button } from '@/components/ui/Button/Button';
-import { Loading } from '@/components/atoms/Loading';
+import { Loading } from '@/components/ui/Loading/Loading';
 import { validation } from '@shared/schemas/login';
 import type { LoginForm } from '@shared/schemas/login';
 import { zodResolver } from '@hookform/resolvers/zod';

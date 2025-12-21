@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import type { Option } from '@/components/ui/option';
-import { Radio } from '@/components/atoms/Radio';
+import { Radio } from '@/components/ui/Radio/Radio';
 
 export type Props = {
   name: string;

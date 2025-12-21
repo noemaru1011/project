@@ -1,4 +1,4 @@
-import type { Action } from '@/components/molecules/TableRowActions';
+import type { Action } from '@/components/ui/Table/TableRowActions';
 
 type Props = {
   labelKeys: string[];

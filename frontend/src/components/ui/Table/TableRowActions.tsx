@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/Button/Button';
-import type { ButtonVariant } from '@/interface/ui';
+import type { ButtonVariant } from '@/components/ui/Button/ButtonVariants';
 import { useNavigate } from 'react-router-dom';
 
 export type Action = Extract<ButtonVariant, 'Update' | 'Read' | 'Delete'>;

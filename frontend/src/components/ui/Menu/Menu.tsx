@@ -1,7 +1,7 @@
 import React from 'react';
-import { MenuToggle } from '@/components/atoms/MenuToggle';
-import { MenuOverlay } from '@/components/atoms/MenuOverlay';
-import { MenuPanel } from '@/components/atoms/MenuPanel';
+import { MenuToggle } from '@/components/ui/Menu/MenuToggle';
+import { MenuOverlay } from '@/components/ui/Menu/MenuOverlay';
+import { MenuPanel } from '@/components/ui/Menu/MenuPanel';
 import type { Option } from '@/components/ui/option';
 import { ROUTES } from '@/constants/routes';
 

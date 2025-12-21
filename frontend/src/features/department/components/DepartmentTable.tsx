@@ -1,5 +1,5 @@
-import { Table } from '@/components/molecules/Table';
-import { Loading } from '@/components/atoms/Loading';
+import { Table } from '@/components/ui/Table/Table';
+import { Loading } from '@/components/ui/Loading/Loading';
 import { departmentLabels } from '@/features/department/constants';
 import { useDepartmentList } from '@/features/department/hooks/useDepartmentList';
 

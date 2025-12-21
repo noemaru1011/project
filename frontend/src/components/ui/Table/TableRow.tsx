@@ -1,5 +1,5 @@
-import type { Action } from '@/components/molecules/TableRowActions';
-import { RowActions } from '@/components/molecules/TableRowActions';
+import type { Action } from '@/components/ui/Table/TableRowActions';
+import { RowActions } from '@/components/ui/Table/TableRowActions';
 
 type Props = {
   rowKey: string;

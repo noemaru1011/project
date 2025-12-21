@@ -1,9 +1,9 @@
 import { toast } from 'react-toastify';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { HeaderMain } from '@/components/atoms/HeaderMain';
-import { HeaderNav } from '@/components/atoms/HeaderNav';
-import { Menu } from '@/components/molecules/Menu';
+import { HeaderMain } from '@/components/ui/Header/HeaderMain';
+import { HeaderNav } from '@/components/ui/Header/HeaderNav';
+import { Menu } from '@/components/ui/Menu/Menu';
 import { useLogout } from '@/hooks/useLogout';
 import type { Option } from '@/components/ui/option';
 import { ROUTES } from '@/constants/routes';

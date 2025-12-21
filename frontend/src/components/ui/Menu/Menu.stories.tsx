@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { Menu, MenuOptions } from './Menu';
-import { MenuToggle } from '@/components/atoms/MenuToggle';
-import { MenuOverlay } from '@/components/atoms/MenuOverlay';
-import { MenuPanel } from '@/components/atoms/MenuPanel';
+import { MenuToggle } from '@/components/ui/Menu/MenuToggle';
+import { MenuOverlay } from '@/components/ui/Menu/MenuOverlay';
+import { MenuPanel } from '@/components/ui/Menu/MenuPanel';
 
 const meta: Meta<typeof Menu> = {
   title: 'Molecules/Menu',

@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { vi } from 'vitest';
 import { Button } from './Button';
-import type { ButtonVariant } from '@/interface/ui';
+import type { ButtonVariant } from './ButtonVariants';
 
 describe('Button', () => {
   // コンポーネントに対応したラベル

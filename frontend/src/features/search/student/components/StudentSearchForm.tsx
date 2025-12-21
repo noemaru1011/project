@@ -1,6 +1,6 @@
 import { Controller } from 'react-hook-form';
 import type { StudentQuery } from '@/features/search/student/types';
-import { Accordion } from '@/components/molecules/Accordion';
+import { Accordion } from '@/components/ui/Accordion/Accordion';
 import { Button } from '@/components/ui/Button/Button';
 import { CategoryCheckboxGroup } from '@/features/category/components';
 import { SubCategoryCheckboxGroup } from '@/features/subCategory/components';

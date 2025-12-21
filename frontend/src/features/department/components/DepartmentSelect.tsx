@@ -1,6 +1,6 @@
-import { Select } from '@/components/atoms/Select';
+import { Select } from '@/components/ui/Select/Select';
 import { Library } from 'lucide-react';
-import type { Props } from '@/components/atoms/Select';
+import type { Props } from '@/components/ui/Select/Select';
 import { useDepartmentOptions } from '@/features/department/hooks/useDepartmentOptions';
 
 type DepartmentSelectProps = Omit<Props, 'id' | 'options'> & { disabled?: boolean };

@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import type { Option } from '@/components/ui/option';
-import { Checkbox } from '@/components/atoms/Checkbox';
+import { Checkbox } from '@/components/ui/Checkbox/Checkbox';
 
 export type Props = {
   name?: string;

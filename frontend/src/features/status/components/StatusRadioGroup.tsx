@@ -1,5 +1,5 @@
-import { RadioGroup } from '@/components/molecules/RadioGroup';
-import type { Props } from '@/components/molecules/RadioGroup';
+import { RadioGroup } from '@/components/ui/RadioGroup/RadioGroup';
+import type { Props } from '@/components/ui/RadioGroup/RadioGroup';
 import { useStatusOptions } from '@/features/status/hooks/useStatusOptions';
 
 type StatusRadioGroupProps = Omit<Props, 'options'> & { disabled?: boolean };

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { AllowedInputType } from './InputType';
+import type { AllowedInputType } from './types';
 
 export type Props = {
   id: string;

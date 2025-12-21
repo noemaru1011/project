@@ -1,5 +1,5 @@
-import { Table } from '@/components/molecules/Table';
-import { Loading } from '@/components/atoms/Loading';
+import { Table } from '@/components/ui/Table/Table';
+import { Loading } from '@/components/ui/Loading/Loading';
 import { minorCategoryLabels } from '@/features/minorCategory/constants';
 import { useMinorCategoryList } from '@/features/minorCategory/hooks/useMinorCategoryList';
 

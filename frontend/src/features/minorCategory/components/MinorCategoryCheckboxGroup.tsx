@@ -1,5 +1,5 @@
-import { CheckboxGroup } from '@/components/molecules/CheckboxGroup';
-import type { Props } from '@/components/molecules/CheckboxGroup';
+import { CheckboxGroup } from '@/components/ui/CheckboxGroup/CheckboxGroup';
+import type { Props } from '@/components/ui/CheckboxGroup/CheckboxGroup';
 import { useMinorCategoryOptions } from '@/features/minorCategory/hooks/useMinorCategoryOptions';
 
 type MinorCategoryCheckboxGroupProps = Omit<Props, 'options'> & { disabled?: boolean };

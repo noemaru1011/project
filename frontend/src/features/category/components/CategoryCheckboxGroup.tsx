@@ -1,5 +1,5 @@
-import { CheckboxGroup } from '@/components/molecules/CheckboxGroup';
-import type { Props } from '@/components/molecules/CheckboxGroup';
+import { CheckboxGroup } from '@/components/ui/CheckboxGroup/CheckboxGroup';
+import type { Props } from '@/components/ui/CheckboxGroup/CheckboxGroup';
 import { useCategoryOptions } from '@/features/category/hooks/useCategoryOptions';
 
 type CategoryCheckboxGroupProps = Omit<Props, 'options'> & { disabled?: boolean };
