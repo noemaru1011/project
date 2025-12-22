@@ -1,14 +1,11 @@
 import { Table } from '@/components/ui/Table/Table';
-import { Loading } from '@/components/ui/Loading/Loading';
 import { minorCategoryLabels } from '@/features/minorCategory/constants';
-import { useMinorCategoryList } from '@/features/minorCategory/hooks/useMinorCategoryList';
+import type { MinorCategory } from '@/features/minorCategory/';
 
-export const MinorCategoryTable = () => {
-  const { data, loading } = useMinorCategoryList();
+type Props = {
+  data: MinorCategory[];
+};
 
-  return (
-    <Loading loading={loading}>
-      <Table labels={minorCategoryLabels} data={data} keyField="minorCategoryId" />
-    </Loading>
-  );
+export const MinorCategoryTable = ({ data }: Props) => {
+  return <Table labels={minorCategoryLabels} data={data} keyField="minorCategoryId" />;
 };
