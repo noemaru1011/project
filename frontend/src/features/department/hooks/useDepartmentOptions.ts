@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useDepartmentList } from './useDepartmentList';
+import { useDepartmentList } from '@/features/department/hooks/useDepartmentList';
 import { departmentsToOptions } from '@/features/department';
 
 export const useDepartmentOptions = () => {
