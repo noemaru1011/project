@@ -1,16 +1,19 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useFetchAll } from '@/hooks/useFetchAll';
-import { subCategoryApi } from '@/features/subCategory';
-import type { SubCategory } from '@/features/subCategory';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMinorCategories } from '@/features/minorCategory';
+import type { RootState, AppDispatch } from '@/hooks/store';
 import { handleApiError } from '@/utils/handleApiError';
 
-export const useSubCategoryList = () => {
+export const useMinorCategoryList = () => {
   const navigate = useNavigate();
-  const { data, fetchAll, loading } = useFetchAll<SubCategory>(subCategoryApi.index);
+  const dispatch = useDispatch<AppDispatch>();
+  const { data, loading } = useSelector((state: RootState) => state.minorCategories);
 
   useEffect(() => {
-    fetchAll().catch((err) => handleApiError(err, navigate));
+    if (data.length === 0) {
+      dispatch(fetchMinorCategories()).catch((err) => handleApiError(err, navigate));
+    }
   }, []);
 
   return { data, loading };

@@ -1,16 +1,19 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useFetchAll } from '@/hooks/useFetchAll';
-import { categoryApi } from '@/features/category';
-import type { Category } from '@/features/category';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCategories } from '@/features/category';
+import type { RootState, AppDispatch } from '@/hooks/store';
 import { handleApiError } from '@/utils/handleApiError';
 
 export const useCategoryList = () => {
   const navigate = useNavigate();
-  const { data, fetchAll, loading } = useFetchAll<Category>(categoryApi.index);
+  const dispatch = useDispatch<AppDispatch>();
+  const { data, loading } = useSelector((state: RootState) => state.categories);
 
   useEffect(() => {
-    fetchAll().catch((err) => handleApiError(err, navigate));
+    if (data.length === 0) {
+      dispatch(fetchCategories()).catch((err) => handleApiError(err, navigate));
+    }
   }, []);
 
   return { data, loading };

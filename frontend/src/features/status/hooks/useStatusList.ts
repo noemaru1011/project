@@ -1,16 +1,19 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useFetchAll } from '@/hooks/useFetchAll';
-import { statusApi } from '@/features/status';
-import type { Status } from '@/features/status';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchStatuses } from '@/features/status';
+import type { RootState, AppDispatch } from '@/hooks/store';
 import { handleApiError } from '@/utils/handleApiError';
 
 export const useStatusList = () => {
   const navigate = useNavigate();
-  const { data, fetchAll, loading } = useFetchAll<Status>(statusApi.index);
+  const dispatch = useDispatch<AppDispatch>();
+  const { data, loading } = useSelector((state: RootState) => state.statuses);
 
   useEffect(() => {
-    fetchAll().catch((err) => handleApiError(err, navigate));
+    if (data.length === 0) {
+      dispatch(fetchStatuses()).catch((err) => handleApiError(err, navigate));
+    }
   }, []);
 
   return { data, loading };
