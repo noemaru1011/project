@@ -1,14 +1,11 @@
 import { Table } from '@/components/ui/Table/Table';
-import { Loading } from '@/components/ui/Loading/Loading';
 import { statusLabels } from '@/features/status/constants';
-import { useStatusList } from '@/features/status/hooks/useStatusList';
+import type { Status } from '@/features/status/types';
 
-export const StatusTable = () => {
-  const { data, loading } = useStatusList();
+type Props = {
+  data: Status[];
+};
 
-  return (
-    <Loading loading={loading}>
-      <Table labels={statusLabels} data={data} keyField="statusId" />
-    </Loading>
-  );
+export const StatusTable = ({ data }: Props) => {
+  return <Table labels={statusLabels} data={data} keyField="statusId" />;
 };
