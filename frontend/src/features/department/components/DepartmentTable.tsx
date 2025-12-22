@@ -1,14 +1,11 @@
 import { Table } from '@/components/ui/Table/Table';
-import { Loading } from '@/components/ui/Loading/Loading';
+import type { Department } from '@/features/department';
 import { departmentLabels } from '@/features/department/constants';
-import { useDepartmentList } from '@/features/department/hooks/useDepartmentList';
 
-export const DepartmentTable = () => {
-  const { data, loading } = useDepartmentList();
+type Props = {
+  data: Department[];
+};
 
-  return (
-    <Loading loading={loading}>
-      <Table labels={departmentLabels} data={data} keyField="departmentId" />
-    </Loading>
-  );
+export const DepartmentTable = ({ data }: Props) => {
+  return <Table labels={departmentLabels} data={data} keyField="departmentId" />;
 };
