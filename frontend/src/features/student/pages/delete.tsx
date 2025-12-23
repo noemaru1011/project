@@ -1,22 +1,31 @@
 import { toast } from 'react-toastify';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { ROUTES } from '@/constants/routes';
 import { StudentDeleteView } from '@/features/student/components/StudentDeleteView';
 import { useStudentDelete } from '@/features/student/hooks/useStudentDelete';
 import { useStudentView } from '@/features/student/hooks/useStudentView';
+import { handleApiError } from '@/utils';
 
 export const StudentDeletePage = () => {
   const { studentId } = useParams<{ studentId: string }>();
+  const navigate = useNavigate();
+
+  if (!studentId) {
+    return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
+  }
   const { student, loading } = useStudentView(studentId);
   const { deleteStudent, loading: deleting } = useStudentDelete();
-  const navigate = useNavigate();
 
   const handleDelete = async () => {
     if (!student) return;
-    const res = await deleteStudent(student.studentId);
-    toast.success(res!.message);
-    navigate(ROUTES.STUDENT.INDEX);
+    try{
+      const res = await deleteStudent(student.studentId);
+      toast.success(res.message);
+      navigate(ROUTES.STUDENT.INDEX);
+    }catch (err) {
+      handleApiError(err, navigate);
+    }
   };
 
   if (loading || !student) {

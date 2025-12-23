@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams ,Navigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { ROUTES } from '@/constants/routes';
@@ -6,10 +6,14 @@ import { StudentUpdateForm } from '@/features/student/components/StudentUpdateFo
 import { useStudentUpdate } from '@/features/student/hooks/useStudentUpdate';
 import { useStudentView } from '@/features/student/hooks/useStudentView';
 import type { StudentUpdateForm as FormType } from '@shared/schemas/student';
+import { handleApiError } from '@/utils';
 
 export const StudentUpdatePage = () => {
   const navigate = useNavigate();
   const { studentId } = useParams<{ studentId: string }>();
+    if (!studentId) {
+      return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
+    }
 
   const { student, loading } = useStudentView(studentId);
   const { updateStudent, loading: updating } = useStudentUpdate();
@@ -28,9 +32,13 @@ export const StudentUpdatePage = () => {
 
   const handleSubmit = async (data: FormType) => {
     if (!student) return;
+    try{
     const res = await updateStudent(student.studentId, data);
     toast.success(res!.message);
     navigate(ROUTES.STUDENT.INDEX);
+    } catch (err) {
+      handleApiError(err, navigate);
+    }
   };
 
   return (

@@ -6,7 +6,7 @@ export type Action = Extract<ButtonVariant, 'Update' | 'Read' | 'Delete'>;
 
 type Props = {
   rowKey: string;
-  actions?: Action[]; // 配列自体をオプションに
+  actions?: Action[];
   routeMap?: Partial<Record<Action, (id: string) => string>>;
 };
 

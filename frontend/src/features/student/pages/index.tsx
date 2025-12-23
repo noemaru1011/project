@@ -4,15 +4,18 @@ import type { StudentQuery } from '@/features/search/student/types';
 import { useSearch } from '@/hooks/useSearch';
 import { StudentSearchPanel } from '@/features/search/student/components/StudentSearchForm';
 import { StudentTable } from '@/features/student/components';
+import { Loading } from '@/components/ui/Loading/Loading';
 
 export const StudentIndexPage = () => {
   const { data, loading, search } = useSearch<StudentResult, StudentQuery>(studentSearchApi.search);
 
   return (
     <div className="p-4 mx-auto max-w-4xl">
-      <h2 className="text-2xl font-bold text-gray-800 text-center">学生一覧</h2>
-      <StudentSearchPanel onSearch={search} />
-      <StudentTable data={data} loading={loading} />
+      <Loading loading={loading}>
+        <h2 className="text-2xl font-bold text-gray-800 text-center">学生一覧</h2>
+        <StudentSearchPanel onSearch={search} />
+        <StudentTable data={data} actions={['Update', 'Read', 'Delete']} />
+      </Loading>
     </div>
   );
 };

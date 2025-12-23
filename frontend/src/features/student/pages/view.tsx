@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams,Navigate } from 'react-router-dom';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { ROUTES } from '@/constants/routes';
 import { StudentView } from '@/features/student/components/StudentView';
@@ -7,6 +7,10 @@ import { useStudentView } from '@/features/student/hooks/useStudentView';
 export const StudentViewPage = () => {
   const navigate = useNavigate();
   const { studentId } = useParams<{ studentId: string }>();
+  if (!studentId) {
+    return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
+  }
+  
   const { student, loading } = useStudentView(studentId);
 
   return (

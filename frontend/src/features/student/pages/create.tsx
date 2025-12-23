@@ -5,6 +5,7 @@ import { ROUTES } from '@/constants/routes';
 import { StudentCreateForm } from '@/features/student/components/StudentCreateForm';
 import { useStudentCreate } from '@/features/student/hooks/useStudentCreate';
 import type { StudentForm } from '@shared/schemas/student';
+import { handleApiError } from '@/utils';
 
 export const StudentCreatePage = () => {
   const navigate = useNavigate();
@@ -15,7 +16,9 @@ export const StudentCreatePage = () => {
       const res = await createStudent(data);
       toast.success(res!.message);
       navigate(ROUTES.STUDENT.INDEX);
-    } catch {}
+    } catch (err){
+      handleApiError(err, navigate);
+    }
   };
 
   return (

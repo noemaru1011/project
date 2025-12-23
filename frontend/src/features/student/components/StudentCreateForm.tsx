@@ -20,7 +20,6 @@ export const StudentCreateForm = ({ onSubmit, onBack, loading }: Props) => {
     control,
     handleSubmit,
     formState: { errors },
-    //TODO　型を修正
   } = useForm({
     resolver: zodResolver(validation),
   });
