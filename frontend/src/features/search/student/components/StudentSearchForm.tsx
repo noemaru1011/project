@@ -2,10 +2,11 @@ import { Button } from '@/components/ui/Button/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
 import { useStudentSearch } from '@/features/search/student/hooks/useStudentSearch';
-import { StudentSearchAccordion } from './StudentSearchAccordion';
+import { StudentSearchAccordion } from '@/features/search/student/components';
+import type { StudentQuery } from '@/features/search/student';
 
 type Props = {
-  onSearch: () => void;
+  onSearch: (query: StudentQuery) => void;
 };
 
 export const StudentSearchPanel = ({ onSearch }: Props) => {

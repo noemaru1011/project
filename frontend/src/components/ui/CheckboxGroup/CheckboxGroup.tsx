@@ -11,7 +11,6 @@ export type Props = {
   error?: string;
   required?: boolean;
   disabled?: boolean;
-
   column?: number; // 1行あたりの列数
 };
 

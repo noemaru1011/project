@@ -4,7 +4,8 @@ import { historySearchLabels } from '@/features/history/constants/historyLabels'
 import { studentSearchApi } from '@/features/search/student';
 import { useSearch } from '@/hooks/useSearch';
 import type { StudentQuery } from '@/features/search/student/types';
-import { StudentSearchPanel } from '@/features/search/student/components/StudentSearchForm';
+import { StudentSearchPanel } from '@/features/search/student/components';
+import { StudentTable } from '@/features/student/components';
 import type { StudentResult } from '@/features/student/types';
 
 type Props = {
