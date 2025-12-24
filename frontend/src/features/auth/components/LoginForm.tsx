@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/Button/Button';
-import { EmailInput, PasswordInput } from '@/features/auth/components';
+import { EmailInput, PasswordInput } from '@/components/form';
 import { validation } from '@shared/schemas/login';
 import type { LoginForm as LoginFormType } from '@shared/schemas/login';
 
@@ -21,7 +21,12 @@ export const LoginForm = ({ onSubmit, loading }: Props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <EmailInput label="メールアドレス" error={errors.email?.message} {...register('email')} />
+      <EmailInput
+        id="mail"
+        label="メールアドレス"
+        error={errors.email?.message}
+        {...register('email')}
+      />
 
       <PasswordInput
         id="password"

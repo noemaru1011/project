@@ -3,7 +3,7 @@ import { ChevronDown } from 'lucide-react';
 import type { Option } from '@/components/ui/option';
 
 export type Props = {
-  id: string;
+  id?: string;
   label?: string;
   options: Option[];
   required?: boolean;

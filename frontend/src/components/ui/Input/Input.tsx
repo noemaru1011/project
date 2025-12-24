@@ -1,10 +1,10 @@
 import React from 'react';
 import type { AllowedInputType } from './types';
 
-export type Props = {
-  id: string;
+export type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> & {
+  id?: string;
   label?: string;
-  type: AllowedInputType;
+  type?: AllowedInputType;
   error?: string;
   required?: boolean;
   disabled?: boolean;

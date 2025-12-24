@@ -1,7 +1,8 @@
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/Button/Button';
-import { StudentNameInput, StudentEmailInput } from '@/features/student/components';
+import { EmailInput } from '@/components/form';
+import { StudentNameInput } from '@/features/student/components';
 import { GradeRadioGroup } from '@/features/grade/components';
 import { MinorCategorySelect } from '@/features/minorCategory/components/MinorCategorySelect';
 import { DepartmentSelect } from '@/features/department/components/DepartmentSelect';
@@ -27,6 +28,7 @@ export const StudentCreateForm = ({ onSubmit, onBack, loading }: Props) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <StudentNameInput
+        id="studentName"
         label="学生名"
         error={errors.studentName?.message}
         required
@@ -55,7 +57,8 @@ export const StudentCreateForm = ({ onSubmit, onBack, loading }: Props) => {
         {...register('minorCategoryId')}
       />
 
-      <StudentEmailInput
+      <EmailInput
+        id="mail"
         label="メールアドレス"
         helperText="メールアドレスは重複しないように"
         required

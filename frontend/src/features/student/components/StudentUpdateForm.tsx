@@ -2,7 +2,8 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/Input/Input';
 import { Button } from '@/components/ui/Button/Button';
-import { StudentNameInput, StudentEmailInput } from '@/features/student/components';
+import { EmailInput } from '@/components/form';
+import { StudentNameInput } from '@/features/student/components';
 import { GradeRadioGroup } from '@/features/grade/components';
 import { MinorCategorySelect } from '@/features/minorCategory/components/MinorCategorySelect';
 import { DepartmentSelect } from '@/features/department/components/DepartmentSelect';
@@ -30,6 +31,7 @@ export const StudentUpdateForm = ({ defaultValues, loading, onSubmit, onBack }: 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <StudentNameInput
+        id="studnetName"
         label="学生名"
         error={errors.studentName?.message}
         required
@@ -65,7 +67,8 @@ export const StudentUpdateForm = ({ defaultValues, loading, onSubmit, onBack }: 
         )}
       />
 
-      <StudentEmailInput
+      <EmailInput
+        id="mail"
         label="メールアドレス"
         helperText="メールアドレスは変更できません"
         disabled

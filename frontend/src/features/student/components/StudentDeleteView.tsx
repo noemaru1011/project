@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/Button/Button';
-import { StudentNameInput, StudentEmailInput } from '@/features/student/components';
+import { StudentNameInput } from '@/features/student/components';
+import { EmailInput } from '@/components/form';
 import { GradeRadioGroup } from '@/features/grade/components';
 import { MinorCategorySelect } from '@/features/minorCategory/components/MinorCategorySelect';
 import { DepartmentSelect } from '@/features/department/components/DepartmentSelect';
@@ -14,7 +15,7 @@ type Props = {
 export const StudentDeleteView = ({ student, onDelete, onBack }: Props) => {
   return (
     <>
-      <StudentNameInput label="学生名" value={student.studentName} disabled />
+      <StudentNameInput id="studnetName" label="学生名" value={student.studentName} disabled />
 
       <GradeRadioGroup
         name="grade"
@@ -26,7 +27,7 @@ export const StudentDeleteView = ({ student, onDelete, onBack }: Props) => {
 
       <MinorCategorySelect label="小分類名" value={String(student.minorCategoryId)} disabled />
 
-      <StudentEmailInput label="メールアドレス" value={student.email} disabled />
+      <EmailInput id="mail" label="メールアドレス" value={student.email} disabled />
 
       <DepartmentSelect label="学科名" value={String(student.departmentId)} disabled />
 

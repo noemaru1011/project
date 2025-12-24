@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/Input/Input';
 import { Lock, Eye, EyeOff } from 'lucide-react';
 import type { Props } from '@/components/ui/Input/Input';
 
-type PasswordInputProps = Omit<Props, 'required' | 'type'>;
+type PasswordInputProps = Omit<Props, 'type'>;
 
 export const PasswordInput = ({ disabled, ...props }: PasswordInputProps) => {
   const [showPassword, setShowPassword] = useState(false);

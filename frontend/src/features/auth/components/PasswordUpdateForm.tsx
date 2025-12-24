@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/Button/Button';
-import { PasswordInput } from '@/features/auth/components';
+import { PasswordInput } from '@/components/form';
 import { validation } from '@shared/schemas/password';
 import type { PasswordForm } from '@shared/schemas/password';
 

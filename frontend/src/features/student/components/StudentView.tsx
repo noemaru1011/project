@@ -1,4 +1,5 @@
-import { StudentNameInput, StudentEmailInput } from '@/features/student/components';
+import { StudentNameInput } from '@/features/student/components';
+import { EmailInput } from '@/components/form';
 import { GradeRadioGroup } from '@/features/grade/components';
 import { MinorCategorySelect } from '@/features/minorCategory/components/MinorCategorySelect';
 import { DepartmentSelect } from '@/features/department/components/DepartmentSelect';
@@ -13,7 +14,12 @@ type Props = {
 export const StudentView = ({ student, onBack }: Props) => {
   return (
     <>
-      <StudentNameInput label="学生名" value={student?.studentName ?? ''} disabled />
+      <StudentNameInput
+        id="studentName"
+        label="学生名"
+        value={student?.studentName ?? ''}
+        disabled
+      />
 
       <GradeRadioGroup
         name="grade"
@@ -29,7 +35,7 @@ export const StudentView = ({ student, onBack }: Props) => {
         disabled
       />
 
-      <StudentEmailInput label="メールアドレス" value={student?.email ?? ''} disabled />
+      <EmailInput id="mail" label="メールアドレス" value={student?.email ?? ''} disabled />
 
       <DepartmentSelect
         label="学科名"
