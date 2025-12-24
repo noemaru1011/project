@@ -16,7 +16,13 @@ export const StudentDeleteView = ({ student, onDelete, onBack }: Props) => {
     <>
       <StudentNameInput label="学生名" value={student.studentName} disabled />
 
-      <GradeRadioGroup name="grade" label="学年" value={String(student.grade)} disabled />
+      <GradeRadioGroup
+        name="grade"
+        column={4}
+        label="学年"
+        value={String(student.grade)}
+        disabled
+      />
 
       <MinorCategorySelect label="小分類名" value={String(student.minorCategoryId)} disabled />
 

@@ -17,6 +17,7 @@ export const StudentView = ({ student, onBack }: Props) => {
 
       <GradeRadioGroup
         name="grade"
+        column={4}
         label="学年"
         value={student?.grade !== undefined ? String(student.grade) : undefined}
         disabled

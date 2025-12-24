@@ -39,6 +39,7 @@ export const StudentCreateForm = ({ onSubmit, onBack, loading }: Props) => {
         render={({ field, fieldState }) => (
           <GradeRadioGroup
             label="学年"
+            column={4}
             name={field.name}
             value={field.value !== undefined ? String(field.value) : undefined}
             onChange={(val) => field.onChange(Number(val))}

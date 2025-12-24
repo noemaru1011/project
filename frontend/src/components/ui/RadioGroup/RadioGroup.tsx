@@ -12,8 +12,7 @@ export type Props = {
   required?: boolean;
   disabled?: boolean;
 
-  row?: number; // 行数
-  column?: number; // 列数
+  column?: number; // 1行あたりの列数
 };
 
 export const RadioGroup = ({
@@ -25,7 +24,6 @@ export const RadioGroup = ({
   error,
   required,
   disabled,
-  row,
   column,
 }: Props) => {
   const handleChange = useCallback(
@@ -36,28 +34,20 @@ export const RadioGroup = ({
   );
 
   /**
-   * options を row/column 指定に合わせて 2D 配列へ
+   * options を column 指定に基づいて 2D 配列へ変換
+   * column 未指定時は縦一列
    */
   const grid = useMemo(() => {
-    const total = options.length;
-
-    if (row && column) {
-      return Array.from({ length: row }, (_, r) => options.slice(r * column, r * column + column));
+    if (!column || column <= 0) {
+      return options.map((option) => [option]);
     }
 
-    if (column) {
-      const rows = Math.ceil(total / column);
-      return Array.from({ length: rows }, (_, i) => options.slice(i * column, i * column + column));
-    }
+    const rows = Math.ceil(options.length / column);
 
-    if (row) {
-      const cols = Math.ceil(total / row);
-      return Array.from({ length: row }, (_, i) => options.slice(i * cols, i * cols + cols));
-    }
-
-    // デフォルト：縦一列
-    return [options];
-  }, [options, row, column]);
+    return Array.from({ length: rows }, (_, i) =>
+      options.slice(i * column, i * column + column),
+    );
+  }, [options, column]);
 
   return (
     <fieldset
@@ -66,7 +56,8 @@ export const RadioGroup = ({
     >
       {label && (
         <legend className="font-semibold text-gray-800 mb-2">
-          {label} {required && <span className="text-red-500">*</span>}
+          {label}
+          {required && <span className="text-red-500 ml-1">*</span>}
         </legend>
       )}
 
