@@ -3,7 +3,7 @@ import type { Option } from '@/components/ui/option';
 import { Checkbox } from '@/components/ui/Checkbox/Checkbox';
 
 export type Props = {
-  name?: string;
+  name: string;
   value?: string[];
   onChange?: (value: string[]) => void;
   options: Option[];
@@ -27,9 +27,7 @@ export const CheckboxGroup = ({
 }: Props) => {
   const handleChange = useCallback(
     (val: string) => {
-      const newValue = value.includes(val)
-        ? value.filter((v) => v !== val)
-        : [...value, val];
+      const newValue = value.includes(val) ? value.filter((v) => v !== val) : [...value, val];
 
       onChange?.(newValue);
     },
@@ -47,9 +45,7 @@ export const CheckboxGroup = ({
 
     const rows = Math.ceil(options.length / column);
 
-    return Array.from({ length: rows }, (_, i) =>
-      options.slice(i * column, i * column + column),
-    );
+    return Array.from({ length: rows }, (_, i) => options.slice(i * column, i * column + column));
   }, [options, column]);
 
   return (

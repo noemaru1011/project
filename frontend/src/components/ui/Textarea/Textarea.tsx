@@ -1,7 +1,7 @@
 import React from 'react';
 
 export type Props = {
-  id: string;
+  id?: string;
   label?: string;
   error?: string;
   required?: boolean;

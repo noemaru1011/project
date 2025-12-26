@@ -33,14 +33,14 @@ export const HistoryRepository = {
     grade?: number[] | undefined;
   }) {
     //小隊(大隊・中隊)、学科、学年
-    const where: Prisma.HistoryWhereInput = {
-      ...(data.minorCategoryIds?.length ? { minorCategoryId: { in: data.minorCategoryIds } } : {}),
-      ...(data.departments?.length ? { departmentId: { in: data.departments } } : {}),
-      ...(data.grade?.length ? { grade: { in: data.grade } } : {}),
-    };
+    // const where: Prisma.HistoryWhereInput = {
+    //   ...(data.minorCategoryIds?.length ? { minorCategoryId: { in: data.minorCategoryIds } } : {}),
+    //   ...(data.departments?.length ? { departmentId: { in: data.departments } } : {}),
+    //   ...(data.grade?.length ? { grade: { in: data.grade } } : {}),
+    // };
 
     return prisma.history.findMany({
-      where,
+      // where,
       select: {
         student: {
           select: {

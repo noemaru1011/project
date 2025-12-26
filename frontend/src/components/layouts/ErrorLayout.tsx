@@ -160,19 +160,34 @@ export const ErrorLayout = ({
           >
             {onGoBack && (
               <div className="flex items-center gap-2">
-                <Button variant="LastPage" onClick={onGoBack} className="px-6 py-3 rounded-xl" />
+                <Button
+                  type="button"
+                  variant="LastPage"
+                  onClick={onGoBack}
+                  className="px-6 py-3 rounded-xl"
+                />
               </div>
             )}
 
             {onGoHome && (
               <div className="flex items-center gap-2">
-                <Button variant="Home" onClick={onGoHome} className="px-6 py-3 rounded-xl" />
+                <Button
+                  type="button"
+                  variant="Home"
+                  onClick={onGoHome}
+                  className="px-6 py-3 rounded-xl"
+                />
               </div>
             )}
 
             {onRetry && (
               <div className="flex items-center gap-2">
-                <Button variant="Retry" onClick={onRetry} className="px-6 py-3 rounded-xl" />
+                <Button
+                  type="button"
+                  variant="Retry"
+                  onClick={onRetry}
+                  className="px-6 py-3 rounded-xl"
+                />
               </div>
             )}
           </motion.div>
