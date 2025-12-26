@@ -1,2 +1,2 @@
-export * from './EmailInput';
-export * from './PasswordInput';
+export * from './Email.Input';
+export * from './Password.Input';

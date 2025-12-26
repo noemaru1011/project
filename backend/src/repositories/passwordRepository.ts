@@ -10,7 +10,7 @@ export const PasswordRepository = {
     return tx.studentPassword.create({ data });
   },
 
-  updatePassword: (studentId: string, hashedPassword: string) =>
+  update: (studentId: string, hashedPassword: string) =>
     prisma.studentPassword.update({
       where: { studentId },
       data: {

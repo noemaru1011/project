@@ -16,6 +16,6 @@ export const PasswordService = {
     if (!isMatch) throw new NotMatchPasswordError();
 
     const hashedPassword = await bcrypt.hash(data.checkNewPassword, 10);
-    return PasswordRepository.updatePassword(studentId, hashedPassword);
+    return PasswordRepository.update(studentId, hashedPassword);
   },
 };
