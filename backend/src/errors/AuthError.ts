@@ -1,4 +1,4 @@
-import { appError } from './appError';
+import { appError } from '@/errors/appError';
 import { APIMESSAGE } from '@shared/apiMessage';
 import type { ApiMessageKey } from '@shared/apiMessage';
 

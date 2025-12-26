@@ -22,6 +22,13 @@ export const StudentRepository = {
     });
   },
 
+  //メールアドレス検証
+  async findByEmail(email: string) {
+    return prisma.student.findUnique({
+      where: { email, deleteFlag: false },
+    });
+  },
+
   //学生新規作成(トランザクション前提)
   async create(
     tx: Prisma.TransactionClient,
