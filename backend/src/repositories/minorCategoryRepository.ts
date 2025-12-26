@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-
+import { Prisma } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const MinorCategoryRepository = {
@@ -21,33 +21,35 @@ export const MinorCategoryRepository = {
     subCategoryId?: number[];
     categoryId?: number[];
   }): Promise<number[]> {
-    //大分類、中分類に紐づいた小分類を格納する配列
-    let ids: number[] = [];
-
-    if (data.categoryId?.length) {
-      const mcs = await prisma.minorCategory.findMany({
-        where: {
-          subCategory: { categoryId: { in: data.categoryId } },
-        },
-        select: { minorCategoryId: true },
-      });
-      ids.push(...mcs.map((m) => m.minorCategoryId));
+    if (!data.minorCategoryId?.length && !data.subCategoryId?.length && !data.categoryId?.length) {
+      return [];
     }
 
-    if (data.subCategoryId?.length) {
-      const mcs = await prisma.minorCategory.findMany({
-        where: {
-          subCategoryId: { in: data.subCategoryId },
-        },
-        select: { minorCategoryId: true },
-      });
-      ids.push(...mcs.map((m) => m.minorCategoryId));
-    }
+    const where: Prisma.MinorCategoryWhereInput = {
+      OR: [
+        ...(data.minorCategoryId?.length
+          ? [{ minorCategoryId: { in: data.minorCategoryId } }]
+          : []),
 
-    if (data.minorCategoryId?.length) {
-      ids.push(...data.minorCategoryId);
-    }
+        ...(data.subCategoryId?.length ? [{ subCategoryId: { in: data.subCategoryId } }] : []),
 
-    return [...new Set(ids)];
+        ...(data.categoryId?.length
+          ? [
+              {
+                subCategory: {
+                  categoryId: { in: data.categoryId },
+                },
+              },
+            ]
+          : []),
+      ],
+    };
+
+    const rows = await prisma.minorCategory.findMany({
+      where,
+      select: { minorCategoryId: true },
+    });
+
+    return rows.map((r) => r.minorCategoryId);
   },
 };

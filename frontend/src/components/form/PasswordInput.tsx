@@ -5,7 +5,7 @@ import type { Props } from '@/components/ui/Input/Input';
 
 type PasswordInputProps = Omit<Props, 'type'>;
 
-export const PasswordInput = ({ disabled, ...props }: PasswordInputProps) => {
+export const PasswordInput = ({ ...props }: PasswordInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <Input

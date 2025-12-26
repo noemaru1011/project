@@ -4,6 +4,6 @@ import type { Props } from '@/components/ui/Input/Input';
 
 type EmailInputProps = Omit<Props, 'type'>;
 
-export const EmailInput = ({ disabled, ...props }: EmailInputProps) => {
+export const EmailInput = ({ ...props }: EmailInputProps) => {
   return <Input {...props} type="email" leftIcon={<Mail className="size-5 text-indigo-500" />} />;
 };

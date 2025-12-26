@@ -1,6 +1,9 @@
 import bcrypt from 'bcrypt';
 import { Prisma } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
 import { StudentRepository } from '@/repositories/studentRepository';
+import { PasswordRepository } from '@/repositories/passwordRepository';
 import { MinorCategoryRepository } from '@/repositories/minorCategoryRepository';
 import { generatePassword } from '@/utils/generatePassword';
 import { sendAccountEmail } from '@/utils/sendAccountEmail';
@@ -20,16 +23,25 @@ export const StudentService = {
     grade: number;
   }) {
     try {
+      //パスワード作成
       const plainPassword = generatePassword();
       const hashedPassword = await bcrypt.hash(plainPassword, 10);
 
-      await StudentRepository.createStudent({
-        ...data,
-        password: hashedPassword,
+      //学生マスタとパスワードテーブルに登録トランザクション
+      const student = await prisma.$transaction(async (tx) => {
+        const student = await StudentRepository.create(tx, data);
+        await PasswordRepository.create(tx, {
+          studentId: student.studentId,
+          password: hashedPassword,
+        });
+        return student;
       });
 
+      //メール送信
       await sendAccountEmail(data.email, plainPassword);
+      return student;
     } catch (err: unknown) {
+      //メールアドレス重複時のエラー
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         if (
           err.code === 'P2002' &&
@@ -44,6 +56,7 @@ export const StudentService = {
   },
 
   async updateStudent(
+    studentId: string,
     data: {
       studentName: string;
       departmentId: number;
@@ -51,14 +64,15 @@ export const StudentService = {
       grade: number;
       updatedAt: Date;
     },
-    studentId: string,
   ) {
-    const student = await StudentRepository.updateStudent(data, studentId);
+    const student = await StudentRepository.update(studentId, data);
+    //楽観的エラー
     if (student.count === 0) throw new ConflictError();
+    return student;
   },
 
   async deleteStudent(studentId: string) {
-    await StudentRepository.deleteStudent(studentId);
+    await StudentRepository.delete(studentId);
   },
 
   async searchStudents(data: {
@@ -76,6 +90,7 @@ export const StudentService = {
       grade: data.grade,
     });
 
+    //DTO
     return students.map((s) => ({
       studentId: s.studentId,
       studentName: s.studentName,

@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { appError } from '@/errors/appError';
+import { Prisma } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const StudentRepository = {
@@ -21,35 +21,32 @@ export const StudentRepository = {
       },
     });
   },
-  async createStudent(data: {
-    studentName: string;
-    email: string;
-    departmentId: number;
-    minorCategoryId: number;
-    grade: number;
-    password: string;
-  }) {
-    return prisma.$transaction(async (tx) => {
-      const student = await tx.student.create({
-        data: {
-          studentName: data.studentName,
-          email: data.email,
-          departmentId: data.departmentId,
-          minorCategoryId: data.minorCategoryId,
-          grade: data.grade,
-        },
-      });
 
-      await tx.studentPassword.create({
-        data: {
-          studentId: student.studentId,
-          password: data.password,
-        },
-      });
+  //学生新規作成(トランザクション前提)
+  async create(
+    tx: Prisma.TransactionClient,
+    data: {
+      studentName: string;
+      email: string;
+      departmentId: number;
+      minorCategoryId: number;
+      grade: number;
+    },
+  ) {
+    return tx.student.create({
+      data: {
+        studentName: data.studentName,
+        email: data.email,
+        departmentId: data.departmentId,
+        minorCategoryId: data.minorCategoryId,
+        grade: data.grade,
+      },
     });
   },
 
-  async updateStudent(
+  //学生更新
+  async update(
+    studentId: string,
     data: {
       studentName: string;
       departmentId: number;
@@ -57,7 +54,6 @@ export const StudentRepository = {
       grade: number;
       updatedAt: Date;
     },
-    studentId: string,
   ) {
     return await prisma.student.updateMany({
       where: {
@@ -73,7 +69,8 @@ export const StudentRepository = {
     });
   },
 
-  async deleteStudent(studentId: string) {
+  //学生削除
+  async delete(studentId: string) {
     await prisma.student.update({
       where: {
         studentId,
@@ -84,27 +81,22 @@ export const StudentRepository = {
       },
     });
   },
+
   async searchStudents(data: {
     minorCategoryIds?: number[] | undefined;
     departments?: number[] | undefined;
     grade?: number[] | undefined;
   }) {
-    const andConditions: any[] = [{ deleteFlag: false }];
-
-    if (data.minorCategoryIds?.length) {
-      andConditions.push({ minorCategoryId: { in: data.minorCategoryIds } });
-    }
-
-    if (data.departments?.length) {
-      andConditions.push({ departmentId: { in: data.departments } });
-    }
-
-    if (data.grade?.length) {
-      andConditions.push({ grade: { in: data.grade } });
-    }
+    //小隊(大隊・中隊)、学科、学年
+    const where: Prisma.StudentWhereInput = {
+      deleteFlag: false,
+      ...(data.minorCategoryIds?.length ? { minorCategoryId: { in: data.minorCategoryIds } } : {}),
+      ...(data.departments?.length ? { departmentId: { in: data.departments } } : {}),
+      ...(data.grade?.length ? { grade: { in: data.grade } } : {}),
+    };
 
     return await prisma.student.findMany({
-      where: { AND: andConditions },
+      where,
       select: {
         studentId: true,
         studentName: true,
