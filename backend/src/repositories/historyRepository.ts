@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const HistoryRepository = {
@@ -31,29 +32,15 @@ export const HistoryRepository = {
     departments?: number[] | undefined;
     grade?: number[] | undefined;
   }) {
-    // History テーブルに deleteFlag は無いので削除
-    const andConditions: any[] = [];
-
-    if (data.minorCategoryIds?.length) {
-      andConditions.push({
-        student: { minorCategoryId: { in: data.minorCategoryIds } },
-      });
-    }
-
-    if (data.departments?.length) {
-      andConditions.push({
-        student: { departmentId: { in: data.departments } },
-      });
-    }
-
-    if (data.grade?.length) {
-      andConditions.push({
-        student: { grade: { in: data.grade } },
-      });
-    }
+    //小隊(大隊・中隊)、学科、学年
+    const where: Prisma.HistoryWhereInput = {
+      ...(data.minorCategoryIds?.length ? { minorCategoryId: { in: data.minorCategoryIds } } : {}),
+      ...(data.departments?.length ? { departmentId: { in: data.departments } } : {}),
+      ...(data.grade?.length ? { grade: { in: data.grade } } : {}),
+    };
 
     return prisma.history.findMany({
-      where: { AND: andConditions },
+      where,
       select: {
         student: {
           select: {

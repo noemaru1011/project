@@ -7,6 +7,7 @@ export const HistoryService = {
   async getHistory(historyId: string) {
     const history = await HistoryRepository.find(historyId);
     if (!history) return null;
+    //DTO
     return {
       studentName: history.student.studentName,
       grade: history.student.grade,

@@ -22,7 +22,7 @@ export const StudentRepository = {
     });
   },
 
-  //メールアドレス検証
+  //メールアドレス検証用
   async findByEmail(email: string) {
     return prisma.student.findUnique({
       where: { email, deleteFlag: false },
