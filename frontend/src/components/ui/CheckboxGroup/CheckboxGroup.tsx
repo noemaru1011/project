@@ -1,86 +1,84 @@
-import { useCallback, useMemo } from 'react';
+import React from 'react';
+import { useMemo } from 'react';
 import type { Option } from '@/components/ui/option';
 import { Checkbox } from '@/components/ui/Checkbox/Checkbox';
 
 export type Props = {
   name: string;
-  value?: string[];
-  onChange?: (value: string[]) => void;
   options: Option[];
   label?: string;
   error?: string;
   required?: boolean;
   disabled?: boolean;
-  column?: number; // 1行あたりの列数
-};
+  column?: number;
+  value?: string[];
+  onChange?: (value: string[]) => void;
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'value' | 'onChange'>;
 
-export const CheckboxGroup = ({
-  name,
-  value = [],
-  onChange,
-  options,
-  label,
-  error,
-  required,
-  disabled,
-  column,
-}: Props) => {
-  const handleChange = useCallback(
-    (val: string) => {
-      const newValue = value.includes(val) ? value.filter((v) => v !== val) : [...value, val];
+export const CheckboxGroup = React.forwardRef<HTMLInputElement, Props>(
+  (
+    { name, options, label, error, required, disabled, column, value = [], onChange, ...rest },
+    ref,
+  ) => {
+    /**
+     * options を column 指定に基づいて 2D 配列へ変換
+     * column 未指定時は縦一列
+     */
+    const grid = useMemo(() => {
+      if (!column || column <= 0) {
+        return options.map((option) => [option]);
+      }
 
-      onChange?.(newValue);
-    },
-    [value, onChange],
-  );
+      const rows = Math.ceil(options.length / column);
 
-  /**
-   * options を column 指定に基づいて 2D 配列へ変換
-   * column 未指定時は縦一列
-   */
-  const grid = useMemo(() => {
-    if (!column || column <= 0) {
-      return options.map((option) => [option]);
-    }
+      return Array.from({ length: rows }, (_, i) => options.slice(i * column, i * column + column));
+    }, [options, column]);
 
-    const rows = Math.ceil(options.length / column);
+    const handleChange = (optionValue: string, checked: boolean) => {
+      if (!onChange) return;
+      if (checked) {
+        onChange([...value, optionValue]); // チェック追加
+      } else {
+        onChange(value.filter((v) => v !== optionValue)); // チェック解除
+      }
+    };
 
-    return Array.from({ length: rows }, (_, i) => options.slice(i * column, i * column + column));
-  }, [options, column]);
+    return (
+      <fieldset
+        className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm disabled:cursor-not-allowed"
+        disabled={disabled}
+      >
+        {label && (
+          <legend className="font-semibold text-gray-800 mb-2">
+            {label}
+            {required && <span className="text-red-500 ml-1">*</span>}
+          </legend>
+        )}
 
-  return (
-    <fieldset
-      className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm disabled:cursor-not-allowed"
-      disabled={disabled}
-    >
-      {label && (
-        <legend className="font-semibold text-gray-800 mb-2">
-          {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
-        </legend>
-      )}
+        <div className="flex flex-col space-y-3">
+          {grid.map((rowOptions, rowIndex) => (
+            <div key={rowIndex} className="flex flex-row gap-6 whitespace-nowrap">
+              {rowOptions.map(
+                (option) =>
+                  option.label && (
+                    <Checkbox
+                      name={name}
+                      onChange={(e) => handleChange(option.value, e.target.checked)}
+                      key={option.value}
+                      id={`${name}-${option.value}`}
+                      label={option.label}
+                      disabled={disabled}
+                      ref={ref}
+                      {...rest}
+                    />
+                  ),
+              )}
+            </div>
+          ))}
+        </div>
 
-      <div className="flex flex-col space-y-3">
-        {grid.map((rowOptions, rowIndex) => (
-          <div key={rowIndex} className="flex flex-row gap-6 whitespace-nowrap">
-            {rowOptions.map(
-              (option) =>
-                option.label && (
-                  <Checkbox
-                    key={option.value}
-                    id={`${name ?? 'checkbox'}-${option.value}`}
-                    label={option.label}
-                    checked={value.includes(option.value)}
-                    onChange={() => handleChange(option.value)}
-                    disabled={disabled}
-                  />
-                ),
-            )}
-          </div>
-        ))}
-      </div>
-
-      {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-    </fieldset>
-  );
-};
+        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+      </fieldset>
+    );
+  },
+);

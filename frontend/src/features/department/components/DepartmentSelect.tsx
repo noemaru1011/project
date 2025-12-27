@@ -11,6 +11,7 @@ export const DepartmentSelect = ({ disabled, ...props }: DepartmentSelectProps) 
   return (
     <Select
       {...props}
+      label="学科名"
       id="departmentId"
       options={options}
       leftIcon={<Library className="size-4" />}

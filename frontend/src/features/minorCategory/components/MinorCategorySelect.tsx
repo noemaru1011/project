@@ -11,6 +11,7 @@ export const MinorCategorySelect = ({ disabled, ...props }: MinorCategorySelectP
   return (
     <Select
       {...props}
+      label="小分類名"
       id="minorCategoryId"
       options={options}
       leftIcon={<Group className="size-4" />}

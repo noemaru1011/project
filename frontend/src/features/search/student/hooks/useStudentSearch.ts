@@ -18,6 +18,7 @@ export const useStudentSearch = (onSearch: (query: StudentQuery) => void | Promi
   const handleSearch = async () => {
     const query = getValues();
     try {
+      console.log('チェックされた値:', query);
       await onSearch(query);
     } catch (err) {
       handleApiError(err, navigate);

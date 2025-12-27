@@ -27,7 +27,6 @@ export const LoginForm = ({ onSubmit, loading }: Props) => {
         error={errors.email?.message}
         {...register('email')}
       />
-
       <PasswordInput
         id="password"
         label="パスワード"

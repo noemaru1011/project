@@ -20,22 +20,14 @@ export const StudentSearchAccordion = ({ control }: Props) => {
           id: 'category',
           title: '大分類',
           children: (
-            <CategorySearchAccordionItem<StudentQuery>
-              control={control}
-              name="categoryId"
-              column={4}
-            />
+            <CategorySearchAccordionItem<StudentQuery> control={control} name="categoryId" />
           ),
         },
         {
           id: 'subCategory',
           title: '中分類',
           children: (
-            <SubCategorySearchAccordionItem<StudentQuery>
-              control={control}
-              name="subCategoryId"
-              column={4}
-            />
+            <SubCategorySearchAccordionItem<StudentQuery> control={control} name="subCategoryId" />
           ),
         },
         {
@@ -45,26 +37,19 @@ export const StudentSearchAccordion = ({ control }: Props) => {
             <MinorCategorySearchAccordionItem<StudentQuery>
               control={control}
               name="minorCategoryId"
-              column={16}
             />
           ),
         },
         {
           id: 'grade',
           title: '学年',
-          children: (
-            <GradeSearchAccordionItem<StudentQuery> control={control} name="grade" column={4} />
-          ),
+          children: <GradeSearchAccordionItem<StudentQuery> control={control} name="grade" />,
         },
         {
           id: 'department',
           title: '学科',
           children: (
-            <DepartmentSearchAccordionItem<StudentQuery>
-              control={control}
-              name="departmentId"
-              column={7}
-            />
+            <DepartmentSearchAccordionItem<StudentQuery> control={control} name="departmentId" />
           ),
         },
       ]}

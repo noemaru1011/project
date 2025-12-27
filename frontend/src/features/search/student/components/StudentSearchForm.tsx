@@ -1,17 +1,14 @@
 import { Button } from '@/components/ui/Button/Button';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/constants/routes';
 import { useStudentSearch } from '@/features/search/student/hooks/useStudentSearch';
 import { StudentSearchAccordion } from '@/features/search/student/components';
 import type { StudentQuery } from '@/features/search/student';
 
 type Props = {
   onSearch: (query: StudentQuery) => void;
+  onCreate: () => void;
 };
 
-export const StudentSearchPanel = ({ onSearch }: Props) => {
-  const navigate = useNavigate();
-  const pathname = useLocation().pathname;
+export const StudentSearchPanel = ({ onSearch, onCreate }: Props) => {
   const { control, handleSubmit, handleSearch } = useStudentSearch(onSearch);
 
   return (
@@ -19,12 +16,12 @@ export const StudentSearchPanel = ({ onSearch }: Props) => {
       <form onSubmit={handleSubmit(handleSearch)} className="flex flex-col gap-4">
         <StudentSearchAccordion control={control} />
         <div className="flex justify-center gap-4 mt-4">
-          {pathname === ROUTES.STUDENT.INDEX && (
+          {onCreate && (
             <Button
               type="button"
               variant="Create"
               className="w-64 mx-auto py-2"
-              onClick={() => navigate(ROUTES.STUDENT.CREATE)}
+              onClick={onCreate}
             />
           )}
           <Button type="submit" variant="Search" className="w-64 mx-auto py-2" />

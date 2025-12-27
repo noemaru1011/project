@@ -1,38 +1,22 @@
 import { CheckboxGroup } from '@/components/ui/CheckboxGroup/CheckboxGroup';
 import { gradeOptions } from '@/features/grade/constants/gradeOptions';
 
-type GradeCheckboxGroupProps = {
-  name: string;
-  value: number[];
-  onChange: (values: number[]) => void;
-  label?: string;
+type Props = {
   error?: string;
   required?: boolean;
   disabled?: boolean;
-  column?: number;
-};
+} & Omit<React.ComponentProps<typeof CheckboxGroup>, 'options' | 'label' | 'column'>;
 
-export const GradeCheckboxGroup = ({
-  name,
-  value,
-  onChange,
-  label,
-  error,
-  required,
-  disabled,
-  column,
-}: GradeCheckboxGroupProps) => {
+export const GradeCheckboxGroup = ({ error, required, disabled, ...rest }: Props) => {
   return (
     <CheckboxGroup
-      name={name}
-      value={value.map(String)}
-      onChange={(vals) => onChange(vals.map(Number))}
       options={gradeOptions}
-      label={label}
+      label="学年"
       required={required}
       error={error}
       disabled={disabled}
-      column={column}
+      column={4}
+      {...rest}
     />
   );
 };

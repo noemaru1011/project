@@ -1,16 +1,14 @@
 import { useState } from 'react';
 import { Input } from '@/components/ui/Input/Input';
 import { Lock, Eye, EyeOff } from 'lucide-react';
-import type { Props } from '@/components/ui/Input/Input';
 
-type PasswordInputProps = Omit<Props, 'type'>;
+type Props = Omit<React.ComponentProps<typeof Input>, 'type'>;
 
-export const PasswordInput = ({ ...props }: PasswordInputProps) => {
+export const PasswordInput = ({ ...props }: Props) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <Input
       {...props}
-      required
       type={showPassword ? 'text' : 'password'}
       leftIcon={<Lock className="size-5 text-indigo-500" />}
       rightIcon={

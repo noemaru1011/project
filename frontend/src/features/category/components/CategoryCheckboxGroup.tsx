@@ -1,40 +1,23 @@
 import { CheckboxGroup } from '@/components/ui/CheckboxGroup/CheckboxGroup';
 import { useCategoryOptions } from '@/features/category/hooks/useCategoryOptions';
 
-type CategoryCheckboxGroupProps = {
-  name: string;
-  value: number[];
-  onChange: (values: number[]) => void;
-  label?: string;
+type Props = {
   error?: string;
   required?: boolean;
   disabled?: boolean;
-  column?: number;
-};
+} & Omit<React.ComponentProps<typeof CheckboxGroup>, 'options' | 'label' | 'column'>;
 
-export const CategoryCheckboxGroup = ({
-  name,
-  value,
-  onChange,
-  label,
-  error,
-  required,
-  disabled,
-  column,
-}: CategoryCheckboxGroupProps) => {
+export const CategoryCheckboxGroup = ({ error, required, disabled, ...rest }: Props) => {
   const { options, loading } = useCategoryOptions();
-
   return (
     <CheckboxGroup
-      name={name}
-      value={value.map(String)}
-      onChange={(vals) => onChange(vals.map(Number))}
       options={options}
-      label={label}
+      label="大分類"
       required={required}
       error={error}
-      disabled={loading || disabled}
-      column={column}
+      disabled={disabled || loading}
+      column={4}
+      {...rest}
     />
   );
 };

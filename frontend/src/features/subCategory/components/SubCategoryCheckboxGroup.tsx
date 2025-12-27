@@ -1,40 +1,23 @@
 import { CheckboxGroup } from '@/components/ui/CheckboxGroup/CheckboxGroup';
 import { useSubCategoryOptions } from '@/features/subCategory/hooks/useSubCategoryOptions';
 
-type SubCategoryCheckboxGroupProps = {
-  name: string;
-  value: number[];
-  onChange: (values: number[]) => void;
-  label?: string;
+type Props = {
   error?: string;
   required?: boolean;
   disabled?: boolean;
-  column?: number;
-};
+} & Omit<React.ComponentProps<typeof CheckboxGroup>, 'options' | 'label' | 'column'>;
 
-export const SubCategoryCheckboxGroup = ({
-  name,
-  value,
-  onChange,
-  label,
-  error,
-  required,
-  disabled,
-  column,
-}: SubCategoryCheckboxGroupProps) => {
+export const SubCategoryCheckboxGroup = ({ error, required, disabled, ...rest }: Props) => {
   const { options, loading } = useSubCategoryOptions();
-
   return (
     <CheckboxGroup
-      name={name}
-      value={value.map(String)}
-      onChange={(vals) => onChange(vals.map(Number))}
-      label={label}
+      options={options}
+      label="中分類"
       required={required}
       error={error}
-      column={column}
-      options={options}
-      disabled={loading || disabled}
+      disabled={disabled || loading}
+      column={4}
+      {...rest}
     />
   );
 };

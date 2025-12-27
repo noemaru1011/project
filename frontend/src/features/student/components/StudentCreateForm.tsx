@@ -1,8 +1,7 @@
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/Button/Button';
-import { EmailInput } from '@/components/form';
-import { StudentNameInput } from '@/features/student/components';
+import { StudentNameInput, StudentEmailInput } from '@/features/student/components';
 import { GradeRadioGroup } from '@/features/grade/components';
 import { MinorCategorySelect } from '@/features/minorCategory/components/MinorCategorySelect';
 import { DepartmentSelect } from '@/features/department/components/DepartmentSelect';
@@ -27,21 +26,13 @@ export const StudentCreateForm = ({ onSubmit, onBack, loading }: Props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <StudentNameInput
-        id="studentName"
-        label="学生名"
-        error={errors.studentName?.message}
-        required
-        {...register('studentName')}
-      />
+      <StudentNameInput required error={errors.studentName?.message} {...register('studentName')} />
 
       <Controller
         name="grade"
         control={control}
         render={({ field, fieldState }) => (
           <GradeRadioGroup
-            label="学年"
-            column={4}
             name={field.name}
             value={field.value !== undefined ? String(field.value) : undefined}
             onChange={(val) => field.onChange(Number(val))}
@@ -51,23 +42,14 @@ export const StudentCreateForm = ({ onSubmit, onBack, loading }: Props) => {
       />
 
       <MinorCategorySelect
-        label="小分類名"
         required
         error={errors.minorCategoryId?.message}
         {...register('minorCategoryId')}
       />
 
-      <EmailInput
-        id="mail"
-        label="メールアドレス"
-        helperText="メールアドレスは重複しないように"
-        required
-        error={errors.email?.message}
-        {...register('email')}
-      />
+      <StudentEmailInput required error={errors.email?.message} {...register('email')} />
 
       <DepartmentSelect
-        label="学科名"
         required
         error={errors.departmentId?.message}
         {...register('departmentId')}

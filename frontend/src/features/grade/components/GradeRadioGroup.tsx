@@ -5,5 +5,7 @@ import { gradeOptions } from '@/features/grade/constants/gradeOptions';
 type GradeRadioGroupProps = Omit<Props, 'options'> & { disabled?: boolean };
 
 export const GradeRadioGroup = ({ disabled, ...props }: GradeRadioGroupProps) => {
-  return <RadioGroup {...props} options={gradeOptions} disabled={disabled} />;
+  return (
+    <RadioGroup {...props} label="学年" column={4} options={gradeOptions} disabled={disabled} />
+  );
 };

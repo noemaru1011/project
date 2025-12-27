@@ -1,15 +1,14 @@
-import { Input } from '@/components/ui/Input/Input';
+import { Datetime_localInput } from '@/components/form/Datetime-local.Input';
 import { Clock } from 'lucide-react';
-import type { Props } from '@/components/ui/Input/Input';
+import type { Datetime_localInputProps } from '@/components/form/Datetime-local.Input';
 
-type EndTimeInputProps = Omit<Props, 'id' | 'type'> & { disabled?: boolean };
+type EndTimeInputProps = Omit<Datetime_localInputProps, 'type'> & { disabled?: boolean };
 
 export const EndTimeInput = ({ disabled, ...props }: EndTimeInputProps) => {
   return (
-    <Input
+    <Datetime_localInput
       {...props}
       id="endTime"
-      type="datetime-local"
       leftIcon={<Clock className="size-4" />}
       helperText="未定の場合は時間を設定しないでください。"
       disabled={disabled}

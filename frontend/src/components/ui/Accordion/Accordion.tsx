@@ -3,7 +3,7 @@ import { ChevronDown } from 'lucide-react';
 
 export interface AccordionItemProps {
   id: string;
-  title: string;
+  title?: string;
   children: React.ReactNode;
   defaultOpen?: boolean;
   icon?: React.ReactNode;

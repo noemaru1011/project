@@ -31,12 +31,14 @@ export const PasswordUpdateForm = ({ onSubmit, loading }: Props) => {
         id="newPassword1"
         label="新しいパスワード"
         error={errors.newPassword?.message}
+        helperText="6文字以上で入力してください"
         {...register('newPassword')}
       />
       <PasswordInput
         id="newPassword2"
         label="新しいパスワード(確認)"
         error={errors.checkNewPassword?.message}
+        helperText="6文字以上で入力してください"
         {...register('checkNewPassword')}
       />
 

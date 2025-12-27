@@ -1,40 +1,23 @@
 import { CheckboxGroup } from '@/components/ui/CheckboxGroup/CheckboxGroup';
 import { useDepartmentOptions } from '@/features/department/hooks/useDepartmentOptions';
 
-type DepartmentCheckboxGroupProps = {
-  name: string;
-  value: number[];
-  onChange: (values: number[]) => void;
-  label?: string;
+type Props = {
   error?: string;
   required?: boolean;
   disabled?: boolean;
-  column?: number;
-};
+} & Omit<React.ComponentProps<typeof CheckboxGroup>, 'options' | 'label' | 'column'>;
 
-export const DepartmentCheckboxGroup = ({
-  name,
-  value,
-  onChange,
-  label,
-  error,
-  required,
-  disabled,
-  column,
-}: DepartmentCheckboxGroupProps) => {
+export const DepartmentCheckboxGroup = ({ error, required, disabled, ...rest }: Props) => {
   const { options, loading } = useDepartmentOptions();
-
   return (
     <CheckboxGroup
-      name={name}
-      value={value.map(String)}
-      onChange={(vals) => onChange(vals.map(Number))}
       options={options}
-      label={label}
+      label="学科"
       required={required}
       error={error}
-      disabled={loading || disabled}
-      column={column}
+      disabled={disabled || loading}
+      column={4}
+      {...rest}
     />
   );
 };
