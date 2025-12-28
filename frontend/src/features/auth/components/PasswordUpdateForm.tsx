@@ -1,7 +1,11 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/Button/Button';
-import { PasswordInput } from '@/components/form';
+import {
+  OldPasswordInput,
+  NewPasswordInput,
+  CheckNewPasswordInput,
+} from '@/features/auth/components';
 import { validation } from '@shared/schemas/password';
 import type { PasswordForm } from '@shared/schemas/password';
 
@@ -21,24 +25,10 @@ export const PasswordUpdateForm = ({ onSubmit, loading }: Props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <PasswordInput
-        id="oldPassword"
-        label="古いパスワード"
-        error={errors.oldPassword?.message}
-        {...register('oldPassword')}
-      />
-      <PasswordInput
-        id="newPassword1"
-        label="新しいパスワード"
-        error={errors.newPassword?.message}
-        helperText="6文字以上で入力してください"
-        {...register('newPassword')}
-      />
-      <PasswordInput
-        id="newPassword2"
-        label="新しいパスワード(確認)"
+      <OldPasswordInput error={errors.oldPassword?.message} {...register('oldPassword')} />
+      <NewPasswordInput error={errors.newPassword?.message} {...register('newPassword')} />
+      <CheckNewPasswordInput
         error={errors.checkNewPassword?.message}
-        helperText="6文字以上で入力してください"
         {...register('checkNewPassword')}
       />
 

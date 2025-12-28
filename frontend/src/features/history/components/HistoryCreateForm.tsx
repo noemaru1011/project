@@ -55,24 +55,15 @@ export const HistoryCreateForm = ({ selectedStudents, onSubmit }: Props) => {
 
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="w-full sm:w-1/2">
-          <StartTimeInput
-            label="有効開始日"
-            required
-            error={errors.startTime?.message}
-            {...register('startTime')}
-          />
+          <StartTimeInput error={errors.startTime?.message} {...register('startTime')} />
         </div>
 
         <div className="w-full sm:w-1/2">
-          <EndTimeInput
-            label="有効終了日"
-            error={errors.endTime?.message}
-            {...register('endTime')}
-          />
+          <EndTimeInput error={errors.endTime?.message} {...register('endTime')} />
         </div>
       </div>
 
-      <OtherTextarea label="備考欄" error={errors.other?.message} {...register('other')} />
+      <OtherTextarea error={errors.other?.message} {...register('other')} />
 
       {isSubmitted && errors.studentIds && (
         <p className="text-red-500 text-sm text-center mt-4">{errors.studentIds.message}</p>

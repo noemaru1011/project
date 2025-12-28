@@ -1,8 +1,7 @@
 import { Textarea } from '@/components/ui/Textarea/Textarea';
-import type { Props } from '@/components/ui/Textarea/Textarea';
 
-type OtherTextareaProps = Omit<Props, 'id'> & { disabled?: boolean };
+type Props = Omit<React.ComponentProps<typeof Textarea>, 'id' | 'label' | 'helperText'>;
 
-export const OtherTextarea = ({ disabled, ...props }: OtherTextareaProps) => {
-  return <Textarea {...props} id="other" helperText="例 「於:〇〇病院」" disabled={disabled} />;
+export const OtherTextarea = ({ ...props }: Props) => {
+  return <Textarea {...props} id="other" label="備考欄" helperText="例 「於:〇〇病院」" />;
 };

@@ -2,13 +2,18 @@ import { useState } from 'react';
 import { Input } from '@/components/ui/Input/Input';
 import { Lock, Eye, EyeOff } from 'lucide-react';
 
-type Props = Omit<React.ComponentProps<typeof Input>, 'type'>;
+type Props = Omit<
+  React.ComponentProps<typeof Input>,
+  'type' | 'id' | 'label' | 'leftIcon' | 'rightIcon'
+>;
 
-export const PasswordInput = ({ ...props }: Props) => {
+export const OldPasswordInput = ({ ...props }: Props) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <Input
       {...props}
+      id="oldPassword"
+      label="古いパスワード"
       type={showPassword ? 'text' : 'password'}
       leftIcon={<Lock className="size-5 text-indigo-500" />}
       rightIcon={

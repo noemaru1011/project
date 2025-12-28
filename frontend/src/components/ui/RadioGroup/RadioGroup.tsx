@@ -3,7 +3,7 @@ import { useCallback, useMemo } from 'react';
 import type { Option } from '@/components/ui/option';
 import { Radio } from '@/components/ui/Radio/Radio';
 
-export type Props = {
+type Props = {
   name: string;
   options: Option[];
   label?: string;

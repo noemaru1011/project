@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import type { Option } from '@/components/ui/option';
 import { Checkbox } from '@/components/ui/Checkbox/Checkbox';
 
-export type Props = {
+type Props = {
   name: string;
   options: Option[];
   label?: string;
