@@ -1,10 +1,13 @@
 import { Datetime_localInput } from '@/components/form/Datetime-local.Input';
 import { Clock } from 'lucide-react';
-import type { Datetime_localInputProps } from '@/components/form/Datetime-local.Input';
 
-type EndTimeInputProps = Omit<Datetime_localInputProps, 'type'> & { disabled?: boolean };
+type Props = {
+  error?: string;
+  required?: boolean;
+  disabled?: boolean;
+} & Omit<React.ComponentProps<typeof Datetime_localInput>, 'id' | 'leftIcon' | 'helperText'>;
 
-export const EndTimeInput = ({ disabled, ...props }: EndTimeInputProps) => {
+export const EndTimeInput = ({ disabled, ...props }: Props) => {
   return (
     <Datetime_localInput
       {...props}

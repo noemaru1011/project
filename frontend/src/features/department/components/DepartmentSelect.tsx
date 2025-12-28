@@ -1,11 +1,13 @@
 import { Select } from '@/components/ui/Select/Select';
 import { Library } from 'lucide-react';
-import type { Props } from '@/components/ui/Select/Select';
 import { useDepartmentOptions } from '@/features/department/hooks/useDepartmentOptions';
 
-type DepartmentSelectProps = Omit<Props, 'id' | 'options'> & { disabled?: boolean };
+type Props = Omit<
+  React.ComponentProps<typeof Select>,
+  'options' | 'id' | 'label' | 'leftIcon' | 'required'
+>;
 
-export const DepartmentSelect = ({ disabled, ...props }: DepartmentSelectProps) => {
+export const DepartmentSelect = ({ disabled, ...props }: Props) => {
   const { options, loading } = useDepartmentOptions();
 
   return (
@@ -16,6 +18,7 @@ export const DepartmentSelect = ({ disabled, ...props }: DepartmentSelectProps) 
       options={options}
       leftIcon={<Library className="size-4" />}
       disabled={loading || disabled}
+      required
     />
   );
 };

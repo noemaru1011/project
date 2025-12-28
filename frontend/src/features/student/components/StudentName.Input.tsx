@@ -1,17 +1,20 @@
-import { TextInput } from '@/components/form/Text.Input';
+import { Input } from '@/components/ui/Input/Input';
 import { User } from 'lucide-react';
-import type { TextInputProps } from '@/components/form/Text.Input';
 
-type StudentNameInputProps = Omit<TextInputProps, 'type'> & { disabled?: boolean };
+type Props = Omit<
+  React.ComponentProps<typeof Input>,
+  'type' | 'id' | 'label' | 'leftIcon' | 'required'
+>;
 
-export const StudentNameInput = ({ disabled, ...props }: StudentNameInputProps) => {
+export const StudentNameInput = ({ ...props }: Props) => {
   return (
-    <TextInput
+    <Input
       {...props}
+      type="text"
       id="studnetName"
       label="学生名"
+      required
       leftIcon={<User className="size-4" />}
-      disabled={disabled}
     />
   );
 };

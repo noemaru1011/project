@@ -26,7 +26,7 @@ export const StudentCreateForm = ({ onSubmit, onBack, loading }: Props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <StudentNameInput required error={errors.studentName?.message} {...register('studentName')} />
+      <StudentNameInput error={errors.studentName?.message} {...register('studentName')} />
 
       <Controller
         name="grade"
@@ -42,18 +42,17 @@ export const StudentCreateForm = ({ onSubmit, onBack, loading }: Props) => {
       />
 
       <MinorCategorySelect
-        required
         error={errors.minorCategoryId?.message}
         {...register('minorCategoryId')}
       />
 
-      <StudentEmailInput required error={errors.email?.message} {...register('email')} />
-
-      <DepartmentSelect
-        required
-        error={errors.departmentId?.message}
-        {...register('departmentId')}
+      <StudentEmailInput
+        helperText="メールアドレスは重複しないように"
+        error={errors.email?.message}
+        {...register('email')}
       />
+
+      <DepartmentSelect error={errors.departmentId?.message} {...register('departmentId')} />
 
       <div className="flex justify-center gap-4 mt-6">
         <Button type="submit" variant="Create" disabled={loading} className="w-32 mx-auto py-2" />

@@ -5,7 +5,7 @@ import type { StudentQuery } from '@/features/search/student';
 
 type Props = {
   onSearch: (query: StudentQuery) => void;
-  onCreate: () => void;
+  onCreate?: () => void;
 };
 
 export const StudentSearchPanel = ({ onSearch, onCreate }: Props) => {

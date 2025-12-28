@@ -1,27 +1,18 @@
-import { EmailInput } from '@/components/form/Email.Input';
+import { Input } from '@/components/ui/Input/Input';
+import { Mail } from 'lucide-react';
 
-export type StudentEmailInputProps = {
-  required?: boolean;
-  error?: string;
-  disabled?: boolean;
-  className?: string;
-};
+type Props = Omit<React.ComponentProps<typeof Input>, 'id' | 'type' | 'label' | 'leftIcon'>;
 
-export const StudentEmailInput = ({
-  required,
-  error,
-  disabled,
-  className,
-}: StudentEmailInputProps) => {
+export const StudentEmailInput = ({ ...props }: Props) => {
   return (
-    <EmailInput
+    <Input
+      {...props}
       id="mail"
+      type="mail"
       label="メールアドレス"
-      helperText="メールアドレスは重複しないように"
-      error={error}
-      disabled={disabled}
-      required={required}
-      className={className}
+      leftIcon={<Mail className="size-5 text-indigo-500" />}
+      //helperText="メールアドレスは重複しないように"
+      //helperText="メールアドレスは変更できません"
     />
   );
 };
