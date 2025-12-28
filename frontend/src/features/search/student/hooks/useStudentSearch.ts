@@ -1,19 +1,13 @@
-import { useForm } from 'react-hook-form';
-import type { StudentQuery } from '@/features/search/student/types';
 import { useNavigate } from 'react-router-dom';
+import type { StudentQuery } from '@/features/search/student/types';
 import { handleApiError } from '@/utils/handleApiError';
+import type { UseFormGetValues } from 'react-hook-form';
 
-export const useStudentSearch = (onSearch: (query: StudentQuery) => void | Promise<void>) => {
+export const useStudentSearch = (
+  onSearch: (query: StudentQuery) => void | Promise<void>,
+  getValues: UseFormGetValues<StudentQuery>,
+) => {
   const navigate = useNavigate();
-  const { handleSubmit, control, getValues } = useForm<StudentQuery>({
-    defaultValues: {
-      categoryId: [],
-      subCategoryId: [],
-      minorCategoryId: [],
-      grade: [],
-      departmentId: [],
-    },
-  });
 
   const handleSearch = async () => {
     const query = getValues();
@@ -25,5 +19,5 @@ export const useStudentSearch = (onSearch: (query: StudentQuery) => void | Promi
     }
   };
 
-  return { control, handleSubmit, handleSearch };
+  return { handleSearch };
 };

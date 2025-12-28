@@ -1,10 +1,10 @@
 export interface HistoryDetail {
   historyId: string;
   studentName: string;
-  grade: number;
-  minorCategoryId: number;
-  departmentId: number;
-  statusId: number;
+  grade: string;
+  minorCategoryId: string;
+  departmentId: string;
+  statusId: string;
   other: string;
   startTime: string;
   endTime: string | null;
@@ -13,9 +13,9 @@ export interface HistoryDetail {
 }
 
 export interface HistoryResult {
-  historyId: number;
+  historyId: string;
   studentName: string;
-  grade: number;
+  grade: string;
   minorCategoryName: string;
   departmentName: string;
   statusName: string;

@@ -1,8 +1,8 @@
 export interface HistoryQuery {
   //studentと同じ
-  minorCategoryId: number[];
-  subCategoryId: number[];
-  categoryId: number[];
-  grade: number[];
-  departmentId: number[];
+  minorCategoryId: string[];
+  subCategoryId: string[];
+  categoryId: string[];
+  grade: string[];
+  departmentId: string[];
 }

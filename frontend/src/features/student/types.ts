@@ -1,17 +1,17 @@
 export interface StudentDetail {
   studentId: string;
   studentName: string;
-  grade: number;
-  minorCategoryId: number;
+  grade: string;
+  minorCategoryId: string;
   email: string;
-  departmentId: number;
+  departmentId: string;
   updatedAt: string;
 }
 
 export interface StudentResult {
   studentId: string;
   studentName: string;
-  grade: number;
+  grade: string;
   minorCategoryName: string;
   subCategoryName: string;
   categoryName: string;
