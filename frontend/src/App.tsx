@@ -21,7 +21,7 @@ import { StudentDeletePage } from '@/features/student/pages/delete';
 import { ChangePassword } from '@/features/auth/pages/updatePassword';
 import { HistoryIndexPage } from '@/features/history/pages';
 import { HistoryCreatePage } from '@/features/history/pages/create';
-// import { HistoryUpdate } from '@/pages/historyPage/update';
+import { HistoryUpdatePage } from '@/features/history/pages/update';
 import { HistoryDeletePage } from '@/features/history/pages/delete';
 
 import { NotFound } from '@/pages/error/notFound';
@@ -65,8 +65,8 @@ const AppRoutes = () => (
           </RoleGuard>
         }
       />
-      {/* 
-      <Route path={ROUTES.HISTORY.UPDATE()} element={<HistoryUpdate />} />*/}
+
+      <Route path={ROUTES.HISTORY.UPDATE()} element={<HistoryUpdatePage />} />
       <Route path={ROUTES.HISTORY.DELETE()} element={<HistoryDeletePage />} />
       <Route
         path={ROUTES.STUDENT.CHANGE}

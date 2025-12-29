@@ -5,7 +5,6 @@ import { studentSearchApi } from '@/features/search/student';
 import { useSearch } from '@/hooks/useSearch';
 import type { StudentQueryForm } from '@shared/schemas/studentQuery';
 import { StudentSearchForm } from '@/features/search/student/components';
-import { StudentTable } from '@/features/student/components';
 import type { StudentResult } from '@/features/student/types';
 
 type Props = {
@@ -30,9 +29,8 @@ export const StudentSearchSection = ({ selectedStudents, onChangeSelected }: Pro
           showCheckbox
           selectedIds={selectedStudents.map((s) => s.id)}
           onSelect={(id, checked) => {
-            const student = data.find((s) => String(s.studentId) === id);
+            const student = data.find((s) => s.studentId === id);
             if (!student) return;
-
             const updated = checked
               ? [...selectedStudents, { id, name: student.studentName }]
               : selectedStudents.filter((x) => x.id !== id);

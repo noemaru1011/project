@@ -1,4 +1,5 @@
 export interface StudentDetail {
+  //CRUD画面で表示する型
   studentId: string;
   studentName: string;
   grade: string;

@@ -8,18 +8,21 @@ import { useUpdate } from '@/hooks/useUpdate';
 import { useView } from '@/hooks/useView';
 
 import { Input } from '@/components/ui/Input/Input';
-import { Textarea } from '@/components/ui/Textarea/Textarea';
-import { Checkbox } from '@/components/ui/Checkbox/Checkbox';
-import { RadioGroup } from '@/components/ui/RadioGroup/RadioGroup';
+import { StudentNameInput } from '@/features/student/components';
+import { GradeRadioGroup } from '@/features/grade/components';
+import { MinorCategorySelect } from '@/features/minorCategory/components';
+import { DepartmentSelect } from '@/features/department/components';
+import { StatusRadioGroup } from '@/features/status/components';
+import {
+  StartTimeInput,
+  EndTimeInput,
+  OtherTextarea,
+  VailFlagCheckbox,
+} from '@/features/history/components';
 import { Button } from '@/components/ui/Button/Button';
-import { Select } from '@/components/ui/Select/Select';
 import { Loading } from '@/components/ui/Loading/Loading';
-import { statusOptions } from '@/features/status/constants/options';
-import { gradeOptions } from '@/features/grade/constants/gradeOptions';
-import { minorCategoryOptions } from '@/features/minorCategory/constants/options';
-import { departmentOptions } from '@/features/department/constants/options';
 
-import { HistoryApi } from '@/api/historyApi';
+import { historyApi } from '@/features/history/';
 import type { HistoryUpdateForm } from '@shared/schemas/history';
 import { updateValidation } from '@shared/schemas/history';
 import type { HistoryDetail } from '@/features/history/types';
@@ -27,18 +30,18 @@ import type { HistoryDetail } from '@/features/history/types';
 import { handleApiError } from '@/utils/handleApiError';
 import { ROUTES } from '@/constants/routes';
 
-export const HistoryUpdate = () => {
+export const HistoryUpdatePage = () => {
   const navigate = useNavigate();
   const { historyId } = useParams<{ historyId: string }>();
-  const { update, loading } = useUpdate<HistoryUpdateForm>(HistoryApi.update);
-  const { view } = useView<HistoryDetail>(HistoryApi.view);
+  const { update, loading } = useUpdate<HistoryUpdateForm>(historyApi.update);
+  const { view } = useView<HistoryDetail>(historyApi.view);
 
   const [studentData, setStudentData] = useState<{
     studentName: string;
-    grade: number;
-    minorCategoryId: number;
-    departmentId: number;
-  }>({ studentName: '', grade: 0, minorCategoryId: 0, departmentId: 0 });
+    grade: string;
+    minorCategoryId: string;
+    departmentId: string;
+  }>({ studentName: '', grade: '', minorCategoryId: '', departmentId: '' });
 
   const {
     register,
@@ -71,7 +74,7 @@ export const HistoryUpdate = () => {
           validFlag: data.validFlag,
           updatedAt: data.updatedAt,
         });
-      } catch (err: any) {
+      } catch (err) {
         handleApiError(err, navigate);
       }
     };
@@ -86,7 +89,7 @@ export const HistoryUpdate = () => {
       const res = await update(historyId, form);
       toast.success(res.message);
       navigate(ROUTES.HISTORY.INDEX);
-    } catch (err: any) {
+    } catch (err) {
       handleApiError(err, navigate);
     }
   };
@@ -102,37 +105,13 @@ export const HistoryUpdate = () => {
               <section className="space-y-4 p-4 bg-gray-50 rounded-xl">
                 <h3 className="text-lg font-semibold text-gray-700">基本情報（変更不可）</h3>
 
-                <Input
-                  id="studentName"
-                  label="学生名"
-                  type="text"
-                  value={studentData.studentName}
-                  disabled
-                />
+                <StudentNameInput value={studentData.studentName} disabled />
 
-                <RadioGroup
-                  label="学年"
-                  name="grade"
-                  options={gradeOptions}
-                  value={String(studentData.grade)}
-                  disabled
-                />
+                <GradeRadioGroup name="grade" value={String(studentData.grade)} disabled />
 
-                <Select
-                  id="minorCategory"
-                  label="小分類名"
-                  options={minorCategoryOptions}
-                  value={String(studentData.minorCategoryId)}
-                  disabled
-                />
+                <MinorCategorySelect value={String(studentData.minorCategoryId)} disabled />
 
-                <Select
-                  id="department"
-                  label="学科名"
-                  options={departmentOptions}
-                  value={String(studentData.departmentId)}
-                  disabled
-                />
+                <DepartmentSelect value={String(studentData.departmentId)} disabled />
               </section>
 
               {/* ===== 右：編集可能 ===== */}
@@ -143,49 +122,23 @@ export const HistoryUpdate = () => {
                   name="statusId"
                   control={control}
                   render={({ field, fieldState }) => (
-                    <RadioGroup
-                      label="状況"
+                    <StatusRadioGroup
                       name={field.name}
-                      options={statusOptions}
                       value={field.value !== undefined ? String(field.value) : undefined}
-                      onChange={(v) => field.onChange(Number(v))}
-                      required
+                      onChange={(value) => field.onChange(value)}
                       error={fieldState.error?.message}
                     />
                   )}
                 />
 
                 <div className="flex flex-col gap-4">
-                  <Input
-                    id="startTime"
-                    type="datetime-local"
-                    label="有効開始日"
-                    required
-                    error={errors.startTime?.message}
-                    {...register('startTime')}
-                  />
-                  <Input
-                    id="endTime"
-                    type="datetime-local"
-                    label="有効終了日"
-                    error={errors.endTime?.message}
-                    {...register('endTime')}
-                  />
+                  <StartTimeInput error={errors.startTime?.message} {...register('startTime')} />
+                  <EndTimeInput error={errors.endTime?.message} {...register('endTime')} />
                 </div>
 
-                <Textarea
-                  id="other"
-                  label="備考欄"
-                  error={errors.other?.message}
-                  {...register('other')}
-                />
+                <OtherTextarea error={errors.other?.message} {...register('other')} />
 
-                <Checkbox
-                  id="validFlag"
-                  label="有効フラグ"
-                  error={errors.validFlag?.message}
-                  {...register('validFlag')}
-                />
+                <VailFlagCheckbox error={errors.validFlag?.message} {...register('validFlag')} />
 
                 <Input
                   id="updatedAt"

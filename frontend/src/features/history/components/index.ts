@@ -5,3 +5,4 @@ export * from './HistoryCreateForm';
 export * from './StudentSearchSection';
 export * from './SelectedStudentsFloat';
 export * from './HistoryTable';
+export * from './VailFlag.Checkbox';

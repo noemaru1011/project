@@ -8,7 +8,7 @@ export const validation = z.object({
           ? "学生名は必須です。"
           : undefined,
     })
-    .max(50, { error: "学生名は50文字以内で入力してください。" }),
+    .max(20, { error: "学生名は20文字以内で入力してください。" }),
 
   grade: z.string({
     error: (issue) =>
@@ -62,7 +62,7 @@ export const serverValidation = z.object({
           ? "学生名は必須です。"
           : undefined,
     })
-    .max(50, { error: "学生名は50文字以内で入力してください。" }),
+    .max(20, { error: "学生名は20文字以内で入力してください。" }),
 
   grade: z.coerce
     .number({

@@ -1,12 +1,14 @@
 import { historySearchApi } from '@/features/search/history';
 import type { HistoryResult } from '@/features/history/types';
-import type { HistoryQuery } from '@/features/search/history/types';
+import type { StudentQueryForm } from '@shared/schemas/studentQuery';
 import { useSearch } from '@/hooks/useSearch';
 import { StudentSearchForm } from '@/features/search/student/components/StudentSearchForm';
 import { HistoryTable } from '@/features/history/components';
 
 export const HistoryIndexPage = () => {
-  const { data, loading, search } = useSearch<HistoryResult, HistoryQuery>(historySearchApi.search);
+  const { data, loading, search } = useSearch<HistoryResult, StudentQueryForm>(
+    historySearchApi.search,
+  );
 
   return (
     <div className="p-4 mx-auto max-w-4xl">

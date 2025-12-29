@@ -1,7 +1,7 @@
 import { Input } from '@/components/ui/Input/Input';
 import { Clock } from 'lucide-react';
 
-export type Props = Omit<
+type Props = Omit<
   React.ComponentProps<typeof Input>,
   'type' | 'id' | 'leftIcon' | 'label' | 'required'
 >;
