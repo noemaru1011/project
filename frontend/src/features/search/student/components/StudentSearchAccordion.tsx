@@ -6,10 +6,10 @@ import { SubCategoryCheckboxGroup } from '@/features/subCategory/components';
 import { MinorCategoryCheckboxGroup } from '@/features/minorCategory/components';
 import { GradeCheckboxGroup } from '@/features/grade/components';
 import { DepartmentCheckboxGroup } from '@/features/department/components';
-import type { StudentQuery } from '@/features/search/student';
+import type { StudentQueryForm } from '@shared/schemas/studentQuery';
 
 type Props = {
-  control: Control<StudentQuery>;
+  control: Control<StudentQueryForm>;
 };
 
 export const StudentSearchAccordion = ({ control }: Props) => {
@@ -22,9 +22,15 @@ export const StudentSearchAccordion = ({ control }: Props) => {
           title: '大分類',
           children: (
             <Controller
-              name="categoryId"
+              name="categoryIds"
               control={control}
-              render={({ field }) => <CategoryCheckboxGroup {...field} />}
+              render={({ field }) => (
+                <CategoryCheckboxGroup
+                  name={field.name}
+                  value={(field.value ?? []) as string[]}
+                  onChange={field.onChange}
+                />
+              )}
             />
           ),
         },
@@ -33,9 +39,15 @@ export const StudentSearchAccordion = ({ control }: Props) => {
           title: '中分類',
           children: (
             <Controller
-              name="subCategoryId"
+              name="subCategoryIds"
               control={control}
-              render={({ field }) => <SubCategoryCheckboxGroup {...field} />}
+              render={({ field }) => (
+                <SubCategoryCheckboxGroup
+                  name={field.name}
+                  value={(field.value ?? []) as string[]}
+                  onChange={field.onChange}
+                />
+              )}
             />
           ),
         },
@@ -44,9 +56,15 @@ export const StudentSearchAccordion = ({ control }: Props) => {
           title: '小分類',
           children: (
             <Controller
-              name="minorCategoryId"
+              name="minorCategoryIds"
               control={control}
-              render={({ field }) => <MinorCategoryCheckboxGroup {...field} />}
+              render={({ field }) => (
+                <MinorCategoryCheckboxGroup
+                  name={field.name}
+                  value={(field.value ?? []) as string[]}
+                  onChange={field.onChange}
+                />
+              )}
             />
           ),
         },
@@ -55,9 +73,15 @@ export const StudentSearchAccordion = ({ control }: Props) => {
           title: '学年',
           children: (
             <Controller
-              name="grade"
+              name="grades"
               control={control}
-              render={({ field }) => <GradeCheckboxGroup {...field} />}
+              render={({ field }) => (
+                <GradeCheckboxGroup
+                  name={field.name}
+                  value={(field.value ?? []) as string[]}
+                  onChange={field.onChange}
+                />
+              )}
             />
           ),
         },
@@ -66,9 +90,15 @@ export const StudentSearchAccordion = ({ control }: Props) => {
           title: '学科',
           children: (
             <Controller
-              name="departmentId"
+              name="departmentIds"
               control={control}
-              render={({ field }) => <DepartmentCheckboxGroup {...field} />}
+              render={({ field }) => (
+                <DepartmentCheckboxGroup
+                  name={field.name}
+                  value={(field.value ?? []) as string[]}
+                  onChange={field.onChange}
+                />
+              )}
             />
           ),
         },

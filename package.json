@@ -19,12 +19,12 @@
   "homepage": "https://github.com/noemaru1011/project#readme",
   "devDependencies": {
     "@types/node": "^24.8.1",
-    "typescript": "^5.9.3",
-    "zod": "^4.1.12"
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
-    "helmet": "^8.1.0"
+    "helmet": "^8.1.0",
+    "zod": "^4.2.1"
   },
   "private": true,
   "workspaces": [

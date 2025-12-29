@@ -1,22 +1,25 @@
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/Button/Button';
 import { useStudentSearch } from '@/features/search/student/hooks/useStudentSearch';
 import { StudentSearchAccordion } from '@/features/search/student/components';
-import type { StudentQuery } from '@/features/search/student';
+import type { StudentQueryForm } from '@shared/schemas/studentQuery';
+import { validation } from '@shared/schemas/studentQuery';
 
 type Props = {
-  onSearch: (query: StudentQuery) => void;
+  onSearch: (query: StudentQueryForm) => void;
   onCreate?: () => void;
 };
 
 export const StudentSearchPanel = ({ onSearch, onCreate }: Props) => {
-  const { control, handleSubmit, getValues } = useForm<StudentQuery>({
+  const { control, handleSubmit, getValues } = useForm<StudentQueryForm>({
+    resolver: zodResolver(validation),
     defaultValues: {
-      categoryId: [],
-      subCategoryId: [],
-      minorCategoryId: [],
-      grade: [],
-      departmentId: [],
+      categoryIds: [],
+      subCategoryIds: [],
+      minorCategoryIds: [],
+      grades: [],
+      departmentIds: [],
     },
   });
 

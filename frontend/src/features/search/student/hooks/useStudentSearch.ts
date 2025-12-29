@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import type { StudentQuery } from '@/features/search/student/types';
+import type { StudentQueryForm } from '@shared/schemas/studentQuery';
 import { handleApiError } from '@/utils/handleApiError';
 import type { UseFormGetValues } from 'react-hook-form';
 
 export const useStudentSearch = (
-  onSearch: (query: StudentQuery) => void | Promise<void>,
-  getValues: UseFormGetValues<StudentQuery>,
+  onSearch: (query: StudentQueryForm) => void | Promise<void>,
+  getValues: UseFormGetValues<StudentQueryForm>,
 ) => {
   const navigate = useNavigate();
 
