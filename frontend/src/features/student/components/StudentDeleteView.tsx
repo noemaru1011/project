@@ -18,11 +18,11 @@ export const StudentDeleteView = ({ student, onDelete, onBack }: Props) => {
 
       <GradeRadioGroup name="grade" value={String(student.grade)} disabled />
 
-      <MinorCategorySelect value={String(student.minorCategoryId)} disabled />
+      <MinorCategorySelect value={student.minorCategoryId} disabled />
 
       <StudentEmailInput value={student.email} disabled />
 
-      <DepartmentSelect value={String(student.departmentId)} disabled />
+      <DepartmentSelect value={student.departmentId} disabled />
 
       <div className="flex justify-center gap-4 mt-4">
         <Button type="button" variant="Delete" className="w-32 mx-auto py-2" onClick={onDelete} />

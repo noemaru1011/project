@@ -17,15 +17,15 @@ export const StudentView = ({ student, onBack }: Props) => {
 
       <GradeRadioGroup
         name="grade"
-        value={student?.grade !== undefined ? String(student.grade) : undefined}
+        value={student?.grade !== undefined ? student.grade : undefined}
         disabled
       />
 
-      <MinorCategorySelect value={student ? String(student.minorCategoryId) : ''} disabled />
+      <MinorCategorySelect value={student?.minorCategoryId ?? ''} disabled />
 
       <StudentEmailInput value={student?.email ?? ''} disabled />
 
-      <DepartmentSelect value={student ? String(student.departmentId) : ''} disabled />
+      <DepartmentSelect value={student?.departmentId ?? ''} disabled />
 
       <div className="flex justify-center mt-4">
         <Button type="button" variant="Back" className="w-64 py-2" onClick={onBack} />

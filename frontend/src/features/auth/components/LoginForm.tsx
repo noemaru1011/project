@@ -8,6 +8,7 @@ import type { LoginForm as LoginFormType } from '@shared/schemas/login';
 type Props = {
   onSubmit: (data: LoginFormType) => void;
   loading: boolean;
+  formError?: string | null;
 };
 
 export const LoginForm = ({ onSubmit, loading }: Props) => {
