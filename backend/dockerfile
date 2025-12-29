@@ -16,6 +16,8 @@ RUN npm install
 # ソース
 COPY backend/src ./src
 COPY backend/prisma ./prisma
+RUN npx prisma generate
+RUN npx prisma db seed
 
 # shared
 WORKDIR /project
@@ -24,8 +26,6 @@ COPY shared ./shared
 ENV TS_NODE_PROJECT=/project/backend/tsconfig.json
 
 WORKDIR /project/backend
-RUN npx prisma generate
-RUN npx prisma db seed
 
 EXPOSE 3000
 CMD ["npm", "run", "dev"]

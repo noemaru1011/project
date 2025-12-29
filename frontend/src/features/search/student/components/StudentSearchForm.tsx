@@ -11,7 +11,7 @@ type Props = {
   onCreate?: () => void;
 };
 
-export const StudentSearchPanel = ({ onSearch, onCreate }: Props) => {
+export const StudentSearchForm = ({ onSearch, onCreate }: Props) => {
   const { control, handleSubmit, getValues } = useForm<StudentQueryForm>({
     resolver: zodResolver(validation),
     defaultValues: {

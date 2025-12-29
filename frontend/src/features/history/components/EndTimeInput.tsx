@@ -11,6 +11,7 @@ export const EndTimeInput = ({ ...props }: Props) => {
     <Input
       {...props}
       id="endTime"
+      type="datetime-local"
       label="有効終了日"
       leftIcon={<Clock className="size-4" />}
       helperText="未定の場合は時間を設定しないでください。"

@@ -1,11 +1,22 @@
 import { RadioGroup } from '@/components/ui/RadioGroup/RadioGroup';
-import type { Props } from '@/components/ui/RadioGroup/RadioGroup';
 import { useStatusOptions } from '@/features/status/hooks/useStatusOptions';
 
-type StatusRadioGroupProps = Omit<Props, 'options'>;
+type Props = Omit<
+  React.ComponentProps<typeof RadioGroup>,
+  'options' | 'label' | 'column' | 'required'
+>;
 
-export const StatusRadioGroup = ({ disabled, ...props }: StatusRadioGroupProps) => {
+export const StatusRadioGroup = ({ disabled, ...props }: Props) => {
   const { options, loading } = useStatusOptions();
 
-  return <RadioGroup {...props} options={options} disabled={loading || disabled} />;
+  return (
+    <RadioGroup
+      {...props}
+      options={options}
+      label="状況"
+      column={7}
+      required
+      disabled={loading || disabled}
+    />
+  );
 };

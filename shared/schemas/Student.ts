@@ -2,29 +2,57 @@ import { z } from "zod";
 
 export const validation = z.object({
   studentName: z
-    .string()
-    .nonempty("学生名は必須です。")
-    .max(50, "学生名は50文字以内で入力してください。"),
+    .string({
+      error: (issue) => {
+        if (issue.input === undefined || issue.input === "") {
+          return "学生名は必須です。";
+        }
+        return "正しい入力をしてください。";
+      },
+    })
+    .max(50, { error: "学生名は50文字以内で入力してください。" }),
 
   grade: z
-    .string()
-    .nonempty("学年は必須です。")
-    .regex(/^[1-4]$/, "学年は1〜4で入力してください"),
+    .string({
+      error: (issue) => {
+        if (issue.input === undefined || issue.input === "") {
+          return "学年は必須です。";
+        }
+        return "学年は1〜4で入力してください。";
+      },
+    })
+    .regex(/^[1-4]$/, { error: "学年は1〜4で入力してください。" }),
 
-  //TODO
-  email: z.string().nonempty("メールアドレスは必須です。").email({
-    message: "有効なメールアドレスを入力してください",
+  email: z.email({
+    error: (issue) => {
+      if (issue.input === undefined || issue.input === "") {
+        return "メールアドレスは必須です";
+      }
+      return "正しいメールアドレスの形式で入力してください";
+    },
   }),
 
   minorCategoryId: z
-    .string()
-    .nonempty("小分類は必須です。")
-    .regex(/^[1-4]$/, "正しい小分類を入力してください"),
+    .string({
+      error: (issue) => {
+        if (issue.input === undefined || issue.input === "") {
+          return "小分類は必須です。";
+        }
+        return "正しい小分類を入力してください。";
+      },
+    })
+    .regex(/^[1-48]$/, { error: "正しい小分類を入力してください。" }),
 
   departmentId: z
-    .string()
-    .nonempty("学科は必須です。")
-    .regex(/^[1-4]$/, "正しい学科を入力してください"),
+    .string({
+      error: (issue) => {
+        if (issue.input === undefined || issue.input === "") {
+          return "学科は必須です。";
+        }
+        return "正しい学科を入力してください。";
+      },
+    })
+    .regex(/^[1-7]$/, { error: "正しい学科を入力してください。" }),
 });
 
 export type StudentForm = z.infer<typeof validation>;

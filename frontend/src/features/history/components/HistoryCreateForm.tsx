@@ -42,12 +42,9 @@ export const HistoryCreateForm = ({ selectedStudents, onSubmit }: Props) => {
         control={control}
         render={({ field, fieldState }) => (
           <StatusRadioGroup
-            label="状況"
-            column={7}
             name={field.name}
             value={field.value !== undefined ? String(field.value) : undefined}
-            onChange={(val) => field.onChange(Number(val))}
-            required
+            onChange={(val) => field.onChange(val)}
             error={fieldState.error?.message}
           />
         )}

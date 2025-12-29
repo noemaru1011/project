@@ -8,6 +8,7 @@ export interface StudentDetail {
   updatedAt: string;
 }
 
+//テーブルに表示する型
 export interface StudentResult {
   studentId: string;
   studentName: string;
