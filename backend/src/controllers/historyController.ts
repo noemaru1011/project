@@ -3,9 +3,9 @@ import { HistoryService } from '@/services/historyService';
 import { APIMESSAGE } from '@shared/apiMessage';
 
 export const HistoryController = {
-  async searchHitories(req: Request, res: Response, next: NextFunction) {
+  async searchHistories(req: Request, res: Response, next: NextFunction) {
     try {
-      const histories = await HistoryService.searchHistoies(req.body);
+      const histories = await HistoryService.searchHistories(req.body);
       return res.status(201).json({
         data: histories,
         message: APIMESSAGE.FETCH_SUCCESS,

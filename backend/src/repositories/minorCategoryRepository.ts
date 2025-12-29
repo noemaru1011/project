@@ -17,27 +17,27 @@ export const MinorCategoryRepository = {
   //例：1大隊→111,112,113,121...
   //例：11中隊→111,112,113
   async resolveMinorCategoryIds(data: {
-    minorCategoryId?: number[];
-    subCategoryId?: number[];
-    categoryId?: number[];
+    minorCategoryIds?: number[];
+    subCategoryIds?: number[];
+    categoryIds?: number[];
   }): Promise<number[]> {
-    if (!data.minorCategoryId?.length && !data.subCategoryId?.length && !data.categoryId?.length) {
+    if (!data.minorCategoryIds?.length && !data.subCategoryIds?.length && !data.categoryIds?.length) {
       return [];
     }
 
     const where: Prisma.MinorCategoryWhereInput = {
       OR: [
-        ...(data.minorCategoryId?.length
-          ? [{ minorCategoryId: { in: data.minorCategoryId } }]
+        ...(data.minorCategoryIds?.length
+          ? [{ minorCategoryId: { in: data.minorCategoryIds } }]
           : []),
 
-        ...(data.subCategoryId?.length ? [{ subCategoryId: { in: data.subCategoryId } }] : []),
+        ...(data.subCategoryIds?.length ? [{ subCategoryId: { in: data.subCategoryIds } }] : []),
 
-        ...(data.categoryId?.length
+        ...(data.categoryIds?.length
           ? [
               {
                 subCategory: {
-                  categoryId: { in: data.categoryId },
+                  categoryId: { in: data.categoryIds },
                 },
               },
             ]

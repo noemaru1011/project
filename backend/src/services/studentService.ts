@@ -76,18 +76,18 @@ export const StudentService = {
   },
 
   async searchStudents(data: {
-    minorCategoryId?: number[];
-    subCategoryId?: number[];
-    categoryId?: number[];
-    grade?: number[];
-    departmentId?: number[];
+    minorCategoryIds?: number[];
+    subCategoryIds?: number[];
+    categoryIds?: number[];
+    grades?: number[];
+    departmentIds?: number[];
   }) {
     const minorCategoryIds = await MinorCategoryRepository.resolveMinorCategoryIds(data);
 
     const students = await StudentRepository.searchStudents({
       minorCategoryIds,
-      departments: data.departmentId,
-      grade: data.grade,
+      departmentIds: data.departmentIds,
+      grades: data.grades,
     });
 
     //DTO

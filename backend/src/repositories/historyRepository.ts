@@ -27,20 +27,24 @@ export const HistoryRepository = {
     });
   },
 
-  async searchHistoies(data: {
+  async searchHistories(data: {
     minorCategoryIds?: number[] | undefined;
-    departments?: number[] | undefined;
-    grade?: number[] | undefined;
+    departmentIds?: number[] | undefined;
+    grades?: number[] | undefined;
   }) {
     //小隊(大隊・中隊)、学科、学年
-    // const where: Prisma.HistoryWhereInput = {
-    //   ...(data.minorCategoryIds?.length ? { minorCategoryId: { in: data.minorCategoryIds } } : {}),
-    //   ...(data.departments?.length ? { departmentId: { in: data.departments } } : {}),
-    //   ...(data.grade?.length ? { grade: { in: data.grade } } : {}),
-    // };
+    const where: Prisma.HistoryWhereInput = {
+      student: {
+        ...(data.minorCategoryIds?.length
+          ? { minorCategoryId: { in: data.minorCategoryIds } }
+          : {}),
+        ...(data.departmentIds?.length ? { departmentId: { in: data.departmentIds } } : {}),
+        ...(data.grades?.length ? { grade: { in: data.grades } } : {}),
+      },
+    };
 
     return prisma.history.findMany({
-      // where,
+      where,
       select: {
         student: {
           select: {

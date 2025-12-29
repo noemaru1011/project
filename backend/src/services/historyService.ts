@@ -22,19 +22,19 @@ export const HistoryService = {
     };
   },
 
-  async searchHistoies(data: {
-    minorCategoryId?: number[];
-    subCategoryId?: number[];
-    categoryId?: number[];
-    grade?: number[];
-    departmentId?: number[];
+  async searchHistories(data: {
+    minorCategoryIds?: number[];
+    subCategoryIds?: number[];
+    categoryIds?: number[];
+    grades?: number[];
+    departmentIds?: number[];
   }) {
     const minorCategoryIds = await MinorCategoryRepository.resolveMinorCategoryIds(data);
 
-    const histories = await HistoryRepository.searchHistoies({
+    const histories = await HistoryRepository.searchHistories({
       minorCategoryIds,
-      departments: data.departmentId,
-      grade: data.grade,
+      departmentIds: data.departmentIds,
+      grades: data.grades,
     });
 
     return histories.map((h) => ({

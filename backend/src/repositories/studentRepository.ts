@@ -91,15 +91,15 @@ export const StudentRepository = {
 
   async searchStudents(data: {
     minorCategoryIds?: number[] | undefined;
-    departments?: number[] | undefined;
-    grade?: number[] | undefined;
+    departmentIds?: number[] | undefined;
+    grades?: number[] | undefined;
   }) {
     //小隊(大隊・中隊)、学科、学年
     const where: Prisma.StudentWhereInput = {
       deleteFlag: false,
       ...(data.minorCategoryIds?.length ? { minorCategoryId: { in: data.minorCategoryIds } } : {}),
-      ...(data.departments?.length ? { departmentId: { in: data.departments } } : {}),
-      ...(data.grade?.length ? { grade: { in: data.grade } } : {}),
+      ...(data.departmentIds?.length ? { departmentId: { in: data.departmentIds } } : {}),
+      ...(data.grades?.length ? { grade: { in: data.grades } } : {}),
     };
 
     return await prisma.student.findMany({
