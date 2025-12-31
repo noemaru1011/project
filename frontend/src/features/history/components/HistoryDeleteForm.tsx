@@ -3,7 +3,7 @@ import { StatusRadioGroup } from '@/features/status/components';
 import { StartTimeInput, EndTimeInput, OtherTextarea } from '@/features/history/components';
 import type { HistoryUpdateForm } from '@shared/schemas/history';
 
-export const HistoryDeleteInfo = ({ type }: { type: HistoryUpdateForm }) => (
+export const HistoryDeleteForm = ({ type }: { type: HistoryUpdateForm }) => (
   <section className="space-y-6 p-4 bg-white rounded-xl">
     <h3 className="text-lg font-semibold text-gray-700">
       削除内容（データベースから削除されます）

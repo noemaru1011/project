@@ -29,7 +29,7 @@ export const updateValidation = validation
     studentIds: true,
   })
   .extend({
-    validFlag: z.coerce.boolean({
+    validFlag: z.boolean({
       error: "ture か false を選択してください。",
     }),
     updatedAt: z.string({

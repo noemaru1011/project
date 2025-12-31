@@ -7,5 +7,7 @@ export * from './SelectedStudentsFloat';
 export * from './HistoryTable';
 export * from './VailFlag.Checkbox';
 export * from './HistoryBasicInfo';
-export * from './HistoryDeleteInfo';
+export * from './HistoryDeleteForm';
 export * from './HistoryDeleteView';
+export * from './HistoryUpdateForm';
+export * from './HistoryUpdateView';

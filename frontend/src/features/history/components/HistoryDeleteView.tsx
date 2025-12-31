@@ -1,4 +1,4 @@
-import { HistoryBasicInfo, HistoryDeleteInfo } from '@/features/history/components';
+import { HistoryBasicInfo, HistoryDeleteForm } from '@/features/history/components';
 import { Button } from '@/components/ui/Button/Button';
 import type { HistoryUpdateForm } from '@shared/schemas/history';
 import type { HistoryBasic } from '@/features/history';
@@ -21,7 +21,7 @@ export const HistoryDeleteView = ({ historyDelete, historyBasic, onDelete, onBac
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <HistoryBasicInfo type={historyBasic} />
-          <HistoryDeleteInfo type={historyDelete} />
+          <HistoryDeleteForm type={historyDelete} />
         </div>
 
         <div className="flex justify-center gap-4 mt-6">
