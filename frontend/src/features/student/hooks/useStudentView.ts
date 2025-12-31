@@ -5,7 +5,7 @@ import { useView } from '@/hooks/useView';
 
 export const useStudentView = (studentId: string) => {
   const { view, loading } = useView<StudentDetail>(studentApi.view);
-  const [student, setStudent] = useState<StudentDetail | null>(null);
+  const [student, setStudent] = useState<StudentDetail | undefined>(undefined);
 
   useEffect(() => {
     view(studentId).then(setStudent);

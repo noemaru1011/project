@@ -12,6 +12,9 @@ type Props = {
 
 export const Textarea = React.forwardRef<HTMLTextAreaElement, Props>(
   ({ id, label, error, required, disabled, helperText, className, ...props }, ref) => {
+    //アクセシビリティ用
+    const errorId = error ? `${id}-error` : undefined;
+    const helpId = helperText ? `${id}-help` : undefined;
     return (
       <div className="flex flex-col space-y-1 w-full">
         {label && (
@@ -45,6 +48,8 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, Props>(
             duration-200
             ease-in-out
           `}
+          aria-invalid={!!error}
+          aria-describedby={[errorId, helpId].filter(Boolean).join(' ') || undefined}
           {...props}
         />
 

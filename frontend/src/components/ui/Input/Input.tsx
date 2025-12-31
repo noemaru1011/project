@@ -1,7 +1,7 @@
 import React from 'react';
 import type { AllowedInputType } from './types';
 
-type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> & {
+type Props = {
   id?: string;
   label?: string;
   type?: AllowedInputType;
@@ -12,7 +12,7 @@ type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> & {
   rightIcon?: React.ReactNode;
   helperText?: string;
   className?: string;
-} & React.InputHTMLAttributes<HTMLInputElement>;
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'>;
 
 export const Input = React.forwardRef<HTMLInputElement, Props>(
   (
@@ -31,6 +31,9 @@ export const Input = React.forwardRef<HTMLInputElement, Props>(
     },
     ref,
   ) => {
+    //アクセシビリティ用
+    const errorId = error ? `${id}-error` : undefined;
+    const helpId = helperText ? `${id}-help` : undefined;
     return (
       <div className="flex flex-col space-y-1">
         {label && (
@@ -58,6 +61,8 @@ export const Input = React.forwardRef<HTMLInputElement, Props>(
               ${rightIcon ? 'pr-6' : ''}
               ${className || ''}`}
             autoComplete="off"
+            aria-invalid={!!error}
+            aria-describedby={[errorId, helpId].filter(Boolean).join(' ') || undefined}
             {...rest}
           />
 
@@ -66,8 +71,17 @@ export const Input = React.forwardRef<HTMLInputElement, Props>(
           )}
         </div>
 
-        {error && <p className="text-red-500 text-sm ml-1">{error}</p>}
-        {helperText && !error && <p className="text-gray-500 text-sm ml-1">{helperText}</p>}
+        {error && (
+          <div id={errorId} role="alert" className="text-red-500 text-sm ml-1">
+            {error}
+          </div>
+        )}
+
+        {helperText && !error && (
+          <div id={helpId} role="note" className="text-gray-500 text-sm ml-1">
+            {helperText}
+          </div>
+        )}
       </div>
     );
   },

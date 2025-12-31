@@ -1,30 +1,19 @@
-import React from 'react';
 import { MenuToggle } from '@/components/ui/Menu/MenuToggle';
 import { MenuOverlay } from '@/components/ui/Menu/MenuOverlay';
 import { MenuPanel } from '@/components/ui/Menu/MenuPanel';
-import type { Option } from '@/components/ui/option';
-import { ROUTES } from '@/constants/routes';
+import { MenuOptions } from '@/components/ui/option';
 
-export const MenuOptions: Option[] = [
-  { value: ROUTES.CATEGORY.INDEX, label: '大分類マスタ' },
-  { value: ROUTES.SUBCATEGORY.INDEX, label: '中分類マスタ' },
-  { value: ROUTES.MINORCategory.INDEX, label: '小分類マスタ' },
-  { value: ROUTES.DEPARTMENT.INDEX, label: '学科マスタ' },
-  { value: ROUTES.STATUS.INDEX, label: '状態区分' },
-  { value: ROUTES.STUDENT.INDEX, label: '学生マスタ' },
-];
-
-type MenuProps = {
+type Props = {
   open: boolean;
   onClick: () => void;
 };
 
-export const Menu: React.FC<MenuProps> = ({ open, onClick }) => (
+export const Menu = ({ open, onClick }: Props) => (
   <div className="relative">
-    <MenuToggle onClick={onClick} />
+    <MenuToggle open={open} onClick={onClick} />
     {open && (
       <>
-        <MenuOverlay onClick={onClick} />
+        <MenuOverlay onClick={onClick} aria-expanded={open} aria-controls="menu-panel" />
         <MenuPanel options={MenuOptions} onClick={onClick} />
       </>
     )}

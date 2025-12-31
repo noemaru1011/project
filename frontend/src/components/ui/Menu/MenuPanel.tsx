@@ -1,4 +1,3 @@
-import React from 'react';
 import { X } from 'lucide-react';
 import type { Option } from '@/components/ui/option';
 import { Link } from 'react-router-dom';
@@ -8,8 +7,13 @@ type Props = {
   onClick: () => void;
 };
 
-export const MenuPanel: React.FC<Props> = ({ options, onClick }) => (
-  <div className="fixed top-0 right-0 h-full w-64 bg-white z-50 shadow-lg">
+export const MenuPanel = ({ options, onClick }: Props) => (
+  <div
+    id="menu-panel"
+    role="menu"
+    aria-label="管理メニュー"
+    className="fixed top-0 right-0 h-full w-64 bg-white z-50 shadow-lg"
+  >
     <div className="flex justify-end p-4">
       <X
         onClick={onClick}
@@ -24,6 +28,7 @@ export const MenuPanel: React.FC<Props> = ({ options, onClick }) => (
           to={opt.value}
           className="font-bold border-b border-gray-300 py-2 hover:text-indigo-500"
           onClick={onClick}
+          role="menuitem"
         >
           {opt.label}
         </Link>

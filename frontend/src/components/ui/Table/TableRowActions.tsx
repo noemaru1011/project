@@ -18,7 +18,14 @@ export const RowActions = ({ rowKey, actions = [], routeMap = {} }: Props) => {
       {actions.map((action) => {
         const path = routeMap[action];
         if (!path) return null;
-        return <Button key={action} variant={action} onClick={() => navigate(path(rowKey))} />;
+        return (
+          <Button
+            type="button"
+            key={action}
+            variant={action}
+            onClick={() => navigate(path(rowKey))}
+          />
+        );
       })}
     </div>
   );

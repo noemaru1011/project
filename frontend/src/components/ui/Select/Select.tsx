@@ -19,6 +19,9 @@ export const Select = React.forwardRef<HTMLSelectElement, Props>(
     { id, label, options, required, disabled, error, leftIcon, helperText, className, ...rest },
     ref,
   ) => {
+    //アクセシビリティ用
+    const errorId = error ? `${id}-error` : undefined;
+    const helpId = helperText ? `${id}-help` : undefined;
     return (
       <div className="flex flex-col space-y-1">
         {label && (
@@ -43,6 +46,8 @@ export const Select = React.forwardRef<HTMLSelectElement, Props>(
               ${error ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : 'border-gray-300'}
               ${leftIcon ? 'pl-10' : ''}
               ${className || ''}`}
+            aria-invalid={!!error}
+            aria-describedby={[errorId, helpId].filter(Boolean).join(' ') || undefined}
             {...rest}
           >
             <option value="">選択してください</option>
@@ -58,8 +63,17 @@ export const Select = React.forwardRef<HTMLSelectElement, Props>(
           </div>
         </div>
 
-        {error && <p className="text-red-500 text-sm ml-1">{error}</p>}
-        {helperText && !error && <p className="text-gray-500 text-sm ml-1">{helperText}</p>}
+        {error && (
+          <div id={errorId} role="alert" className="text-red-500 text-sm ml-1">
+            {error}
+          </div>
+        )}
+
+        {helperText && !error && (
+          <div id={helpId} role="note" className="text-gray-500 text-sm ml-1">
+            {helperText}
+          </div>
+        )}
       </div>
     );
   },

@@ -17,6 +17,7 @@ export const Button = ({ variant, disabled, onClick, type = 'button', className 
       type={type}
       onClick={onClick}
       disabled={disabled}
+      aria-disabled={disabled}
       className={`${bg} ${className ?? ''} px-3 py-1 rounded-lg text-white font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed`}
     >
       {label}

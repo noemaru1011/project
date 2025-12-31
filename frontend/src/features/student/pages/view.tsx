@@ -1,4 +1,4 @@
-import { useNavigate, useParams,Navigate } from 'react-router-dom';
+import { useNavigate, useParams, Navigate } from 'react-router-dom';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { ROUTES } from '@/constants/routes';
 import { StudentView } from '@/features/student/components/StudentView';
@@ -10,8 +10,16 @@ export const StudentViewPage = () => {
   if (!studentId) {
     return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
   }
-  
+
   const { student, loading } = useStudentView(studentId);
+
+  if (loading) {
+    return <Loading loading />;
+  }
+
+  if (!student) {
+    return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
+  }
 
   return (
     <Loading loading={loading}>
