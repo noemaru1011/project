@@ -12,6 +12,21 @@ export interface HistoryDetail {
   updatedAt: string;
 }
 
+export type HistoryBasic = {
+  studentName: string;
+  grade: string;
+  minorCategoryId: string;
+  departmentId: string;
+};
+
+export type HistoryDelete = {
+  statusId: string;
+  startTime: string;
+  endTime?: string;
+  other: string;
+  validFlag: boolean;
+};
+
 export interface HistoryResult {
   historyId: string;
   studentName: string;

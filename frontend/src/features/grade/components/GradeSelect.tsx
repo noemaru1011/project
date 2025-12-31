@@ -1,9 +1,8 @@
 import { Select } from '@/components/ui/Select/Select';
-import type { Props } from '@/components/ui/Select/Select';
 import { gradeOptions } from '@/features/grade/constants/gradeOptions';
 
-type GradeSelectProps = Omit<Props, 'id' | 'options'> & { disabled?: boolean };
+type Props = Omit<React.ComponentProps<typeof Select>, 'options' | 'label' | 'id'>;
 
-export const GradeSelect = ({ disabled, ...props }: GradeSelectProps) => {
-  return <Select {...props} id="grade" options={gradeOptions} disabled={disabled} />;
+export const GradeSelect = ({ ...props }: Props) => {
+  return <Select {...props} id="grade" label="学年" options={gradeOptions} />;
 };
