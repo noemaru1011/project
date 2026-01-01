@@ -17,6 +17,7 @@ export const HistoryRepository = {
             minorCategoryId: true,
           },
         },
+        historyId: true,
         statusId: true,
         startTime: true,
         endTime: true,

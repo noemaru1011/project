@@ -9,6 +9,7 @@ export const HistoryService = {
     if (!history) return null;
     //DTO
     return {
+      historyId: history.historyId,
       studentName: history.student.studentName,
       grade: history.student.grade,
       departmentId: history.student.departmentId,

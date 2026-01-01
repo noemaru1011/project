@@ -19,7 +19,7 @@ export const HistoryDeletePage = () => {
   const { deleteHistory, loading: deleting } = useHistoryDelete();
 
   const handleDelete = async () => {
-    if (!history) return;
+    if (!history) return navigate(ROUTES.ERROR.NOTFOUND);
     try {
       const res = await deleteHistory(history.historyId);
       toast.success(res.message);
@@ -32,6 +32,7 @@ export const HistoryDeletePage = () => {
       }
     }
   };
+  //マッピング
   const historyBasic = history
     ? {
         studentName: history.studentName,
@@ -53,17 +54,16 @@ export const HistoryDeletePage = () => {
     : null;
 
   if (!historyBasic || !historyDelete) {
-    return <Loading loading />;
+    return <Loading loading={loading} />;
   }
 
   return (
-    <Loading loading={loading || deleting}>
-      <HistoryDeleteView
-        historyBasic={historyBasic}
-        historyDelete={historyDelete}
-        onDelete={handleDelete}
-        onBack={() => navigate(ROUTES.HISTORY.INDEX)}
-      />
-    </Loading>
+    <HistoryDeleteView
+      historyBasic={historyBasic}
+      historyDelete={historyDelete}
+      onDelete={handleDelete}
+      onBack={() => navigate(ROUTES.HISTORY.INDEX)}
+      loading={deleting}
+    />
   );
 };
