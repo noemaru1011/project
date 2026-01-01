@@ -99,7 +99,13 @@ app.use(
   requestLogger,
   DepartmentRoutes,
 );
-app.use(API_ROUTES.STATUS, authMiddleware, requireRole([ROLE.ADMIN]), requestLogger, statusRoutes);
+app.use(
+  API_ROUTES.STATUS,
+  authMiddleware,
+  requireRole([ROLE.ADMIN, ROLE.STUDENT]),
+  requestLogger,
+  statusRoutes,
+);
 //管理者のみ
 app.use(
   API_ROUTES.STUDENT,
@@ -115,6 +121,4 @@ app.use(errorLogger);
 const PORT = Number(process.env.BACK_PORT);
 app.listen(PORT, () => {
   console.log(`🚀 Backend running: ${process.env.BACK_URL}`);
-  console.log('🚀 JWT_SECRET:', process.env.JWT_SECRET);
-  console.log('🚀 RESEND_API_KEY:', process.env.RESEND_API_KEY);
 });

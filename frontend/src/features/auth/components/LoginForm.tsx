@@ -21,7 +21,7 @@ export const LoginForm = ({ onSubmit, loading }: Props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <LoginEmailInput error={errors.email?.message} {...register('email')} />
+      <LoginEmailInput autoComplete="email" error={errors.email?.message} {...register('email')} />
       <LoginPasswordInput error={errors.password?.message} {...register('password')} />
 
       <Button type="submit" variant="Login" className="w-full py-3 mt-2" disabled={loading} />

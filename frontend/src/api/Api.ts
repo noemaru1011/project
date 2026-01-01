@@ -59,6 +59,7 @@ export async function api<T>(path: string, options?: RequestInit): Promise<ApiRe
     message: json?.message,
     status: res.status,
   };
+  //TODO 確認用、完成したら消す
   console.log(response);
 
   // 【意図⑥】

@@ -13,10 +13,11 @@ export function useLogin() {
     start();
     try {
       const res = await authApi.login(data);
-      setPasswordUpdateRequired(res.data?.passwordUpdateRequired ?? false);
+      const required = res.data?.passwordUpdateRequired ?? false;
+
+      setPasswordUpdateRequired(required);
+      localStorage.setItem('passwordUpdateRequired', String(required));
       return res;
-    } catch (e) {
-      throw e;
     } finally {
       end();
     }

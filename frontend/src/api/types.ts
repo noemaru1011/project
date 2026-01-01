@@ -5,7 +5,7 @@ export interface ApiResponse<T> {
   status?: number;
 }
 
-export interface ApiErrorRespomse {
+export interface ApiErrorResponse {
   status?: number;
   code?: string;
   message?: string;

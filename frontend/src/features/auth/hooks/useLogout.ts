@@ -10,8 +10,6 @@ export function useLogout() {
     try {
       const res = await authApi.logout();
       return res;
-    } catch (e) {
-      throw e;
     } finally {
       end();
     }

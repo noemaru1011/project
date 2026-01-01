@@ -1,5 +1,5 @@
 import { ROUTES } from '@/constants/routes';
-import type { ApiResponse, ApiErrorRespomse } from '@/api/types';
+import type { ApiResponse, ApiErrorResponse } from '@/api/types';
 import { APIMESSAGE } from '@shared/apiMessage';
 
 //ネットワーク切断、バグ（undefined参照）、JSON parse errorなどを500番にマッピング
@@ -8,7 +8,7 @@ const isApiResponse = (err: unknown): err is ApiResponse<unknown> => {
 };
 
 //バックエンドのエラーを、フロントエンドのUI制御に変換する関数
-export const handleApiError = (err: unknown): ApiErrorRespomse => {
+export const handleApiError = (err: unknown): ApiErrorResponse => {
   if (!isApiResponse(err)) {
     return {
       status: 500,
