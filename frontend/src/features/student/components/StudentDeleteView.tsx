@@ -9,9 +9,10 @@ type Props = {
   student: StudentDetail;
   onDelete: () => void;
   onBack: () => void;
+  loading: boolean;
 };
 
-export const StudentDeleteView = ({ student, onDelete, onBack }: Props) => {
+export const StudentDeleteView = ({ student, onDelete, onBack, loading }: Props) => {
   return (
     <>
       <StudentNameInput value={student.studentName} disabled />
@@ -25,7 +26,13 @@ export const StudentDeleteView = ({ student, onDelete, onBack }: Props) => {
       <DepartmentSelect value={student.departmentId} disabled />
 
       <div className="flex justify-center gap-4 mt-4">
-        <Button type="button" variant="Delete" className="w-32 mx-auto py-2" onClick={onDelete} />
+        <Button
+          type="button"
+          variant="Delete"
+          disabled={loading}
+          className="w-32 mx-auto py-2"
+          onClick={onDelete}
+        />
         <Button type="button" variant="Back" className="w-32 mx-auto py-2" onClick={onBack} />
       </div>
     </>

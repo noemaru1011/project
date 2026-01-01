@@ -18,7 +18,7 @@ export const StudentDeletePage = () => {
   const { deleteStudent, loading: deleting } = useStudentDelete();
 
   const handleDelete = async () => {
-    if (!student) return;
+    if (!student) return navigate(ROUTES.ERROR.NOTFOUND);
     try {
       const res = await deleteStudent(student.studentId);
       toast.success(res.message);
@@ -37,17 +37,16 @@ export const StudentDeletePage = () => {
   }
 
   return (
-    <Loading loading={deleting}>
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="w-full max-w-lg p-8 bg-white rounded-2xl shadow-lg space-y-6">
-          <h2 className="text-2xl font-bold text-gray-800 text-center">学生削除</h2>
-          <StudentDeleteView
-            student={student}
-            onDelete={handleDelete}
-            onBack={() => navigate(ROUTES.STUDENT.INDEX)}
-          />
-        </div>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="w-full max-w-lg p-8 bg-white rounded-2xl shadow-lg space-y-6">
+        <h2 className="text-2xl font-bold text-gray-800 text-center">学生削除</h2>
+        <StudentDeleteView
+          student={student}
+          onDelete={handleDelete}
+          onBack={() => navigate(ROUTES.STUDENT.INDEX)}
+          loading={deleting}
+        />
       </div>
-    </Loading>
+    </div>
   );
 };

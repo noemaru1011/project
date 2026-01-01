@@ -27,14 +27,14 @@ export const StudentUpdatePage = () => {
     grade: student.grade.toString(),
     minorCategoryId: student.minorCategoryId.toString(),
     departmentId: student.departmentId.toString(),
-    updatedAt: student.updatedAt.toString(),
+    updatedAt: student.updatedAt,
   };
 
   const handleSubmit = async (data: FormType) => {
-    if (!student) return;
+    if (!student) return navigate(ROUTES.ERROR.NOTFOUND);
     try {
       const res = await updateStudent(student.studentId, data);
-      toast.success(res!.message);
+      toast.success(res.message);
       navigate(ROUTES.STUDENT.INDEX);
     } catch (err) {
       const error = handleApiError(err);

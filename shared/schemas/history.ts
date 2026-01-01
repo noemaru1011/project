@@ -15,7 +15,7 @@ export const validation = z.object({
   startTime: z.string({
     error: (issue) =>
       issue.input === undefined || issue.input === ""
-        ? "更新日は必須です。"
+        ? "有効開始日は必須です。"
         : "正しい日付を入力してください。",
   }),
 

@@ -10,7 +10,7 @@ export function useSearch<T, Query = void>(searchFn: (query: Query) => Promise<A
     start();
     try {
       const res = await searchFn(query);
-      if (res.data) setData(res.data);
+      setData(res.data ?? []);
     } finally {
       end();
     }

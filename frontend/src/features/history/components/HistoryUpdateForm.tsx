@@ -21,7 +21,12 @@ export const HistoryUpdateForm = ({ type }: { type: UseFormReturn<HistoryUpdateF
         name="statusId"
         control={control}
         render={({ field, fieldState }) => (
-          <StatusRadioGroup {...field} error={fieldState.error?.message} />
+          <StatusRadioGroup
+            name={field.name}
+            value={field.value !== undefined ? field.value : undefined}
+            onChange={(val) => field.onChange(val)}
+            error={fieldState.error?.message}
+          />
         )}
       />
 

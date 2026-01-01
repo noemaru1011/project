@@ -32,7 +32,7 @@ export const HistoryUpdatePage = () => {
     if (!history) return;
 
     reset({
-      statusId: history.statusId,
+      statusId: history.statusId.toString(),
       startTime: history.startTime,
       endTime: history.endTime ?? '',
       other: history.other ?? '',
@@ -61,9 +61,9 @@ export const HistoryUpdatePage = () => {
 
   const historyBasic = {
     studentName: history.studentName,
-    grade: history.grade,
-    minorCategoryId: history.minorCategoryId,
-    departmentId: history.departmentId,
+    grade: history.grade.toString(),
+    minorCategoryId: history.minorCategoryId.toString(),
+    departmentId: history.departmentId.toString(),
   };
 
   return (
