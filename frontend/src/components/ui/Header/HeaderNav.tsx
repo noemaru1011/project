@@ -23,15 +23,12 @@ export const HeaderNav = ({ options, onLogout, loading, passwordUpdateRequired }
                 onClick={onLogout}
                 disabled={loading}
                 aria-busy={loading}
-                className={`font-bold mb-2 sm:mb-0 cursor-pointer text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white transition-colors ${spacing}`}
+                className={`font-bold mb-2 sm:mb-0 cursor-pointer ${spacing}`}
               >
                 {opt.label}
               </button>
             ) : (
-              <Link
-                to={opt.to}
-                className={`font-bold mb-2 sm:mb-0 text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white transition-colors ${spacing}`}
-              >
+              <Link to={opt.to} className={`font-bold mb-2 sm:mb-0 ${spacing}`}>
                 {opt.label}
                 {opt.to === ROUTES.STUDENT.CHANGE && passwordUpdateRequired && (
                   <AlertCircle

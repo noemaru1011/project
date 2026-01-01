@@ -1,21 +1,5 @@
 @import 'tailwindcss';
 
-@theme {
-  --color-background: white;
-  --color-foreground: black;
-}
-
-@layer base {
-  body {
-    @apply bg-white text-black transition-colors duration-200;
-  }
-  .dark body {
-    @apply bg-gray-900 text-white;
-  }
-}
-
-@variant dark (&:where(.dark, .dark *));
-
 @keyframes slide-up {
   from {
     transform: translateY(20px);
