@@ -10,9 +10,10 @@ import { EndTimeInput, StartTimeInput, OtherTextarea } from '@/features/history/
 type Props = {
   onSubmit: (data: HistoryForm) => void;
   selectedStudents: { id: string; name: string }[];
+  loading: boolean;
 };
 
-export const HistoryCreateForm = ({ selectedStudents, onSubmit }: Props) => {
+export const HistoryCreateForm = ({ selectedStudents, onSubmit, loading }: Props) => {
   const {
     register,
     control,
@@ -66,7 +67,7 @@ export const HistoryCreateForm = ({ selectedStudents, onSubmit }: Props) => {
         <p className="text-red-500 text-sm text-center mt-4">{errors.studentIds.message}</p>
       )}
       <div className="flex justify-center gap-4">
-        <Button variant="Create" type="submit" className="w-64 mx-auto py-2" />
+        <Button variant="Create" type="submit" disabled={loading} className="w-64 mx-auto py-2" />
       </div>
     </form>
   );

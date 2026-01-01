@@ -1,23 +1,12 @@
-import { useNavigate } from 'react-router-dom';
+import { studentSearchApi } from '@/features/search/student/api';
+import type { StudentResult } from '@/features/student/types';
 import type { StudentQueryForm } from '@shared/schemas/studentQuery';
-import { handleApiError } from '@/utils/handleApiError';
-import type { UseFormGetValues } from 'react-hook-form';
+import { useSearch } from '@/hooks/useSearch';
 
-export const useStudentSearch = (
-  onSearch: (query: StudentQueryForm) => void | Promise<void>,
-  getValues: UseFormGetValues<StudentQueryForm>,
-) => {
-  const navigate = useNavigate();
+export const useStudentSearch = () => {
+  const { data, search, loading } = useSearch<StudentResult, StudentQueryForm>(
+    studentSearchApi.search,
+  );
 
-  const handleSearch = async () => {
-    const query = getValues();
-    try {
-      console.log('チェックされた値:', query);
-      await onSearch(query);
-    } catch (err) {
-      handleApiError(err, navigate);
-    }
-  };
-
-  return { handleSearch };
+  return { data, search, loading };
 };

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Loading } from '@/components/ui/Loading/Loading';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -32,17 +31,22 @@ export const HistoryCreatePage = () => {
   };
 
   return (
-    <Loading loading={loading}>
-      <div className="m-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
+    <>
+      <h2 className="text-center text-2xl font-bold mt-4">履歴作成</h2>
+      <div className="m-4 grid grid-cols-1 sm:grid-cols-2 gap-6">
         <StudentSearchSection
           selectedStudents={selectedStudents}
           onChangeSelected={setSelectedStudents}
         />
 
-        <HistoryCreateForm onSubmit={onSubmit} selectedStudents={selectedStudents} />
+        <HistoryCreateForm
+          onSubmit={onSubmit}
+          loading={loading}
+          selectedStudents={selectedStudents}
+        />
 
         {selectedStudents.length > 0 && <SelectedStudentsFloat students={selectedStudents} />}
       </div>
-    </Loading>
+    </>
   );
 };

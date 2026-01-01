@@ -58,12 +58,17 @@ export const HistoryDeletePage = () => {
   }
 
   return (
-    <HistoryDeleteView
-      historyBasic={historyBasic}
-      historyDelete={historyDelete}
-      onDelete={handleDelete}
-      onBack={() => navigate(ROUTES.HISTORY.INDEX)}
-      loading={deleting}
-    />
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 pt-10">
+      <div className="w-full max-w-4xl p-8 bg-white rounded-2xl shadow-lg space-y-6">
+        <h2 className="text-2xl font-bold text-gray-800 text-center">履歴削除</h2>
+        <HistoryDeleteView
+          historyBasic={historyBasic}
+          historyDelete={historyDelete}
+          onDelete={handleDelete}
+          onBack={() => navigate(ROUTES.HISTORY.INDEX)}
+          loading={deleting}
+        />
+      </div>
+    </div>
   );
 };

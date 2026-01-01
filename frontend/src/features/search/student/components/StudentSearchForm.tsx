@@ -12,7 +12,7 @@ type Props = {
 };
 
 export const StudentSearchForm = ({ onSearch, onCreate }: Props) => {
-  const { control, handleSubmit, getValues } = useForm<StudentQueryForm>({
+  const { control, handleSubmit } = useForm<StudentQueryForm>({
     resolver: zodResolver(validation),
     defaultValues: {
       categoryIds: [],
@@ -23,7 +23,12 @@ export const StudentSearchForm = ({ onSearch, onCreate }: Props) => {
     },
   });
 
-  const { handleSearch } = useStudentSearch(onSearch, getValues);
+  const { search } = useStudentSearch();
+
+  const handleSearch = (values: StudentQueryForm) => {
+    search(values);
+    onSearch(values);
+  };
 
   return (
     <div className="w-full max-w-2xl mx-auto p-4">

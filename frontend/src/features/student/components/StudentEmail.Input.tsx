@@ -1,7 +1,10 @@
 import { Input } from '@/components/ui/Input/Input';
 import { Mail } from 'lucide-react';
 
-type Props = Omit<React.ComponentProps<typeof Input>, 'id' | 'type' | 'label' | 'leftIcon'>;
+type Props = Omit<
+  React.ComponentProps<typeof Input>,
+  'id' | 'type' | 'label' | 'leftIcon' | 'required'
+>;
 
 export const StudentEmailInput = ({ ...props }: Props) => {
   return (
@@ -10,6 +13,7 @@ export const StudentEmailInput = ({ ...props }: Props) => {
       id="mail"
       type="mail"
       label="メールアドレス"
+      required
       leftIcon={<Mail className="size-5 text-indigo-500" />}
       //helperText="メールアドレスは重複しないように"
       //helperText="メールアドレスは変更できません"

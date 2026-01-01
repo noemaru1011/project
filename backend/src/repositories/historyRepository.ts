@@ -7,6 +7,7 @@ export const HistoryRepository = {
     return await prisma.history.findUnique({
       where: {
         historyId,
+        student: { deleteFlag: false },
       },
       select: {
         student: {
