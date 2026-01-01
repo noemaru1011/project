@@ -16,12 +16,9 @@ export const StudentIndexPage = () => {
 
   return (
     <div className="p-4 mx-auto max-w-4xl">
+      <h2 className="text-2xl font-bold text-gray-800 text-center">学生一覧</h2>
+      <StudentSearchForm onSearch={handleSearch} onCreate={() => navigate(ROUTES.STUDENT.CREATE)} />
       <Loading loading={loading}>
-        <h2 className="text-2xl font-bold text-gray-800 text-center">学生一覧</h2>
-        <StudentSearchForm
-          onSearch={handleSearch}
-          onCreate={() => navigate(ROUTES.STUDENT.CREATE)}
-        />
         <StudentTable data={data} actions={['Update', 'Read', 'Delete']} />
       </Loading>
     </div>
