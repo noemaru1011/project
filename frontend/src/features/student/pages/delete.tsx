@@ -19,12 +19,16 @@ export const StudentDeletePage = () => {
 
   const handleDelete = async () => {
     if (!student) return;
-    try{
+    try {
       const res = await deleteStudent(student.studentId);
       toast.success(res.message);
       navigate(ROUTES.STUDENT.INDEX);
-    }catch (err) {
-      handleApiError(err, navigate);
+    } catch (err) {
+      const error = handleApiError(err);
+      toast.error(error.message);
+      if (error.redirectTo) {
+        navigate(error.redirectTo);
+      }
     }
   };
 

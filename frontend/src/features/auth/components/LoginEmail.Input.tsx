@@ -3,10 +3,10 @@ import { Mail } from 'lucide-react';
 
 type Props = Omit<React.ComponentProps<typeof Input>, 'id' | 'type' | 'label' | 'leftIcon'>;
 
-export const LoginEmailInput = ({ ...props }: Props) => {
+export const LoginEmailInput = ({ ...rest }: Props) => {
   return (
     <Input
-      {...props}
+      {...rest}
       type="mail"
       id="mail"
       label="メールアドレス"

@@ -7,7 +7,7 @@ interface Props {
   allowedRoles: Role[];
 }
 
-export const RoleVisibility = ({ children, allowedRoles }: Props) => {
+export const UiVisibility = ({ children, allowedRoles }: Props) => {
   const role = Cookies.get('role') as Role | undefined;
 
   if (!role) return null;

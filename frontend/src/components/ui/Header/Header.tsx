@@ -9,7 +9,7 @@ import { headerMain, headerOptions } from '@/components/ui/option';
 import { ROUTES } from '@/constants/routes';
 import { handleApiError } from '@/utils/handleApiError';
 import { useLoginContext } from '@/hooks/passwordUpdateContext';
-import { RoleVisibility } from '@/hooks/roleVisibility';
+import { UiVisibility } from '@/hooks/uiVisibility';
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -23,7 +23,11 @@ export const Header = () => {
       toast.success(res.message);
       navigate(ROUTES.AUTH.LOGIN);
     } catch (err) {
-      handleApiError(err, navigate);
+      const error = handleApiError(err);
+      toast.error(error.message);
+      if (error.redirectTo) {
+        navigate(error.redirectTo);
+      }
     }
   };
 
@@ -40,7 +44,7 @@ export const Header = () => {
             passwordUpdateRequired={passwordUpdateRequired}
           />
 
-          <RoleVisibility allowedRoles={['ADMIN']}>
+          <UiVisibility allowedRoles={['ADMIN']}>
             <div id="admin-menu" className="ml-5 mt-2 sm:mt-0">
               <Menu
                 aria-expanded={open}
@@ -50,7 +54,7 @@ export const Header = () => {
                 onClick={() => setOpen(!open)}
               />
             </div>
-          </RoleVisibility>
+          </UiVisibility>
         </div>
       </div>
     </header>

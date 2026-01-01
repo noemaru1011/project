@@ -1,19 +1,20 @@
-import { toast } from 'react-toastify';
-import type { NavigateFunction } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
-import type { ApiResponse } from '@/api/types';
+import type { ApiResponse, ApiErrorRespomse } from '@/api/types';
 import { APIMESSAGE } from '@shared/apiMessage';
 
+//ネットワーク切断、バグ（undefined参照）、JSON parse errorなどを500番にマッピング
 const isApiResponse = (err: unknown): err is ApiResponse<unknown> => {
   return typeof err === 'object' && err !== null && 'status' in err && 'message' in err;
 };
 
-export const handleApiError = (err: unknown, navigate: NavigateFunction) => {
+//バックエンドのエラーを、フロントエンドのUI制御に変換する関数
+export const handleApiError = (err: unknown): ApiErrorRespomse => {
   if (!isApiResponse(err)) {
-    // 想定外エラー
-    navigate(ROUTES.ERROR.SERVER);
-    toast.error(APIMESSAGE.INTERNAL_SERVER_ERROR);
-    throw err;
+    return {
+      status: 500,
+      message: APIMESSAGE.INTERNAL_SERVER_ERROR,
+      redirectTo: ROUTES.ERROR.SERVER,
+    };
   }
 
   const status = err.status ?? 0;
@@ -21,41 +22,26 @@ export const handleApiError = (err: unknown, navigate: NavigateFunction) => {
   const message = err.message ?? APIMESSAGE.INTERNAL_SERVER_ERROR;
 
   switch (status) {
-    case 0:
-      navigate(ROUTES.ERROR.SERVER);
-      toast.error(message);
-      break;
-
     case 400:
-      toast.error(message);
-      break;
+      return { status, code, message };
 
     case 401:
+      //ログイン失敗時は、その場でメッセージを出す
       if (code === APIMESSAGE.INVALID_CREDENTIALS) {
-        toast.error(message);
-      } else {
-        navigate(ROUTES.AUTH.LOGIN);
-        toast.error(message);
+        return { status, code, message };
       }
-      break;
+      return { status, code, message, redirectTo: ROUTES.AUTH.LOGIN };
 
     case 403:
-      navigate(ROUTES.ERROR.FORBIDDEN);
-      toast.error(message);
-      break;
+      return { status, code, message, redirectTo: ROUTES.ERROR.FORBIDDEN };
 
     case 404:
-      navigate(ROUTES.ERROR.NOTFOUND);
-      toast.error(message);
-      break;
+      return { status, code, message, redirectTo: ROUTES.ERROR.NOTFOUND };
 
     default:
-      if (status >= 500) {
-        navigate(ROUTES.ERROR.SERVER);
+      if (status >= 500 || status === 0) {
+        return { status, code, message, redirectTo: ROUTES.ERROR.SERVER };
       }
-      toast.error(message);
-      break;
+      return { status, code, message };
   }
-
-  return { status, code, message };
 };

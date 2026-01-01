@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { RoleGuard } from '@/hooks/roleGuard';
+import { PageGuard } from '@/hooks/pageGuard';
 import { ROUTES } from '@/constants/routes';
 import { ROLE } from '@shared/role';
 
@@ -37,32 +37,32 @@ const AppRoutes = () => (
     <Route path={ROUTES.ERROR.FORBIDDEN} element={<Forbidden />} />
     <Route path={ROUTES.ERROR.NOTFOUND} element={<NotFound />} />
 
-    {/* ヘッダーあり */}
+    {/* 以下ヘッダーあり */}
     <Route element={<Layout />}>
       {/* リクエスト不要画面なのでフロントで制御 */}
       <Route
         path={ROUTES.HOME}
         element={
-          <RoleGuard allowedRoles={[ROLE.ADMIN, ROLE.STUDENT]}>
+          <PageGuard allowedRoles={[ROLE.ADMIN, ROLE.STUDENT]}>
             <HomePage />
-          </RoleGuard>
+          </PageGuard>
         }
       />
       <Route
         path={ROUTES.HISTORY.CREATE}
         element={
-          <RoleGuard allowedRoles={[ROLE.ADMIN, ROLE.STUDENT]}>
+          <PageGuard allowedRoles={[ROLE.ADMIN, ROLE.STUDENT]}>
             <HistoryCreatePage />
-          </RoleGuard>
+          </PageGuard>
         }
       />
 
       <Route
         path={ROUTES.HISTORY.INDEX}
         element={
-          <RoleGuard allowedRoles={[ROLE.ADMIN, ROLE.STUDENT]}>
+          <PageGuard allowedRoles={[ROLE.ADMIN, ROLE.STUDENT]}>
             <HistoryIndexPage />
-          </RoleGuard>
+          </PageGuard>
         }
       />
 
@@ -71,9 +71,9 @@ const AppRoutes = () => (
       <Route
         path={ROUTES.STUDENT.CHANGE}
         element={
-          <RoleGuard allowedRoles={[ROLE.ADMIN, ROLE.STUDENT]}>
+          <PageGuard allowedRoles={[ROLE.ADMIN, ROLE.STUDENT]}>
             <ChangePassword />
-          </RoleGuard>
+          </PageGuard>
         }
       />
       {/* ここからaminのみしかし、page開くと同時にサーバー通信しない場合はフロントでも制御 */}
@@ -85,17 +85,17 @@ const AppRoutes = () => (
       <Route
         path={ROUTES.STUDENT.INDEX}
         element={
-          <RoleGuard allowedRoles={[ROLE.ADMIN]}>
+          <PageGuard allowedRoles={[ROLE.ADMIN]}>
             <StudentIndexPage />
-          </RoleGuard>
+          </PageGuard>
         }
       />
       <Route
         path={ROUTES.STUDENT.CREATE}
         element={
-          <RoleGuard allowedRoles={[ROLE.ADMIN]}>
+          <PageGuard allowedRoles={[ROLE.ADMIN]}>
             <StudentCreatePage />
-          </RoleGuard>
+          </PageGuard>
         }
       />
       <Route path={ROUTES.STUDENT.UPDATE()} element={<StudentUpdatePage />} />

@@ -7,11 +7,11 @@ type Props = Omit<
   'type' | 'id' | 'label' | 'leftIcon' | 'rightIcon' | 'helperText'
 >;
 
-export const CheckNewPasswordInput = ({ ...props }: Props) => {
+export const CheckNewPasswordInput = ({ ...rest }: Props) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <Input
-      {...props}
+      {...rest}
       id="checkNewPassword"
       label="新しいパスワード(確認)"
       type={showPassword ? 'text' : 'password'}
@@ -22,6 +22,7 @@ export const CheckNewPasswordInput = ({ ...props }: Props) => {
           onClick={() => setShowPassword(!showPassword)}
           className="pointer-events-auto hover:text-indigo-600 transition-colors"
           tabIndex={-1}
+          aria-label="パスワードの表示/非表示"
         >
           {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
         </button>

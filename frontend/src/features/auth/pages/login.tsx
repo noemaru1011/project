@@ -16,8 +16,12 @@ export const Login = () => {
       const res = await login(data);
       toast.success(res.message);
       navigate(ROUTES.HOME);
-    } catch (e) {
-      handleApiError(e, navigate);
+    } catch (err) {
+      const error = handleApiError(err);
+      toast.error(error.message);
+      if (error.redirectTo) {
+        navigate(error.redirectTo);
+      }
     }
   };
 

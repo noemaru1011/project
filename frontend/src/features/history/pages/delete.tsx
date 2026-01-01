@@ -25,7 +25,11 @@ export const HistoryDeletePage = () => {
       toast.success(res.message);
       navigate(ROUTES.HISTORY.INDEX);
     } catch (err) {
-      handleApiError(err, navigate);
+      const error = handleApiError(err);
+      toast.error(error.message);
+      if (error.redirectTo) {
+        navigate(error.redirectTo);
+      }
     }
   };
   const historyBasic = history

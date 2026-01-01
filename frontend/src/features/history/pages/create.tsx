@@ -10,6 +10,7 @@ import {
 import type { HistoryForm } from '@shared/schemas/history';
 import { useHistoryCreate } from '@/features/history/hooks/useHistoryCreate';
 import { ROUTES } from '@/constants/routes';
+import { handleApiError } from '@/utils/handleApiError';
 
 export const HistoryCreatePage = () => {
   const navigate = useNavigate();
@@ -21,7 +22,13 @@ export const HistoryCreatePage = () => {
       const res = await createHistory(data);
       toast.success(res!.message);
       navigate(ROUTES.HISTORY.INDEX);
-    } catch {}
+    } catch (err) {
+      const error = handleApiError(err);
+      toast.error(error.message);
+      if (error.redirectTo) {
+        navigate(error.redirectTo);
+      }
+    }
   };
 
   return (

@@ -3,6 +3,6 @@ import type { ApiResponse } from '@/api/types';
 
 export const authErrorGenerate = (status: 401 | 403): ApiResponse<unknown> => ({
   status,
-  code: status === 401 ? APIMESSAGE.TOKEN_ERROR : APIMESSAGE.FORBIDDEN,
+  code: status === 401 ? 'TOKEN_ERROR' : 'FORBIDDEN',
   message: status === 401 ? APIMESSAGE.TOKEN_ERROR : APIMESSAGE.FORBIDDEN,
 });

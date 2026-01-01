@@ -7,11 +7,11 @@ type Props = Omit<
   'type' | 'id' | 'label' | 'leftIcon' | 'rightIcon'
 >;
 
-export const OldPasswordInput = ({ ...props }: Props) => {
+export const OldPasswordInput = ({ ...rest }: Props) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <Input
-      {...props}
+      {...rest}
       id="oldPassword"
       label="古いパスワード"
       type={showPassword ? 'text' : 'password'}

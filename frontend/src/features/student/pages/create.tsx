@@ -16,8 +16,12 @@ export const StudentCreatePage = () => {
       const res = await createStudent(data);
       toast.success(res!.message);
       navigate(ROUTES.STUDENT.INDEX);
-    } catch (err){
-      handleApiError(err, navigate);
+    } catch (err) {
+      const error = handleApiError(err);
+      toast.error(error.message);
+      if (error.redirectTo) {
+        navigate(error.redirectTo);
+      }
     }
   };
 

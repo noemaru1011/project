@@ -1,16 +1,13 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, type ReactNode } from 'react';
 
-type LoginContextType = {
+type Props = {
   passwordUpdateRequired: boolean;
   setPasswordUpdateRequired: (value: boolean) => void;
 };
 
-const LoginContext = createContext<LoginContextType>({
-  passwordUpdateRequired: false,
-  setPasswordUpdateRequired: () => {},
-});
+const LoginContext = createContext<Props | undefined>(undefined);
 
-export const LoginProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const LoginProvider = (children: ReactNode) => {
   const [passwordUpdateRequired, setPasswordUpdateRequired] = useState(false);
 
   return (
@@ -20,4 +17,12 @@ export const LoginProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   );
 };
 
-export const useLoginContext = () => useContext(LoginContext);
+export const useLoginContext = (): Props => {
+  const context = useContext(LoginContext);
+
+  if (!context) {
+    throw new Error('useLoginContext must be used within a LoginProvider');
+  }
+
+  return context;
+};

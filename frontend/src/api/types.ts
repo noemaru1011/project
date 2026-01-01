@@ -4,3 +4,10 @@ export interface ApiResponse<T> {
   message?: string;
   status?: number;
 }
+
+export interface ApiErrorRespomse {
+  status?: number;
+  code?: string;
+  message?: string;
+  redirectTo?: string;
+}

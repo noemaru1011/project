@@ -7,11 +7,11 @@ type Props = Omit<
   'type' | 'id' | 'label' | 'leftIcon' | 'rightIcon'
 >;
 
-export const LoginPasswordInput = ({ ...props }: Props) => {
+export const LoginPasswordInput = ({ ...rest }: Props) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <Input
-      {...props}
+      {...rest}
       id="password"
       label="パスワード"
       type={showPassword ? 'text' : 'password'}
@@ -22,6 +22,7 @@ export const LoginPasswordInput = ({ ...props }: Props) => {
           onClick={() => setShowPassword(!showPassword)}
           className="pointer-events-auto hover:text-indigo-600 transition-colors"
           tabIndex={-1}
+          aria-label="パスワードの表示/非表示"
         >
           {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
         </button>
