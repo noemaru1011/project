@@ -47,6 +47,7 @@ export const Select = React.forwardRef<HTMLSelectElement, Props>(
               ${leftIcon ? 'pl-10' : ''}
               ${className || ''}`}
             aria-invalid={!!error}
+            aria-required={required}
             aria-describedby={[errorId, helpId].filter(Boolean).join(' ') || undefined}
             {...rest}
           >

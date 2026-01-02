@@ -50,63 +50,15 @@ app.use(
   passwordRoutes,
 );
 //学生・管理者両方使える
-app.use(
-  API_ROUTES.HISTORY,
-  authMiddleware,
-  requireRole([ROLE.ADMIN, ROLE.STUDENT]),
-  requestLogger,
-  historyRoutes,
-);
-app.use(
-  API_ROUTES.HISTORY_SEARCH,
-  authMiddleware,
-  requireRole([ROLE.ADMIN, ROLE.STUDENT]),
-  requestLogger,
-  historySearchRoutes,
-);
-app.use(
-  API_ROUTES.STUDENT_SEARCH,
-  authMiddleware,
-  requireRole([ROLE.ADMIN, ROLE.STUDENT]),
-  requestLogger,
-  studentSearchRoutes,
-);
-app.use(
-  API_ROUTES.CATEGORY,
-  authMiddleware,
-  requireRole([ROLE.ADMIN, ROLE.STUDENT]),
-  requestLogger,
-  categoryRoutes,
-);
-app.use(
-  API_ROUTES.SUBCATEGORY,
-  authMiddleware,
-  requireRole([ROLE.ADMIN, ROLE.STUDENT]),
-  requestLogger,
-  SubCategoryRoutes,
-);
-app.use(
-  API_ROUTES.MINOR_CATEGORY,
-  authMiddleware,
-  requireRole([ROLE.ADMIN, ROLE.STUDENT]),
-  requestLogger,
-  MinorCategoryRoutes,
-);
-app.use(
-  API_ROUTES.DEPARTMENT,
-  authMiddleware,
-  requireRole([ROLE.ADMIN, ROLE.STUDENT]),
-  requestLogger,
-  DepartmentRoutes,
-);
-app.use(
-  API_ROUTES.STATUS,
-  authMiddleware,
-  requireRole([ROLE.ADMIN, ROLE.STUDENT]),
-  requestLogger,
-  statusRoutes,
-);
-//管理者のみ
+app.use(API_ROUTES.HISTORY, authMiddleware, requestLogger, historyRoutes);
+app.use(API_ROUTES.HISTORY_SEARCH, authMiddleware, requestLogger, historySearchRoutes);
+app.use(API_ROUTES.STUDENT_SEARCH, authMiddleware, requestLogger, studentSearchRoutes);
+app.use(API_ROUTES.CATEGORY, authMiddleware, requestLogger, categoryRoutes);
+app.use(API_ROUTES.SUBCATEGORY, authMiddleware, requestLogger, SubCategoryRoutes);
+app.use(API_ROUTES.MINOR_CATEGORY, authMiddleware, requestLogger, MinorCategoryRoutes);
+app.use(API_ROUTES.DEPARTMENT, authMiddleware, requestLogger, DepartmentRoutes);
+app.use(API_ROUTES.STATUS, authMiddleware, requestLogger, statusRoutes);
+//(学生マスタの操作)管理者のみ
 app.use(
   API_ROUTES.STUDENT,
   authMiddleware,

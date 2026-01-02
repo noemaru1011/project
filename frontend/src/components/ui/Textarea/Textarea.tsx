@@ -49,6 +49,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, Props>(
             ease-in-out
           `}
           aria-invalid={!!error}
+          aria-required={required}
           aria-describedby={[errorId, helpId].filter(Boolean).join(' ') || undefined}
           {...props}
         />

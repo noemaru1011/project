@@ -37,7 +37,7 @@ export const Input = React.forwardRef<HTMLInputElement, Props>(
     return (
       <div className="flex flex-col space-y-1">
         {label && (
-          <label htmlFor={id} className="text-gray-700">
+          <label htmlFor={id} className="text-sm font-medium text-gray-700">
             {label}
             {required && <span className="text-red-500 ml-1">*</span>}
           </label>
@@ -62,6 +62,7 @@ export const Input = React.forwardRef<HTMLInputElement, Props>(
               ${className || ''}`}
             autoComplete="off"
             aria-invalid={!!error}
+            aria-required={required}
             aria-describedby={[errorId, helpId].filter(Boolean).join(' ') || undefined}
             {...rest}
           />

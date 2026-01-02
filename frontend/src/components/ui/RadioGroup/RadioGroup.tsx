@@ -54,6 +54,7 @@ export const RadioGroup = ({
       disabled={disabled}
       aria-invalid={!!error}
       aria-describedby={errorId}
+      aria-required={required}
     >
       {label && (
         <legend className="font-semibold text-gray-800 mb-2">

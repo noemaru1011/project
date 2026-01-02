@@ -55,6 +55,7 @@ export const CheckboxGroup = ({
       className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm disabled:cursor-not-allowed"
       disabled={disabled}
       aria-invalid={!!error}
+      aria-required={required}
       aria-describedby={errorId}
     >
       {label && (

@@ -12,12 +12,7 @@ export const validation = z.object({
 
   other: z.string().max(30, "備考は30文字以内で入力してください。"),
 
-  startTime: z.string({
-    error: (issue) =>
-      issue.input === undefined || issue.input === ""
-        ? "有効開始日は必須です。"
-        : "正しい日付を入力してください。",
-  }),
+  startTime: z.string().min(1, { error: "有効開始日は必須です。" }),
 
   endTime: z.string().optional(),
 });
@@ -32,12 +27,7 @@ export const updateValidation = validation
     validFlag: z.boolean({
       error: "ture か false を選択してください。",
     }),
-    updatedAt: z.string({
-      error: (issue) =>
-        issue.input === undefined || issue.input === ""
-          ? "更新日は必須です。"
-          : "正しい日付を入力してください。",
-    }),
+    updatedAt: z.string().min(1, { error: "更新日は必須です。" }),
   });
 
 export type HistoryUpdateForm = z.infer<typeof updateValidation>;
