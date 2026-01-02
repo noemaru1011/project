@@ -33,7 +33,6 @@ export const ROUTES = {
     UPDATE: (studentId = ':studentId') => `/Student/Update/${studentId}`,
     VIEW: (studentId = ':studentId') => `/Student/View/${studentId}`,
     DELETE: (studentId = ':studentId') => `/Student/Delete/${studentId}`,
-    CHANGE: '/Student/Change/',
   },
 
   //履歴一覧
@@ -47,6 +46,7 @@ export const ROUTES = {
   //認証
   AUTH: {
     LOGIN: '/Login/',
+    PASSWORD_CHANGE: '/Change/',
   },
 
   //エラーページ

@@ -39,6 +39,6 @@ export const headerMain: HeaderLinkOption = {
 export const headerOptions: HeaderOption[] = [
   { kind: 'link', to: ROUTES.HISTORY.INDEX, label: '履歴一覧' },
   { kind: 'link', to: ROUTES.HISTORY.CREATE, label: '履歴作成' },
-  { kind: 'link', to: ROUTES.STUDENT.CHANGE, label: 'パスワード変更' },
+  { kind: 'link', to: ROUTES.AUTH.PASSWORD_CHANGE, label: 'パスワード変更' },
   { kind: 'action', action: 'logout', label: 'ログアウト' },
 ];

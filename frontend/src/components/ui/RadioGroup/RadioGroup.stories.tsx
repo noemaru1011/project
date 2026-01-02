@@ -4,7 +4,7 @@ import { RadioGroup } from './RadioGroup';
 import type { Option } from '@/components/ui/option';
 
 const meta: Meta<typeof RadioGroup> = {
-  title: 'Molecules/RadioGroup',
+  title: 'UI/RadioGroup',
   tags: ['autodocs'],
   component: RadioGroup,
 };
@@ -18,7 +18,7 @@ const options: Option[] = [
   { value: 'other', label: 'その他' },
 ];
 
-export const Default: Story = {
+export const defaultRadioGroup: Story = {
   render: (args) => {
     const [value, setValue] = useState('');
     return <RadioGroup {...args} value={value} onChange={(v) => setValue(v)} />;
@@ -27,28 +27,5 @@ export const Default: Story = {
     name: 'gender',
     label: '性別',
     options,
-  },
-};
-
-export const WithError: Story = {
-  render: (args) => {
-    const [value, setValue] = useState('');
-    return <RadioGroup {...args} value={value} onChange={(v) => setValue(v)} />;
-  },
-  args: {
-    name: 'gender',
-    label: '性別',
-    options,
-    error: '必須項目です',
-    required: true,
-  },
-};
-
-export const Disabled: Story = {
-  args: {
-    name: 'gender',
-    label: '性別',
-    options,
-    disabled: true,
   },
 };

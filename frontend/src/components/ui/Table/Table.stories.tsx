@@ -10,7 +10,7 @@ const labels = { id: 'ID', name: 'Name', age: 'Age' };
 
 const meta: Meta<typeof Table> = {
   component: Table,
-  title: 'Molecules/Table',
+  title: 'UI/Table',
   tags: ['autodocs'],
 };
 
@@ -22,6 +22,6 @@ const data: Data[] = [
   { id: 2, name: 'Bob', age: 30 },
 ];
 
-export const Default: Story = {
+export const defaultTable: Story = {
   render: () => <Table labels={labels} data={data} keyField="id" />,
 };

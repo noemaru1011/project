@@ -1,13 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { Menu, MenuOptions } from './Menu';
+import { MenuOptions } from '@/components/ui/option';
+import { Menu } from './Menu';
 import { MenuToggle } from '@/components/ui/Menu/MenuToggle';
 import { MenuOverlay } from '@/components/ui/Menu/MenuOverlay';
 import { MenuPanel } from '@/components/ui/Menu/MenuPanel';
 
 const meta: Meta<typeof Menu> = {
-  title: 'Molecules/Menu',
+  title: 'UI/Menu',
   tags: ['autodocs'],
 };
 
@@ -22,7 +23,7 @@ export const Toggle: Story = {
     const [open, setOpen] = useState(false);
     return (
       <div className="p-4">
-        <MenuToggle onClick={() => setOpen((prev) => !prev)} />
+        <MenuToggle open={open} onClick={() => setOpen((prev) => !prev)} />
         <p>Menu is {open ? 'Open' : 'Closed'}</p>
       </div>
     );

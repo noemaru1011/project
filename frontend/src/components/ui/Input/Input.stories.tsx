@@ -4,7 +4,7 @@ import { Input } from './Input';
 
 const meta: Meta<typeof Input> = {
   component: Input,
-  title: 'Atoms/Input',
+  title: 'UI/Input',
   tags: ['autodocs'],
 };
 
@@ -18,40 +18,11 @@ const Template: Story = {
   },
 };
 
-export const textInput: Story = {
+export const defaultInput: Story = {
   ...Template,
   args: {
-    id: 'textInput',
     label: 'テキスト',
     type: 'text',
     value: 'テキスト',
-  },
-};
-
-export const requiredInput: Story = {
-  ...Template,
-  args: {
-    id: 'requiredInput',
-    type: 'password',
-    label: 'パスワード',
-    required: true,
-  },
-};
-
-export const noLabelInput: Story = {
-  ...Template,
-  args: {
-    id: 'noLabelInput',
-    type: 'text',
-  },
-};
-
-export const disabeledInput: Story = {
-  ...Template,
-  args: {
-    id: 'disabeledInput',
-    label: '非活性テキスト',
-    type: 'text',
-    disabled: true,
   },
 };

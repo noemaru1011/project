@@ -4,7 +4,7 @@ import { Radio } from './Radio';
 
 const meta: Meta<typeof Radio> = {
   component: Radio,
-  title: 'Atoms/Radio',
+  title: 'UI/Radio',
   tags: ['autodocs'],
 };
 
@@ -21,16 +21,6 @@ const Template: Story = {
 export const defaultRadio: Story = {
   ...Template,
   args: {
-    id: 'textInput',
     label: 'テキスト',
-  },
-};
-
-export const disabledRadio: Story = {
-  ...Template,
-  args: {
-    id: 'textInput',
-    label: 'テキスト',
-    disabled: true,
   },
 };

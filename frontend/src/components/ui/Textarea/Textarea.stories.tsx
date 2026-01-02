@@ -4,7 +4,7 @@ import { Textarea } from './Textarea';
 
 const meta: Meta<typeof Textarea> = {
   component: Textarea,
-  title: 'Atoms/Textarea',
+  title: 'UI/Textarea',
   tags: ['autodocs'],
 };
 
@@ -18,19 +18,9 @@ const Template: Story = {
   },
 };
 
-export const textarea: Story = {
+export const defaultTextarea: Story = {
   ...Template,
   args: {
-    id: 'textarea',
     label: '備考欄',
-  },
-};
-
-export const disabeldTaxtarea: Story = {
-  ...Template,
-  args: {
-    id: 'disabledTextarea',
-    label: '備考欄参照',
-    disabled: true,
   },
 };

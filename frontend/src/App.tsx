@@ -69,9 +69,9 @@ const AppRoutes = () => (
       <Route path={ROUTES.HISTORY.UPDATE()} element={<HistoryUpdatePage />} />
       <Route path={ROUTES.HISTORY.DELETE()} element={<HistoryDeletePage />} />
       <Route
-        path={ROUTES.STUDENT.CHANGE}
+        path={ROUTES.AUTH.PASSWORD_CHANGE}
         element={
-          <PageGuard allowedRoles={[ROLE.ADMIN, ROLE.STUDENT]}>
+          <PageGuard allowedRoles={[ROLE.STUDENT]}>
             <ChangePassword />
           </PageGuard>
         }

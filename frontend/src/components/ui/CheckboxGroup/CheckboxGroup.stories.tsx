@@ -4,7 +4,7 @@ import { CheckboxGroup } from './CheckboxGroup';
 import type { Option } from '@/components/ui/option';
 
 export default {
-  title: 'Molecules/CheckboxGroup',
+  title: 'UI/CheckboxGroup',
   component: CheckboxGroup,
   tags: ['autodocs'],
 } as Meta<typeof CheckboxGroup>;
@@ -22,28 +22,10 @@ const Template = (args: any) => {
   return <CheckboxGroup {...args} value={selected} onChange={setSelected} />;
 };
 
-export const Default: Story = {
+export const defaultCheckboxGroup: Story = {
   render: Template,
   args: {
     label: 'チェックボックスグループ',
     options,
-  },
-};
-
-export const WithError: Story = {
-  render: Template,
-  args: {
-    label: 'チェックボックスグループ',
-    options,
-    error: '必須項目です',
-  },
-};
-
-export const Required: Story = {
-  render: Template,
-  args: {
-    label: '必須チェックボックス',
-    options,
-    required: true,
   },
 };

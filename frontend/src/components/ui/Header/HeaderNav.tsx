@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import type { HeaderOption } from '@/components/ui/option';
 import { ROUTES } from '@/constants/routes';
 import { AlertCircle } from 'lucide-react';
+import { UiVisibility } from '@/hooks/uiVisibility';
 
 type Props = {
   options: HeaderOption[];
@@ -27,17 +28,23 @@ export const HeaderNav = ({ options, onLogout, loading, passwordUpdateRequired }
               >
                 {opt.label}
               </button>
+            ) : opt.to === ROUTES.AUTH.PASSWORD_CHANGE ? (
+              <UiVisibility allowedRoles={['STUDENT']}>
+                <Link to={opt.to} className={`font-bold mb-2 sm:mb-0 ${spacing}`}>
+                  {opt.label}
+                  {passwordUpdateRequired && (
+                    <AlertCircle
+                      aria-label="パスワード変更が推奨されています"
+                      role="img"
+                      className="inline-block ml-1 text-red-500"
+                      size={16}
+                    />
+                  )}
+                </Link>
+              </UiVisibility>
             ) : (
               <Link to={opt.to} className={`font-bold mb-2 sm:mb-0 ${spacing}`}>
                 {opt.label}
-                {opt.to === ROUTES.STUDENT.CHANGE && passwordUpdateRequired && (
-                  <AlertCircle
-                    aria-label="パスワード変更が推奨されています"
-                    role="img"
-                    className="inline-block ml-1 text-red-500"
-                    size={16}
-                  />
-                )}
               </Link>
             )}
           </li>

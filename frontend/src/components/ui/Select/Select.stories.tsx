@@ -11,7 +11,7 @@ const sampleOptions: Option[] = [
 ];
 const meta: Meta<typeof Select> = {
   component: Select,
-  title: 'Atoms/Select',
+  title: 'UI/Select',
   tags: ['autodocs'],
 };
 export default meta;
@@ -27,20 +27,8 @@ const Template: Story = {
 export const DefaultSelect: Story = {
   ...Template,
   args: {
-    id: 'sample',
     label: 'サンプルリストボックス',
     options: sampleOptions,
     value: '1',
-  },
-};
-
-export const DisabledSelect: Story = {
-  ...Template,
-  args: {
-    id: 'disabledSample',
-    label: 'サンプルリストボックス',
-    options: sampleOptions,
-    value: '3',
-    disabled: true,
   },
 };

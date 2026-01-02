@@ -4,14 +4,14 @@ import { Checkbox } from './Checkbox';
 
 const meta: Meta<typeof Checkbox> = {
   component: Checkbox,
-  title: 'Atoms/Checkbox',
+  title: 'UI/Checkbox',
   tags: ['autodocs'],
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const Template: Story = {
+const rest: Story = {
   render: (args) => {
     const [value, setValue] = React.useState(args.value || '');
     return <Checkbox {...args} value={value} onChange={(e) => setValue(e.target.value)} />;
@@ -19,18 +19,9 @@ const Template: Story = {
 };
 
 export const defaultCheckbox: Story = {
-  ...Template,
+  ...rest,
   args: {
-    id: 'textInput',
+    id: 'sample',
     label: 'テキスト',
-  },
-};
-
-export const disabledCheckbox: Story = {
-  ...Template,
-  args: {
-    id: 'textInput',
-    label: 'テキスト',
-    disabled: true,
   },
 };
