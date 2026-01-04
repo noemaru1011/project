@@ -7,12 +7,12 @@ type Props = Omit<
   'options' | 'id' | 'label' | 'leftIcon' | 'required'
 >;
 
-export const DepartmentSelect = ({ disabled, ...props }: Props) => {
+export const DepartmentSelect = ({ disabled, ...rest }: Props) => {
   const { options, loading } = useDepartmentOptions();
 
   return (
     <Select
-      {...props}
+      {...rest}
       label="学科名"
       id="departmentId"
       options={options}

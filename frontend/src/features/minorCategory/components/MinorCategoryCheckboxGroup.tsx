@@ -3,11 +3,11 @@ import { useMinorCategoryOptions } from '@/features/minorCategory/hooks/useMinor
 
 type Props = Omit<React.ComponentProps<typeof CheckboxGroup>, 'options' | 'label' | 'column'>;
 
-export const MinorCategoryCheckboxGroup = ({ disabled, ...props }: Props) => {
+export const MinorCategoryCheckboxGroup = ({ disabled, ...rest }: Props) => {
   const { options, loading } = useMinorCategoryOptions();
   return (
     <CheckboxGroup
-      {...props}
+      {...rest}
       options={options}
       label="小分類"
       disabled={disabled || loading}

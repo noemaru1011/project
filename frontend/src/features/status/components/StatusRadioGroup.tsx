@@ -6,12 +6,12 @@ type Props = Omit<
   'options' | 'label' | 'column' | 'required'
 >;
 
-export const StatusRadioGroup = ({ disabled, ...props }: Props) => {
+export const StatusRadioGroup = ({ disabled, ...rest }: Props) => {
   const { options, loading } = useStatusOptions();
 
   return (
     <RadioGroup
-      {...props}
+      {...rest}
       options={options}
       label="状況"
       column={7}

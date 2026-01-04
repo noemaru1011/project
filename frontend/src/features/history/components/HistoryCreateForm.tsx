@@ -37,7 +37,7 @@ export const HistoryCreateForm = ({ selectedStudents, onSubmit, loading }: Props
   }, [selectedStudents, setValue]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+    <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-4">
       <Controller
         name="statusId"
         control={control}

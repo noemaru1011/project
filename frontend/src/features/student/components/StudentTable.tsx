@@ -5,7 +5,7 @@ import type { Action } from '@/components/ui/Table/TableRowActions';
 import { ROUTES } from '@/constants/routes';
 
 type Props = {
-  data?: StudentResult[];
+  data: StudentResult[];
   actions?: Action[];
 };
 

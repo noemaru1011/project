@@ -7,7 +7,7 @@ import { HistoryTable } from '@/features/history/components';
 export const HistoryIndexPage = () => {
   const { data, search, loading } = useHistorySearch();
   const handleSearch = (query: StudentQueryForm) => {
-    search(query); // useStudentSearch 内の search 関数を呼ぶ
+    search(query);
   };
 
   return (

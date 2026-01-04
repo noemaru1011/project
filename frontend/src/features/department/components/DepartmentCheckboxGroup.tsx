@@ -3,11 +3,11 @@ import { useDepartmentOptions } from '@/features/department/hooks/useDepartmentO
 
 type Props = Omit<React.ComponentProps<typeof CheckboxGroup>, 'options' | 'label' | 'column'>;
 
-export const DepartmentCheckboxGroup = ({ disabled, ...props }: Props) => {
+export const DepartmentCheckboxGroup = ({ disabled, ...rest }: Props) => {
   const { options, loading } = useDepartmentOptions();
   return (
     <CheckboxGroup
-      {...props}
+      {...rest}
       options={options}
       label="学科"
       disabled={disabled || loading}

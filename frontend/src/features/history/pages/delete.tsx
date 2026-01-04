@@ -3,7 +3,9 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useHistoryDelete } from '@/features/history/hooks/useHistoryDelete';
 import { useHistoryView } from '@/features/history/hooks/useHistoryView';
 
+import type { Stdent } from '@/features/history';
 import { HistoryDeleteView } from '@/features/history/components';
+import { HistoryBasicInfo } from '@/features/history/components';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { handleApiError } from '@/utils/handleApiError';
 import { ROUTES } from '@/constants/routes';
@@ -16,10 +18,16 @@ export const HistoryDeletePage = () => {
   }
 
   const { history, loading } = useHistoryView(historyId);
+  if (loading || !history) {
+    return <Loading loading={loading} />;
+  }
   const { deleteHistory, loading: deleting } = useHistoryDelete();
 
-  const handleDelete = async () => {
-    if (!history) return navigate(ROUTES.ERROR.NOTFOUND);
+  const handleSubmit = async () => {
+    if (!history) {
+      navigate(ROUTES.ERROR.NOTFOUND, { replace: true });
+      return;
+    }
     try {
       const res = await deleteHistory(history.historyId);
       toast.success(res.message);
@@ -33,41 +41,47 @@ export const HistoryDeletePage = () => {
     }
   };
   //マッピング
-  const historyBasic = history
-    ? {
-        studentName: history.studentName,
-        grade: history.grade,
-        minorCategoryId: history.minorCategoryId,
-        departmentId: history.departmentId,
-      }
-    : null;
+  const historyBasic: Stdent = {
+    studentName: history.studentName,
+    grade: history.grade.toString(),
+    minorCategoryId: history.minorCategoryId.toString(),
+    departmentId: history.departmentId.toString(),
+  };
 
-  const historyDelete = history
-    ? {
-        statusId: history.statusId,
-        startTime: history.startTime,
-        endTime: history.endTime ?? undefined,
-        other: history.other,
-        updatedAt: history.updatedAt,
-        validFlag: history.validFlag,
-      }
-    : null;
+  const historyDelete = {
+    statusId: history.statusId,
+    startTime: history.startTime,
+    endTime: history.endTime ?? undefined,
+    other: history.other,
+    updatedAt: history.updatedAt,
+    validFlag: history.validFlag,
+  };
 
   if (!historyBasic || !historyDelete) {
     return <Loading loading={loading} />;
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 pt-10">
-      <div className="w-full max-w-4xl p-8 bg-white rounded-2xl shadow-lg space-y-6">
-        <h2 className="text-2xl font-bold text-gray-800 text-center">履歴削除</h2>
-        <HistoryDeleteView
-          historyBasic={historyBasic}
-          historyDelete={historyDelete}
-          onDelete={handleDelete}
-          onBack={() => navigate(ROUTES.HISTORY.INDEX)}
-          loading={deleting}
-        />
+    <div className="min-h-screen bg-gray-50 py-10 px-4">
+      <div className="mx-auto w-full max-w-6xl">
+        <h2 className="mb-8 text-center text-2xl font-bold text-gray-800">履歴削除</h2>
+
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          {/* 左：基本情報（READ ONLY） */}
+          <div className="space-y-6">
+            <HistoryBasicInfo stdent={historyBasic} />
+          </div>
+
+          {/* 右：編集フォーム */}
+          <div className="space-y-6">
+            <HistoryDeleteView
+              history={historyDelete}
+              loading={deleting}
+              onDelete={handleSubmit}
+              onBack={() => navigate(ROUTES.HISTORY.INDEX)}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -27,6 +27,7 @@ export const LoginPasswordInput = ({ ...rest }: Props) => {
           {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
         </button>
       }
+      helperText="パスワードは6文字以上で入力してください"
     />
   );
 };

@@ -7,12 +7,12 @@ type Props = Omit<
   'options' | 'id' | 'label' | 'leftIcon' | 'required'
 >;
 
-export const MinorCategorySelect = ({ disabled, ...props }: Props) => {
+export const MinorCategorySelect = ({ disabled, ...rest }: Props) => {
   const { options, loading } = useMinorCategoryOptions();
 
   return (
     <Select
-      {...props}
+      {...rest}
       label="小分類名"
       id="minorCategoryId"
       options={options}

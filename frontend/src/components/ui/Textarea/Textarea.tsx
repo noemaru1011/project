@@ -11,7 +11,7 @@ type Props = {
 } & React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 export const Textarea = React.forwardRef<HTMLTextAreaElement, Props>(
-  ({ id, label, error, required, disabled, helperText, className, ...props }, ref) => {
+  ({ id, label, error, required, disabled, helperText, className, ...rest }, ref) => {
     //アクセシビリティ用
     const errorId = error ? `${id}-error` : undefined;
     const helpId = helperText ? `${id}-help` : undefined;
@@ -51,7 +51,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, Props>(
           aria-invalid={!!error}
           aria-required={required}
           aria-describedby={[errorId, helpId].filter(Boolean).join(' ') || undefined}
-          {...props}
+          {...rest}
         />
 
         {error && <p className="text-sm text-red-500 mt-1">{error}</p>}

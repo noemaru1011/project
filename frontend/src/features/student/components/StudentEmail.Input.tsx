@@ -6,10 +6,10 @@ type Props = Omit<
   'id' | 'type' | 'label' | 'leftIcon' | 'required'
 >;
 
-export const StudentEmailInput = ({ ...props }: Props) => {
+export const StudentEmailInput = ({ ...rest }: Props) => {
   return (
     <Input
-      {...props}
+      {...rest}
       id="mail"
       type="mail"
       label="メールアドレス"

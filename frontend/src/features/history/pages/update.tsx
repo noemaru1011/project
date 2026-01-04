@@ -1,18 +1,16 @@
 import { toast } from 'react-toastify';
-import { useEffect } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-
 import { useHistoryView } from '@/features/history/hooks/useHistoryView';
 import { useHistoryUpdate } from '@/features/history/hooks/useHistoryUpdate';
-import { HistoryUpdateView } from '@/features/history/components';
+import { HistoryUpdateForm } from '@/features/history/components';
+import { HistoryBasicInfo } from '@/features/history/components';
+import type { Stdent } from '@/features/history';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { handleApiError } from '@/utils/handleApiError';
 import { ROUTES } from '@/constants/routes';
+import type { HistoryUpdateForm as FormType } from '@shared/schemas/history';
 
 import type { HistoryUpdateForm as HistoryUpdateFormType } from '@shared/schemas/history';
-import { updateValidation } from '@shared/schemas/history';
 
 export const HistoryUpdatePage = () => {
   const navigate = useNavigate();
@@ -22,28 +20,25 @@ export const HistoryUpdatePage = () => {
   }
 
   const { history, loading } = useHistoryView(historyId);
+  if (loading || !history) {
+    return <Loading loading={loading} />;
+  }
   const { updateHistory, loading: updating } = useHistoryUpdate();
-  const form = useForm<HistoryUpdateFormType>({
-    resolver: zodResolver(updateValidation),
-  });
 
-  const { reset } = form;
+  const defaultValues: FormType = {
+    statusId: history.statusId.toString(),
+    other: history.other,
+    startTime: history.startTime,
+    endTime: history.endTime ?? undefined,
+    validFlag: history.validFlag,
+    updatedAt: history.updatedAt,
+  };
 
-  useEffect(() => {
-    if (!history) return;
-
-    reset({
-      statusId: history.statusId.toString(),
-      startTime: history.startTime,
-      endTime: history.endTime ?? '',
-      other: history.other ?? '',
-      validFlag: history.validFlag,
-      updatedAt: history.updatedAt,
-    });
-  }, [history, reset]);
-
-  const onSubmit = async (data: HistoryUpdateFormType) => {
-    if (!history) return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
+  const handleSubmit = async (data: HistoryUpdateFormType) => {
+    if (!history) {
+      navigate(ROUTES.ERROR.NOTFOUND, { replace: true });
+      return;
+    }
 
     try {
       const res = await updateHistory(history.historyId, data);
@@ -58,30 +53,34 @@ export const HistoryUpdatePage = () => {
     }
   };
 
-  const historyBasic = history
-    ? {
-        studentName: history.studentName,
-        grade: history.grade.toString(),
-        minorCategoryId: history.minorCategoryId.toString(),
-        departmentId: history.departmentId.toString(),
-      }
-    : null;
-
-  if (!historyBasic) {
-    return <Loading loading={loading} />;
-  }
+  const historyBasic: Stdent = {
+    studentName: history.studentName,
+    grade: history.grade.toString(),
+    minorCategoryId: history.minorCategoryId.toString(),
+    departmentId: history.departmentId.toString(),
+  };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 pt-10">
-      <div className="w-full max-w-4xl p-8 bg-white rounded-2xl shadow-lg space-y-6">
-        <h2 className="text-2xl font-bold text-gray-800 text-center">履歴更新</h2>
-        <HistoryUpdateView
-          historyBasic={historyBasic}
-          historyUpdate={form}
-          onUpdate={form.handleSubmit(onSubmit)}
-          onBack={() => navigate(ROUTES.HISTORY.INDEX)}
-          loading={updating}
-        />
+    <div className="min-h-screen bg-gray-50 py-10 px-4">
+      <div className="mx-auto w-full max-w-6xl">
+        <h2 className="mb-8 text-center text-2xl font-bold text-gray-800">履歴更新</h2>
+
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          {/* 左：基本情報（READ ONLY） */}
+          <div className="space-y-6">
+            <HistoryBasicInfo stdent={historyBasic} />
+          </div>
+
+          {/* 右：編集フォーム */}
+          <div className="space-y-6">
+            <HistoryUpdateForm
+              defaultValues={defaultValues}
+              loading={updating}
+              onSubmit={handleSubmit}
+              onBack={() => navigate(ROUTES.HISTORY.INDEX)}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

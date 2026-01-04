@@ -12,7 +12,7 @@ type Props = {
 
 export const StudentView = ({ student, onBack }: Props) => {
   return (
-    <>
+    <section>
       <StudentNameInput value={student.studentName} disabled />
 
       <GradeRadioGroup name="grade" value={String(student.grade)} disabled />
@@ -26,6 +26,6 @@ export const StudentView = ({ student, onBack }: Props) => {
       <div className="flex justify-center mt-4">
         <Button type="button" variant="Back" className="w-64 py-2" onClick={onBack} />
       </div>
-    </>
+    </section>
   );
 };

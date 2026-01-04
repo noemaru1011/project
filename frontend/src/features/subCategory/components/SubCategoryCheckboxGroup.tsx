@@ -3,11 +3,11 @@ import { useSubCategoryOptions } from '@/features/subCategory/hooks/useSubCatego
 
 type Props = Omit<React.ComponentProps<typeof CheckboxGroup>, 'options' | 'label' | 'column'>;
 
-export const SubCategoryCheckboxGroup = ({ disabled, ...props }: Props) => {
+export const SubCategoryCheckboxGroup = ({ disabled, ...rest }: Props) => {
   const { options, loading } = useSubCategoryOptions();
   return (
     <CheckboxGroup
-      {...props}
+      {...rest}
       options={options}
       label="中分類"
       disabled={disabled || loading}

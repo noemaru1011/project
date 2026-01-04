@@ -6,10 +6,10 @@ type Props = Omit<
   'type' | 'id' | 'label' | 'leftIcon' | 'required'
 >;
 
-export const StudentNameInput = ({ ...props }: Props) => {
+export const StudentNameInput = ({ ...rest }: Props) => {
   return (
     <Input
-      {...props}
+      {...rest}
       type="text"
       id="studnetName"
       label="学生名"

@@ -6,10 +6,10 @@ type Props = Omit<
   'type' | 'id' | 'leftIcon' | 'label' | 'required'
 >;
 
-export const StartTimeInput = ({ ...props }: Props) => {
+export const StartTimeInput = ({ ...rest }: Props) => {
   return (
     <Input
-      {...props}
+      {...rest}
       id="startTime"
       label="有効開始日"
       type="datetime-local"

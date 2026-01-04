@@ -2,19 +2,30 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import {
-  StudentSearchSection,
   HistoryCreateForm,
   SelectedStudentsFloat,
+  StudentTable,
 } from '@/features/history/components';
+import { StudentSearchForm } from '@/features/search/student/components';
 import type { HistoryForm } from '@shared/schemas/history';
 import { useHistoryCreate } from '@/features/history/hooks/useHistoryCreate';
 import { ROUTES } from '@/constants/routes';
 import { handleApiError } from '@/utils/handleApiError';
+import { studentSearchApi } from '@/features/search/student';
+import { useSearch } from '@/hooks/useSearch';
+import type { StudentQueryForm } from '@shared/schemas/studentQuery';
+import type { StudentResult } from '@/features/student/types';
+import { Loading } from '@/components/ui/Loading/Loading';
 
 export const HistoryCreatePage = () => {
   const navigate = useNavigate();
   const [selectedStudents, setSelectedStudents] = useState<{ id: string; name: string }[]>([]);
-  const { createHistory, loading } = useHistoryCreate();
+  const { createHistory, loading: creating } = useHistoryCreate();
+  const {
+    search,
+    data,
+    loading: searching,
+  } = useSearch<StudentResult, StudentQueryForm>(studentSearchApi.search);
 
   const onSubmit = async (data: HistoryForm) => {
     try {
@@ -34,14 +45,21 @@ export const HistoryCreatePage = () => {
     <>
       <h2 className="text-center text-2xl font-bold mt-4">履歴作成</h2>
       <div className="m-4 grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <StudentSearchSection
-          selectedStudents={selectedStudents}
-          onChangeSelected={setSelectedStudents}
-        />
+        <div>
+          <StudentSearchForm onSearch={search} />
+
+          <Loading loading={searching}>
+            <StudentTable
+              data={data}
+              selectedStudents={selectedStudents}
+              onChangeSelected={setSelectedStudents}
+            />
+          </Loading>
+        </div>
 
         <HistoryCreateForm
           onSubmit={onSubmit}
-          loading={loading}
+          loading={creating}
           selectedStudents={selectedStudents}
         />
 

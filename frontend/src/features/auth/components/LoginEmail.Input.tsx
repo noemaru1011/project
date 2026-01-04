@@ -11,9 +11,6 @@ export const LoginEmailInput = ({ ...rest }: Props) => {
       id="mail"
       label="メールアドレス"
       leftIcon={<Mail className="size-5 text-indigo-500" />}
-      //新規作成、更新用でヘルパーテキストを分ける
-      //helperText="メールアドレスは重複しないように"
-      //helperText="メールアドレスは変更できません"
     />
   );
 };
