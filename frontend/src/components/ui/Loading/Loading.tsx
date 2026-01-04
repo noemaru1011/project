@@ -1,3 +1,4 @@
+///Loding用のスピナー
 type Props = {
   loading?: boolean;
   children?: React.ReactNode;

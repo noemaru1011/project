@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import type { Option } from '@/components/ui/option';
 import { Checkbox } from '@/components/ui/Checkbox/Checkbox';
+import clsx from 'clsx';
 
 type Props = {
   name: string;
@@ -52,7 +53,12 @@ export const CheckboxGroup = ({
 
   return (
     <fieldset
-      className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm disabled:cursor-not-allowed"
+      className={clsx(
+        'bg-white rounded-lg p-4 shadow-sm disabled:cursor-not-allowed',
+        error
+          ? 'border border-red-500 focus-within:ring-2 focus-within:ring-red-300'
+          : 'border border-gray-200 focus-within:ring-2 focus-within:ring-blue-200',
+      )}
       disabled={disabled}
       aria-invalid={!!error}
       aria-required={required}

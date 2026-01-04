@@ -16,7 +16,6 @@ export function useLogin() {
       const required = res.data?.passwordUpdateRequired ?? false;
 
       setPasswordUpdateRequired(required);
-      localStorage.setItem('passwordUpdateRequired', String(required));
       return res;
     } finally {
       end();

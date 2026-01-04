@@ -1,5 +1,6 @@
 import { Controller } from 'react-hook-form';
 import type { Control } from 'react-hook-form';
+import { Group, Library, School } from 'lucide-react';
 import { Accordion } from '@/components/ui/Accordion/Accordion';
 import { CategoryCheckboxGroup } from '@/features/category/components';
 import { SubCategoryCheckboxGroup } from '@/features/subCategory/components';
@@ -20,6 +21,8 @@ export const StudentSearchAccordion = ({ control }: Props) => {
         {
           id: 'category',
           title: '大分類',
+          badge: 4,
+          icon: <Group className="size-4" />,
           children: (
             <Controller
               name="categoryIds"
@@ -37,6 +40,8 @@ export const StudentSearchAccordion = ({ control }: Props) => {
         {
           id: 'subCategory',
           title: '中分類',
+          badge: 16,
+          icon: <Group className="size-4" />,
           children: (
             <Controller
               name="subCategoryIds"
@@ -54,6 +59,8 @@ export const StudentSearchAccordion = ({ control }: Props) => {
         {
           id: 'minorCategory',
           title: '小分類',
+          badge: 48,
+          icon: <Group className="size-4" />,
           children: (
             <Controller
               name="minorCategoryIds"
@@ -71,6 +78,8 @@ export const StudentSearchAccordion = ({ control }: Props) => {
         {
           id: 'grade',
           title: '学年',
+          badge: 4,
+          icon: <School className="size-4" />,
           children: (
             <Controller
               name="grades"
@@ -88,6 +97,8 @@ export const StudentSearchAccordion = ({ control }: Props) => {
         {
           id: 'department',
           title: '学科',
+          badge: 7,
+          icon: <Library className="size-4" />,
           children: (
             <Controller
               name="departmentIds"

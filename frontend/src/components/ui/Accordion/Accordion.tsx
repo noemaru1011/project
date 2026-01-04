@@ -99,11 +99,7 @@ const AccordionItem: React.FC<
   );
 };
 
-export const Accordion: React.FC<AccordionProps> = ({
-  items,
-  allowMultiple = false,
-  className = '',
-}) => {
+export const Accordion = ({ items, allowMultiple = false, className = '' }: AccordionProps) => {
   const [openItems, setOpenItems] = useState<Set<string>>(() => {
     const initialOpen = new Set<string>();
     items.forEach((item) => {

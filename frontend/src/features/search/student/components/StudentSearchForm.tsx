@@ -23,7 +23,7 @@ export const StudentSearchForm = ({ onSearch, onCreate }: Props) => {
     },
   });
 
-  const { search } = useStudentSearch();
+  const { search, loading } = useStudentSearch();
 
   const handleSearch = (values: StudentQueryForm) => {
     search(values);
@@ -38,7 +38,7 @@ export const StudentSearchForm = ({ onSearch, onCreate }: Props) => {
           {onCreate && (
             <Button type="button" variant="Create" className="w-64" onClick={onCreate} />
           )}
-          <Button type="submit" variant="Search" className="w-64" />
+          <Button type="submit" disabled={loading} variant="Search" className="w-64" />
         </div>
       </form>
     </div>

@@ -6,14 +6,23 @@ type Props = {
 };
 
 const LoginContext = createContext<Props | undefined>(undefined);
+let passwordUpdateRequiredCache = false;
 
 export const LoginProvider = ({ children }: { children: ReactNode }) => {
-  const [passwordUpdateRequired, setPasswordUpdateRequired] = useState(
-    localStorage.getItem('passwordUpdateRequired') === 'true',
-  );
+  const [passwordUpdateRequired, setPasswordUpdateRequired] = useState(passwordUpdateRequiredCache);
+
+  const setPasswordUpdateRequiredStable = (value: boolean) => {
+    passwordUpdateRequiredCache = value;
+    setPasswordUpdateRequired(value);
+  };
 
   return (
-    <LoginContext.Provider value={{ passwordUpdateRequired, setPasswordUpdateRequired }}>
+    <LoginContext.Provider
+      value={{
+        passwordUpdateRequired,
+        setPasswordUpdateRequired: setPasswordUpdateRequiredStable,
+      }}
+    >
       {children}
     </LoginContext.Provider>
   );
