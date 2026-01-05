@@ -3,56 +3,56 @@ export const ROUTES = {
 
   // 大分類マスタ
   CATEGORY: {
-    INDEX: '/Category/Index/',
+    INDEX: '/categories',
   },
 
   //中分類マスタ
   SUBCATEGORY: {
-    INDEX: '/SubCategory/Index/',
+    INDEX: '/sub-categories',
   },
 
   //小分類マスタ
-  MINORCategory: {
-    INDEX: '/MinorCategory/Index/',
+  MINORCATEGORY: {
+    INDEX: '/minor-categories',
   },
 
   //状態区分
   STATUS: {
-    INDEX: '/Status/Index/',
+    INDEX: '/statuses',
   },
 
   //学科マスタ
   DEPARTMENT: {
-    INDEX: '/Department/Index/',
+    INDEX: '/departments',
   },
 
   // 学生マスタ
   STUDENT: {
-    INDEX: '/Student/Index/',
-    CREATE: '/Student/Create/',
-    UPDATE: (studentId = ':studentId') => `/Student/Update/${studentId}`,
-    VIEW: (studentId = ':studentId') => `/Student/View/${studentId}`,
-    DELETE: (studentId = ':studentId') => `/Student/Delete/${studentId}`,
+    INDEX: '/students',
+    CREATE: '/students/new',
+    UPDATE: (studentId = ':studentId') => `/students/${studentId}/edit`,
+    VIEW: (studentId = ':studentId') => `/students/${studentId}`,
+    DELETE: (studentId = ':studentId') => `/students/${studentId}/delete`,
   },
 
   //履歴一覧
   HISTORY: {
-    INDEX: '/History/Index/',
-    CREATE: '/History/Create/',
-    UPDATE: (historyId = ':historyId') => `/History/Update/${historyId}`,
-    DELETE: (historyId = ':historyId') => `/History/Delete/${historyId}`,
+    INDEX: '/histories',
+    CREATE: '/histories/new',
+    UPDATE: (historyId = ':historyId') => `/histories/${historyId}/edit`,
+    DELETE: (historyId = ':historyId') => `/histories/${historyId}/delete`,
   },
 
   //認証
   AUTH: {
-    LOGIN: '/Login/',
-    PASSWORD_CHANGE: '/Change/',
+    LOGIN: '/login',
+    PASSWORD_CHANGE: '/password-change',
   },
 
   //エラーページ
   ERROR: {
-    FORBIDDEN: '/Error/Forbidden/',
-    SERVER: '/Error/ServerError/',
+    FORBIDDEN: '/403',
+    SERVER: '/500',
     NOTFOUND: '*',
   },
 } as const;
