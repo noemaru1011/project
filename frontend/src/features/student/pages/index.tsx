@@ -3,7 +3,7 @@ import { StudentSearchForm } from '@/features/search/student/components/StudentS
 import { useStudentSearch } from '@/features/search/student/hooks/useStudentSearch';
 import { StudentTable } from '@/features/student/components';
 import { Loading } from '@/components/ui/Loading/Loading';
-import { ROUTES } from '@/constants/routes';
+import { ROUTES } from '@/routes/routes';
 import type { StudentQueryForm } from '@shared/schemas/studentQuery';
 
 export const StudentIndexPage = () => {

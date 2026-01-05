@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDepartments } from '@/features/department';
-import type { RootState, AppDispatch } from '@/hooks/store';
+import type { RootState, AppDispatch } from '@/stores/store';
 
 export const useDepartmentList = () => {
   const dispatch = useDispatch<AppDispatch>();

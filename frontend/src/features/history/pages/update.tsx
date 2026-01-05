@@ -7,7 +7,7 @@ import { HistoryBasicInfo } from '@/features/history/components';
 import type { Stdent } from '@/features/history';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { handleApiError } from '@/utils/handleApiError';
-import { ROUTES } from '@/constants/routes';
+import { ROUTES } from '@/routes/routes';
 import type { HistoryUpdateForm as FormType } from '@shared/schemas/history';
 
 import type { HistoryUpdateForm as HistoryUpdateFormType } from '@shared/schemas/history';

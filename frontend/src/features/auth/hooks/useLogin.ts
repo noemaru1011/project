@@ -1,9 +1,9 @@
 import { authApi } from '@/features/auth/api';
 import type { LoginForm } from '@shared/schemas/login';
-import { useLoadingCounter } from '@/hooks/useLoadingCounter';
+import { useLoadingCounter } from '@/hooks/ui/useLoadingCounter';
 import type { ApiResponse } from '@/api/types';
 import type { LoginResponse } from '@/features/auth/types';
-import { useLoginContext } from '@/hooks/passwordUpdateContext';
+import { useLoginContext } from '@/contexts/passwordUpdateContext';
 
 export function useLogin() {
   const { loading, start, end } = useLoadingCounter();

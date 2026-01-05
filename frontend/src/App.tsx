@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { PageGuard } from '@/hooks/pageGuard';
-import { ROUTES } from '@/constants/routes';
+import { PageGuard } from '@/routes/pageGuard';
+import { ROUTES } from '@/routes/routes';
 import { ROLE } from '@shared/role';
 
 import Layout from '@/components/layouts/Layout';
@@ -80,7 +80,7 @@ const AppRoutes = () => (
       <Route path={ROUTES.STATUS.INDEX} element={<StatusIndexPage />} />
       <Route path={ROUTES.CATEGORY.INDEX} element={<CategoryIndexPage />} />
       <Route path={ROUTES.SUBCATEGORY.INDEX} element={<SubCategoryIndexPage />} />
-      <Route path={ROUTES.MINORCategory.INDEX} element={<MinorCategoryIndexPage />} />
+      <Route path={ROUTES.MINORCATEGORY.INDEX} element={<MinorCategoryIndexPage />} />
       <Route path={ROUTES.DEPARTMENT.INDEX} element={<DepartmentIndexPage />} />
       <Route
         path={ROUTES.STUDENT.INDEX}

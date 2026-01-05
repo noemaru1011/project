@@ -8,7 +8,7 @@ import { HistoryDeleteView } from '@/features/history/components';
 import { HistoryBasicInfo } from '@/features/history/components';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { handleApiError } from '@/utils/handleApiError';
-import { ROUTES } from '@/constants/routes';
+import { ROUTES } from '@/routes/routes';
 
 export const HistoryDeletePage = () => {
   const navigate = useNavigate();

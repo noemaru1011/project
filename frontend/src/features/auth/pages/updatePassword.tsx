@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { PasswordUpdateForm } from '@/features/auth/components/PasswordUpdateForm';
 import { usePassword } from '@/features/auth/hooks/useUpdatePassword';
-import { ROUTES } from '@/constants/routes';
+import { ROUTES } from '@/routes/routes';
 import type { PasswordForm } from '@shared/schemas/password';
 import { handleApiError } from '@/utils';
 

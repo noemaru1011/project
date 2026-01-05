@@ -1,4 +1,4 @@
-import { ROUTES } from '@/constants/routes';
+import { ROUTES } from '@/routes/routes';
 import type { ApiResponse, ApiErrorResponse } from '@/api/types';
 import { APIMESSAGE } from '@shared/apiMessage';
 

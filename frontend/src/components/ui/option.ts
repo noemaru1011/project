@@ -1,4 +1,4 @@
-import { ROUTES } from '@/constants/routes';
+import { ROUTES } from '@/routes/routes';
 
 // selectやcheckbox用
 export interface Option {

@@ -1,7 +1,6 @@
 import { authApi } from '@/features/auth/api';
-import { useLoadingCounter } from '@/hooks/useLoadingCounter';
+import { useLoadingCounter } from '@/hooks/ui/useLoadingCounter';
 
-//pageがないためuseLogoutを作成
 export function useLogout() {
   const { loading, start, end } = useLoadingCounter();
 

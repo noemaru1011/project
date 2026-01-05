@@ -9,7 +9,7 @@ import {
 import { StudentSearchForm } from '@/features/search/student/components';
 import type { HistoryForm } from '@shared/schemas/history';
 import { useHistoryCreate } from '@/features/history/hooks/useHistoryCreate';
-import { ROUTES } from '@/constants/routes';
+import { ROUTES } from '@/routes/routes';
 import { handleApiError } from '@/utils/handleApiError';
 import { studentSearchApi } from '@/features/search/student';
 import { useSearch } from '@/hooks/useSearch';

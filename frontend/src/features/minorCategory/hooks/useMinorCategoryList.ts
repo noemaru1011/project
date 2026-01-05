@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMinorCategories } from '@/features/minorCategory';
-import type { RootState, AppDispatch } from '@/hooks/store';
+import type { RootState, AppDispatch } from '@/stores/store';
 
 export const useMinorCategoryList = () => {
   const dispatch = useDispatch<AppDispatch>();

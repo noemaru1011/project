@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { ErrorLayout } from '@/components/layouts/ErrorLayout';
-import { ROUTES } from '@/constants/routes';
+import { ROUTES } from '@/routes/routes';
 
 export const Forbidden = () => {
   const navigate = useNavigate();

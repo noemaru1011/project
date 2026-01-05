@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/constants/routes';
+import { ROUTES } from '@/routes/routes';
 import { StudentCreateForm } from '@/features/student/components/StudentCreateForm';
 import { useStudentCreate } from '@/features/student/hooks/useStudentCreate';
 import type { StudentForm } from '@shared/schemas/student';

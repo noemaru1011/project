@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { Loading } from '@/components/ui/Loading/Loading';
-import { ROUTES } from '@/constants/routes';
+import { ROUTES } from '@/routes/routes';
 import { StudentDeleteView } from '@/features/student/components/StudentDeleteView';
 import { useStudentDelete } from '@/features/student/hooks/useStudentDelete';
 import { useStudentView } from '@/features/student/hooks/useStudentView';

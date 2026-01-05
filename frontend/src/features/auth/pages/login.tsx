@@ -3,7 +3,7 @@ import { LoginForm } from '@/features/auth/components';
 import type { LoginForm as LoginFormType } from '@shared/schemas/login';
 import { useLogin } from '@/features/auth/hooks/useLogin';
 import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/constants/routes';
+import { ROUTES } from '@/routes/routes';
 import { handleApiError } from '@/utils';
 
 export const Login = () => {

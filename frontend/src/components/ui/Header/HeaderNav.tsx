@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import type { HeaderOption } from '@/components/ui/option';
-import { ROUTES } from '@/constants/routes';
+import { ROUTES } from '@/routes/routes';
 import { AlertCircle } from 'lucide-react';
-import { UiVisibility } from '@/hooks/uiVisibility';
+import { UiVisibility } from '@/hooks/ui/uiVisibility';
 
 type Props = {
   options: HeaderOption[];

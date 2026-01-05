@@ -1,6 +1,6 @@
 import { Table } from '@/components/ui/Table/Table';
 import { minorCategoryLabels } from '@/features/minorCategory/constants';
-import type { MinorCategory } from '@/features/minorCategory/';
+import type { MinorCategory } from '@/features/minorCategory';
 
 type Props = {
   data: MinorCategory[];

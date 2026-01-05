@@ -1,9 +1,8 @@
 import { authApi } from '@/features/auth/api';
 import type { PasswordForm } from '@shared/schemas/password';
-import { useLoadingCounter } from '@/hooks/useLoadingCounter';
-import { useLoginContext } from '@/hooks/passwordUpdateContext';
+import { useLoadingCounter } from '@/hooks/ui/useLoadingCounter';
+import { useLoginContext } from '@/contexts/passwordUpdateContext';
 
-//IDが不要なためusePasswordを作成
 export function usePassword() {
   const { loading, start, end } = useLoadingCounter();
   const { setPasswordUpdateRequired } = useLoginContext();

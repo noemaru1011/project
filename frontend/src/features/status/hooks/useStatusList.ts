@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchStatuses } from '@/features/status';
-import type { RootState, AppDispatch } from '@/hooks/store';
+import type { RootState, AppDispatch } from '@/stores/store';
 
 export const useStatusList = () => {
   const dispatch = useDispatch<AppDispatch>();

@@ -3,7 +3,7 @@ import { Loading } from '@/components/ui/Loading/Loading';
 import { historyResultLabels } from '@/features/history/constants/historyLabels';
 import type { HistoryResult } from '@/features/history/types';
 import type { Action } from '@/components/ui/Table/TableRowActions';
-import { ROUTES } from '@/constants/routes';
+import { ROUTES } from '@/routes/routes';
 
 type Props = {
   data?: HistoryResult[];

@@ -6,10 +6,10 @@ import { HeaderNav } from '@/components/ui/Header/HeaderNav';
 import { Menu } from '@/components/ui/Menu/Menu';
 import { useLogout } from '@/features/auth/hooks/useLogout';
 import { headerMain, headerOptions } from '@/components/ui/option';
-import { ROUTES } from '@/constants/routes';
+import { ROUTES } from '@/routes/routes';
 import { handleApiError } from '@/utils/handleApiError';
-import { useLoginContext } from '@/hooks/passwordUpdateContext';
-import { UiVisibility } from '@/hooks/uiVisibility';
+import { useLoginContext } from '@/contexts/passwordUpdateContext';
+import { UiVisibility } from '@/hooks/ui/uiVisibility';
 
 export const Header = () => {
   const navigate = useNavigate();
