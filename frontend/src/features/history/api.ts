@@ -1,7 +1,7 @@
 import { api } from '@/api/api';
 import type { HistoryForm, HistoryUpdateForm } from '@shared/schemas/history';
 import type { HistoryDetail } from '@/features/history/types';
-import { API_ROUTES } from '@shared/routes';
+import { API_ROUTES } from '@shared/routes/routes';
 
 export const historyApi = {
   create: (data: HistoryForm) =>

@@ -2,7 +2,7 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import { API_ROUTES } from '@shared/routes';
+import { API_ROUTES } from '@shared/routes/routes';
 import { ROLE } from '@shared/role';
 import loginRoutes from '@/routes/loginRoutes';
 import logoutRoutes from '@/routes/logoutRoutes';

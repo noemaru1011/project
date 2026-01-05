@@ -1,5 +1,5 @@
 import { api } from '@/api/api';
-import { API_ROUTES } from '@shared/routes';
+import { API_ROUTES } from '@shared/routes/routes';
 import type { StudentQueryForm } from '@shared/schemas/studentQuery';
 import type { StudentResult } from '@/features/student/types';
 

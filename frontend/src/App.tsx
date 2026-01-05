@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { PageGuard } from '@/routes/pageGuard';
+import { Toast } from '@/components/ui/Toast/Toast';
+import { PageGuard } from '@/features/auth/components';
 import { ROUTES } from '@/routes/routes';
 import { ROLE } from '@shared/role';
 
@@ -107,18 +106,7 @@ const AppRoutes = () => (
 
 const App = () => (
   <Router>
-    <ToastContainer
-      position="top-right"
-      autoClose={3000}
-      toastStyle={{ width: '500px' }}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-    />
+    <Toast />
     <AppRoutes />
   </Router>
 );

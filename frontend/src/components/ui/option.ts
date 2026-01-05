@@ -31,10 +31,10 @@ export interface HeaderActionOption {
 
 export type HeaderOption = HeaderLinkOption | HeaderActionOption;
 
-export const headerMain: HeaderOption = {
+export const headerMain: HeaderLinkOption = {
   kind: 'link',
-  to: ROUTES.HOME,
   label: 'メインページへ',
+  to: ROUTES.HOME,
 };
 
 export const headerOptions: HeaderOption[] = [

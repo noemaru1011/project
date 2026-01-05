@@ -1,6 +1,6 @@
 import { api } from '@/api/api';
 import type { LoginForm } from '@shared/schemas/login';
-import { API_ROUTES } from '@shared/routes';
+import { API_ROUTES } from '@shared/routes/routes';
 import type { LoginResponse } from '@/features/auth/types';
 import type { PasswordForm } from '@shared/schemas/password';
 

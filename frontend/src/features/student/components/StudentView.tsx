@@ -12,7 +12,7 @@ type Props = {
 
 export const StudentView = ({ student, onBack }: Props) => {
   return (
-    <section>
+    <section className="space-y-6">
       <StudentNameInput value={student.studentName} disabled />
 
       <GradeRadioGroup name="grade" value={String(student.grade)} disabled />

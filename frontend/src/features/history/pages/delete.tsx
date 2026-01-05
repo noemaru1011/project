@@ -13,15 +13,14 @@ import { ROUTES } from '@/routes/routes';
 export const HistoryDeletePage = () => {
   const navigate = useNavigate();
   const { historyId } = useParams<{ historyId: string }>();
+  const { deleteHistory, loading: deleting } = useHistoryDelete();
   if (!historyId) {
     return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
   }
-
   const { history, loading } = useHistoryView(historyId);
   if (loading || !history) {
     return <Loading loading={loading} />;
   }
-  const { deleteHistory, loading: deleting } = useHistoryDelete();
 
   const handleSubmit = async () => {
     if (!history) {
@@ -56,10 +55,6 @@ export const HistoryDeletePage = () => {
     updatedAt: history.updatedAt,
     validFlag: history.validFlag,
   };
-
-  if (!historyBasic || !historyDelete) {
-    return <Loading loading={loading} />;
-  }
 
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-4">

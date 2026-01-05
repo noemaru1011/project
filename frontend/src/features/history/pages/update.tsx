@@ -15,6 +15,7 @@ import type { HistoryUpdateForm as HistoryUpdateFormType } from '@shared/schemas
 export const HistoryUpdatePage = () => {
   const navigate = useNavigate();
   const { historyId } = useParams<{ historyId: string }>();
+  const { updateHistory, loading: updating } = useHistoryUpdate();
   if (!historyId) {
     return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
   }
@@ -23,7 +24,6 @@ export const HistoryUpdatePage = () => {
   if (loading || !history) {
     return <Loading loading={loading} />;
   }
-  const { updateHistory, loading: updating } = useHistoryUpdate();
 
   const defaultValues: FormType = {
     statusId: history.statusId.toString(),

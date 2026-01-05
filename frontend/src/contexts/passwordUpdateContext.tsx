@@ -1,19 +1,28 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
 
-type Props = {
+type LoginContextProps = {
   passwordUpdateRequired: boolean;
   setPasswordUpdateRequired: (value: boolean) => void;
 };
 
-const LoginContext = createContext<Props | undefined>(undefined);
-let passwordUpdateRequiredCache = false;
+const LoginContext = createContext<LoginContextProps | undefined>(undefined);
 
-export const LoginProvider = ({ children }: { children: ReactNode }) => {
-  const [passwordUpdateRequired, setPasswordUpdateRequired] = useState(passwordUpdateRequiredCache);
+// localStorage に保存するキー
+const STORAGE_KEY = 'passwordUpdateRequired';
 
+export const PasswordUpdateProvider = ({ children }: { children: ReactNode }) => {
+  // 初期値は localStorage から取得
+  const [passwordUpdateRequired, setPasswordUpdateRequired] = useState(() => {
+    if (typeof window === 'undefined') return false; // SSR 対応
+    return localStorage.getItem(STORAGE_KEY) === 'true';
+  });
+
+  // 値が変わったら localStorage にも反映
   const setPasswordUpdateRequiredStable = (value: boolean) => {
-    passwordUpdateRequiredCache = value;
     setPasswordUpdateRequired(value);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(STORAGE_KEY, value.toString());
+    }
   };
 
   return (
@@ -28,12 +37,11 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const useLoginContext = (): Props => {
+// フックで安全に取得
+export const usePasswordUpdateContext = (): LoginContextProps => {
   const context = useContext(LoginContext);
-
   if (!context) {
-    throw new Error('useLoginContext must be used within a LoginProvider');
+    throw new Error('usePasswordUpdateContext must be used within a PasswordUpdateProvider');
   }
-
   return context;
 };

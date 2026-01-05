@@ -8,13 +8,13 @@ import { useLogout } from '@/features/auth/hooks/useLogout';
 import { headerMain, headerOptions } from '@/components/ui/option';
 import { ROUTES } from '@/routes/routes';
 import { handleApiError } from '@/utils/handleApiError';
-import { useLoginContext } from '@/contexts/passwordUpdateContext';
+import { usePasswordUpdateContext } from '@/contexts/passwordUpdateContext';
 import { UiVisibility } from '@/hooks/ui/uiVisibility';
 
 export const Header = () => {
   const navigate = useNavigate();
   const { logout, loading } = useLogout();
-  const { passwordUpdateRequired } = useLoginContext();
+  const { passwordUpdateRequired } = usePasswordUpdateContext();
   const [open, setOpen] = useState(false);
 
   const handleLogout = async () => {
