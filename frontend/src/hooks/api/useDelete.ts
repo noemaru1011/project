@@ -1,5 +1,5 @@
 import type { ApiResponse } from '@/api/types';
-import { useLoadingCounter } from './useLoadingCounter';
+import { useLoadingCounter } from '@/hooks/ui/useLoadingCounter';
 
 export function useDelete(deleteFn: (id: string) => Promise<ApiResponse<void>>) {
   const { loading, start, end } = useLoadingCounter();

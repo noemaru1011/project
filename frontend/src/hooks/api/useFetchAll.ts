@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { ApiResponse } from '@/api/types';
-import { useLoadingCounter } from './useLoadingCounter';
+import { useLoadingCounter } from '@/hooks/ui/useLoadingCounter';
 
 export function useFetchAll<T>(indexFn: () => Promise<ApiResponse<T[]>>) {
   const [data, setData] = useState<T[]>([]);

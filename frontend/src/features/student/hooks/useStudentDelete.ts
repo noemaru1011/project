@@ -1,5 +1,5 @@
 import { studentApi } from '@/features/student';
-import { useDelete } from '@/hooks/useDelete';
+import { useDelete } from '@/hooks/api/useDelete';
 
 export const useStudentDelete = () => {
   const { remove, loading } = useDelete(studentApi.delete);

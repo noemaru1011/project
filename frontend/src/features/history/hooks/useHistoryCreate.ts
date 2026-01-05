@@ -1,4 +1,4 @@
-import { useCreate } from '@/hooks/useCreate';
+import { useCreate } from '@/hooks/api/useCreate';
 import { historyApi } from '@/features/history';
 import type { HistoryForm } from '@shared/schemas/history';
 

@@ -11,21 +11,14 @@ import type { HistoryForm } from '@shared/schemas/history';
 import { useHistoryCreate } from '@/features/history/hooks/useHistoryCreate';
 import { ROUTES } from '@/routes/routes';
 import { handleApiError } from '@/utils/handleApiError';
-import { studentSearchApi } from '@/features/search/student';
-import { useSearch } from '@/hooks/useSearch';
-import type { StudentQueryForm } from '@shared/schemas/studentQuery';
-import type { StudentResult } from '@/features/student/types';
+import { useStudentSearch } from '@/features/search/student/hooks/useStudentSearch';
 import { Loading } from '@/components/ui/Loading/Loading';
 
 export const HistoryCreatePage = () => {
   const navigate = useNavigate();
   const [selectedStudents, setSelectedStudents] = useState<{ id: string; name: string }[]>([]);
   const { createHistory, loading: creating } = useHistoryCreate();
-  const {
-    search,
-    data,
-    loading: searching,
-  } = useSearch<StudentResult, StudentQueryForm>(studentSearchApi.search);
+  const { search, data, loading: searching } = useStudentSearch();
 
   const onSubmit = async (data: HistoryForm) => {
     try {

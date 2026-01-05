@@ -1,4 +1,4 @@
-import { useUpdate } from '@/hooks/useUpdate';
+import { useUpdate } from '@/hooks/api/useUpdate';
 import { studentApi } from '@/features/student';
 import type { StudentUpdateForm } from '@shared/schemas/student';
 

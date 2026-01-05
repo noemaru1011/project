@@ -1,5 +1,5 @@
 import type { ApiResponse } from '@/api/types';
-import { useLoadingCounter } from './useLoadingCounter';
+import { useLoadingCounter } from '@/hooks/ui/useLoadingCounter';
 
 export function useUpdate<I>(updateFn: (id: string, data: I) => Promise<ApiResponse<void>>) {
   const { loading, start, end } = useLoadingCounter();

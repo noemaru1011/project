@@ -1,5 +1,5 @@
 import { historyApi } from '@/features/history';
-import { useDelete } from '@/hooks/useDelete';
+import { useDelete } from '@/hooks/api/useDelete';
 
 export const useHistoryDelete = () => {
   const { remove, loading } = useDelete(historyApi.delete);

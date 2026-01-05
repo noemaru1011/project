@@ -1,4 +1,4 @@
-import { useUpdate } from '@/hooks/useUpdate';
+import { useUpdate } from '@/hooks/api/useUpdate';
 import { historyApi } from '@/features/history';
 import type { HistoryUpdateForm } from '@shared/schemas/history';
 
