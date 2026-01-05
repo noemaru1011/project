@@ -15,22 +15,23 @@ export const MenuOptions: Option[] = [
   { value: ROUTES.STUDENT.INDEX, label: '学生マスタ' },
 ];
 
+//画面遷移用
 export interface HeaderLinkOption {
   kind: 'link';
   label: string;
   to: string;
 }
 
-//現状ログアウトのみ
+//httpリクエスト用（ログアウトのみ）
 export interface HeaderActionOption {
   kind: 'action';
   label: string;
-  action: 'logout';
+  action: string;
 }
 
 export type HeaderOption = HeaderLinkOption | HeaderActionOption;
 
-export const headerMain: HeaderLinkOption = {
+export const headerMain: HeaderOption = {
   kind: 'link',
   to: ROUTES.HOME,
   label: 'メインページへ',
