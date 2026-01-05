@@ -9,7 +9,7 @@ export interface Option {
 export const MenuOptions: Option[] = [
   { value: ROUTES.CATEGORY.INDEX, label: '大分類マスタ' },
   { value: ROUTES.SUBCATEGORY.INDEX, label: '中分類マスタ' },
-  { value: ROUTES.MINORCategory.INDEX, label: '小分類マスタ' },
+  { value: ROUTES.MINORCATEGORY.INDEX, label: '小分類マスタ' },
   { value: ROUTES.DEPARTMENT.INDEX, label: '学科マスタ' },
   { value: ROUTES.STATUS.INDEX, label: '状態区分' },
   { value: ROUTES.STUDENT.INDEX, label: '学生マスタ' },
