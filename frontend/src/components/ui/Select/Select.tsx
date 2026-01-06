@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import { ChevronDown } from 'lucide-react';
 import type { Option } from '@/components/ui/option';
 
@@ -12,20 +13,35 @@ type Props = {
   leftIcon?: React.ReactNode;
   helperText?: string;
   className?: string;
+  selectClassName?: string;
+  labelClassName?: string;
 } & React.SelectHTMLAttributes<HTMLSelectElement>;
 
 export const Select = React.forwardRef<HTMLSelectElement, Props>(
   (
-    { id, label, options, required, disabled, error, leftIcon, helperText, className, ...rest },
+    {
+      id,
+      label,
+      options,
+      required,
+      disabled,
+      error,
+      leftIcon,
+      helperText,
+      className,
+      selectClassName,
+      labelClassName,
+      ...rest
+    },
     ref,
   ) => {
-    //アクセシビリティ用
     const errorId = error ? `${id}-error` : undefined;
     const helpId = helperText ? `${id}-help` : undefined;
+
     return (
-      <div className="flex flex-col space-y-1">
+      <div className={clsx('flex flex-col space-y-1', className)}>
         {label && (
-          <label htmlFor={id} className="text-gray-700">
+          <label htmlFor={id} className={clsx('text-sm font-medium text-gray-700', labelClassName)}>
             {label}
             {required && <span className="text-red-500 ml-1">*</span>}
           </label>
@@ -42,10 +58,17 @@ export const Select = React.forwardRef<HTMLSelectElement, Props>(
             id={id}
             ref={ref}
             disabled={disabled}
-            className={`w-full focus:ring focus:ring-indigo-100 focus:border-indigo-500  border-gray-300 appearance-none bg-white border rounded-lg px-3 py-2.5 pr-10 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed cursor-pointer
-              ${error ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : 'border-gray-300'}
-              ${leftIcon ? 'pl-10' : ''}
-              ${className || ''}`}
+            className={clsx(
+              'w-full appearance-none bg-white border rounded-lg px-3 py-2.5 pr-10 transition-all cursor-pointer',
+              'focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500',
+              'disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed',
+              {
+                'border-red-500 focus:ring-red-500 focus:border-red-500': error,
+                'border-gray-300': !error,
+                'pl-10': leftIcon,
+              },
+              selectClassName,
+            )}
             aria-invalid={!!error}
             aria-required={required}
             aria-describedby={[errorId, helpId].filter(Boolean).join(' ') || undefined}

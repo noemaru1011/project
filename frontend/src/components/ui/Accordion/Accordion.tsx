@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
+import clsx from 'clsx';
 
 export interface AccordionItemProps {
   id: string;
@@ -8,6 +9,7 @@ export interface AccordionItemProps {
   defaultOpen?: boolean;
   icon?: React.ReactNode;
   badge?: string | number;
+  className?: string;
 }
 
 export interface AccordionProps {
@@ -21,7 +23,7 @@ const AccordionItem: React.FC<
     isOpen: boolean;
     onToggle: () => void;
   }
-> = ({ title, children, isOpen, onToggle, icon, badge }) => {
+> = ({ title, children, isOpen, onToggle, icon, badge, className }) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState<number | undefined>(isOpen ? undefined : 0);
 
@@ -31,13 +33,12 @@ const AccordionItem: React.FC<
     if (isOpen) {
       const contentHeight = contentRef.current.scrollHeight;
       setHeight(contentHeight);
-      // Reset to auto after animation completes
+
       const timer = setTimeout(() => {
         setHeight(undefined);
       }, 300);
       return () => clearTimeout(timer);
     } else {
-      // Set explicit height first for smooth closing animation
       setHeight(contentRef.current.scrollHeight);
       requestAnimationFrame(() => {
         setHeight(0);
@@ -45,52 +46,63 @@ const AccordionItem: React.FC<
     }
   }, [isOpen]);
 
+  const contentId = `${title}-content`;
+
   return (
-    <div className="border-b border-gray-200 last:border-b-0">
+    <div className={clsx('border-b border-gray-200 last:border-b-0', className)}>
       <button
         type="button"
         onClick={onToggle}
-        className={`
-          w-full flex items-center justify-between px-5 py-4 
-          text-left transition-colors duration-200
-          ${isOpen ? 'bg-indigo-50' : 'bg-white hover:bg-gray-50'}
-        `}
+        aria-expanded={isOpen}
+        aria-controls={contentId}
+        className={clsx(
+          'w-full flex items-center justify-between px-5 py-4 text-left transition-colors duration-200',
+          isOpen ? 'bg-indigo-50' : 'bg-white hover:bg-gray-50',
+        )}
       >
         <div className="flex items-center gap-3 flex-1">
           {icon && (
             <div
-              className={`transition-colors duration-200 ${isOpen ? 'text-indigo-600' : 'text-gray-400'}`}
+              className={clsx(
+                'transition-colors duration-200',
+                isOpen ? 'text-indigo-600' : 'text-gray-400',
+              )}
             >
               {icon}
             </div>
           )}
           <span
-            className={`transition-colors duration-200 ${isOpen ? 'text-indigo-700' : 'text-gray-700'}`}
+            className={clsx(
+              'transition-colors duration-200',
+              isOpen ? 'text-indigo-700' : 'text-gray-700',
+            )}
           >
             {title}
           </span>
           {badge !== undefined && (
             <span
-              className={`
-              px-2 py-0.5 text-xs rounded-full transition-colors duration-200
-              ${isOpen ? 'bg-indigo-100 text-indigo-700' : 'bg-gray-100 text-gray-600'}
-            `}
+              className={clsx(
+                'px-2 py-0.5 text-xs rounded-full transition-colors duration-200',
+                isOpen ? 'bg-indigo-100 text-indigo-700' : 'bg-gray-100 text-gray-600',
+              )}
             >
               {badge}
             </span>
           )}
         </div>
         <ChevronDown
-          className={`
-            size-5 transition-all duration-300 flex-shrink-0
-            ${isOpen ? 'rotate-180 text-indigo-600' : 'rotate-0 text-gray-400'}
-          `}
+          size={20}
+          className={clsx(
+            'transition-all duration-300 flex-shrink-0',
+            isOpen ? 'rotate-180 text-indigo-600' : 'rotate-0 text-gray-400',
+          )}
         />
       </button>
 
       <div
         ref={contentRef}
-        style={{ height: height }}
+        id={contentId}
+        style={{ height }}
         className="overflow-hidden transition-all duration-300 ease-in-out"
       >
         <div className="px-5 py-4 bg-gray-50 overflow-x-auto">{children}</div>
@@ -99,7 +111,7 @@ const AccordionItem: React.FC<
   );
 };
 
-export const Accordion = ({ items, allowMultiple = false, className = '' }: AccordionProps) => {
+export const Accordion = ({ items, allowMultiple = false, className }: AccordionProps) => {
   const [openItems, setOpenItems] = useState<Set<string>>(() => {
     const initialOpen = new Set<string>();
     items.forEach((item) => {
@@ -113,7 +125,6 @@ export const Accordion = ({ items, allowMultiple = false, className = '' }: Acco
   const toggleItem = (id: string) => {
     setOpenItems((prev) => {
       const newSet = new Set(prev);
-
       if (newSet.has(id)) {
         newSet.delete(id);
       } else {
@@ -122,13 +133,12 @@ export const Accordion = ({ items, allowMultiple = false, className = '' }: Acco
         }
         newSet.add(id);
       }
-
       return newSet;
     });
   };
 
   return (
-    <div className={`bg-white border border-gray-200 rounded-lg overflow-hidden ${className}`}>
+    <div className={clsx('bg-white border border-gray-200 rounded-lg overflow-hidden', className)}>
       {items.map((item) => (
         <AccordionItem
           key={item.id}

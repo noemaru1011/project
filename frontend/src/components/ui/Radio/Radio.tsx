@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 
 type Props = {
   id?: string;
@@ -6,27 +7,36 @@ type Props = {
   disabled?: boolean;
   error?: string;
   helperText?: string;
+  className?: string;
+  inputClassName?: string;
+  labelClassName?: string;
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'>;
 
 export const Radio = React.forwardRef<HTMLInputElement, Props>(
-  ({ id, label, disabled, error, helperText, ...rest }, ref) => {
-    //アクセシビリティ用
+  (
+    { id, label, disabled, error, helperText, className, inputClassName, labelClassName, ...rest },
+    ref,
+  ) => {
     const errorId = error ? `${id}-error` : undefined;
     const helpId = helperText ? `${id}-help` : undefined;
+
     return (
-      <div className="flex items-center space-x-2">
+      <div className={clsx('flex items-center space-x-2', className)}>
         <input
           id={id}
           type="radio"
           ref={ref}
           disabled={disabled}
-          className="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          className={clsx(
+            'border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed',
+            inputClassName,
+          )}
           aria-invalid={!!error}
           aria-describedby={[errorId, helpId].filter(Boolean).join(' ') || undefined}
           {...rest}
         />
         {label && (
-          <label htmlFor={id} className="text-gray-700 font-medium">
+          <label htmlFor={id} className={clsx('text-gray-700 font-medium', labelClassName)}>
             {label}
           </label>
         )}

@@ -12,6 +12,7 @@ type Props = {
   disabled?: boolean;
   column?: number;
   value?: string[];
+  className?: string;
   onChange?: (value: string[]) => void;
 };
 
@@ -24,6 +25,7 @@ export const CheckboxGroup = ({
   disabled,
   column,
   value = [],
+  className,
   onChange,
 }: Props) => {
   /**
@@ -55,6 +57,7 @@ export const CheckboxGroup = ({
     <fieldset
       className={clsx(
         'bg-white rounded-lg p-4 shadow-sm disabled:cursor-not-allowed',
+        className,
         error
           ? 'border border-red-500 focus-within:ring-2 focus-within:ring-red-300'
           : 'border border-gray-200 focus-within:ring-2 focus-within:ring-blue-200',

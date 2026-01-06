@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import type { AllowedInputType } from './types';
 
 type Props = {
@@ -12,6 +13,8 @@ type Props = {
   rightIcon?: React.ReactNode;
   helperText?: string;
   className?: string;
+  inputClassName?: string;
+  labelClassName?: string;
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'>;
 
 export const Input = React.forwardRef<HTMLInputElement, Props>(
@@ -27,17 +30,19 @@ export const Input = React.forwardRef<HTMLInputElement, Props>(
       rightIcon,
       helperText,
       className,
+      inputClassName,
+      labelClassName,
       ...rest
     },
     ref,
   ) => {
-    //アクセシビリティ用
     const errorId = error ? `${id}-error` : undefined;
     const helpId = helperText ? `${id}-help` : undefined;
+
     return (
-      <div className="flex flex-col space-y-1">
+      <div className={clsx('flex flex-col space-y-1', className)}>
         {label && (
-          <label htmlFor={id} className="text-sm font-medium text-gray-700">
+          <label htmlFor={id} className={clsx('text-sm font-medium text-gray-700', labelClassName)}>
             {label}
             {required && <span className="text-red-500 ml-1">*</span>}
           </label>
@@ -55,11 +60,17 @@ export const Input = React.forwardRef<HTMLInputElement, Props>(
             type={type}
             ref={ref}
             disabled={disabled}
-            className={`w-full rounded-lg focus:ring focus:ring-indigo-100 border-b transition-colors focus:outline-none focus:border-b-2 focus:border-indigo-500 disabled:bg-gray-100 disabled:text-gray-400 placeholder:text-gray-400
-              ${error ? 'border-red-500' : 'border-gray-300'}
-              ${leftIcon ? 'pl-6' : ''}
-              ${rightIcon ? 'pr-6' : ''}
-              ${className || ''}`}
+            className={clsx(
+              'w-full rounded-lg border-b transition-colors focus:outline-none focus:border-b-2 focus:border-indigo-500 focus:ring focus:ring-indigo-100',
+              'disabled:bg-gray-100 disabled:text-gray-400 placeholder:text-gray-400',
+              {
+                'border-red-500': error,
+                'border-gray-300': !error,
+                'pl-6': leftIcon,
+                'pr-6': rightIcon,
+              },
+              inputClassName,
+            )}
             autoComplete="off"
             aria-invalid={!!error}
             aria-required={required}

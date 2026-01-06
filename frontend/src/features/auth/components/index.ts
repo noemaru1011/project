@@ -1,6 +1,7 @@
 export * from './LoginForm';
 export * from './PasswordUpdateForm';
 export * from './LoginEmail.Input';
+export * from './Remember.Checkbox';
 export * from './LoginPassword.Input';
 export * from './CheckNewPassword.Input';
 export * from './NewPassword.Input';

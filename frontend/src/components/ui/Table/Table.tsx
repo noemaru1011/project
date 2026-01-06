@@ -1,6 +1,7 @@
 import { TableHead } from '@/components/ui/Table/TableHead';
 import { TableRow } from '@/components/ui/Table/TableRow';
 import type { Action } from '@/components/ui/Table/TableRowActions';
+import clsx from 'clsx';
 
 type Props<T> = {
   /** 表示するラベルの定義オブジェクト*/
@@ -13,28 +14,52 @@ type Props<T> = {
   actions?: Action[];
   /** 表示するアクションの種類 */
   routeMap?: Partial<Record<Action, (id: string) => string>>;
-  /** チェックボックスの有無 */
-  showCheckbox?: boolean;
-  selectedIds?: string[];
-  onSelect?: (id: string, checked: boolean) => void;
+  className?: string;
+  tableClassName?: string;
 };
 
-export function Table<T extends Record<string, any>>({
-  labels,
-  data,
-  keyField,
-  actions,
-  routeMap,
-  showCheckbox = false,
-  selectedIds,
-  onSelect,
-}: Props<T>) {
+// showCheckbox = true の場合
+/** チェックボックスの有無 */
+type CheckboxProps = {
+  showCheckbox: true;
+  selectedIds: string[];
+  onSelect: (id: string, checked: boolean) => void;
+};
+
+// showCheckbox = false または undefined の場合
+type NoCheckboxProps = {
+  showCheckbox?: false;
+  selectedIds?: never;
+  onSelect?: never;
+};
+
+export type TableProps<T> = Props<T> & (CheckboxProps | NoCheckboxProps);
+
+export function Table<T extends Record<string, any>>(props: TableProps<T>) {
+  const {
+    labels,
+    data,
+    keyField,
+    actions,
+    routeMap,
+    showCheckbox = false,
+    selectedIds,
+    onSelect,
+    className,
+    tableClassName,
+  } = props;
+
   const labelKeys = Object.keys(labels);
 
   return (
-    <div className="m-4">
+    <div className={clsx('m-4', className)}>
       <div className="overflow-x-auto rounded-lg border border-gray-300 shadow-md">
-        <table className="table-auto min-w-full sm:min-w-max w-full overflow-x-auto">
+        <table
+          className={clsx(
+            'table-auto min-w-full sm:min-w-max w-full overflow-x-auto',
+            tableClassName,
+          )}
+        >
           <TableHead
             labelKeys={labelKeys}
             labels={labels}
