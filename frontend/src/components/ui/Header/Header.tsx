@@ -5,6 +5,7 @@ import { HeaderMain } from '@/components/ui/Header/HeaderMain';
 import { HeaderNav } from '@/components/ui/Header/HeaderNav';
 import { Menu } from '@/components/ui/Menu/Menu';
 import { useLogout } from '@/features/auth/hooks/useLogout';
+import { useLogDownload } from '@/features/auth/hooks/useLogDownload';
 import { headerMain, headerOptions } from '@/components/ui/option';
 import { ROUTES } from '@/routes/routes';
 import { handleApiError } from '@/utils/handleApiError';
@@ -13,7 +14,8 @@ import { UiVisibility } from '@/hooks/ui/uiVisibility';
 
 export const Header = () => {
   const navigate = useNavigate();
-  const { logout, loading } = useLogout();
+  const { logout, loading: logouting } = useLogout();
+  const { logDownload, loading: downloading } = useLogDownload();
   const { passwordUpdateRequired } = usePasswordUpdateContext();
   const [open, setOpen] = useState(false);
 
@@ -22,6 +24,24 @@ export const Header = () => {
       const res = await logout();
       toast.success(res.message);
       navigate(ROUTES.AUTH.LOGIN);
+    } catch (err) {
+      const error = handleApiError(err);
+      toast.error(error.message);
+      if (error.redirectTo) {
+        navigate(error.redirectTo);
+      }
+    }
+  };
+
+  const handleLogDownload = async () => {
+    try {
+      const blob = await logDownload();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'logs.zip';
+      a.click();
+      window.URL.revokeObjectURL(url);
     } catch (err) {
       const error = handleApiError(err);
       toast.error(error.message);
@@ -40,7 +60,8 @@ export const Header = () => {
           <HeaderNav
             options={headerOptions}
             onLogout={handleLogout}
-            loading={loading}
+            onLogDownload={handleLogDownload}
+            loading={logouting || downloading}
             passwordUpdateRequired={passwordUpdateRequired}
           />
 

@@ -6,6 +6,7 @@ import { API_ROUTES } from '@shared/routes/routes';
 import { ROLE } from '@shared/role';
 import loginRoutes from '@/routes/loginRoutes';
 import logoutRoutes from '@/routes/logoutRoutes';
+import logRoutes from '@/routes/logRoutes';
 import categoryRoutes from '@/routes/categoryRoutes';
 import SubCategoryRoutes from '@/routes/subCategoryRoutes';
 import MinorCategoryRoutes from '@/routes/minorCategoryRoutes';
@@ -66,6 +67,7 @@ app.use(
   requestLogger,
   studentRoutes,
 );
+app.use(API_ROUTES.LOG, authMiddleware, requireRole([ROLE.ADMIN]), requestLogger, logRoutes);
 
 // エラーログ、最終的なレスポンス
 app.use(errorLogger);
