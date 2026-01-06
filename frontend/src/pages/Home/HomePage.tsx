@@ -112,7 +112,19 @@ export const HomePage = () => {
             </div>
           </section>
         </div>
-        <img src={organization} alt="organization" />
+        <figure className="mt-8">
+          <img
+            src={organization}
+            alt="この学校（1大隊）の組織構成を示した図"
+            className="w-full rounded-lg border border-gray-200"
+          />
+
+          <figcaption className="mt-3 text-sm text-gray-600 leading-relaxed">
+            これは、この学校の1大隊の組織図です。
+            学生の所属の最小単位は小隊です。また、学年と所属学科の括りもあります。 会社の「部署 → 課
+            → 所」の関係をイメージしてください。
+          </figcaption>
+        </figure>
       </div>
     </section>
   );
