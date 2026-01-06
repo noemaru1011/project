@@ -10,29 +10,107 @@ export const HomePage = () => {
         </h2>
         <div className="grid gap-8 sm:grid-cols-2">
           {/* 履歴作成画面 */}
-          <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow flex flex-col items-start gap-4">
-            <div className="flex items-center gap-2 text-indigo-600">
-              <PlusCircle className="w-6 h-6" />
-              <h3 className="text-xl font-semibold text-gray-800">履歴作成画面</h3>
-            </div>
-            <p className="text-gray-600 leading-relaxed">
-              学生の状況を登録できます。新しい履歴を追加すると、学生の最新状況として反映されます。
+          <section
+            role="region"
+            aria-labelledby="history-create-title"
+            aria-describedby="history-create-desc"
+            className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow flex flex-col gap-4"
+          >
+            {/* 見出し領域 */}
+            <header className="flex items-center gap-3 text-indigo-600">
+              <PlusCircle className="w-6 h-6" aria-hidden="true" />
+              <h2 id="history-create-title" className="text-xl font-semibold text-gray-800">
+                履歴作成画面
+              </h2>
+            </header>
+
+            {/* 説明 */}
+            <p id="history-create-desc" className="text-gray-600 leading-relaxed">
+              この画面では、学生の状況を時間帯付きで登録できます。
+              以下の手順に従って入力してください。
             </p>
-          </div>
+
+            {/* 手順 */}
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">入力手順</h3>
+
+              <ol className="list-decimal list-inside space-y-2 text-gray-700">
+                <li>
+                  例：
+                  <time dateTime="2026-01-01T09:00">2026/01/01 09:00</time>
+                  から
+                  <time dateTime="2026-01-01T18:00">同日 18:00</time>
+                  まで体調不良で休務する場合を想定します。
+                </li>
+
+                <li>
+                  該当する学生を検索し、
+                  <span className="font-semibold">チェックを入れます</span>。
+                </li>
+
+                <li>
+                  「状況」から
+                  <span className="font-semibold text-indigo-600" aria-label="状態：休務">
+                    休務
+                  </span>
+                  を選択します。
+                </li>
+
+                <li>
+                  「有効開始」に
+                  <time dateTime="2026-01-01T09:00">2026/01/01 09:00</time>
+                  を入力します。
+                </li>
+
+                <li>
+                  「有効終了」に
+                  <time dateTime="2026-01-01T18:00">2026/01/01 18:00</time>
+                  を入力します。
+                </li>
+
+                <li>
+                  必要に応じて「備考」に
+                  <span className="italic">於：○○号室</span>
+                  などを記入します。
+                </li>
+              </ol>
+
+              <div className="flex justify-end">
+                <span className="text-sm text-gray-400 italic">※入力内容は後から編集できます</span>
+              </div>
+            </div>
+          </section>
 
           {/* 履歴一覧画面 */}
-          <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow flex flex-col items-start gap-4">
-            <div className="flex items-center gap-2 text-green-600">
-              <ListCheck className="w-6 h-6" />
-              <h3 className="text-xl font-semibold text-gray-800">履歴一覧画面</h3>
+          <section
+            role="region"
+            aria-labelledby="history-list-title"
+            aria-describedby="history-list-desc"
+            className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow flex flex-col gap-4"
+          >
+            {/* 見出し領域 */}
+            <header className="flex items-center gap-3 text-indigo-600">
+              <ListCheck className="w-6 h-6" aria-hidden="true" />
+              <h2 id="history-list-title" className="text-xl font-semibold text-gray-800">
+                履歴一覧画面
+              </h2>
+            </header>
+
+            {/* 説明 */}
+            <p id="history-list-desc" className="text-gray-600 leading-relaxed">
+              この画面では、学生の履歴と時間毎の状況を検索、一覧が表示されます。また履歴の更新・削除の操作が可能です。
+            </p>
+
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">補足事項</h3>
+
+              <ul className="list-decimal list-inside space-y-2 text-gray-700">
+                <li>更新画面の有効フラグは、チェックを外すと、時間毎の集計には反映されません。</li>
+                <li>有効終了日を未定で登録した場合は、終了日がわかり次第、更新してください</li>
+                <li>削除画面で、削除をした際は、その履歴がなかったことになります。</li>
+              </ul>
             </div>
-            <p className="text-gray-600 leading-relaxed mb-2">学生の現在の状況を確認できます。</p>
-            <ul className="list-disc list-inside text-gray-600 space-y-1">
-              <li>重複した状況(Status)は、期限の長い方が優先されます。</li>
-              <li>削除は完全に削除され、履歴一覧からも消えます。</li>
-              <li>無効は一時的に無効となり、カウントされません。</li>
-            </ul>
-          </div>
+          </section>
         </div>
         <img src={organization} alt="organization" />
       </div>

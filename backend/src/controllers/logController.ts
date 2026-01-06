@@ -18,7 +18,6 @@ export const downloadLogsController = async (_req: Request, res: Response, next:
 
     await archive.finalize();
   } catch (error) {
-    console.error('log download failed:', error);
     return next(error);
   }
 };

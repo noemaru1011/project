@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toast } from '@/components/ui/Toast/Toast';
-import { PageGuard } from '@/features/auth/components';
+import { PageGuard } from '@/components/layouts/PageGuard';
 import { ROUTES } from '@/routes/routes';
 import { ROLE } from '@shared/role';
 

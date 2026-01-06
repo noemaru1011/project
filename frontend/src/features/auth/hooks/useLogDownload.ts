@@ -3,7 +3,6 @@ import { useLoadingCounter } from '@/hooks/ui/useLoadingCounter';
 
 export function useLogDownload() {
   const { loading, start, end } = useLoadingCounter();
-  //いったんany
   const logDownload = async (): Promise<Blob> => {
     start();
     try {
