@@ -1,0 +1,52 @@
+@startuml
+title 組織編成図（1大隊）
+top to bottom direction
+
+skinparam rectangle {
+    RoundCorner 10
+    Padding 5
+    Margin 5
+    FontName "Meiryo UI, sans-serif"
+}
+
+rectangle "1大隊" as B1 #Salmon
+
+rectangle "11中隊" as C11 #LightSalmon
+rectangle "12中隊" as C12 #LightSalmon
+rectangle "13中隊" as C13 #LightSalmon
+rectangle "14中隊" as C14 #LightSalmon
+
+B1 --> C11
+B1 --> C12
+B1 --> C13
+B1 --> C14
+
+rectangle "111小隊" as P111 #MistyRose
+rectangle "112小隊" as P112 #MistyRose
+rectangle "113小隊" as P113 #MistyRose
+C11 --> P111
+C11 --> P112
+C11 --> P113
+
+rectangle "121小隊" as P121 #MistyRose
+rectangle "122小隊" as P122 #MistyRose
+rectangle "123小隊" as P123 #MistyRose
+C12 --> P121
+C12 --> P122
+C12 --> P123
+
+rectangle "131小隊" as P131 #MistyRose
+rectangle "132小隊" as P132 #MistyRose
+rectangle "133小隊" as P133 #MistyRose
+C13 --> P131
+C13 --> P132
+C13 --> P133
+
+rectangle "141小隊" as P141 #MistyRose
+rectangle "142小隊" as P142 #MistyRose
+rectangle "143小隊" as P143 #MistyRose
+C14 --> P141
+C14 --> P142
+C14 --> P143
+
+@enduml

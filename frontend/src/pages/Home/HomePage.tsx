@@ -1,4 +1,5 @@
 import { PlusCircle, ListCheck } from 'lucide-react';
+import organization from '@/assets/organization.svg';
 
 export const HomePage = () => {
   return (
@@ -7,7 +8,6 @@ export const HomePage = () => {
         <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center sm:text-left">
           学生履歴管理システムの概要
         </h2>
-
         <div className="grid gap-8 sm:grid-cols-2">
           {/* 履歴作成画面 */}
           <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow flex flex-col items-start gap-4">
@@ -34,6 +34,7 @@ export const HomePage = () => {
             </ul>
           </div>
         </div>
+        <img src={organization} alt="organization" />
       </div>
     </section>
   );

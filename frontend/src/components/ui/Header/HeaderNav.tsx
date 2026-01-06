@@ -33,14 +33,27 @@ export const HeaderNav = ({
           return (
             <li key={opt.label}>
               {opt.kind === 'action' ? (
-                <button
-                  onClick={actionHandlers[opt.action]}
-                  disabled={loading}
-                  aria-busy={loading}
-                  className={`font-bold mb-2 sm:mb-0 cursor-pointer ${spacing}`}
-                >
-                  {opt.label}
-                </button>
+                opt.action === 'logDownload' ? (
+                  <UiVisibility allowedRoles={['ADMIN']}>
+                    <button
+                      onClick={actionHandlers[opt.action]}
+                      disabled={loading}
+                      aria-busy={loading}
+                      className={`font-bold mb-2 sm:mb-0 cursor-pointer ${spacing}`}
+                    >
+                      {opt.label}
+                    </button>
+                  </UiVisibility>
+                ) : (
+                  <button
+                    onClick={actionHandlers[opt.action]}
+                    disabled={loading}
+                    aria-busy={loading}
+                    className={`font-bold mb-2 sm:mb-0 cursor-pointer ${spacing}`}
+                  >
+                    {opt.label}
+                  </button>
+                )
               ) : opt.to === ROUTES.AUTH.PASSWORD_CHANGE ? (
                 <UiVisibility allowedRoles={['STUDENT']}>
                   <Link to={opt.to} className={`font-bold mb-2 sm:mb-0 ${spacing}`}>

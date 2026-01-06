@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import Cookies from 'js-cookie';
 import type { Role } from '@shared/role';
+import { useAuth } from '@/contexts/atchContext';
 
 interface Props {
   children: ReactNode;
@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const UiVisibility = ({ children, allowedRoles }: Props) => {
-  const role = Cookies.get('role') as Role | undefined;
+  const { role } = useAuth();
 
   if (!role) return null;
   if (!allowedRoles.includes(role)) return null;

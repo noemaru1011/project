@@ -29,16 +29,13 @@ import { Forbidden } from '@/pages/error/forbidden';
 
 const AppRoutes = () => (
   <Routes>
-    {/* ヘッダーなし */}
     <Route path={ROUTES.AUTH.LOGIN} element={<Login />} />
-    {/* エラー画面 */}
-    <Route path={ROUTES.ERROR.SERVER} element={<ServerError />} />
-    <Route path={ROUTES.ERROR.FORBIDDEN} element={<Forbidden />} />
-    <Route path={ROUTES.ERROR.NOTFOUND} element={<NotFound />} />
-
-    {/* 以下ヘッダーあり */}
     <Route element={<Layout />}>
-      {/* リクエスト不要画面なのでフロントで制御 */}
+      {/* エラー画面 */}
+      <Route path={ROUTES.ERROR.SERVER} element={<ServerError />} />
+      <Route path={ROUTES.ERROR.FORBIDDEN} element={<Forbidden />} />
+      <Route path={ROUTES.ERROR.NOTFOUND} element={<NotFound />} />
+      {/* ページを開くときリクエスト不要画面なのでフロントで制御 */}
       <Route
         path={ROUTES.HOME}
         element={
