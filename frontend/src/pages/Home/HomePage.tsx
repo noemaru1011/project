@@ -1,9 +1,11 @@
 import { PlusCircle, ListCheck } from 'lucide-react';
 import organization from '@/assets/organization.svg';
+import { Dashboard } from '@/mock/Dashboard';
 
 export const HomePage = () => {
   return (
     <section className="py-12 px-4 sm:px-6 lg:px-8">
+      <Dashboard />
       <div className="max-w-4xl mx-auto">
         <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center sm:text-left">
           学生履歴管理システムの概要
@@ -72,6 +74,11 @@ export const HomePage = () => {
                   必要に応じて「備考」に
                   <span className="italic">於：○○号室</span>
                   などを記入します。
+                </li>
+                <li>
+                  <span className="font-semibold">
+                    ※有効時間の重複したデータには注意してください。
+                  </span>
                 </li>
               </ol>
 
