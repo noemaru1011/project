@@ -8,6 +8,7 @@ export const APIMESSAGE = {
   //以下エラーメッセージ
   NO_STUDENT: "学生が見つかりません",
   NO_HISTORY: "履歴が見つかりません",
+  INVALID_DATETIME: "日時の形式が正しくありません",
   VALIDATE_ERROR: "入力エラー",
   INVALID_CREDENTIALS: "メールアドレスかパスワードが違います",
   NOT_MACTH_PASSWORD: "古いメールアドレスが違います",
