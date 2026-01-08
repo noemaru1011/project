@@ -8,5 +8,7 @@ export const useStudentSearch = () => {
     studentSearchApi.search,
   );
 
-  return { data, search, loading };
+  const searchStudents = (data: StudentQueryForm) => search(data);
+
+  return { data, searchStudents, loading };
 };

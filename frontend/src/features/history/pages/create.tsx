@@ -13,12 +13,13 @@ import { ROUTES } from '@/routes/routes';
 import { handleApiError } from '@/utils/handleApiError';
 import { useStudentSearch } from '@/features/search/student/hooks/useStudentSearch';
 import { Loading } from '@/components/ui/Loading/Loading';
+import type { StudentQueryForm } from '@shared/schemas/studentQuery';
 
 export const HistoryCreatePage = () => {
   const navigate = useNavigate();
   const [selectedStudents, setSelectedStudents] = useState<{ id: string; name: string }[]>([]);
   const { createHistory, loading: creating } = useHistoryCreate();
-  const { search, data, loading: searching } = useStudentSearch();
+  const { searchStudents, data, loading: searching } = useStudentSearch();
 
   const onSubmit = async (data: HistoryForm) => {
     try {
@@ -34,12 +35,24 @@ export const HistoryCreatePage = () => {
     }
   };
 
+  const handleSearch = async (query: StudentQueryForm) => {
+    try {
+      await searchStudents(query);
+    } catch (err) {
+      const error = handleApiError(err);
+      toast.error(error.message);
+      if (error.redirectTo) {
+        navigate(error.redirectTo);
+      }
+    }
+  };
+
   return (
     <>
       <h2 className="text-center text-2xl font-bold mt-4">履歴作成</h2>
       <div className="m-4 grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
-          <StudentSearchForm onSearch={search} />
+          <StudentSearchForm onSearch={handleSearch} loading={searching} />
 
           <Loading loading={searching}>
             <StudentTable

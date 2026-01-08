@@ -1,0 +1,44 @@
+services:
+  db:
+    image: postgres:16
+    container_name: db.dev
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/dockerfile.dev
+    container_name: backend.dev
+    restart: always
+    ports:
+      - "3001:3000"
+    env_file:
+      - .env
+      - backend/.env
+    depends_on:
+      - db
+    volumes:
+      - ./shared:/project/shared
+      - ./backend/prisma:/project/backend/prisma
+      - ./backend/src:/project/backend/src
+
+  # frontend:
+  #   build: ./frontend
+  #   ports:
+  #     - "5173:5173"
+  #   volumes:
+  #     - ./shared:/project/shared
+
+volumes:
+  db_data:

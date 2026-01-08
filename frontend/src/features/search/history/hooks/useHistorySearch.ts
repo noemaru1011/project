@@ -8,5 +8,7 @@ export const useHistorySearch = () => {
     historySearchApi.search,
   );
 
-  return { data, search, loading };
+  const searchHistories = (data: StudentQueryForm) => search(data);
+
+  return { data, searchHistories, loading };
 };
