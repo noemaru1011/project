@@ -40,8 +40,9 @@ app.use(
   passwordRoutes,
 );
 //学生・管理者両方使える
-app.use(API_ROUTES.HISTORY, authMiddleware, requestLogger, historyRoutes);
+// より具体的なパスを先に登録（/histories/search が /histories/:id にマッチしないように）
 app.use(API_ROUTES.HISTORY_SEARCH, authMiddleware, requestLogger, historySearchRoutes);
+app.use(API_ROUTES.HISTORY, authMiddleware, requestLogger, historyRoutes);
 app.use(API_ROUTES.STUDENT_SEARCH, authMiddleware, requestLogger, studentSearchRoutes);
 app.use(API_ROUTES.CATEGORY, authMiddleware, requestLogger, categoryRoutes);
 app.use(API_ROUTES.SUBCATEGORY, authMiddleware, requestLogger, SubCategoryRoutes);
