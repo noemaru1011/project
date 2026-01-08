@@ -12,7 +12,7 @@ export const csrfMiddleware = (req: Request, _res: Response, next: NextFunction)
   const headerToken = req.headers['x-csrf-token'];
 
   if (!cookieToken || !headerToken || cookieToken !== headerToken) {
-    throw new CsrfError();
+    return next(new CsrfError());
   }
 
   next();

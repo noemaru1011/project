@@ -14,6 +14,11 @@ export const LogoutController = {
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
       });
+      res.clearCookie('csrf', {
+        httpOnly: false,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+      });
 
       return res.status(200).json({ message: APIMESSAGE.LOGOUT_SUCCESS });
     } catch (error) {
