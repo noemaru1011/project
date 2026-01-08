@@ -14,6 +14,20 @@ export const HistoryController = {
       return next(error);
     }
   },
+  async searchByStartTimeHistories(req: Request, res: Response, next: NextFunction) {
+    try {
+      const datetimeStr = req.query.datetime as string; // ?datetime=2026-01-08T14:30
+      const query = new Date(datetimeStr);
+
+      const histories = await HistoryService.searchByStartTimeHistories(query);
+      return res.status(201).json({
+        data: histories,
+        message: APIMESSAGE.FETCH_SUCCESS,
+      });
+    } catch (error) {
+      return next(error);
+    }
+  },
 
   async getHistory(req: Request, res: Response, next: NextFunction) {
     try {

@@ -8,4 +8,6 @@ const router = Router();
 
 router.post('/', csrfMiddleware, validateBody(serverValidation), HistoryController.searchHistories);
 
+router.get('/', validateBody(serverValidation), HistoryController.searchByStartTimeHistories);
+
 export default router;

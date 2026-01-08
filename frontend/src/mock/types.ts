@@ -3,6 +3,7 @@ export type StatusCounts = {
   trip: number; // 出張
   annual: number; // 年休
   other: number; // その他
+  //ほんとはもっと続く
 };
 
 export type OrgNode = {
