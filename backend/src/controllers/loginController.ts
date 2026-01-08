@@ -24,6 +24,9 @@ export const LoginController = {
         maxAge: 3600 * 1000,
       });
 
+      // csrf用
+      res.cookie('csrf', crypto.randomUUID(), { httpOnly: false });
+
       return res.status(200).json({ message: APIMESSAGE.LOGIN_SUCCESS, data: result });
     } catch (error) {
       return next(error);

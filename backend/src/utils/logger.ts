@@ -1,9 +1,6 @@
 import winston from 'winston';
 import path from 'path';
 
-/**
- * 日本時間 (JST) のタイムスタンプを生成
- */
 const jstTimestamp = () => {
   return new Date().toLocaleString('ja-JP', {
     timeZone: 'Asia/Tokyo',
@@ -16,15 +13,13 @@ const jstTimestamp = () => {
   });
 };
 
-const logFormat = winston.format.printf(({ level, message, timestamp }) => {
-  return `[${timestamp}] [${level.toUpperCase()}] ${message}`;
-});
-
 export const logger = winston.createLogger({
   level: 'info',
   format: winston.format.combine(
-    winston.format.timestamp({ format: jstTimestamp }), // ← ここが重要
-    logFormat,
+    winston.format.timestamp({ format: jstTimestamp }),
+    winston.format.errors({ stack: true }),
+    winston.format.splat(),
+    winston.format.json(),
   ),
   transports: [
     new winston.transports.File({

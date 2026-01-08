@@ -2,24 +2,30 @@ FROM node:22.21.1
 
 WORKDIR /project
 
-# ルート依存関係
+# ========== Root dependencies ==========
 COPY package.json package-lock.json ./
 COPY tsconfig.json ./
-RUN npm install
+RUN npm ci
 
-# backend 依存関係
+# 🔒 Root の依存関係を監査
+RUN npm audit --audit-level=high
+
+# ========== Backend dependencies ==========
 WORKDIR /project/backend
-COPY backend/package*.json ./
+COPY backend/package.json backend/package-lock.json ./
 COPY backend/tsconfig.json ./
-RUN npm install
+RUN npm ci
 
-# ソース
+# 🔒 Backend の依存関係を監査
+RUN npm audit --audit-level=high
+
+# ========== Source ==========
 COPY backend/src ./src
 COPY backend/prisma ./prisma
 RUN npx prisma generate
 RUN npx prisma db seed
 
-# shared
+# ========== Shared ==========
 WORKDIR /project
 COPY shared ./shared
 

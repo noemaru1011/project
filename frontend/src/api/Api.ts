@@ -1,4 +1,5 @@
 import type { ApiResponse } from '@/api/types';
+import Cookies from 'js-cookie';
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 /**
@@ -18,6 +19,7 @@ export async function api<T>(path: string, options?: RequestInit): Promise<ApiRe
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
+        'X-CSRF-Token': Cookies.get('csrf') ?? '',
         ...(options?.headers || {}),
       },
       ...options,

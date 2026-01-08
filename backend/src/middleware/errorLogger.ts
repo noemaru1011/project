@@ -8,7 +8,15 @@ export const errorLogger = (err: unknown, req: Request, res: Response, _next: Ne
   const userId = req.user?.id ?? 'anonymous';
 
   if (err instanceof appError) {
-    const msg = `${req.method} ${req.originalUrl} | user:${userId} | msg:${err.message} | stack:${err.stack}`;
+    const msg = [
+      req.method,
+      req.originalUrl,
+      `status:${err.status}`,
+      `user:${userId}`,
+      `msg:${err.message}`,
+      `stack:${err.stack}`,
+    ].join(' | ');
+
     Promise.resolve(logger.error(msg)).catch(console.error);
 
     return res.status(err.status).json({
@@ -17,8 +25,18 @@ export const errorLogger = (err: unknown, req: Request, res: Response, _next: Ne
     });
   }
 
-  const msg = `${req.method} ${req.originalUrl} | user:${userId} | unexpected error: ${JSON.stringify(err)}`;
-  Promise.resolve(logger.error(msg)).catch(console.error);
+  if (err instanceof Error) {
+    const msg = [
+      req.method,
+      req.originalUrl,
+      `status:500`,
+      `user:${userId}`,
+      `msg:${err.message}`,
+      `stack:${err.stack}`,
+    ].join(' | ');
+
+    Promise.resolve(logger.error(msg)).catch(console.error);
+  }
 
   const key: ApiMessageKey = 'INTERNAL_SERVER_ERROR';
   return res.status(500).json({

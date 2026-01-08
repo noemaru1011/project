@@ -16,6 +16,7 @@ export const APIMESSAGE = {
   TOKEN_ERROR: "ログインしてください",
   CONFLICT: "他のユーザーによって更新されています,再読み込みしてください",
   INTERNAL_SERVER_ERROR: "予期せぬエラーが発生しました",
+  CSRF_INVALID: "CSRFトークンが異なります",
 } as const;
 
 export type ApiMessageKey = keyof typeof APIMESSAGE;
