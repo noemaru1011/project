@@ -22,6 +22,7 @@ export const authApi = {
   updatePassword: (data: PasswordForm) =>
     api(API_ROUTES.PASSWORD, {
       method: 'POST',
+      credentials: 'include',
       body: JSON.stringify(data),
     }),
 

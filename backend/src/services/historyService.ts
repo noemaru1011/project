@@ -52,6 +52,7 @@ export const HistoryService = {
   },
 
   async searchByStartTimeHistories(query: Date) {
+    console.log(query);
     const histories = await HistoryRepository.searchByStartTimeHistories(query);
     const historiesMapped = histories.map((h) => ({
       statusId: h.statusId,
@@ -106,7 +107,6 @@ interface History {
 
 function aggregateByDepartmentAndGrade(histories: History[]) {
   const result: Record<number, Record<number, Record<number, number>>> = {};
-  // result[departmentId][grade][statusId] = count
 
   histories.forEach((h) => {
     const { departmentId, grade, statusId } = h;

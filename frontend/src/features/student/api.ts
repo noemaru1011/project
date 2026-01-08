@@ -7,17 +7,20 @@ export const studentApi = {
   create: (data: StudentForm) =>
     api<void>(API_ROUTES.STUDENT, {
       method: 'POST',
+      credentials: 'include',
       body: JSON.stringify(data),
     }),
 
   update: (id: string, data: StudentUpdateForm) =>
     api<void>(`${API_ROUTES.STUDENT}/${id}`, {
       method: 'PUT',
+      credentials: 'include',
       body: JSON.stringify(data),
     }),
 
   delete: (id: string) =>
     api<void>(`${API_ROUTES.STUDENT}/${id}`, {
+      credentials: 'include',
       method: 'DELETE',
     }),
 
