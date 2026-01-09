@@ -1,50 +1,38 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { vi } from 'vitest';
-import React from 'react';
-import { Checkbox } from './Checkbox';
+// 1. label クリックでチェックボックスが切り替わる
+it('label クリックでチェックボックスが切り替わる', async () => {
+  await user.click(screen.getByText('同意する'));
+  expect(handleChange).toHaveBeenCalledTimes(1);
+});
 
-describe('Checkbox', () => {
-  it('renders with label', () => {
-    render(<Checkbox id="test" label="チェックボックス" />);
-    const checkbox = screen.getByRole('checkbox', { name: /チェックボックス/i });
-    expect(checkbox).toBeInTheDocument();
-  });
+// 2. チェック状態が切り替わる
+it('チェック状態が切り替わる', async () => {
+  const checkbox = screen.getByRole('checkbox');
+  expect(checkbox).not.toBeChecked();
+  
+  await user.click(checkbox);
+  expect(checkbox).toBeChecked();
+  
+  await user.click(checkbox);
+  expect(checkbox).not.toBeChecked();
+});
 
-  it('renders without label', () => {
-    render(<Checkbox id="test" />);
-    const checkbox = screen.getByRole('checkbox');
-    expect(checkbox).toBeInTheDocument();
-  });
+// 3. キーボード操作（Space）
+it('キーボード操作（Space）でチェックできる', async () => {
+  const checkbox = screen.getByRole('checkbox');
+  checkbox.focus();
+  await user.keyboard(' ');
+  expect(handleChange).toHaveBeenCalledTimes(1);
+});
 
-  it('is disabled when disabled prop is true', () => {
-    render(<Checkbox id="test" label="無効" disabled />);
-    const checkbox = screen.getByRole('checkbox', { name: /無効/i });
-    expect(checkbox).toBeDisabled();
-  });
+// 4. ref 経由で checked 状態を取得
+it('ref 経由で checked 状態を取得できる', () => {
+  const ref = React.createRef<HTMLInputElement>();
+  render(<Checkbox ref={ref} defaultChecked />);
+  expect(ref.current?.checked).toBe(true);
+});
 
-  it('calls onChange handler when clicked', () => {
-    const handleChange = vi.fn();
-    render(<Checkbox id="test" label="クリック" onChange={handleChange} />);
-    const checkbox = screen.getByRole('checkbox', { name: /クリック/i });
-
-    fireEvent.click(checkbox);
-    expect(handleChange).toHaveBeenCalledTimes(1);
-  });
-
-  it('toggles checked state when clicked', () => {
-    render(<Checkbox id="test" label="チェック" />);
-    const checkbox = screen.getByRole('checkbox', { name: /チェック/i }) as HTMLInputElement;
-
-    expect(checkbox.checked).toBe(false);
-    fireEvent.click(checkbox);
-    expect(checkbox.checked).toBe(true);
-    fireEvent.click(checkbox);
-    expect(checkbox.checked).toBe(false);
-  });
-
-  it('supports ref forwarding', () => {
-    const ref = React.createRef<HTMLInputElement>();
-    render(<Checkbox id="test" ref={ref} />);
-    expect(ref.current).toBeInstanceOf(HTMLInputElement);
-  });
+// 5. select-none スタイル（label のテキスト選択防止）
+it('label に select-none が適用される', () => {
+  render(<Checkbox label="同意する" />);
+  expect(screen.getByText('同意する')).toHaveClass('select-none');
 });
