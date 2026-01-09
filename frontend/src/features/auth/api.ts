@@ -9,27 +9,23 @@ export const authApi = {
   login: (data: LoginForm) =>
     api<LoginResponse>(API_ROUTES.LOGIN, {
       method: 'POST',
-      credentials: 'include',
       body: JSON.stringify(data),
     }),
 
   logout: () =>
     api(API_ROUTES.LOGOUT, {
       method: 'POST',
-      credentials: 'include',
     }),
 
   updatePassword: (data: PasswordForm) =>
     api(API_ROUTES.PASSWORD, {
       method: 'POST',
-      credentials: 'include',
       body: JSON.stringify(data),
     }),
 
   logDownload: async (): Promise<Blob> => {
     const res = await fetch(`${API_BASE_URL}${API_ROUTES.LOG}`, {
       method: 'GET',
-      credentials: 'include',
     });
 
     if (!res.ok) {

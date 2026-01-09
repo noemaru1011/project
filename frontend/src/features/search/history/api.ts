@@ -7,13 +7,11 @@ export const historySearchApi = {
   search: (query: StudentQueryForm) =>
     api<HistoryResult[]>(API_ROUTES.HISTORY_SEARCH, {
       method: 'POST',
-      credentials: 'include',
       body: JSON.stringify(query),
     }),
 
   searchByTime: (datetime: string) =>
     api<any>(`${API_ROUTES.HISTORY_SEARCH}?datetime=${encodeURIComponent(datetime)}`, {
       method: 'GET',
-      credentials: 'include',
     }),
 };

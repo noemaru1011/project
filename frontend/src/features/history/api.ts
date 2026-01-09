@@ -7,20 +7,16 @@ export const historyApi = {
   create: (data: HistoryForm) =>
     api<void>(API_ROUTES.HISTORY, {
       method: 'POST',
-      credentials: 'include',
       body: JSON.stringify(data),
     }),
 
   update: (id: string, data: HistoryUpdateForm) =>
     api<void>(`${API_ROUTES.HISTORY}/${id}`, {
       method: 'PUT',
-      credentials: 'include',
       body: JSON.stringify(data),
     }),
 
-  view: (id: string) =>
-    api<HistoryDetail>(`${API_ROUTES.HISTORY}/${id}`, { method: 'GET', credentials: 'include' }),
+  view: (id: string) => api<HistoryDetail>(`${API_ROUTES.HISTORY}/${id}`, { method: 'GET' }),
 
-  delete: (id: string) =>
-    api<void>(`${API_ROUTES.HISTORY}/${id}`, { method: 'DELETE', credentials: 'include' }),
+  delete: (id: string) => api<void>(`${API_ROUTES.HISTORY}/${id}`, { method: 'DELETE' }),
 };

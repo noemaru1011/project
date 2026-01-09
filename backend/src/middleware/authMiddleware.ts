@@ -2,9 +2,10 @@ import { Request, Response, NextFunction } from 'express';
 import { InvalidCredentialsError, ForbiddenError, TokenError } from '@/errors/authError';
 import { Role } from '@shared/role';
 import { JwtPayload } from '@/types/jwtPayload';
+import { tokenBlacklist } from '@/utils/tokenBlacklist';
 import jwt from 'jsonwebtoken';
 
-export const authMiddleware = (req: Request, _res: Response, next: NextFunction) => {
+export const authMiddleware = async (req: Request, _res: Response, next: NextFunction) => {
   const token = req.cookies.token;
 
   if (!token) {
@@ -16,6 +17,11 @@ export const authMiddleware = (req: Request, _res: Response, next: NextFunction)
     req.user = payload;
     next();
   } catch {
+    return next(new TokenError());
+  }
+
+  // ブラックリストチェック
+  if (await tokenBlacklist.isBlacklisted(token)) {
     return next(new TokenError());
   }
 };

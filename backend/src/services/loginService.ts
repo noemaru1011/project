@@ -10,8 +10,16 @@ import { PasswordRepository } from '@/repositories/passwordRepository';
 
 export const LoginService = {
   async login(email: string, inputPassword: string): Promise<LoginResponse> {
+    // 管理者と学生の検索を同時に
+    const [admin, student] = await Promise.all([
+      AdminRepository.findByEmail(email),
+      StudentRepository.findByEmail(email),
+    ]);
+
+    // ダミーハッシュ（存在しない場合でも bcrypt.compare する）
+    const DUMMY_HASH = '$2b$10$dummyhashtopreventtimingattacks000000000000000';
+
     // 管理者判定
-    const admin = await AdminRepository.findByEmail(email);
     if (admin) {
       const isMatch = await bcrypt.compare(inputPassword, admin.password);
       if (!isMatch) throw new InvalidCredentialsError();
@@ -21,22 +29,26 @@ export const LoginService = {
     }
 
     // 学生判定
-    const student = await StudentRepository.findByEmail(email);
-    if (!student) throw new InvalidCredentialsError();
+    let studentPasswordHash = DUMMY_HASH;
+    if (student) {
+      const studentPassword = await PasswordRepository.findByStudentId(student.studentId);
+      if (studentPassword) studentPasswordHash = studentPassword.password;
+    }
+
+    const isMatch = await bcrypt.compare(inputPassword, studentPasswordHash);
+
+    // マッチしなければ必ずエラー
+    if (!isMatch || !student) throw new InvalidCredentialsError();
 
     const studentPassword = await PasswordRepository.findByStudentId(student.studentId);
-    if (!studentPassword) throw new InvalidCredentialsError();
 
-    const isMatch = await bcrypt.compare(inputPassword, studentPassword.password);
-    if (!isMatch) throw new InvalidCredentialsError();
-
-    // パスワード変更が必要か
+    // パスワード変更判定
     const passwordUpdateRequired = isPasswordUpdateRequired(
-      studentPassword.createdAt,
-      studentPassword.updatedAt,
+      studentPassword!.createdAt,
+      studentPassword!.updatedAt,
     );
 
-    const token = jwtUtil.createToken(student.studentId, ROLE.STUDENT);
+    const token = jwtUtil.createToken(student!.studentId, ROLE.STUDENT);
     return { token, role: ROLE.STUDENT, passwordUpdateRequired };
   },
 };
