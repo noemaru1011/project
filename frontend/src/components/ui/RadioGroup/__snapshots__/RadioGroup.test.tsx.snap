@@ -1,0 +1,471 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`RadioGroup > スナップショット > column=2 の HTML 構造 1`] = `
+<fieldset
+  aria-invalid="false"
+  class="bg-white rounded-lg p-4 shadow-sm disabled:cursor-not-allowed border border-gray-200 focus-within:ring-2 focus-within:ring-blue-200"
+>
+  <div
+    class="flex flex-col space-y-3"
+  >
+    <div
+      class="flex flex-row gap-6 flex-wrap"
+    >
+      <div
+        class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
+      >
+        <input
+          aria-invalid="false"
+          class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          id="test-option1"
+          name="test"
+          type="radio"
+        />
+        <label
+          class="text-gray-700 font-medium"
+          for="test-option1"
+        >
+          オプション1
+        </label>
+      </div>
+      <div
+        class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
+      >
+        <input
+          aria-invalid="false"
+          class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          id="test-option2"
+          name="test"
+          type="radio"
+        />
+        <label
+          class="text-gray-700 font-medium"
+          for="test-option2"
+        >
+          オプション2
+        </label>
+      </div>
+    </div>
+    <div
+      class="flex flex-row gap-6 flex-wrap"
+    >
+      <div
+        class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
+      >
+        <input
+          aria-invalid="false"
+          class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          id="test-option3"
+          name="test"
+          type="radio"
+        />
+        <label
+          class="text-gray-700 font-medium"
+          for="test-option3"
+        >
+          オプション3
+        </label>
+      </div>
+    </div>
+  </div>
+</fieldset>
+`;
+
+exports[`RadioGroup > スナップショット > disabled の HTML 構造 1`] = `
+<fieldset
+  aria-invalid="false"
+  class="bg-white rounded-lg p-4 shadow-sm disabled:cursor-not-allowed border border-gray-200 focus-within:ring-2 focus-within:ring-blue-200"
+  disabled=""
+>
+  <div
+    class="flex flex-col space-y-3"
+  >
+    <div
+      class="flex flex-row gap-6 flex-wrap"
+    >
+      <div
+        class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
+      >
+        <input
+          aria-invalid="false"
+          class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          disabled=""
+          id="test-option1"
+          name="test"
+          type="radio"
+        />
+        <label
+          class="text-gray-700 font-medium"
+          for="test-option1"
+        >
+          オプション1
+        </label>
+      </div>
+    </div>
+    <div
+      class="flex flex-row gap-6 flex-wrap"
+    >
+      <div
+        class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
+      >
+        <input
+          aria-invalid="false"
+          class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          disabled=""
+          id="test-option2"
+          name="test"
+          type="radio"
+        />
+        <label
+          class="text-gray-700 font-medium"
+          for="test-option2"
+        >
+          オプション2
+        </label>
+      </div>
+    </div>
+    <div
+      class="flex flex-row gap-6 flex-wrap"
+    >
+      <div
+        class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
+      >
+        <input
+          aria-invalid="false"
+          class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          disabled=""
+          id="test-option3"
+          name="test"
+          type="radio"
+        />
+        <label
+          class="text-gray-700 font-medium"
+          for="test-option3"
+        >
+          オプション3
+        </label>
+      </div>
+    </div>
+  </div>
+</fieldset>
+`;
+
+exports[`RadioGroup > スナップショット > error ありの HTML 構造 1`] = `
+<fieldset
+  aria-describedby="test-error"
+  aria-invalid="true"
+  class="bg-white rounded-lg p-4 shadow-sm disabled:cursor-not-allowed border border-red-500 focus-within:ring-2 focus-within:ring-red-300"
+>
+  <div
+    class="flex flex-col space-y-3"
+  >
+    <div
+      class="flex flex-row gap-6 flex-wrap"
+    >
+      <div
+        class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
+      >
+        <input
+          aria-invalid="false"
+          class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          id="test-option1"
+          name="test"
+          type="radio"
+        />
+        <label
+          class="text-gray-700 font-medium"
+          for="test-option1"
+        >
+          オプション1
+        </label>
+      </div>
+    </div>
+    <div
+      class="flex flex-row gap-6 flex-wrap"
+    >
+      <div
+        class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
+      >
+        <input
+          aria-invalid="false"
+          class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          id="test-option2"
+          name="test"
+          type="radio"
+        />
+        <label
+          class="text-gray-700 font-medium"
+          for="test-option2"
+        >
+          オプション2
+        </label>
+      </div>
+    </div>
+    <div
+      class="flex flex-row gap-6 flex-wrap"
+    >
+      <div
+        class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
+      >
+        <input
+          aria-invalid="false"
+          class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          id="test-option3"
+          name="test"
+          type="radio"
+        />
+        <label
+          class="text-gray-700 font-medium"
+          for="test-option3"
+        >
+          オプション3
+        </label>
+      </div>
+    </div>
+  </div>
+  <div
+    class="text-red-500 text-sm mt-2"
+    id="test-error"
+    role="alert"
+  >
+    選択してください
+  </div>
+</fieldset>
+`;
+
+exports[`RadioGroup > スナップショット > label + required の HTML 構造 1`] = `
+<fieldset
+  aria-invalid="false"
+  aria-required="true"
+  class="bg-white rounded-lg p-4 shadow-sm disabled:cursor-not-allowed border border-gray-200 focus-within:ring-2 focus-within:ring-blue-200"
+>
+  <legend
+    class="font-semibold text-gray-800 mb-2"
+  >
+    プラン
+    <span
+      class="text-red-500 ml-1"
+    >
+      *
+    </span>
+  </legend>
+  <div
+    class="flex flex-col space-y-3"
+  >
+    <div
+      class="flex flex-row gap-6 flex-wrap"
+    >
+      <div
+        class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
+      >
+        <input
+          aria-invalid="false"
+          class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          id="test-option1"
+          name="test"
+          type="radio"
+        />
+        <label
+          class="text-gray-700 font-medium"
+          for="test-option1"
+        >
+          オプション1
+        </label>
+      </div>
+    </div>
+    <div
+      class="flex flex-row gap-6 flex-wrap"
+    >
+      <div
+        class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
+      >
+        <input
+          aria-invalid="false"
+          class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          id="test-option2"
+          name="test"
+          type="radio"
+        />
+        <label
+          class="text-gray-700 font-medium"
+          for="test-option2"
+        >
+          オプション2
+        </label>
+      </div>
+    </div>
+    <div
+      class="flex flex-row gap-6 flex-wrap"
+    >
+      <div
+        class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
+      >
+        <input
+          aria-invalid="false"
+          class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          id="test-option3"
+          name="test"
+          type="radio"
+        />
+        <label
+          class="text-gray-700 font-medium"
+          for="test-option3"
+        >
+          オプション3
+        </label>
+      </div>
+    </div>
+  </div>
+</fieldset>
+`;
+
+exports[`RadioGroup > スナップショット > value 選択済みの HTML 構造 1`] = `
+<fieldset
+  aria-invalid="false"
+  class="bg-white rounded-lg p-4 shadow-sm disabled:cursor-not-allowed border border-gray-200 focus-within:ring-2 focus-within:ring-blue-200"
+>
+  <div
+    class="flex flex-col space-y-3"
+  >
+    <div
+      class="flex flex-row gap-6 flex-wrap"
+    >
+      <div
+        class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
+      >
+        <input
+          aria-invalid="false"
+          class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          id="test-option1"
+          name="test"
+          type="radio"
+        />
+        <label
+          class="text-gray-700 font-medium"
+          for="test-option1"
+        >
+          オプション1
+        </label>
+      </div>
+    </div>
+    <div
+      class="flex flex-row gap-6 flex-wrap"
+    >
+      <div
+        class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
+      >
+        <input
+          aria-invalid="false"
+          checked=""
+          class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          id="test-option2"
+          name="test"
+          type="radio"
+        />
+        <label
+          class="text-gray-700 font-medium"
+          for="test-option2"
+        >
+          オプション2
+        </label>
+      </div>
+    </div>
+    <div
+      class="flex flex-row gap-6 flex-wrap"
+    >
+      <div
+        class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
+      >
+        <input
+          aria-invalid="false"
+          class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          id="test-option3"
+          name="test"
+          type="radio"
+        />
+        <label
+          class="text-gray-700 font-medium"
+          for="test-option3"
+        >
+          オプション3
+        </label>
+      </div>
+    </div>
+  </div>
+</fieldset>
+`;
+
+exports[`RadioGroup > スナップショット > 基本形の HTML 構造 1`] = `
+<fieldset
+  aria-invalid="false"
+  class="bg-white rounded-lg p-4 shadow-sm disabled:cursor-not-allowed border border-gray-200 focus-within:ring-2 focus-within:ring-blue-200"
+>
+  <div
+    class="flex flex-col space-y-3"
+  >
+    <div
+      class="flex flex-row gap-6 flex-wrap"
+    >
+      <div
+        class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
+      >
+        <input
+          aria-invalid="false"
+          class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          id="test-option1"
+          name="test"
+          type="radio"
+        />
+        <label
+          class="text-gray-700 font-medium"
+          for="test-option1"
+        >
+          オプション1
+        </label>
+      </div>
+    </div>
+    <div
+      class="flex flex-row gap-6 flex-wrap"
+    >
+      <div
+        class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
+      >
+        <input
+          aria-invalid="false"
+          class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          id="test-option2"
+          name="test"
+          type="radio"
+        />
+        <label
+          class="text-gray-700 font-medium"
+          for="test-option2"
+        >
+          オプション2
+        </label>
+      </div>
+    </div>
+    <div
+      class="flex flex-row gap-6 flex-wrap"
+    >
+      <div
+        class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
+      >
+        <input
+          aria-invalid="false"
+          class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          id="test-option3"
+          name="test"
+          type="radio"
+        />
+        <label
+          class="text-gray-700 font-medium"
+          for="test-option3"
+        >
+          オプション3
+        </label>
+      </div>
+    </div>
+  </div>
+</fieldset>
+`;

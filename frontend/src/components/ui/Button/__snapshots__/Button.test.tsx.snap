@@ -1,0 +1,138 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Button > スナップショット > className の違い > カスタム className ありの HTML 構造 1`] = `
+<button
+  class="bg-blue-500 hover:bg-blue-600 transition-colors shadow-md px-3 py-1 rounded-lg text-white font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed custom-class"
+  type="button"
+>
+  新規登録
+</button>
+`;
+
+exports[`Button > スナップショット > disabled 状態の違い > disabled=true の HTML 構造 1`] = `
+<button
+  aria-disabled="true"
+  class="bg-blue-500 hover:bg-blue-600 transition-colors shadow-md px-3 py-1 rounded-lg text-white font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+  disabled=""
+  type="button"
+>
+  新規登録
+</button>
+`;
+
+exports[`Button > スナップショット > type 属性の違い > type="button" の HTML 構造 1`] = `
+<button
+  class="bg-blue-500 hover:bg-blue-600 transition-colors shadow-md px-3 py-1 rounded-lg text-white font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+  type="button"
+>
+  新規登録
+</button>
+`;
+
+exports[`Button > スナップショット > type 属性の違い > type="reset" の HTML 構造 1`] = `
+<button
+  class="bg-blue-500 hover:bg-blue-600 transition-colors shadow-md px-3 py-1 rounded-lg text-white font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+  type="reset"
+>
+  新規登録
+</button>
+`;
+
+exports[`Button > スナップショット > type 属性の違い > type="submit" の HTML 構造 1`] = `
+<button
+  class="bg-blue-500 hover:bg-blue-600 transition-colors shadow-md px-3 py-1 rounded-lg text-white font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+  type="submit"
+>
+  新規登録
+</button>
+`;
+
+exports[`Button > スナップショット > variant ごとの構造 > variant="Back" の HTML 構造 1`] = `
+<button
+  class="bg-gray-500 hover:bg-gray-600 transition-colors shadow-md px-3 py-1 rounded-lg text-white font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+  type="button"
+>
+  一覧に戻る
+</button>
+`;
+
+exports[`Button > スナップショット > variant ごとの構造 > variant="Create" の HTML 構造 1`] = `
+<button
+  class="bg-blue-500 hover:bg-blue-600 transition-colors shadow-md px-3 py-1 rounded-lg text-white font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+  type="button"
+>
+  新規登録
+</button>
+`;
+
+exports[`Button > スナップショット > variant ごとの構造 > variant="Delete" の HTML 構造 1`] = `
+<button
+  class="bg-red-500 hover:bg-red-600 transition-colors shadow-md px-3 py-1 rounded-lg text-white font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+  type="button"
+>
+  削除
+</button>
+`;
+
+exports[`Button > スナップショット > variant ごとの構造 > variant="Home" の HTML 構造 1`] = `
+<button
+  class="bg-gray-500 hover:bg-gray-600 transition-colors shadow-md px-3 py-1 rounded-lg text-white font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+  type="button"
+>
+  ホームに戻る
+</button>
+`;
+
+exports[`Button > スナップショット > variant ごとの構造 > variant="LastPage" の HTML 構造 1`] = `
+<button
+  class="bg-gray-500 hover:bg-gray-600 transition-colors shadow-md px-3 py-1 rounded-lg text-white font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+  type="button"
+>
+  戻る
+</button>
+`;
+
+exports[`Button > スナップショット > variant ごとの構造 > variant="Login" の HTML 構造 1`] = `
+<button
+  class="bg-blue-600 hover:bg-indigo-600 transition-colors shadow-md px-3 py-1 rounded-lg text-white font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+  type="button"
+>
+  ログイン
+</button>
+`;
+
+exports[`Button > スナップショット > variant ごとの構造 > variant="Read" の HTML 構造 1`] = `
+<button
+  class="bg-gray-500 hover:bg-gray-600 transition-colors shadow-md px-3 py-1 rounded-lg text-white font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+  type="button"
+>
+  参照
+</button>
+`;
+
+exports[`Button > スナップショット > variant ごとの構造 > variant="Retry" の HTML 構造 1`] = `
+<button
+  class="bg-slate-200 hover:bg-slate-300 transition-colors shadow-md px-3 py-1 rounded-lg text-white font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+  type="button"
+>
+  再試行
+</button>
+`;
+
+exports[`Button > スナップショット > variant ごとの構造 > variant="Search" の HTML 構造 1`] = `
+<button
+  class="bg-blue-400 hover:bg-blue-500 transition-colors shadow-md px-3 py-1 rounded-lg text-white font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+  type="button"
+>
+  検索
+</button>
+`;
+
+exports[`Button > スナップショット > variant ごとの構造 > variant="Update" の HTML 構造 1`] = `
+<button
+  class="bg-green-600 hover:bg-green-700 transition-colors shadow-md px-3 py-1 rounded-lg text-white font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+  type="button"
+>
+  更新
+</button>
+`;

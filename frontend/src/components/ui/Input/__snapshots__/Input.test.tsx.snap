@@ -1,0 +1,213 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Input > スナップショット > disabled の HTML 構造 1`] = `
+<div
+  class="flex flex-col space-y-1"
+>
+  <div
+    class="relative flex items-center"
+  >
+    <input
+      aria-invalid="false"
+      autocomplete="off"
+      class="w-full rounded-lg border-b transition-colors focus:outline-none focus:border-b-2 focus:border-indigo-500 focus:ring focus:ring-indigo-100 disabled:bg-gray-100 disabled:text-gray-400 placeholder:text-gray-400 border-gray-300"
+      disabled=""
+      id="test"
+    />
+  </div>
+</div>
+`;
+
+exports[`Input > スナップショット > error ありの HTML 構造 1`] = `
+<div
+  class="flex flex-col space-y-1"
+>
+  <div
+    class="relative flex items-center"
+  >
+    <input
+      aria-describedby="test-error"
+      aria-invalid="true"
+      autocomplete="off"
+      class="w-full rounded-lg border-b transition-colors focus:outline-none focus:border-b-2 focus:border-indigo-500 focus:ring focus:ring-indigo-100 disabled:bg-gray-100 disabled:text-gray-400 placeholder:text-gray-400 border-red-500"
+      id="test"
+    />
+  </div>
+  <div
+    class="text-red-500 text-sm ml-1"
+    id="test-error"
+    role="alert"
+  >
+    入力エラーです
+  </div>
+</div>
+`;
+
+exports[`Input > スナップショット > helperText ありの HTML 構造 1`] = `
+<div
+  class="flex flex-col space-y-1"
+>
+  <div
+    class="relative flex items-center"
+  >
+    <input
+      aria-describedby="test-help"
+      aria-invalid="false"
+      autocomplete="off"
+      class="w-full rounded-lg border-b transition-colors focus:outline-none focus:border-b-2 focus:border-indigo-500 focus:ring focus:ring-indigo-100 disabled:bg-gray-100 disabled:text-gray-400 placeholder:text-gray-400 border-gray-300"
+      id="test"
+    />
+  </div>
+  <div
+    class="text-gray-500 text-sm ml-1"
+    id="test-help"
+    role="note"
+  >
+    8文字以上
+  </div>
+</div>
+`;
+
+exports[`Input > スナップショット > label + required の HTML 構造 1`] = `
+<div
+  class="flex flex-col space-y-1"
+>
+  <label
+    class="text-sm font-medium text-gray-700"
+    for="test"
+  >
+    名前
+    <span
+      class="text-red-500 ml-1"
+    >
+      *
+    </span>
+  </label>
+  <div
+    class="relative flex items-center"
+  >
+    <input
+      aria-invalid="false"
+      aria-required="true"
+      autocomplete="off"
+      class="w-full rounded-lg border-b transition-colors focus:outline-none focus:border-b-2 focus:border-indigo-500 focus:ring focus:ring-indigo-100 disabled:bg-gray-100 disabled:text-gray-400 placeholder:text-gray-400 border-gray-300"
+      id="test"
+    />
+  </div>
+</div>
+`;
+
+exports[`Input > スナップショット > leftIcon + rightIcon の HTML 構造 1`] = `
+<div
+  class="flex flex-col space-y-1"
+>
+  <div
+    class="relative flex items-center"
+  >
+    <div
+      class="absolute left-0 flex items-center pointer-events-none text-gray-400"
+    >
+      <span>
+        🔍
+      </span>
+    </div>
+    <input
+      aria-invalid="false"
+      autocomplete="off"
+      class="w-full rounded-lg border-b transition-colors focus:outline-none focus:border-b-2 focus:border-indigo-500 focus:ring focus:ring-indigo-100 disabled:bg-gray-100 disabled:text-gray-400 placeholder:text-gray-400 border-gray-300 pl-6 pr-6"
+    />
+    <div
+      class="absolute right-0 flex items-center text-gray-400"
+    >
+      <span>
+        👁️
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Input > スナップショット > type="email" の HTML 構造 1`] = `
+<div
+  class="flex flex-col space-y-1"
+>
+  <div
+    class="relative flex items-center"
+  >
+    <input
+      aria-invalid="false"
+      autocomplete="off"
+      class="w-full rounded-lg border-b transition-colors focus:outline-none focus:border-b-2 focus:border-indigo-500 focus:ring focus:ring-indigo-100 disabled:bg-gray-100 disabled:text-gray-400 placeholder:text-gray-400 border-gray-300"
+      type="email"
+    />
+  </div>
+</div>
+`;
+
+exports[`Input > スナップショット > type="number" の HTML 構造 1`] = `
+<div
+  class="flex flex-col space-y-1"
+>
+  <div
+    class="relative flex items-center"
+  >
+    <input
+      aria-invalid="false"
+      autocomplete="off"
+      class="w-full rounded-lg border-b transition-colors focus:outline-none focus:border-b-2 focus:border-indigo-500 focus:ring focus:ring-indigo-100 disabled:bg-gray-100 disabled:text-gray-400 placeholder:text-gray-400 border-gray-300"
+      type="number"
+    />
+  </div>
+</div>
+`;
+
+exports[`Input > スナップショット > type="password" の HTML 構造 1`] = `
+<div
+  class="flex flex-col space-y-1"
+>
+  <div
+    class="relative flex items-center"
+  >
+    <input
+      aria-invalid="false"
+      autocomplete="off"
+      class="w-full rounded-lg border-b transition-colors focus:outline-none focus:border-b-2 focus:border-indigo-500 focus:ring focus:ring-indigo-100 disabled:bg-gray-100 disabled:text-gray-400 placeholder:text-gray-400 border-gray-300"
+      type="password"
+    />
+  </div>
+</div>
+`;
+
+exports[`Input > スナップショット > type="text" の HTML 構造 1`] = `
+<div
+  class="flex flex-col space-y-1"
+>
+  <div
+    class="relative flex items-center"
+  >
+    <input
+      aria-invalid="false"
+      autocomplete="off"
+      class="w-full rounded-lg border-b transition-colors focus:outline-none focus:border-b-2 focus:border-indigo-500 focus:ring focus:ring-indigo-100 disabled:bg-gray-100 disabled:text-gray-400 placeholder:text-gray-400 border-gray-300"
+      type="text"
+    />
+  </div>
+</div>
+`;
+
+exports[`Input > スナップショット > 基本形の HTML 構造 1`] = `
+<div
+  class="flex flex-col space-y-1"
+>
+  <div
+    class="relative flex items-center"
+  >
+    <input
+      aria-invalid="false"
+      autocomplete="off"
+      class="w-full rounded-lg border-b transition-colors focus:outline-none focus:border-b-2 focus:border-indigo-500 focus:ring focus:ring-indigo-100 disabled:bg-gray-100 disabled:text-gray-400 placeholder:text-gray-400 border-gray-300"
+      id="test"
+    />
+  </div>
+</div>
+`;

@@ -1,0 +1,101 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Radio > スナップショット > checked 状態の HTML 構造 1`] = `
+<div
+  class="flex items-center space-x-2"
+>
+  <input
+    aria-invalid="false"
+    checked=""
+    class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+    type="radio"
+  />
+</div>
+`;
+
+exports[`Radio > スナップショット > disabled の HTML 構造 1`] = `
+<div
+  class="flex items-center space-x-2"
+>
+  <input
+    aria-invalid="false"
+    class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+    disabled=""
+    type="radio"
+  />
+</div>
+`;
+
+exports[`Radio > スナップショット > error ありの HTML 構造 1`] = `
+<div
+  class="flex items-center space-x-2"
+>
+  <input
+    aria-describedby="test-error"
+    aria-invalid="true"
+    class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+    id="test"
+    type="radio"
+  />
+  <div
+    class="text-red-500 text-sm ml-1"
+    id="test-error"
+    role="alert"
+  >
+    選択してください
+  </div>
+</div>
+`;
+
+exports[`Radio > スナップショット > helperText ありの HTML 構造 1`] = `
+<div
+  class="flex items-center space-x-2"
+>
+  <input
+    aria-describedby="test-help"
+    aria-invalid="false"
+    class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+    id="test"
+    type="radio"
+  />
+  <div
+    class="text-gray-500 text-sm ml-1"
+    id="test-help"
+    role="note"
+  >
+    推奨オプション
+  </div>
+</div>
+`;
+
+exports[`Radio > スナップショット > label ありの HTML 構造 1`] = `
+<div
+  class="flex items-center space-x-2"
+>
+  <input
+    aria-invalid="false"
+    class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+    id="test"
+    type="radio"
+  />
+  <label
+    class="text-gray-700 font-medium"
+    for="test"
+  >
+    オプション1
+  </label>
+</div>
+`;
+
+exports[`Radio > スナップショット > 基本形の HTML 構造 1`] = `
+<div
+  class="flex items-center space-x-2"
+>
+  <input
+    aria-invalid="false"
+    class="border rounded-sm accent-blue-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+    id="test"
+    type="radio"
+  />
+</div>
+`;

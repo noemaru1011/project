@@ -1,0 +1,101 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Textarea > スナップショット > disabled の HTML 構造 1`] = `
+<div
+  class="flex flex-col space-y-1 w-full"
+>
+  <textarea
+    aria-invalid="false"
+    class="w-full min-h-[100px] px-3 py-2 rounded-lg border bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:bg-gray-100 disabled:text-gray-400 transition duration-200 ease-in-out border-gray-300"
+    disabled=""
+    id="test"
+  />
+</div>
+`;
+
+exports[`Textarea > スナップショット > error ありの HTML 構造 1`] = `
+<div
+  class="flex flex-col space-y-1 w-full"
+>
+  <textarea
+    aria-describedby="test-error"
+    aria-invalid="true"
+    class="w-full min-h-[100px] px-3 py-2 rounded-lg border bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:bg-gray-100 disabled:text-gray-400 transition duration-200 ease-in-out border-red-500 focus:ring-red-500 focus:border-red-500"
+    id="test"
+  />
+  <p
+    class="text-sm text-red-500 mt-1"
+    id="test-error"
+  >
+    入力エラーです
+  </p>
+</div>
+`;
+
+exports[`Textarea > スナップショット > helperText ありの HTML 構造 1`] = `
+<div
+  class="flex flex-col space-y-1 w-full"
+>
+  <textarea
+    aria-describedby="test-help"
+    aria-invalid="false"
+    class="w-full min-h-[100px] px-3 py-2 rounded-lg border bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:bg-gray-100 disabled:text-gray-400 transition duration-200 ease-in-out border-gray-300"
+    id="test"
+  />
+  <p
+    class="text-gray-500 text-sm ml-1"
+    id="test-help"
+  >
+    200文字以内
+  </p>
+</div>
+`;
+
+exports[`Textarea > スナップショット > label + required の HTML 構造 1`] = `
+<div
+  class="flex flex-col space-y-1 w-full"
+>
+  <label
+    class="text-sm font-medium text-gray-700"
+    for="test"
+  >
+    コメント
+     
+    <span
+      class="text-red-500"
+    >
+      *
+    </span>
+  </label>
+  <textarea
+    aria-invalid="false"
+    aria-required="true"
+    class="w-full min-h-[100px] px-3 py-2 rounded-lg border bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:bg-gray-100 disabled:text-gray-400 transition duration-200 ease-in-out border-gray-300"
+    id="test"
+  />
+</div>
+`;
+
+exports[`Textarea > スナップショット > rows 指定の HTML 構造 1`] = `
+<div
+  class="flex flex-col space-y-1 w-full"
+>
+  <textarea
+    aria-invalid="false"
+    class="w-full min-h-[100px] px-3 py-2 rounded-lg border bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:bg-gray-100 disabled:text-gray-400 transition duration-200 ease-in-out border-gray-300"
+    rows="10"
+  />
+</div>
+`;
+
+exports[`Textarea > スナップショット > 基本形の HTML 構造 1`] = `
+<div
+  class="flex flex-col space-y-1 w-full"
+>
+  <textarea
+    aria-invalid="false"
+    class="w-full min-h-[100px] px-3 py-2 rounded-lg border bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:bg-gray-100 disabled:text-gray-400 transition duration-200 ease-in-out border-gray-300"
+    id="test"
+  />
+</div>
+`;

@@ -1,0 +1,101 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Checkbox > スナップショット > checked 状態の HTML 構造 1`] = `
+<div
+  class="flex items-center space-x-2"
+>
+  <input
+    aria-invalid="false"
+    checked=""
+    class="w-5 h-5 rounded-md accent-indigo-600 border-gray-300 hover:border-indigo-400 disabled:bg-gray-100 disabled:border-gray-200 disabled:cursor-not-allowed transition-colors duration-200"
+    type="checkbox"
+  />
+</div>
+`;
+
+exports[`Checkbox > スナップショット > disabled の HTML 構造 1`] = `
+<div
+  class="flex items-center space-x-2"
+>
+  <input
+    aria-invalid="false"
+    class="w-5 h-5 rounded-md accent-indigo-600 border-gray-300 hover:border-indigo-400 disabled:bg-gray-100 disabled:border-gray-200 disabled:cursor-not-allowed transition-colors duration-200"
+    disabled=""
+    type="checkbox"
+  />
+</div>
+`;
+
+exports[`Checkbox > スナップショット > error ありの HTML 構造 1`] = `
+<div
+  class="flex items-center space-x-2"
+>
+  <input
+    aria-describedby="test-error"
+    aria-invalid="true"
+    class="w-5 h-5 rounded-md accent-indigo-600 border-gray-300 hover:border-indigo-400 disabled:bg-gray-100 disabled:border-gray-200 disabled:cursor-not-allowed transition-colors duration-200"
+    id="test"
+    type="checkbox"
+  />
+  <div
+    class="text-red-500 text-sm ml-1"
+    id="test-error"
+    role="alert"
+  >
+    この項目は必須です
+  </div>
+</div>
+`;
+
+exports[`Checkbox > スナップショット > helperText ありの HTML 構造 1`] = `
+<div
+  class="flex items-center space-x-2"
+>
+  <input
+    aria-describedby="test-help"
+    aria-invalid="false"
+    class="w-5 h-5 rounded-md accent-indigo-600 border-gray-300 hover:border-indigo-400 disabled:bg-gray-100 disabled:border-gray-200 disabled:cursor-not-allowed transition-colors duration-200"
+    id="test"
+    type="checkbox"
+  />
+  <div
+    class="text-gray-500 text-sm ml-1"
+    id="test-help"
+    role="note"
+  >
+    任意の項目です
+  </div>
+</div>
+`;
+
+exports[`Checkbox > スナップショット > label ありの HTML 構造 1`] = `
+<div
+  class="flex items-center space-x-2"
+>
+  <input
+    aria-invalid="false"
+    class="w-5 h-5 rounded-md accent-indigo-600 border-gray-300 hover:border-indigo-400 disabled:bg-gray-100 disabled:border-gray-200 disabled:cursor-not-allowed transition-colors duration-200"
+    id="test"
+    type="checkbox"
+  />
+  <label
+    class="text-gray-700 font-medium select-none"
+    for="test"
+  >
+    同意する
+  </label>
+</div>
+`;
+
+exports[`Checkbox > スナップショット > 基本形の HTML 構造 1`] = `
+<div
+  class="flex items-center space-x-2"
+>
+  <input
+    aria-invalid="false"
+    class="w-5 h-5 rounded-md accent-indigo-600 border-gray-300 hover:border-indigo-400 disabled:bg-gray-100 disabled:border-gray-200 disabled:cursor-not-allowed transition-colors duration-200"
+    id="test"
+    type="checkbox"
+  />
+</div>
+`;
