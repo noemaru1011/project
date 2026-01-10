@@ -1,9 +1,28 @@
 import { Request, Response, NextFunction } from 'express';
 import { APIMESSAGE } from '@shared/apiMessage';
+import { tokenBlacklist } from '@/utils/tokenBlacklist';
+import jwt from 'jsonwebtoken';
 
 export const LogoutController = {
-  logout(_req: Request, res: Response, next: NextFunction) {
+  async logout(req: Request, res: Response, next: NextFunction) {
     try {
+      const token = req.cookies.token;
+
+      if (token) {
+        // トークンをデコードして有効期限(exp)を取得
+        const decoded = jwt.decode(token) as { exp?: number };
+
+        if (decoded?.exp) {
+          const now = Math.floor(Date.now() / 1000);
+          const expiresIn = decoded.exp - now;
+
+          if (expiresIn > 0) {
+            // Redisのブラックリストに追加
+            await tokenBlacklist.add(token, expiresIn);
+          }
+        }
+      }
+
       res.clearCookie('token', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',

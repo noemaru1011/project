@@ -18,14 +18,15 @@ export const authMiddleware = async (req: Request, _res: Response, next: NextFun
       throw new Error('JWT_SECRET is not defined');
     }
     const payload = jwt.verify(token, JWT_SECRET) as JwtPayload;
+
+    // ブラックリストチェック
+    if (await tokenBlacklist.isBlacklisted(token)) {
+      return next(new TokenError());
+    }
+
     req.user = payload;
     next();
   } catch {
-    return next(new TokenError());
-  }
-
-  // ブラックリストチェック
-  if (await tokenBlacklist.isBlacklisted(token)) {
     return next(new TokenError());
   }
 };
