@@ -80,30 +80,19 @@ export const HistoryRepository = {
     });
   },
 
-  async searchByStartTimeHistories(query?: Date) {
+  async searchByStartTimeHistories(query: Date) {
     return prisma.history.findMany({
       where: {
         validFlag: true,
         student: {
           deleteFlag: false,
         },
-        ...(query
-          ? {
-              startTime: {
-                lte: query, // 開始時刻 <= query
-              },
-              OR: [
-                {
-                  endTime: {
-                    gte: query, // 終了時刻 >= query
-                  },
-                },
-                {
-                  endTime: null,
-                },
-              ],
-            }
-          : {}),
+        startTime: {
+          lte: query, // 開始時刻 <= query
+        },
+        endTime: {
+          gte: query, // 終了時刻 >= query
+        },
       },
       select: {
         statusId: true,

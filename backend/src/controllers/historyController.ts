@@ -17,13 +17,12 @@ export const HistoryController = {
   async searchByStartTimeHistories(req: Request, res: Response, next: NextFunction) {
     try {
       const datetimeStr = req.query.datetime as string; // ?datetime=2026-01-08T14:30
-      let query: Date | undefined;
-
-      if (datetimeStr) {
-        query = new Date(datetimeStr);
-        if (isNaN(query.getTime())) {
-          return res.status(400).json({ message: APIMESSAGE.INVALID_DATETIME });
-        }
+      if (!datetimeStr) {
+        return res.status(400).json({ message: APIMESSAGE.INVALID_DATETIME });
+      }
+      const query = new Date(datetimeStr);
+      if (isNaN(query.getTime())) {
+        return res.status(400).json({ message: APIMESSAGE.INVALID_DATETIME });
       }
 
       const histories = await HistoryService.searchByStartTimeHistories(query);
