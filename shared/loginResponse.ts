@@ -1,4 +1,4 @@
-import type { Role } from '@shared/role';
+import type { Role } from "./role";
 
 //拡張可能
 

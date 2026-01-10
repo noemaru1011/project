@@ -2,7 +2,7 @@ import { api } from '@/api/api';
 import Cookies from 'js-cookie';
 import type { LoginForm } from '@shared/schemas/login';
 import { API_ROUTES } from '@shared/routes/routes';
-import type { LoginResponse } from '@/features/auth/types';
+import type { LoginResponse } from '@shared/loginResponse';
 import type { PasswordForm } from '@shared/schemas/password';
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 

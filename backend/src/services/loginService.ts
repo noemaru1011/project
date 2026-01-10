@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import { InvalidCredentialsError } from '@/errors/authError';
 import { jwtUtil } from '@/utils/jwt';
 import { ROLE } from '@shared/role';
-import type { LoginResponse } from '@/types/loginResponse';
+import type { LoginResponse } from '@shared/loginResponse';
 import { isPasswordUpdateRequired } from '@/utils/isPasswordUpdateRequired';
 import { StudentRepository } from '@/repositories/studentRepository';
 import { AdminRepository } from '@/repositories/adminRepository';
