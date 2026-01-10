@@ -15,7 +15,25 @@ export const HistoryIndexPage = () => {
 
   const handleSearch = async (query: StudentQueryForm) => {
     try {
-      searchHistories(query);
+      const res = await searchHistories(query);
+      if (res?.message) {
+        toast.success(res.message);
+      }
+    } catch (err) {
+      const error = handleApiError(err);
+      toast.error(error.message);
+      if (error.redirectTo) {
+        navigate(error.redirectTo);
+      }
+    }
+  };
+
+  const handleTimeSearch = async (query: string) => {
+    try {
+      const res = await searchHistoriesByTime(query);
+      if (res?.message) {
+        toast.success(res.message);
+      }
     } catch (err) {
       const error = handleApiError(err);
       toast.error(error.message);
@@ -28,7 +46,7 @@ export const HistoryIndexPage = () => {
   return (
     <div className="p-4 mx-auto max-w-4xl">
       <h2 className="text-2xl font-bold text-gray-800 text-center">履歴一覧</h2>
-      <HitorySearchForm onSearch={searchHistoriesByTime} loading={timeSearching} />
+      <HitorySearchForm onSearch={handleTimeSearch} loading={timeSearching} />
       <StudentSearchForm onSearch={handleSearch} loading={loading} />
       <HistoryTable data={data} loading={loading} />
     </div>

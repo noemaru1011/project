@@ -11,6 +11,7 @@ export function useSearch<T, Query = void>(searchFn: (query: Query) => Promise<A
     try {
       const res = await searchFn(query);
       setData(res.data ?? []);
+      return res;
     } finally {
       end();
     }
