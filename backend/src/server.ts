@@ -39,6 +39,9 @@ setInterval(() => {
 }, 30_000);
 
 // ===== サーバー起動 =====
-app.listen(PORT, () => {
+const HOST = process.env.BACK_HOST || '0.0.0.0';
+
+app.listen(PORT, HOST, () => {
   logger.info(`Backend running: ${process.env.BACK_URL}`);
+  logger.info(`Listening on ${HOST}:${PORT}`);
 });
