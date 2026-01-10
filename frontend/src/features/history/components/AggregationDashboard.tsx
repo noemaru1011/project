@@ -113,31 +113,25 @@ export const AggregationDashboard = ({ data }: Props) => {
     });
   }, [data, departments, statuses]);
 
-  if (!orgNodes.length && !deptGradeNodes.length) return null;
-
   return (
     <div className="space-y-12 mt-8">
-      {orgNodes.length > 0 && (
-        <div>
-          <h3 className="text-xl font-bold text-gray-800 mb-4 px-4 border-l-4 border-indigo-600">
-            組織別集計
-          </h3>
-          <div className="px-4">
-            <HierarchyCountTable data={orgNodes} statuses={statuses} />
-          </div>
+      <div>
+        <h3 className="text-xl font-bold text-gray-800 mb-4 px-4 border-l-4 border-indigo-600">
+          組織別集計
+        </h3>
+        <div className="px-4">
+          <HierarchyCountTable data={orgNodes} statuses={statuses} />
         </div>
-      )}
+      </div>
 
-      {deptGradeNodes.length > 0 && (
-        <div>
-          <h3 className="text-xl font-bold text-gray-800 mb-4 px-4 border-l-4 border-indigo-600">
-            学科・学年別集計
-          </h3>
-          <div className="px-4">
-            <HierarchyCountTable data={deptGradeNodes} statuses={statuses} />
-          </div>
+      <div>
+        <h3 className="text-xl font-bold text-gray-800 mb-4 px-4 border-l-4 border-indigo-600">
+          学科・学年別集計
+        </h3>
+        <div className="px-4">
+          <HierarchyCountTable data={deptGradeNodes} statuses={statuses} />
         </div>
-      )}
+      </div>
     </div>
   );
 };

@@ -1,11 +1,9 @@
 import { PlusCircle, ListCheck } from 'lucide-react';
 import organization from '@/assets/organization.svg';
-import { Dashboard } from '@/mock/Dashboard';
 
 export const HomePage = () => {
   return (
     <section className="py-12 px-4 sm:px-6 lg:px-8">
-      <Dashboard />
       <div className="max-w-4xl mx-auto">
         <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center sm:text-left">
           学生履歴管理システムの概要

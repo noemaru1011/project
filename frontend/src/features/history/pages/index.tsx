@@ -20,9 +20,7 @@ export const HistoryIndexPage = () => {
   const handleSearch = async (query: StudentQueryForm) => {
     try {
       const res = await searchHistories(query);
-      if (res?.message) {
-        toast.success(res.message);
-      }
+      toast.info(res.message);
     } catch (err) {
       const error = handleApiError(err);
       toast.error(error.message);
@@ -35,9 +33,7 @@ export const HistoryIndexPage = () => {
   const handleTimeSearch = async (query: string) => {
     try {
       const res = await searchHistoriesByTime(query);
-      if (res?.message) {
-        toast.success(res.message);
-      }
+      toast.info(res.message);
     } catch (err) {
       const error = handleApiError(err);
       toast.error(error.message);
