@@ -1,31 +1,6 @@
 export const ROUTES = {
   HOME: '/',
 
-  // 大分類マスタ
-  CATEGORY: {
-    INDEX: '/categories',
-  },
-
-  //中分類マスタ
-  SUBCATEGORY: {
-    INDEX: '/sub-categories',
-  },
-
-  //小分類マスタ
-  MINORCATEGORY: {
-    INDEX: '/minor-categories',
-  },
-
-  //状態区分
-  STATUS: {
-    INDEX: '/statuses',
-  },
-
-  //学科マスタ
-  DEPARTMENT: {
-    INDEX: '/departments',
-  },
-
   // 学生マスタ
   STUDENT: {
     INDEX: '/students',

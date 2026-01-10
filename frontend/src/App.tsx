@@ -5,11 +5,6 @@ import { ROUTES } from '@/routes/routes';
 import { BaseLayout } from '@/components/layouts/BaseLayout';
 import { Login } from '@/features/auth/pages/login';
 import { HomePage } from '@/pages/home/homePage';
-import { CategoryIndexPage } from '@/features/category/pages';
-import { SubCategoryIndexPage } from '@/features/subCategory/pages';
-import { MinorCategoryIndexPage } from '@/features/minorCategory/pages';
-import { DepartmentIndexPage } from '@/features/department/pages';
-import { StatusIndexPage } from '@/features/status/pages';
 import { StudentIndexPage } from '@/features/student/pages/';
 import { StudentCreatePage } from '@/features/student/pages/create';
 import { StudentUpdatePage } from '@/features/student/pages/update';
@@ -44,11 +39,6 @@ const AppRoutes = () => (
       <Route path={ROUTES.AUTH.PASSWORD_CHANGE} element={<ChangePassword />} />
 
       {/* aminのみ*/}
-      <Route path={ROUTES.STATUS.INDEX} element={<StatusIndexPage />} />
-      <Route path={ROUTES.CATEGORY.INDEX} element={<CategoryIndexPage />} />
-      <Route path={ROUTES.SUBCATEGORY.INDEX} element={<SubCategoryIndexPage />} />
-      <Route path={ROUTES.MINORCATEGORY.INDEX} element={<MinorCategoryIndexPage />} />
-      <Route path={ROUTES.DEPARTMENT.INDEX} element={<DepartmentIndexPage />} />
       <Route path={ROUTES.STUDENT.INDEX} element={<StudentIndexPage />} />
       <Route path={ROUTES.STUDENT.CREATE} element={<StudentCreatePage />} />
       <Route path={ROUTES.STUDENT.UPDATE()} element={<StudentUpdatePage />} />
