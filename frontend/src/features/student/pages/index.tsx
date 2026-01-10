@@ -15,9 +15,7 @@ export const StudentIndexPage = () => {
   const handleSearch = async (query: StudentQueryForm) => {
     try {
       const res = await searchStudents(query);
-      if (res?.message) {
-        toast.success(res.message);
-      }
+      toast.info(res.message);
     } catch (err) {
       const error = handleApiError(err);
       toast.error(error.message);

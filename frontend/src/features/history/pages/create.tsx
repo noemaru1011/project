@@ -24,7 +24,7 @@ export const HistoryCreatePage = () => {
   const onSubmit = async (data: HistoryForm) => {
     try {
       const res = await createHistory(data);
-      toast.success(res!.message);
+      toast.success(res.message);
       navigate(ROUTES.HISTORY.INDEX);
     } catch (err) {
       const error = handleApiError(err);
@@ -38,9 +38,7 @@ export const HistoryCreatePage = () => {
   const handleSearch = async (query: StudentQueryForm) => {
     try {
       const res = await searchStudents(query);
-      if (res?.message) {
-        toast.success(res.message);
-      }
+      toast.info(res.message);
     } catch (err) {
       const error = handleApiError(err);
       toast.error(error.message);

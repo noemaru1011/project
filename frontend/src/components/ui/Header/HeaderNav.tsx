@@ -37,14 +37,14 @@ export const HeaderNav = ({
                     onClick={actionHandlers[opt.action!]}
                     disabled={loading}
                     aria-busy={loading}
-                    className={`font-bold mb-2 sm:mb-0 cursor-pointer ${spacing}`}
+                    className={`font-bold mb-2 sm:mb-0 cursor-pointer transition-colors rounded-lg  transition-colors hover:bg-gray-300 ${spacing}`}
                   >
                     {opt.label}
                   </button>
                 ) : (
                   <Link
                     to={opt.to}
-                    className={`font-bold mb-2 sm:mb-0 ${spacing}`}
+                    className={`font-bold mb-2 sm:mb-0 transition-colors rounded-lg  transition-colors hover:bg-gray-300 ${spacing}`}
                     aria-current={opt.to ? 'page' : undefined}
                   >
                     {opt.label}
@@ -52,7 +52,7 @@ export const HeaderNav = ({
                       <AlertCircle
                         aria-label="パスワード変更が推奨されています"
                         role="img"
-                        className="inline-block ml-1 text-red-500"
+                        className="inline-block ml-1 text-red-500 "
                         size={16}
                       />
                     )}
