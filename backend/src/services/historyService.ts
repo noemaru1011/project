@@ -51,7 +51,7 @@ export const HistoryService = {
     }));
   },
 
-  async searchByStartTimeHistories(query: Date) {
+  async searchByStartTimeHistories(query?: Date) {
     console.log(query);
     const histories = await HistoryRepository.searchByStartTimeHistories(query);
     const historiesMapped = histories.map((h) => ({
