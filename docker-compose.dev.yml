@@ -58,8 +58,9 @@ services:
     env_file:
       - envs/.env.dev
     volumes:
-      - ./frontend:/app
-      - /app/node_modules
+      - ./frontend:/app/frontend
+      - ./shared:/app/shared
+      - /app/frontend/node_modules
     depends_on:
       - backend
 
