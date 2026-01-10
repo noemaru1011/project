@@ -20,6 +20,7 @@ exports[`RadioGroup > スナップショット > column=2 の HTML 構造 1`] = 
           id="test-option1"
           name="test"
           type="radio"
+          value="option1"
         />
         <label
           class="text-gray-700 font-medium"
@@ -37,6 +38,7 @@ exports[`RadioGroup > スナップショット > column=2 の HTML 構造 1`] = 
           id="test-option2"
           name="test"
           type="radio"
+          value="option2"
         />
         <label
           class="text-gray-700 font-medium"
@@ -58,6 +60,7 @@ exports[`RadioGroup > スナップショット > column=2 の HTML 構造 1`] = 
           id="test-option3"
           name="test"
           type="radio"
+          value="option3"
         />
         <label
           class="text-gray-700 font-medium"
@@ -93,6 +96,7 @@ exports[`RadioGroup > スナップショット > disabled の HTML 構造 1`] = 
           id="test-option1"
           name="test"
           type="radio"
+          value="option1"
         />
         <label
           class="text-gray-700 font-medium"
@@ -115,6 +119,7 @@ exports[`RadioGroup > スナップショット > disabled の HTML 構造 1`] = 
           id="test-option2"
           name="test"
           type="radio"
+          value="option2"
         />
         <label
           class="text-gray-700 font-medium"
@@ -137,6 +142,7 @@ exports[`RadioGroup > スナップショット > disabled の HTML 構造 1`] = 
           id="test-option3"
           name="test"
           type="radio"
+          value="option3"
         />
         <label
           class="text-gray-700 font-medium"
@@ -171,6 +177,7 @@ exports[`RadioGroup > スナップショット > error ありの HTML 構造 1`]
           id="test-option1"
           name="test"
           type="radio"
+          value="option1"
         />
         <label
           class="text-gray-700 font-medium"
@@ -192,6 +199,7 @@ exports[`RadioGroup > スナップショット > error ありの HTML 構造 1`]
           id="test-option2"
           name="test"
           type="radio"
+          value="option2"
         />
         <label
           class="text-gray-700 font-medium"
@@ -213,6 +221,7 @@ exports[`RadioGroup > スナップショット > error ありの HTML 構造 1`]
           id="test-option3"
           name="test"
           type="radio"
+          value="option3"
         />
         <label
           class="text-gray-700 font-medium"
@@ -264,6 +273,7 @@ exports[`RadioGroup > スナップショット > label + required の HTML 構�
           id="test-option1"
           name="test"
           type="radio"
+          value="option1"
         />
         <label
           class="text-gray-700 font-medium"
@@ -285,6 +295,7 @@ exports[`RadioGroup > スナップショット > label + required の HTML 構�
           id="test-option2"
           name="test"
           type="radio"
+          value="option2"
         />
         <label
           class="text-gray-700 font-medium"
@@ -306,6 +317,7 @@ exports[`RadioGroup > スナップショット > label + required の HTML 構�
           id="test-option3"
           name="test"
           type="radio"
+          value="option3"
         />
         <label
           class="text-gray-700 font-medium"
@@ -339,6 +351,7 @@ exports[`RadioGroup > スナップショット > value 選択済みの HTML 構�
           id="test-option1"
           name="test"
           type="radio"
+          value="option1"
         />
         <label
           class="text-gray-700 font-medium"
@@ -361,6 +374,7 @@ exports[`RadioGroup > スナップショット > value 選択済みの HTML 構�
           id="test-option2"
           name="test"
           type="radio"
+          value="option2"
         />
         <label
           class="text-gray-700 font-medium"
@@ -382,6 +396,7 @@ exports[`RadioGroup > スナップショット > value 選択済みの HTML 構�
           id="test-option3"
           name="test"
           type="radio"
+          value="option3"
         />
         <label
           class="text-gray-700 font-medium"
@@ -415,6 +430,7 @@ exports[`RadioGroup > スナップショット > 基本形の HTML 構造 1`] = 
           id="test-option1"
           name="test"
           type="radio"
+          value="option1"
         />
         <label
           class="text-gray-700 font-medium"
@@ -436,6 +452,7 @@ exports[`RadioGroup > スナップショット > 基本形の HTML 構造 1`] = 
           id="test-option2"
           name="test"
           type="radio"
+          value="option2"
         />
         <label
           class="text-gray-700 font-medium"
@@ -457,6 +474,7 @@ exports[`RadioGroup > スナップショット > 基本形の HTML 構造 1`] = 
           id="test-option3"
           name="test"
           type="radio"
+          value="option3"
         />
         <label
           class="text-gray-700 font-medium"
