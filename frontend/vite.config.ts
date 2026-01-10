@@ -13,6 +13,9 @@ export default defineConfig({
       '@shared': path.resolve(__dirname, '../shared'),
     },
   },
+  optimizeDeps: {
+    exclude: ['zod'],
+  },
   test: {
     globals: true,
     environment: 'jsdom',
