@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toast } from '@/components/ui/Toast/Toast';
 import { ROUTES } from '@/routes/routes';
+import { PageGuard } from '@/components/layouts/PageGuard';
 
 import { BaseLayout } from '@/components/layouts/BaseLayout';
 import { Login } from '@/features/auth/pages/login';
@@ -30,17 +31,59 @@ const AppRoutes = () => (
       <Route path={ROUTES.ERROR.NOTFOUND} element={<NotFoundPage />} />
 
       {/* 共通画面*/}
-      <Route path={ROUTES.HOME} element={<HomePage />} />
-      <Route path={ROUTES.HISTORY.CREATE} element={<HistoryCreatePage />} />
-      <Route path={ROUTES.HISTORY.INDEX} element={<HistoryIndexPage />} />
+      <Route
+        path={ROUTES.HOME}
+        element={
+          <PageGuard allowedRoles={['ADMIN', 'STUDENT']}>
+            <HomePage />
+          </PageGuard>
+        }
+      />
+      <Route
+        path={ROUTES.HISTORY.INDEX}
+        element={
+          <PageGuard allowedRoles={['ADMIN', 'STUDENT']}>
+            <HistoryIndexPage />
+          </PageGuard>
+        }
+      />
+      <Route
+        path={ROUTES.HISTORY.CREATE}
+        element={
+          <PageGuard allowedRoles={['ADMIN', 'STUDENT']}>
+            <HistoryCreatePage />
+          </PageGuard>
+        }
+      />
       <Route path={ROUTES.HISTORY.UPDATE()} element={<HistoryUpdatePage />} />
       <Route path={ROUTES.HISTORY.DELETE()} element={<HistoryDeletePage />} />
       {/* 学生のみ */}
-      <Route path={ROUTES.AUTH.PASSWORD_CHANGE} element={<ChangePassword />} />
+      <Route
+        path={ROUTES.AUTH.PASSWORD_CHANGE}
+        element={
+          <PageGuard allowedRoles={['STUDENT']}>
+            <ChangePassword />
+          </PageGuard>
+        }
+      />
 
       {/* aminのみ*/}
-      <Route path={ROUTES.STUDENT.INDEX} element={<StudentIndexPage />} />
-      <Route path={ROUTES.STUDENT.CREATE} element={<StudentCreatePage />} />
+      <Route
+        path={ROUTES.STUDENT.INDEX}
+        element={
+          <PageGuard allowedRoles={['ADMIN']}>
+            <StudentIndexPage />
+          </PageGuard>
+        }
+      />
+      <Route
+        path={ROUTES.STUDENT.CREATE}
+        element={
+          <PageGuard allowedRoles={['ADMIN']}>
+            <StudentCreatePage />
+          </PageGuard>
+        }
+      />
       <Route path={ROUTES.STUDENT.UPDATE()} element={<StudentUpdatePage />} />
       <Route path={ROUTES.STUDENT.VIEW()} element={<StudentViewPage />} />
       <Route path={ROUTES.STUDENT.DELETE()} element={<StudentDeletePage />} />

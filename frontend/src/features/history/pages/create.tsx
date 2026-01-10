@@ -49,9 +49,11 @@ export const HistoryCreatePage = () => {
   };
 
   return (
-    <>
+    <div className="m-4">
       <h2 className="text-center text-2xl font-bold mt-4">履歴作成</h2>
-      <div className="m-4 grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
+        {/* 左カラム */}
         <div>
           <StudentSearchForm onSearch={handleSearch} loading={searching} />
 
@@ -64,14 +66,17 @@ export const HistoryCreatePage = () => {
           </Loading>
         </div>
 
-        <HistoryCreateForm
-          onSubmit={onSubmit}
-          loading={creating}
-          selectedStudents={selectedStudents}
-        />
-
-        {selectedStudents.length > 0 && <SelectedStudentsFloat students={selectedStudents} />}
+        {/* 右カラム（sticky） */}
+        <div className="sticky top-4 self-start">
+          <HistoryCreateForm
+            onSubmit={onSubmit}
+            loading={creating}
+            selectedStudents={selectedStudents}
+          />
+        </div>
       </div>
-    </>
+
+      {selectedStudents.length > 0 && <SelectedStudentsFloat students={selectedStudents} />}
+    </div>
   );
 };
