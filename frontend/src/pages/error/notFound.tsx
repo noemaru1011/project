@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { ErrorLayout } from '@/components/layouts/ErrorLayout';
 import { ROUTES } from '@/routes/routes';
 
-export const NotFound = () => {
+export const NotFoundPage = () => {
   const navigate = useNavigate();
 
   return (

@@ -4,7 +4,7 @@ import { ROUTES } from '@/routes/routes';
 
 import { BaseLayout } from '@/components/layouts/BaseLayout';
 import { Login } from '@/features/auth/pages/login';
-import { HomePage } from '@/pages/home/homePage';
+import { HomePage } from '@/pages/home/home';
 import { StudentIndexPage } from '@/features/student/pages/';
 import { StudentCreatePage } from '@/features/student/pages/create';
 import { StudentUpdatePage } from '@/features/student/pages/update';
@@ -16,18 +16,18 @@ import { HistoryCreatePage } from '@/features/history/pages/create';
 import { HistoryUpdatePage } from '@/features/history/pages/update';
 import { HistoryDeletePage } from '@/features/history/pages/delete';
 
-import { NotFound } from '@/pages/error/notFound';
-import { ServerError } from '@/pages/error/serverError';
-import { Forbidden } from '@/pages/error/forbidden';
+import { NotFoundPage } from '@/pages/error/notFound';
+import { ServerErrorPage } from '@/pages/error/serverError';
+import { ForbiddenPage } from '@/pages/error/forbidden';
 
 const AppRoutes = () => (
   <Routes>
     <Route path={ROUTES.AUTH.LOGIN} element={<Login />} />
     <Route element={<BaseLayout />}>
       {/* エラー画面 */}
-      <Route path={ROUTES.ERROR.SERVER} element={<ServerError />} />
-      <Route path={ROUTES.ERROR.FORBIDDEN} element={<Forbidden />} />
-      <Route path={ROUTES.ERROR.NOTFOUND} element={<NotFound />} />
+      <Route path={ROUTES.ERROR.SERVER} element={<ServerErrorPage />} />
+      <Route path={ROUTES.ERROR.FORBIDDEN} element={<ForbiddenPage />} />
+      <Route path={ROUTES.ERROR.NOTFOUND} element={<NotFoundPage />} />
 
       {/* 共通画面*/}
       <Route path={ROUTES.HOME} element={<HomePage />} />

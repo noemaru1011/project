@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { ErrorLayout } from '@/components/layouts/ErrorLayout';
 import { ROUTES } from '@/routes/routes';
 
-export const Forbidden = () => {
+export const ForbiddenPage = () => {
   const navigate = useNavigate();
 
   return (
