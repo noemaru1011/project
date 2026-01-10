@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { InvalidCredentialsError, ForbiddenError, TokenError } from '@/errors/authError';
 import { Role } from '@shared/role';
 import { JwtPayload } from '@/types/jwtPayload';
-//import { tokenBlacklist } from '@/utils/tokenBlacklist';
+import { tokenBlacklist } from '@/utils/tokenBlacklist';
 import jwt from 'jsonwebtoken';
 
 export const authMiddleware = async (req: Request, _res: Response, next: NextFunction) => {
@@ -24,10 +24,10 @@ export const authMiddleware = async (req: Request, _res: Response, next: NextFun
     return next(new TokenError());
   }
 
-  // // ブラックリストチェック
-  // if (await tokenBlacklist.isBlacklisted(token)) {
-  //   return next(new TokenError());
-  // }
+  // ブラックリストチェック
+  if (await tokenBlacklist.isBlacklisted(token)) {
+    return next(new TokenError());
+  }
 };
 
 // 権限チェック
