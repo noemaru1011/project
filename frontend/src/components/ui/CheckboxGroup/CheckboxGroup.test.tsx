@@ -76,6 +76,7 @@ describe('CheckboxGroup', () => {
 
       it('チェック解除時に正しい値で onChange が呼ばれる', () => {
         const handleChange = vi.fn();
+        // 初期値を ['1', '2'] とし、'Option 1' をクリックして解除
         render(
           <CheckboxGroup
             name="test"
@@ -121,7 +122,6 @@ describe('CheckboxGroup', () => {
   describe('アクセシビリティ', () => {
     it('fieldset (role="group") を使用している', () => {
       render(<CheckboxGroup name="test" options={mockOptions} />);
-      // legend があるので role="group" とみなされる
       expect(screen.getByRole('group')).toBeInTheDocument();
     });
 

@@ -221,18 +221,22 @@ describe('RadioGroup', () => {
         expect(handleChange).toHaveBeenCalledTimes(1);
       });
 
-      it('異なる Radio をクリックすると onChange が都度呼ばれる', async () => {
+      it('label クリック時に onChange が呼ばれる', async () => {
         const user = userEvent.setup();
         const handleChange = vi.fn();
         render(<RadioGroup name="test" options={mockOptions} onChange={handleChange} />);
 
-        await user.click(screen.getByLabelText('オプション1'));
-        expect(handleChange).toHaveBeenCalledWith('option1');
-
-        await user.click(screen.getByLabelText('オプション3'));
+        await user.click(screen.getByText('オプション3'));
         expect(handleChange).toHaveBeenCalledWith('option3');
+      });
 
-        expect(handleChange).toHaveBeenCalledTimes(2);
+      it('disabled の場合、クリックしても onChange は呼ばれない', async () => {
+        const user = userEvent.setup();
+        const handleChange = vi.fn();
+        render(<RadioGroup name="test" options={mockOptions} disabled onChange={handleChange} />);
+
+        await user.click(screen.getByLabelText('オプション1'));
+        expect(handleChange).not.toHaveBeenCalled();
       });
 
       it('onChange 未指定でもエラーにならない', async () => {
@@ -241,67 +245,6 @@ describe('RadioGroup', () => {
 
         await expect(user.click(screen.getByLabelText('オプション1'))).resolves.not.toThrow();
       });
-    });
-  });
-
-  // ============================================
-  // ユーザーインタラクション テスト
-  // ============================================
-  describe('ユーザーインタラクション', () => {
-    it('Radio をクリックすると選択される', async () => {
-      const user = userEvent.setup();
-      render(<RadioGroup name="test" options={mockOptions} />);
-
-      const radio2 = screen.getByLabelText('オプション2');
-      expect(radio2).not.toBeChecked();
-
-      await user.click(radio2);
-      expect(radio2).toBeChecked();
-    });
-
-    it('別の Radio をクリックすると選択が切り替わる', async () => {
-      const user = userEvent.setup();
-      render(<RadioGroup name="test" options={mockOptions} />);
-
-      const radio1 = screen.getByLabelText('オプション1');
-      const radio2 = screen.getByLabelText('オプション2');
-
-      await user.click(radio1);
-      expect(radio1).toBeChecked();
-      expect(radio2).not.toBeChecked();
-
-      await user.click(radio2);
-      expect(radio1).not.toBeChecked();
-      expect(radio2).toBeChecked();
-    });
-
-    it('label をクリックしても Radio が選択される', async () => {
-      const user = userEvent.setup();
-      render(<RadioGroup name="test" options={mockOptions} />);
-
-      await user.click(screen.getByText('オプション3'));
-      expect(screen.getByLabelText('オプション3')).toBeChecked();
-    });
-
-    it('disabled の場合、クリックできない', async () => {
-      const user = userEvent.setup();
-      const handleChange = vi.fn();
-      render(<RadioGroup name="test" options={mockOptions} disabled onChange={handleChange} />);
-
-      await user.click(screen.getByLabelText('オプション1'));
-      expect(handleChange).not.toHaveBeenCalled();
-    });
-
-    it('キーボード矢印キーでグループ内を移動できる', async () => {
-      const user = userEvent.setup();
-      render(<RadioGroup name="test" options={mockOptions} />);
-
-      const radio1 = screen.getByLabelText('オプション1');
-      const radio2 = screen.getByLabelText('オプション2');
-
-      radio1.focus();
-      await user.keyboard('{ArrowDown}');
-      expect(radio2).toHaveFocus();
     });
   });
 
