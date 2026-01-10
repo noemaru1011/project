@@ -47,5 +47,21 @@ services:
     command: >
       sh -c "npx prisma migrate dev && npx prisma db seed && npm run dev"
 
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      target: development
+    container_name: frontend.dev
+    ports:
+      - "5173:5173"
+    env_file:
+      - envs/.env.dev
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
 volumes:
   db_data_dev:

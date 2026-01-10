@@ -38,5 +38,19 @@ services:
       redis:
         condition: service_started
 
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      target: production
+      args:
+        - VITE_API_BASE_URL=http://localhost:3000
+    container_name: frontend
+    ports:
+      - "8080:80"
+    restart: always
+    depends_on:
+      - backend
+
 volumes:
   db_data:
