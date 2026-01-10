@@ -193,6 +193,40 @@ async function main() {
   await prisma.student.createMany({ data: studentData });
   await prisma.studentPassword.createMany({ data: passwordData });
 
+  console.log('history seed...');
+
+  const students = await prisma.student.findMany({
+    select: { studentId: true },
+  });
+
+  const statusesAll = await prisma.status.findMany({
+    select: { statusId: true },
+  });
+
+  const histories: any[] = [];
+
+  const FIXED_START = new Date('2026-01-01T09:00:00+09:00');
+  const FIXED_END = new Date('2026-01-10T15:00:00+09:00');
+
+  for (const student of students) {
+    // 各学生5件の履歴を作成
+    for (let i = 0; i < 5; i++) {
+      const status = statusesAll[Math.floor(Math.random() * statusesAll.length)];
+
+      histories.push({
+        studentId: student.studentId,
+        statusId: status.statusId,
+        startTime: FIXED_START,
+        endTime: FIXED_END,
+        validFlag: true,
+        other: null,
+      });
+    }
+  }
+
+  console.log(`inserting ${histories.length} histories...`);
+  await prisma.history.createMany({ data: histories });
+
   console.log('admin seed...');
   const adminPassword = 'admin123';
   const hashedAdminPassword = await bcrypt.hash(adminPassword, 10);
