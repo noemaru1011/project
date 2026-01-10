@@ -34,7 +34,7 @@ describe('Loading', () => {
     describe('children', () => {
       it('children がない場合でも正常に動作する', () => {
         const { container } = render(<Loading loading={false} />);
-        expect(container.firstChild).toBeEmptyDOMElement();
+        expect(container).toBeEmptyDOMElement();
       });
     });
 

@@ -83,6 +83,7 @@ export const RadioGroup = ({
                     id={`${name}-${option.value}`}
                     name={name}
                     label={option.label}
+                    value={option.value}
                     checked={value === option.value}
                     onChange={() => handleChange(option.value)}
                     disabled={disabled}

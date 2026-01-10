@@ -82,6 +82,7 @@ export const CheckboxGroup = ({
                 option.label && (
                   <Checkbox
                     name={name}
+                    checked={value.includes(option.value)}
                     onChange={(e) => handleChange(option.value, e.target.checked)}
                     key={option.value}
                     id={`${name}-${option.value}`}
