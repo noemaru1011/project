@@ -121,7 +121,8 @@ async function main() {
   const studentPassword = '123456';
   const hashedStudentPassword = await bcrypt.hash(studentPassword, 10);
 
-  console.log('cleaning existing student data...');
+  console.log('cleaning existing data...');
+  await prisma.history.deleteMany({});
   await prisma.studentPassword.deleteMany({});
   await prisma.student.deleteMany({});
 
