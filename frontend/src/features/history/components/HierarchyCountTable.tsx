@@ -38,11 +38,11 @@ export const HierarchyCountTable = ({ data, statuses }: Props) => {
             'grid items-center border-b py-2 px-4 transition-colors rounded-lg hover:bg-indigo-50',
             depth === 0 ? 'bg-indigo-100 font-semibold' : 'bg-white',
           )}
-          style={{ gridTemplateColumns: `300px repeat(${statuses.length + 1}, 1fr)` }}
+          style={{ gridTemplateColumns: `200px repeat(${statuses.length + 1}, 70px)` }}
         >
           <div
-            className="flex items-center gap-2 cursor-pointer select-none"
-            style={{ paddingLeft: depth * 20 }}
+            className="flex items-center gap-2 cursor-pointer select-none sticky left-0 z-20 bg-inherit"
+            style={{ paddingLeft: depth * 16, width: '200px' }}
             onClick={() => hasChildren && toggle(node.id)}
           >
             {hasChildren && (
@@ -76,12 +76,12 @@ export const HierarchyCountTable = ({ data, statuses }: Props) => {
 
   return (
     <div className="border rounded-xl shadow-lg overflow-hidden bg-white overflow-x-auto">
-      <div style={{ minWidth: 800 + statuses.length * 80 }}>
+      <div style={{ width: 'fit-content' }}>
         <div
-          className="grid bg-indigo-600 text-white font-bold py-3 px-4 sticky top-0 z-10"
-          style={{ gridTemplateColumns: `300px repeat(${statuses.length + 1}, 1fr)` }}
+          className="grid bg-indigo-600 text-white font-bold py-3 px-4 sticky top-0 z-30"
+          style={{ gridTemplateColumns: `200px repeat(${statuses.length + 1}, 70px)` }}
         >
-          <div>組織</div>
+          <div className="sticky left-0 bg-indigo-600 z-10 w-[200px]">組織</div>
           {statuses.map((status) => (
             <div key={status.statusId} className="text-center whitespace-nowrap px-2">
               {status.statusName}
