@@ -7,7 +7,7 @@ type Props = {
   label: string;
 };
 
-export const HeaderMain = ({ to, label }: Props) => {
+export const HeaderHome = ({ to, label }: Props) => {
   const location = useLocation();
   return (
     <Link

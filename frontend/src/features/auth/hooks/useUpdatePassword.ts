@@ -1,6 +1,6 @@
 import { authApi } from '@/features/auth/api';
 import type { PasswordForm } from '@shared/schemas/password';
-import { useLoadingCounter } from '@/hooks/ui/useLoadingCounter';
+import { useLoadingCounter } from '@/hooks/ux/useLoadingCounter';
 import { usePasswordUpdateContext } from '@/contexts/passwordUpdateContext';
 
 export function usePassword() {

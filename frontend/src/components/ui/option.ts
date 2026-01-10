@@ -20,18 +20,20 @@ export interface HeaderLinkOption {
   kind: 'link';
   label: string;
   to: string;
+  visible?: boolean;
 }
 
-//httpリクエスト用（ログアウトのみ）
+//リクエスト用
 export interface HeaderActionOption {
   kind: 'action';
   label: string;
   action: string;
+  visible?: boolean;
 }
 
 export type HeaderOption = HeaderLinkOption | HeaderActionOption;
 
-export const headerMain: HeaderLinkOption = {
+export const headerHome: HeaderLinkOption = {
   kind: 'link',
   label: 'メインページへ',
   to: ROUTES.HOME,

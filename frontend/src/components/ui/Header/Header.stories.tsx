@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { MemoryRouter } from 'react-router-dom';
 import { Header } from './Header';
 import { HeaderNav } from '@/components/ui/Header/HeaderNav';
-import { HeaderMain } from '@/components/ui/Header/HeaderMain';
+import { HeaderHome } from '@/components/ui/Header/HeaderHome';
 import type { HeaderOption } from '@/components/ui/option';
 
 const meta: Meta<typeof Header> = {
@@ -22,12 +22,12 @@ const navOptions: HeaderOption[] = [
 ];
 
 // ------------------------
-// HeaderMain Story
+// HeaderHome Story
 // ------------------------
 export const MainLink: Story = {
   render: () => (
     <MemoryRouter>
-      <HeaderMain to={mainOption.value} label={mainOption.label} />
+      <HeaderHome to={mainOption.value} label={mainOption.label} />
     </MemoryRouter>
   ),
 };

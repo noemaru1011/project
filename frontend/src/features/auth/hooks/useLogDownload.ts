@@ -1,5 +1,5 @@
 import { authApi } from '@/features/auth/api';
-import { useLoadingCounter } from '@/hooks/ui/useLoadingCounter';
+import { useLoadingCounter } from '@/hooks/ux/useLoadingCounter';
 
 export function useLogDownload() {
   const { loading, start, end } = useLoadingCounter();
