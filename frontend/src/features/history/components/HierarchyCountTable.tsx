@@ -54,11 +54,17 @@ export const HierarchyCountTable = ({ data, statuses }: Props) => {
           </div>
 
           {statuses.map((status) => (
-            <div key={status.statusId} className="text-center text-gray-700">
+            <div
+              key={status.statusId}
+              className="text-center text-gray-700"
+              title={`${node.name} - ${status.statusName}`}
+            >
               {node.counts[status.statusId] || 0}
             </div>
           ))}
-          <div className="text-center font-semibold text-indigo-600">{total}</div>
+          <div className="text-center font-semibold text-indigo-600" title={`${node.name} - 合計`}>
+            {total}
+          </div>
         </div>
 
         <div className={clsx('overflow-hidden transition-all duration-300', !isOpen && 'max-h-0')}>

@@ -3,9 +3,12 @@ import { useCategoryList } from '@/features/category/hooks/useCategoryList';
 import { useSubCategoryList } from '@/features/subCategory/hooks/useSubCategoryList';
 import { useMinorCategoryList } from '@/features/minorCategory/hooks/useMinorCategoryList';
 import { useStatusList } from '@/features/status/hooks/useStatusList';
+import { useDepartmentList } from '@/features/department/hooks/useDepartmentList';
+import { gradeOptions } from '@/features/grade/constants/gradeOptions';
 import type { Category } from '@/features/category/types';
 import type { SubCategory } from '@/features/subCategory/types';
 import type { MinorCategory } from '@/features/minorCategory/types';
+import type { Department } from '@/features/department/types';
 import type { AggregationData } from '../types';
 import { HierarchyCountTable, type OrgNode } from './HierarchyCountTable';
 
@@ -18,7 +21,9 @@ export const AggregationDashboard = ({ data }: Props) => {
   const { data: subCategories } = useSubCategoryList();
   const { data: minorCategories } = useMinorCategoryList();
   const { data: statuses } = useStatusList();
+  const { data: departments } = useDepartmentList();
 
+  // 組織別集計データの作成
   const orgNodes = useMemo((): OrgNode[] => {
     if (
       !categories.length ||
@@ -71,16 +76,68 @@ export const AggregationDashboard = ({ data }: Props) => {
     });
   }, [data, categories, subCategories, minorCategories, statuses]);
 
-  if (!orgNodes.length) return null;
+  // 学科・学年別集計データの作成
+  const deptGradeNodes = useMemo((): OrgNode[] => {
+    if (!departments.length || !statuses.length) {
+      return [];
+    }
+
+    const { deptGradeAggregation } = data;
+
+    return Object.entries(deptGradeAggregation).map(([deptId, gradeData]): OrgNode => {
+      const dept = departments.find((d: Department) => String(d.departmentId) === deptId);
+
+      const gradeNodes = Object.entries(gradeData).map(([grade, counts]): OrgNode => {
+        const gradeLabel = gradeOptions.find((g) => g.value === grade)?.label ?? `${grade}学年`;
+        return {
+          id: `${deptId}-${grade}`,
+          name: gradeLabel,
+          counts: counts as Record<string, number>,
+        };
+      });
+
+      // 学部ごとの合計を計算
+      const deptTotalCounts: Record<string, number> = {};
+      Object.values(gradeData).forEach((gradeCounts) => {
+        Object.entries(gradeCounts).forEach(([statusId, count]) => {
+          deptTotalCounts[statusId] = (deptTotalCounts[statusId] || 0) + (count as number);
+        });
+      });
+
+      return {
+        id: deptId,
+        name: dept?.departmentName ?? deptId,
+        counts: deptTotalCounts,
+        children: gradeNodes,
+      };
+    });
+  }, [data, departments, statuses]);
+
+  if (!orgNodes.length && !deptGradeNodes.length) return null;
 
   return (
-    <div className="space-y-8 mt-8">
-      <div>
-        <h3 className="text-xl font-bold text-gray-800 mb-4 px-4">組織別集計</h3>
-        <div className="px-4">
-          <HierarchyCountTable data={orgNodes} statuses={statuses} />
+    <div className="space-y-12 mt-8">
+      {orgNodes.length > 0 && (
+        <div>
+          <h3 className="text-xl font-bold text-gray-800 mb-4 px-4 border-l-4 border-indigo-600">
+            組織別集計
+          </h3>
+          <div className="px-4">
+            <HierarchyCountTable data={orgNodes} statuses={statuses} />
+          </div>
         </div>
-      </div>
+      )}
+
+      {deptGradeNodes.length > 0 && (
+        <div>
+          <h3 className="text-xl font-bold text-gray-800 mb-4 px-4 border-l-4 border-indigo-600">
+            学科・学年別集計
+          </h3>
+          <div className="px-4">
+            <HierarchyCountTable data={deptGradeNodes} statuses={statuses} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
