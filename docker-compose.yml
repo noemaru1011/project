@@ -26,13 +26,20 @@ services:
     env_file:
       - .env
       - backend/.env
+    environment:
+      REDIS_URL: redis://redis:6379
     depends_on:
       - db
+      - redis
     volumes:
       - ./shared:/project/shared
       - ./backend/prisma:/project/backend/prisma
       - ./backend/src:/project/backend/src
 
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
   # frontend:
   #   build: ./frontend
   #   ports:

@@ -2,7 +2,11 @@ import { Resend } from 'resend';
 
 export const sendAccountEmail = async (email: string, password: string) => {
   try {
-    const resend = new Resend(process.env.RESEND_API_KEY!);
+    const RESEND_API_KEY = process.env.RESEND_API_KEY;
+    if (!RESEND_API_KEY) {
+      throw new Error('RESEND_API_KEY is not defined');
+    }
+    const resend = new Resend(RESEND_API_KEY);
     await resend.emails.send({
       from: 'no-reply@resend.dev',
       to: email,
