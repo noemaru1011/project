@@ -1,7 +1,46 @@
 import { PrismaClient } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
+import * as crypto from 'crypto';
 
 const prisma = new PrismaClient();
+
+const lastNames = ['佐藤', '鈴木', '高橋', '田中', '伊藤', '渡辺', '山本', '中村', '小林', '加藤'];
+const firstNames = [
+  '健太',
+  '大輔',
+  '直樹',
+  '浩二',
+  '修平',
+  '結衣',
+  '陽子',
+  '美咲',
+  '彩香',
+  '真理子',
+];
+const romajiLastNames = [
+  'sato',
+  'suzuki',
+  'takahashi',
+  'tanaka',
+  'ito',
+  'watanabe',
+  'yamamoto',
+  'nakamura',
+  'kobayashi',
+  'kato',
+];
+const romajiFirstNames = [
+  'kenta',
+  'daisuke',
+  'naoki',
+  'koji',
+  'shuhei',
+  'yui',
+  'yoko',
+  'misaki',
+  'ayaka',
+  'mariko',
+];
 
 async function main() {
   const categories = ['1大隊', '2大隊', '3大隊', '4大隊'];
@@ -79,13 +118,93 @@ async function main() {
     });
   }
 
-  const plainPassword = 'admin123';
-  const hashedPassword = await bcrypt.hash(plainPassword, 10);
+  const studentPassword = '123456';
+  const hashedStudentPassword = await bcrypt.hash(studentPassword, 10);
 
-  await prisma.admin.create({
-    data: {
+  console.log('cleaning existing student data...');
+  await prisma.studentPassword.deleteMany({});
+  await prisma.student.deleteMany({});
+
+  console.log('fetching minor categories...');
+  const minorCategories = await prisma.minorCategory.findMany({
+    include: {
+      subCategory: {
+        include: {
+          category: true,
+        },
+      },
+    },
+  });
+
+  const departmentBatMap: Record<number, number[]> = {
+    1: [5, 7], // 1大隊: 工学部(5), 医学部(7)
+    2: [1, 2], // 2大隊: 経済学部(1), 法学部(2)
+    3: [3, 4], // 3大隊: 文学部(3), 理学部(4)
+    4: [6], // 4大隊: 農学部(6)
+  };
+
+  const studentData: any[] = [];
+  const passwordData: any[] = [];
+
+  console.log('generating student data...');
+  for (let grade = 1; grade <= 4; grade++) {
+    for (let bat = 1; bat <= 4; bat++) {
+      const deptIds = departmentBatMap[bat];
+      const batMinorCats = minorCategories.filter(
+        (mc) => mc.subCategory.category.categoryName === `${bat}大隊`,
+      );
+
+      for (const deptId of deptIds) {
+        // 各学科30人程度
+        for (let i = 0; i < 30; i++) {
+          const nameIdx = (grade + bat + deptId + i) % lastNames.length;
+          const firstIdx = (i * grade) % firstNames.length;
+
+          const lastName = lastNames[nameIdx];
+          const firstName = firstNames[firstIdx];
+          const studentName = `${lastName} ${firstName}`;
+
+          const rLastName = romajiLastNames[nameIdx];
+          const rFirstName = romajiFirstNames[firstIdx];
+          const email = `${rFirstName}.${rLastName}${grade}${bat}${i}@example.com`;
+
+          const minorCat = batMinorCats[i % batMinorCats.length];
+          const studentId = crypto.randomUUID();
+
+          studentData.push({
+            studentId,
+            studentName,
+            email,
+            grade,
+            departmentId: deptId,
+            minorCategoryId: minorCat.minorCategoryId,
+          });
+
+          passwordData.push({
+            studentId,
+            password: hashedStudentPassword,
+          });
+        }
+      }
+    }
+  }
+
+  console.log(`inserting ${studentData.length} students...`);
+  await prisma.student.createMany({ data: studentData });
+  await prisma.studentPassword.createMany({ data: passwordData });
+
+  console.log('admin seed...');
+  const adminPassword = 'admin123';
+  const hashedAdminPassword = await bcrypt.hash(adminPassword, 10);
+
+  await prisma.admin.upsert({
+    where: { email: 'admin@example.com' },
+    update: {
+      password: hashedAdminPassword,
+    },
+    create: {
       email: 'admin@example.com',
-      password: hashedPassword,
+      password: hashedAdminPassword,
     },
   });
 

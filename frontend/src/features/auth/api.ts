@@ -25,28 +25,28 @@ export const authApi = {
     }),
 
   logDownload: async (): Promise<Blob> => {
-    26|    const res = await fetch(`${API_BASE_URL}${API_ROUTES.LOG}`, {
-    27|      method: 'GET',
-    28|      credentials: 'include',
-    29|      headers: {
-    30|        'X-CSRF-Token': Cookies.get('csrf') ?? '',
-    31|      },
-    32|    });
-    33|
-    34|    if (!res.ok) {
-    35|      let message = 'ログダウンロードに失敗しました';
-    36|      try {
-    37|        const json = await res.json();
-    38|        message = json.message || message;
-    39|      } catch {
-    40|        // ignore
-    41|      }
-    42|      throw {
-    43|        status: res.status,
-    44|        message: message,
-    45|      };
-    46|    }
-    47|
-    48|    return await res.blob();
-    49|  },
+    const res = await fetch(`${API_BASE_URL}${API_ROUTES.LOG}`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'X-CSRF-Token': Cookies.get('csrf') ?? '',
+      },
+    });
+
+    if (!res.ok) {
+      let message = 'ログダウンロードに失敗しました';
+      try {
+        const json = await res.json();
+        message = json.message || message;
+      } catch {
+        // ignore
+      }
+      throw {
+        status: res.status,
+        message: message,
+      };
+    }
+
+    return await res.blob();
+  },
 };
