@@ -1,12 +1,22 @@
+import { useState } from 'react';
 import { historySearchApi } from '@/features/search/history/api';
-import { useSearch } from '@/hooks/api/useSearch';
+import { useLoadingCounter } from '@/hooks/ux/useLoadingCounter';
+import type { AggregationData } from '@/features/history/types';
 
 export const useHistorySearchByTime = () => {
-  const { data, search, loading } = useSearch<any, any>((query: string) =>
-    historySearchApi.searchByTime(query),
-  );
+  const [data, setData] = useState<AggregationData | null>(null);
+  const { loading, start, end } = useLoadingCounter();
 
-  const searchHistoriesByTime = (query: string) => search(query);
+  const searchHistoriesByTime = async (query: string) => {
+    start();
+    try {
+      const res = await historySearchApi.searchByTime(query);
+      setData(res.data);
+      return res;
+    } finally {
+      end();
+    }
+  };
 
   return { data, searchHistoriesByTime, loading };
 };

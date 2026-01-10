@@ -10,3 +10,5 @@ export * from './VailFlag.Checkbox';
 export * from './HistoryBasicInfo';
 export * from './HistoryDeleteView';
 export * from './HistoryUpdateForm';
+export * from './HierarchyCountTable';
+export * from './AggregationDashboard';
