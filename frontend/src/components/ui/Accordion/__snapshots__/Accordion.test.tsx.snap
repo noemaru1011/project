@@ -1,0 +1,207 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Accordion > スナップショット > アイテム展開時の HTML 構造 1`] = `
+<div
+  class="bg-white border border-gray-200 rounded-lg overflow-hidden"
+>
+  <div
+    class="border-b border-gray-200 last:border-b-0"
+  >
+    <button
+      aria-controls="Item 1-content"
+      aria-expanded="true"
+      class="w-full flex items-center justify-between px-5 py-4 text-left transition-colors duration-200 bg-indigo-50"
+      type="button"
+    >
+      <div
+        class="flex items-center gap-3 flex-1"
+      >
+        <span
+          class="transition-colors duration-200 text-indigo-700"
+        >
+          Item 1
+        </span>
+      </div>
+      <svg
+        aria-hidden="true"
+        class="lucide lucide-chevron-down transition-all duration-300 flex-shrink-0 rotate-180 text-indigo-600"
+        fill="none"
+        height="20"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="m6 9 6 6 6-6"
+        />
+      </svg>
+    </button>
+    <div
+      class="overflow-hidden transition-all duration-300 ease-in-out"
+      id="Item 1-content"
+      style="height: 0px;"
+    >
+      <div
+        class="px-5 py-4 bg-gray-50 overflow-x-auto"
+      >
+        Content 1
+      </div>
+    </div>
+  </div>
+  <div
+    class="border-b border-gray-200 last:border-b-0"
+  >
+    <button
+      aria-controls="Item 2-content"
+      aria-expanded="false"
+      class="w-full flex items-center justify-between px-5 py-4 text-left transition-colors duration-200 bg-white hover:bg-gray-50"
+      type="button"
+    >
+      <div
+        class="flex items-center gap-3 flex-1"
+      >
+        <span
+          class="transition-colors duration-200 text-gray-700"
+        >
+          Item 2
+        </span>
+      </div>
+      <svg
+        aria-hidden="true"
+        class="lucide lucide-chevron-down transition-all duration-300 flex-shrink-0 rotate-0 text-gray-400"
+        fill="none"
+        height="20"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="m6 9 6 6 6-6"
+        />
+      </svg>
+    </button>
+    <div
+      class="overflow-hidden transition-all duration-300 ease-in-out"
+      id="Item 2-content"
+      style="height: 0px;"
+    >
+      <div
+        class="px-5 py-4 bg-gray-50 overflow-x-auto"
+      >
+        Content 2
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Accordion > スナップショット > デフォルト状態の HTML 構造 1`] = `
+<div
+  class="bg-white border border-gray-200 rounded-lg overflow-hidden"
+>
+  <div
+    class="border-b border-gray-200 last:border-b-0"
+  >
+    <button
+      aria-controls="Item 1-content"
+      aria-expanded="false"
+      class="w-full flex items-center justify-between px-5 py-4 text-left transition-colors duration-200 bg-white hover:bg-gray-50"
+      type="button"
+    >
+      <div
+        class="flex items-center gap-3 flex-1"
+      >
+        <span
+          class="transition-colors duration-200 text-gray-700"
+        >
+          Item 1
+        </span>
+      </div>
+      <svg
+        aria-hidden="true"
+        class="lucide lucide-chevron-down transition-all duration-300 flex-shrink-0 rotate-0 text-gray-400"
+        fill="none"
+        height="20"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="m6 9 6 6 6-6"
+        />
+      </svg>
+    </button>
+    <div
+      class="overflow-hidden transition-all duration-300 ease-in-out"
+      id="Item 1-content"
+      style="height: 0px;"
+    >
+      <div
+        class="px-5 py-4 bg-gray-50 overflow-x-auto"
+      >
+        Content 1
+      </div>
+    </div>
+  </div>
+  <div
+    class="border-b border-gray-200 last:border-b-0"
+  >
+    <button
+      aria-controls="Item 2-content"
+      aria-expanded="false"
+      class="w-full flex items-center justify-between px-5 py-4 text-left transition-colors duration-200 bg-white hover:bg-gray-50"
+      type="button"
+    >
+      <div
+        class="flex items-center gap-3 flex-1"
+      >
+        <span
+          class="transition-colors duration-200 text-gray-700"
+        >
+          Item 2
+        </span>
+      </div>
+      <svg
+        aria-hidden="true"
+        class="lucide lucide-chevron-down transition-all duration-300 flex-shrink-0 rotate-0 text-gray-400"
+        fill="none"
+        height="20"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="m6 9 6 6 6-6"
+        />
+      </svg>
+    </button>
+    <div
+      class="overflow-hidden transition-all duration-300 ease-in-out"
+      id="Item 2-content"
+      style="height: 0px;"
+    >
+      <div
+        class="px-5 py-4 bg-gray-50 overflow-x-auto"
+      >
+        Content 2
+      </div>
+    </div>
+  </div>
+</div>
+`;

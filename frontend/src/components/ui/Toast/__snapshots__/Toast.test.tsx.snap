@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Toast > スナップショット > ToastContainer の初期 HTML 構造 1`] = `
+<section
+  aria-atomic="false"
+  aria-label="Notifications Alt+T"
+  aria-live="polite"
+  aria-relevant="additions text"
+  class="Toastify"
+/>
+`;

@@ -1,0 +1,163 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Menu > スナップショット > 閉じた状態の HTML 構造 1`] = `
+<div
+  class="relative"
+>
+  <button
+    aria-controls="menu-panel"
+    aria-expanded="false"
+    aria-label="管理メニューを開閉"
+    class="cursor-pointer w-6 h-6"
+  >
+    <svg
+      aria-hidden="true"
+      class="lucide lucide-menu w-6 h-6"
+      fill="none"
+      height="24"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+      width="24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M4 5h16"
+      />
+      <path
+        d="M4 12h16"
+      />
+      <path
+        d="M4 19h16"
+      />
+    </svg>
+  </button>
+</div>
+`;
+
+exports[`Menu > スナップショット > 開いた状態の HTML 構造 1`] = `
+<div
+  class="relative"
+>
+  <button
+    aria-controls="menu-panel"
+    aria-expanded="true"
+    aria-label="管理メニューを開閉"
+    class="cursor-pointer w-6 h-6"
+  >
+    <svg
+      aria-hidden="true"
+      class="lucide lucide-menu w-6 h-6"
+      fill="none"
+      height="24"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+      width="24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M4 5h16"
+      />
+      <path
+        d="M4 12h16"
+      />
+      <path
+        d="M4 19h16"
+      />
+    </svg>
+  </button>
+  <div
+    aria-hidden="true"
+    class="fixed inset-0 backdrop-blur-sm  z-50"
+    role="presentation"
+  />
+  <div
+    aria-label="管理メニュー"
+    class="fixed top-0 right-0 h-full w-64 bg-white z-50 shadow-lg"
+    id="menu-panel"
+    role="menu"
+  >
+    <div
+      class="flex justify-end p-4"
+    >
+      <svg
+        aria-hidden="true"
+        class="lucide lucide-x cursor-pointer w-6 h-6 text-gray-700 hover:text-gray-900 transition"
+        fill="none"
+        height="24"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M18 6 6 18"
+        />
+        <path
+          d="m6 6 12 12"
+        />
+      </svg>
+    </div>
+    <nav
+      class="flex flex-col space-y-3 px-4"
+    >
+      <a
+        class="font-bold border-b border-gray-300 py-2 hover:text-indigo-500"
+        data-discover="true"
+        href="/categories"
+        role="menuitem"
+      >
+        大分類マスタ
+      </a>
+      <a
+        class="font-bold border-b border-gray-300 py-2 hover:text-indigo-500"
+        data-discover="true"
+        href="/sub-categories"
+        role="menuitem"
+      >
+        中分類マスタ
+      </a>
+      <a
+        class="font-bold border-b border-gray-300 py-2 hover:text-indigo-500"
+        data-discover="true"
+        href="/minor-categories"
+        role="menuitem"
+      >
+        小分類マスタ
+      </a>
+      <a
+        class="font-bold border-b border-gray-300 py-2 hover:text-indigo-500"
+        data-discover="true"
+        href="/departments"
+        role="menuitem"
+      >
+        学科マスタ
+      </a>
+      <a
+        class="font-bold border-b border-gray-300 py-2 hover:text-indigo-500"
+        data-discover="true"
+        href="/statuses"
+        role="menuitem"
+      >
+        状態区分
+      </a>
+      <a
+        class="font-bold border-b border-gray-300 py-2 hover:text-indigo-500"
+        data-discover="true"
+        href="/students"
+        role="menuitem"
+      >
+        学生マスタ
+      </a>
+    </nav>
+  </div>
+</div>
+`;

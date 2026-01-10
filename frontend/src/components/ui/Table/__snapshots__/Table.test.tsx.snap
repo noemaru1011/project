@@ -1,0 +1,173 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Table > スナップショット > チェックボックスありの状態の HTML 構造 1`] = `
+<div
+  class="m-4"
+>
+  <div
+    class="overflow-x-auto rounded-lg border border-gray-300 shadow-md"
+  >
+    <table
+      class="table-auto min-w-full sm:min-w-max w-full overflow-x-auto"
+    >
+      <thead
+        class="bg-gray-100 border-b-2 border-gray-300"
+      >
+        <tr>
+          <th
+            class="px-4 py-2"
+          >
+            チェック
+          </th>
+          <th
+            class="p-2 text-center"
+          >
+            ID
+          </th>
+          <th
+            class="p-2 text-center"
+          >
+            名前
+          </th>
+          <th
+            class="p-2 text-center"
+          >
+            メールアドレス
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="border-b"
+        >
+          <td
+            class="px-4 py-2 text-center"
+          >
+            <input
+              checked=""
+              type="checkbox"
+            />
+          </td>
+          <td
+            class="px-4 py-2 text-center"
+          >
+            1
+          </td>
+          <td
+            class="px-4 py-2 text-center"
+          >
+            ユーザー1
+          </td>
+          <td
+            class="px-4 py-2 text-center"
+          >
+            user1@example.com
+          </td>
+        </tr>
+        <tr
+          class="border-b"
+        >
+          <td
+            class="px-4 py-2 text-center"
+          >
+            <input
+              type="checkbox"
+            />
+          </td>
+          <td
+            class="px-4 py-2 text-center"
+          >
+            2
+          </td>
+          <td
+            class="px-4 py-2 text-center"
+          >
+            ユーザー2
+          </td>
+          <td
+            class="px-4 py-2 text-center"
+          >
+            user2@example.com
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;
+
+exports[`Table > スナップショット > 基本状態の HTML 構造 1`] = `
+<div
+  class="m-4"
+>
+  <div
+    class="overflow-x-auto rounded-lg border border-gray-300 shadow-md"
+  >
+    <table
+      class="table-auto min-w-full sm:min-w-max w-full overflow-x-auto"
+    >
+      <thead
+        class="bg-gray-100 border-b-2 border-gray-300"
+      >
+        <tr>
+          <th
+            class="p-2 text-center"
+          >
+            ID
+          </th>
+          <th
+            class="p-2 text-center"
+          >
+            名前
+          </th>
+          <th
+            class="p-2 text-center"
+          >
+            メールアドレス
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="border-b"
+        >
+          <td
+            class="px-4 py-2 text-center"
+          >
+            1
+          </td>
+          <td
+            class="px-4 py-2 text-center"
+          >
+            ユーザー1
+          </td>
+          <td
+            class="px-4 py-2 text-center"
+          >
+            user1@example.com
+          </td>
+        </tr>
+        <tr
+          class="border-b"
+        >
+          <td
+            class="px-4 py-2 text-center"
+          >
+            2
+          </td>
+          <td
+            class="px-4 py-2 text-center"
+          >
+            ユーザー2
+          </td>
+          <td
+            class="px-4 py-2 text-center"
+          >
+            user2@example.com
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;
