@@ -8,15 +8,15 @@ WORKDIR /app
 # 2. Dependencies Stage
 # ==========================================
 FROM base AS dependencies
-# frontendディレクトリの内容をコピー（package.jsonなど）
-COPY frontend/package.json frontend/package-lock.json ./
-RUN npm ci
+# frontendディレクトリの内容をコピー（package.jsonのみ）
+COPY frontend/package.json ./
+RUN npm install
 
 # ==========================================
 # 3. Development Stage (開発用)
 # ==========================================
 FROM dependencies AS development
-# ソースコードをコピー（開発時はvolumesで上書きされますがビルド用）
+# ソースコードをコピー
 COPY frontend/ ./
 EXPOSE 5173
 # 外部（ホスト）からアクセスできるように --host 0.0.0.0 を指定
