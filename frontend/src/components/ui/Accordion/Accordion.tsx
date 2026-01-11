@@ -176,7 +176,9 @@ export const Accordion = ({ items, allowMultiple = false, className }: Accordion
           isOpen={openItems.has(item.id)}
           onToggle={() => toggleItem(item.id)}
           onKeyDown={(e) => handleKeyDown(e, index)}
-          buttonRef={(el) => (buttonRefs.current[index] = el)}
+          buttonRef={(el) => {
+            buttonRefs.current[index] = el;
+          }}
         />
       ))}
     </div>
