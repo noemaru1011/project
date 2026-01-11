@@ -5,7 +5,7 @@ import { useMinorCategoryList } from '@/features/minorCategory/hooks/useMinorCat
 import { useStatusList } from '@/features/status/hooks/useStatusList';
 import { useDepartmentList } from '@/features/department/hooks/useDepartmentList';
 import { gradeOptions } from '@/features/grade/constants/gradeOptions';
-import type { Category } from '@/features/category/types';
+import type { Category } from '@shared/types/Category';
 import type { SubCategory } from '@/features/subCategory/types';
 import type { MinorCategory } from '@/features/minorCategory/types';
 import type { Department } from '@/features/department/types';
