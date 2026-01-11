@@ -1,6 +1,9 @@
 import { useState } from 'react';
-import { SearchTimeInput } from '@/features/search/history/components/SearchTime.Input';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  SearchTimeInput,
+  PrevTimeButton,
+  NextTimeButton,
+} from '@/features/search/history/components';
 
 type Props = {
   onSearch: (query: string) => void;
@@ -77,29 +80,13 @@ export const HitorySearchForm = ({ onSearch, loading }: Props) => {
     <div className="w-full max-w-2xl mx-auto p-4">
       <form className="flex flex-col gap-4">
         <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={handlePrev}
-            disabled={loading}
-            className="p-2 rounded-full hover:bg-gray-100 transition-colors disabled:opacity-30"
-            aria-label="前の時間帯"
-          >
-            <ChevronLeft size={24} className="text-gray-600" />
-          </button>
+          <PrevTimeButton onClick={handlePrev} disabled={loading} />
 
           <div className="flex-1">
             <SearchTimeInput disabled={loading} value={datetime} onChange={handleChange} />
           </div>
 
-          <button
-            type="button"
-            onClick={handleNext}
-            disabled={loading}
-            className="p-2 rounded-full hover:bg-gray-100 transition-colors disabled:opacity-30"
-            aria-label="次の時間帯"
-          >
-            <ChevronRight size={24} className="text-gray-600" />
-          </button>
+          <NextTimeButton onClick={handleNext} disabled={loading} />
         </div>
       </form>
     </div>
