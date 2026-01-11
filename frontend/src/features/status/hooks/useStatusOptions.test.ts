@@ -14,7 +14,7 @@ describe('useStatusOptions', () => {
       { statusId: '1', statusName: '休務' },
       { statusId: '2', statusName: '平日外出' },
     ];
-    vi.mock(useStatusList).mockReturnValue({ data: mockData, loading: false });
+    vi.mocked(useStatusList).mockReturnValue({ data: mockData, loading: false });
 
     const { result } = renderHook(() => useStatusOptions());
 
@@ -28,7 +28,7 @@ describe('useStatusOptions', () => {
   });
 
   it('loading 状態を正しく反映すること', () => {
-    vi.mock(useStatusList).mockReturnValue({ data: [], loading: true });
+    vi.mocked(useStatusList).mockReturnValue({ data: [], loading: true });
 
     const { result } = renderHook(() => useStatusOptions());
 
@@ -36,4 +36,3 @@ describe('useStatusOptions', () => {
     expect(result.current.loading).toBe(true);
   });
 });
-

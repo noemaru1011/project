@@ -14,7 +14,7 @@ describe('useDepartmentOptions', () => {
       { departmentId: '1', departmentName: '経済学部' },
       { departmentId: '2', departmentName: '法学部' },
     ];
-    vi.mock(useDepartmentList).mockReturnValue({ data: mockData, loading: false });
+    vi.mocked(useDepartmentList).mockReturnValue({ data: mockData, loading: false });
 
     const { result } = renderHook(() => useDepartmentOptions());
 
@@ -28,7 +28,7 @@ describe('useDepartmentOptions', () => {
   });
 
   it('loading 状態を正しく反映すること', () => {
-    vi.mock(useDepartmentList).mockReturnValue({ data: [], loading: true });
+    vi.mocked(useDepartmentList).mockReturnValue({ data: [], loading: true });
 
     const { result } = renderHook(() => useDepartmentOptions());
 
@@ -36,4 +36,3 @@ describe('useDepartmentOptions', () => {
     expect(result.current.loading).toBe(true);
   });
 });
-

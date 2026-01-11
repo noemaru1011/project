@@ -11,8 +11,8 @@ vi.mock('./useCategoryList', () => ({
 describe('useCategoryOptions', () => {
   it('data を options に変換して返すこと', () => {
     const mockData = [
-      { categoryId: 1, categoryName: '1大隊' },
-      { categoryId: 2, categoryName: '2大隊' },
+      { categoryId: '1', categoryName: '1大隊' },
+      { categoryId: '2', categoryName: '2大隊' },
     ];
     vi.mocked(useCategoryList).mockReturnValue({ data: mockData, loading: false });
 
@@ -36,4 +36,3 @@ describe('useCategoryOptions', () => {
     expect(result.current.loading).toBe(true);
   });
 });
-

@@ -14,7 +14,7 @@ describe('useMinorCategoryOptions', () => {
       { minorCategoryId: '1', minorCategoryName: '111小隊' },
       { minorCategoryId: '2', minorCategoryName: '112小隊' },
     ];
-    vi.mock(useMinorCategoryList).mockReturnValue({ data: mockData, loading: false });
+    vi.mocked(useMinorCategoryList).mockReturnValue({ data: mockData, loading: false });
 
     const { result } = renderHook(() => useMinorCategoryOptions());
 
@@ -28,7 +28,7 @@ describe('useMinorCategoryOptions', () => {
   });
 
   it('loading 状態を正しく反映すること', () => {
-    vi.mock(useMinorCategoryList).mockReturnValue({ data: [], loading: true });
+    vi.mocked(useMinorCategoryList).mockReturnValue({ data: [], loading: true });
 
     const { result } = renderHook(() => useMinorCategoryOptions());
 
@@ -36,4 +36,3 @@ describe('useMinorCategoryOptions', () => {
     expect(result.current.loading).toBe(true);
   });
 });
-
