@@ -44,9 +44,9 @@ export const HistoryDeletePage = () => {
   const historyBasic: StudentSummary = {
     studentId: '', //不要なため
     studentName: history.studentName,
-    grade: history.grade.toString(),
-    minorCategoryName: history.minorCategoryId.toString(),
-    departmentName: history.departmentId.toString(),
+    grade: history.grade,
+    minorCategoryName: history.minorCategoryId,
+    departmentName: history.departmentId,
   };
 
   const historyDelete: HistoryUpdateForm = {

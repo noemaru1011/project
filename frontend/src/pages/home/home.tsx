@@ -26,7 +26,7 @@ export const HomePage = () => {
 
             {/* 説明 */}
             <p id="history-create-desc" className="text-gray-600 leading-relaxed">
-              この画面では、学生の状況を時間帯付きで登録できます。
+              履歴作成画面画面では、学生のステータスを時間帯付きで登録できます。
               以下の手順に従って入力してください。
             </p>
 
@@ -49,7 +49,7 @@ export const HomePage = () => {
                 </li>
 
                 <li>
-                  「状況」から
+                  「ステータス」から
                   <span className="font-semibold text-indigo-600" aria-label="状態：休務">
                     休務
                   </span>
@@ -103,7 +103,7 @@ export const HomePage = () => {
 
             {/* 説明 */}
             <p id="history-list-desc" className="text-gray-600 leading-relaxed">
-              この画面では、学生の履歴と時間毎の状況を検索、一覧が表示されます。また履歴の更新・削除の操作が可能です。
+              履歴一覧画面では、学生の履歴と時間毎のステータスを検索、一覧が表示されます。また履歴の更新・削除の操作が可能です。
             </p>
 
             <div>

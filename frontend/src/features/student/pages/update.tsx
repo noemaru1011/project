@@ -24,9 +24,9 @@ export const StudentUpdatePage = () => {
   const defaultValues: FormType = {
     studentName: student.studentName,
     email: student.email,
-    grade: student.grade.toString(),
-    minorCategoryId: student.minorCategoryId.toString(),
-    departmentId: student.departmentId.toString(),
+    grade: student.grade,
+    minorCategoryId: student.minorCategoryId,
+    departmentId: student.departmentId,
     updatedAt: student.updatedAt,
   };
 

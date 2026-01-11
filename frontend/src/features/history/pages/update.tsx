@@ -24,12 +24,20 @@ export const HistoryUpdatePage = () => {
   }
 
   const defaultValues: FormType = {
-    statusId: history.statusId.toString(),
+    statusId: history.statusId,
     other: history.other ?? '',
     startTime: history.startTime,
     endTime: history.endTime ?? '',
     validFlag: history.validFlag,
     updatedAt: history.updatedAt,
+  };
+
+  const historyBasic: StudentSummary = {
+    studentId: '',
+    studentName: history.studentName,
+    grade: history.grade,
+    minorCategoryName: history.minorCategoryId,
+    departmentName: history.departmentId,
   };
 
   const handleSubmit = async (data: FormType) => {
@@ -49,14 +57,6 @@ export const HistoryUpdatePage = () => {
         navigate(error.redirectTo);
       }
     }
-  };
-
-  const historyBasic: StudentSummary = {
-    studentId: '',
-    studentName: history.studentName,
-    grade: history.grade,
-    minorCategoryName: history.minorCategoryId,
-    departmentName: history.departmentId,
   };
 
   return (
