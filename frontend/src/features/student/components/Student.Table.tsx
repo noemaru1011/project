@@ -1,11 +1,11 @@
 import { Table } from '@/components/ui/Table/Table';
 import { studentLabels } from '@/features/student/constants';
-import type { StudentResult } from '@/features/student/types';
+import type { StudentSummary } from '@shared/types/student';
 import type { Action } from '@/components/ui/Table/TableRowActions';
 import { ROUTES } from '@/routes/routes';
 
 type Props = {
-  data: StudentResult[];
+  data: StudentSummary[];
   actions?: Action[];
 };
 

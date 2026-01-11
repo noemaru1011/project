@@ -1,11 +1,11 @@
 import { api } from '@/api/api';
 import { API_ROUTES } from '@shared/routes/routes';
 import type { StudentQueryForm } from '@shared/schemas/studentQuery';
-import type { StudentResult } from '@/features/student/types';
+import type { StudentSummary } from '@shared/types/student';
 
 export const studentSearchApi = {
   search: (query: StudentQueryForm) =>
-    api<StudentResult[]>(API_ROUTES.STUDENT_SEARCH, {
+    api<StudentSummary[]>(API_ROUTES.STUDENT_SEARCH, {
       method: 'POST',
       body: JSON.stringify(query),
     }),

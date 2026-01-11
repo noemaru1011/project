@@ -1,11 +1,13 @@
 import { PrismaClient } from '@prisma/client';
 import { Prisma } from '@prisma/client';
+import type { StudentDetail, StudentNew, StudentSummary } from '@shared/types/student';
+
 const prisma = new PrismaClient();
 
 export const StudentRepository = {
   //学生1件取得
-  async find(studentId: string) {
-    return await prisma.student.findFirst({
+  async find(studentId: string): Promise<StudentDetail | null> {
+    const row = await prisma.student.findFirst({
       where: {
         studentId,
         deleteFlag: false,
@@ -20,6 +22,17 @@ export const StudentRepository = {
         updatedAt: true,
       },
     });
+    if (!row) return null;
+
+    return {
+      studentId: row.studentId,
+      studentName: row.studentName,
+      grade: row.grade.toString(),
+      departmentId: row.departmentId.toString(),
+      email: row.email,
+      minorCategoryId: row.minorCategoryId?.toString() ?? null,
+      updatedAt: row.updatedAt.toISOString(),
+    };
   },
 
   //メールアドレス検証用
@@ -39,8 +52,8 @@ export const StudentRepository = {
       minorCategoryId: number;
       grade: number;
     },
-  ) {
-    return tx.student.create({
+  ): Promise<StudentNew> {
+    const row = await tx.student.create({
       data: {
         studentName: data.studentName,
         email: data.email,
@@ -48,7 +61,28 @@ export const StudentRepository = {
         minorCategoryId: data.minorCategoryId,
         grade: data.grade,
       },
+      select: {
+        studentId: true,
+        studentName: true,
+        grade: true,
+        departmentId: true,
+        email: true,
+        minorCategoryId: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
+
+    return {
+      studentId: row.studentId,
+      studentName: row.studentName,
+      grade: row.grade.toString(),
+      departmentId: row.departmentId.toString(),
+      email: row.email,
+      minorCategoryId: row.minorCategoryId?.toString(),
+      createdAt: row.updatedAt.toISOString(),
+      updatedAt: row.updatedAt.toISOString(),
+    };
   },
 
   //学生更新
@@ -61,19 +95,52 @@ export const StudentRepository = {
       grade: number;
       updatedAt: Date;
     },
-  ) {
-    return await prisma.student.updateMany({
-      where: {
-        studentId,
-        updatedAt: data.updatedAt,
-      },
-      data: {
-        studentName: data.studentName,
-        departmentId: data.departmentId,
-        minorCategoryId: data.minorCategoryId,
-        grade: data.grade,
-      },
+  ): Promise<StudentDetail | null> {
+    const result = await prisma.$transaction(async (tx) => {
+      const updated = await tx.student.updateMany({
+        where: {
+          studentId,
+          updatedAt: data.updatedAt,
+          deleteFlag: false,
+        },
+        data: {
+          studentName: data.studentName,
+          departmentId: data.departmentId,
+          minorCategoryId: data.minorCategoryId,
+          grade: data.grade,
+        },
+      });
+
+      //更新失敗
+      if (updated.count === 0) {
+        return null;
+      }
+
+      return tx.student.findUnique({
+        where: { studentId },
+        select: {
+          studentId: true,
+          studentName: true,
+          grade: true,
+          departmentId: true,
+          email: true,
+          minorCategoryId: true,
+          updatedAt: true,
+        },
+      });
     });
+
+    if (!result) return null;
+
+    return {
+      studentId: result.studentId,
+      studentName: result.studentName,
+      grade: result.grade.toString(),
+      departmentId: result.departmentId.toString(),
+      email: result.email,
+      minorCategoryId: result.minorCategoryId?.toString() ?? null,
+      updatedAt: result.updatedAt.toISOString(),
+    };
   },
 
   //学生削除
@@ -93,7 +160,7 @@ export const StudentRepository = {
     minorCategoryIds?: number[] | undefined;
     departmentIds?: number[] | undefined;
     grades?: number[] | undefined;
-  }) {
+  }): Promise<StudentSummary[]> {
     //小隊(大隊・中隊)、学科、学年
     const where: Prisma.StudentWhereInput = {
       deleteFlag: false,
@@ -102,9 +169,10 @@ export const StudentRepository = {
       ...(data.grades?.length ? { grade: { in: data.grades } } : {}),
     };
 
-    return await prisma.student.findMany({
+    const students = await prisma.student.findMany({
       where,
       select: {
+        deleteFlag: false,
         studentId: true,
         studentName: true,
         grade: true,
@@ -131,5 +199,15 @@ export const StudentRepository = {
       },
       orderBy: [{ minorCategory: { minorCategoryName: 'asc' } }, { grade: 'desc' }],
     });
+
+    return students.map((student) => ({
+      studentId: student.studentId.toString(),
+      studentName: student.studentName,
+      grade: student.grade.toString(),
+      departmentName: student.department.departmentName,
+      minorCategoryName: student.minorCategory.minorCategoryName,
+      subCategoryName: student.minorCategory.subCategory.subCategoryName,
+      categoryName: student.minorCategory.subCategory.category.categoryName,
+    }));
   },
 };

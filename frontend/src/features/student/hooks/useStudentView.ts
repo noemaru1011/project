@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { StudentDetail } from '@/features/student/types';
+import type { StudentDetail } from '@shared/types/student';
 import { studentApi } from '@/features/student/';
 import { useView } from '@/hooks/api/useView';
 

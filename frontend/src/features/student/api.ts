@@ -1,6 +1,6 @@
 import { api } from '@/api/api';
 import type { StudentForm, StudentUpdateForm } from '@shared/schemas/student';
-import type { StudentDetail } from '@/features/student/types';
+import type { StudentDetail } from '@shared/types/student';
 import { API_ROUTES } from '@shared/routes/routes';
 
 export const studentApi = {

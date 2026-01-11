@@ -67,7 +67,7 @@ export const StudentService = {
   ) {
     const student = await StudentRepository.update(studentId, data);
     //楽観的エラー
-    if (student.count === 0) throw new ConflictError();
+    if (student === null) throw new ConflictError();
     return student;
   },
 
@@ -84,19 +84,10 @@ export const StudentService = {
   }) {
     const minorCategoryIds = await MinorCategoryRepository.resolveMinorCategoryIds(data);
 
-    const students = await StudentRepository.searchStudents({
+    return await StudentRepository.searchStudents({
       minorCategoryIds,
       departmentIds: data.departmentIds,
       grades: data.grades,
     });
-
-    //DTO
-    return students.map((s) => ({
-      studentId: s.studentId,
-      studentName: s.studentName,
-      grade: s.grade,
-      departmentName: s.department?.departmentName ?? null,
-      minorCategoryName: s.minorCategory?.minorCategoryName ?? null,
-    }));
   },
 };

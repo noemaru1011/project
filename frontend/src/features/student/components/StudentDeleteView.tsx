@@ -3,7 +3,7 @@ import { StudentNameInput, StudentEmailInput } from '@/features/student/componen
 import { GradeRadioGroup } from '@/features/grade/components';
 import { MinorCategorySelect } from '@/features/minorCategory/components/MinorCategory.Select';
 import { DepartmentSelect } from '@/features/department/components/Department.Select';
-import type { StudentDetail } from '@/features/student';
+import type { StudentDetail } from '@shared/types/student';
 
 type Props = {
   student: StudentDetail;

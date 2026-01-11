@@ -3,7 +3,7 @@ import { GradeRadioGroup } from '@/features/grade/components';
 import { MinorCategorySelect } from '@/features/minorCategory/components/MinorCategory.Select';
 import { DepartmentSelect } from '@/features/department/components/Department.Select';
 import { Button } from '@/components/ui/Button/Button';
-import type { StudentDetail } from '@/features/student/types';
+import type { StudentDetail } from '@shared/types/student';
 
 type Props = {
   student: StudentDetail;

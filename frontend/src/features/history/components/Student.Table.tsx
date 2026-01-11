@@ -1,9 +1,9 @@
 import { Table } from '@/components/ui/Table/Table';
 import { historySearchLabels } from '@/features/history/constants/historyLabels';
-import type { StudentResult } from '@/features/student/types';
+import type { StudentSummary } from '@shared/types/student';
 
 type Props = {
-  data: StudentResult[];
+  data: StudentSummary[];
   selectedStudents: { id: string; name: string }[];
   onChangeSelected: (students: { id: string; name: string }[]) => void;
 };

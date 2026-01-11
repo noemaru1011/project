@@ -1,5 +1,5 @@
+//明細画面で表示する型
 export interface StudentDetail {
-  //CRUD画面で表示する型
   studentId: string;
   studentName: string;
   grade: string;
@@ -9,8 +9,13 @@ export interface StudentDetail {
   updatedAt: string;
 }
 
+//新規作成時の型
+export interface StudentNew extends StudentDetail {
+  createdAt: string;
+}
+
 //テーブルに表示する型
-export interface StudentResult {
+export interface StudentSummary {
   studentId: string;
   studentName: string;
   grade: string;
