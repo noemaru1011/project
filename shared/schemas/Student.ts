@@ -10,7 +10,7 @@ export const validation = z.object({
     error: (issue) =>
       issue.input === undefined || issue.input === ""
         ? "学年は必須です。"
-        : "正しい学年を入力してください。",
+        : undefined,
   }),
 
   email: z.email({
@@ -72,9 +72,9 @@ export const serverValidation = z.object({
         return "小分類は数字である必要があります。";
       },
     })
-    .int({ error: "小分類は整数である必要があります。" })
+    .int({ error: "正しい小分類を入力してください。" })
     .refine((val) => val >= 1 && val <= 48, {
-      error: "小分類は1〜4で入力してください。",
+      error: "正しい小分類を入力してください。",
     }),
 
   departmentId: z.coerce
@@ -86,9 +86,9 @@ export const serverValidation = z.object({
         return "学科は数字である必要があります。";
       },
     })
-    .int({ error: "学科は整数である必要があります。" })
+    .int({ error: "正しい学科を入力してください。" })
     .refine((val) => val >= 1 && val <= 7, {
-      error: "学科は1〜4で入力してください。",
+      error: "正しい学科を入力してください。",
     }),
 });
 

@@ -26,9 +26,9 @@ export const serverValidation = z.object({
     .array(
       z.coerce
         .number()
-        .int({ error: "大分類は整数である必要があります。" })
+        .int({ error: "正しい大分類を入力してください" })
         .refine((val) => val >= 1 && val <= 4, {
-          error: "大分類は1〜4で入力してください。",
+          error: "正しい大分類を入力してください",
         })
     )
     .optional(),
@@ -37,9 +37,9 @@ export const serverValidation = z.object({
     .array(
       z.coerce
         .number()
-        .int({ error: "中分類は整数である必要があります。" })
+        .int({ error: "正しい中分類を入力してください" })
         .refine((val) => val >= 1 && val <= 16, {
-          error: "中分類は1〜16で入力してください。",
+          error: "正しい中分類を入力してください",
         })
     )
     .optional(),
@@ -48,9 +48,9 @@ export const serverValidation = z.object({
     .array(
       z.coerce
         .number()
-        .int({ error: "小分類は整数である必要があります。" })
+        .int({ error: "正しい小分類を入力してください" })
         .refine((val) => val >= 1 && val <= 48, {
-          error: "小分類は1〜48で入力してください。",
+          error: "正しい小分類を入力してください",
         })
     )
     .optional(),
@@ -59,9 +59,9 @@ export const serverValidation = z.object({
     .array(
       z.coerce
         .number()
-        .int({ error: "学科は整数である必要があります。" })
+        .int({ error: "正しい学科を入力してください" })
         .refine((val) => val >= 1 && val <= 7, {
-          error: "学科は1〜7で入力してください。",
+          error: "正しい学科を入力してください",
         })
     )
     .optional(),
