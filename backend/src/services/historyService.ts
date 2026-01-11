@@ -1,6 +1,7 @@
 import { HistoryRepository } from '@/repositories/historyRepository';
 import { MinorCategoryRepository } from '@/repositories/minorCategoryRepository';
 import { ConflictError } from '@/errors/appError';
+import { formatDateTime } from '@/utils/formatDateTime';
 import type { HistoreServerForm, HistoryUpdateServerForm } from '@shared/schemas/history';
 import type { StudentQuerySeverForm } from '@shared/schemas/studentQuery';
 import type { HistoryDetail, HistorySummary, HistoryNew, kari } from '@shared/types/history';
@@ -18,8 +19,8 @@ export const HistoryService = {
       minorCategoryId: history.student.minorCategoryId.toString(),
       statusId: history.statusId.toString(),
       other: history.other,
-      startTime: history.startTime.toISOString(),
-      endTime: history.endTime ? history.endTime.toISOString() : '',
+      startTime: formatDateTime(history.startTime)!,
+      endTime: formatDateTime(history.endTime),
       validFlag: history.validFlag,
       updatedAt: history.updatedAt.toISOString(),
     };
@@ -42,8 +43,8 @@ export const HistoryService = {
       minorCategoryName: history.student.minorCategory.minorCategoryName,
       statusName: history.status.statusName,
       other: history.other,
-      startTime: history.startTime.toISOString(),
-      endTime: history.endTime ? history.endTime.toISOString() : '',
+      startTime: formatDateTime(history.startTime)!,
+      endTime: formatDateTime(history.endTime),
     }));
   },
 
@@ -70,8 +71,8 @@ export const HistoryService = {
       studentId: history.studentId,
       statusId: history.statusId.toString(),
       other: history.other,
-      startTime: history.startTime.toISOString(),
-      endTime: history.endTime ? history.endTime.toISOString() : '',
+      startTime: formatDateTime(history.startTime)!,
+      endTime: formatDateTime(history.endTime),
       validFlag: history.validFlag,
       createdAt: history.createdAt.toISOString(),
       updatedAt: history.updatedAt.toISOString(),
@@ -87,8 +88,8 @@ export const HistoryService = {
       studentId: history.studentId,
       statusId: history.statusId.toString(),
       other: history.other,
-      startTime: history.startTime.toISOString(),
-      endTime: history.endTime ? history.endTime.toISOString() : '',
+      startTime: formatDateTime(history.startTime)!,
+      endTime: formatDateTime(history.endTime),
       validFlag: history.validFlag,
       updatedAt: history.updatedAt.toISOString(),
     };
