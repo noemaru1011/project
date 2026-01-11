@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
-import type { Status } from '@/features/status/types';
+import type { Status } from '@shared/types/status';
 
 export type OrgNode = {
   id: string;

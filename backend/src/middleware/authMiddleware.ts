@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { InvalidCredentialsError, ForbiddenError, TokenError } from '@/errors/authError';
-import { Role } from '@shared/role';
+import { Role } from '@shared/types/role';
 import { JwtPayload } from '@/types/jwtPayload';
 import { tokenBlacklist } from '@/utils/tokenBlacklist';
 import jwt from 'jsonwebtoken';

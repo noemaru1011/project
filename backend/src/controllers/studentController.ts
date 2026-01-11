@@ -25,7 +25,7 @@ export const StudentController = {
     }
   },
 
-  async searchStudents(req: Request, res: Response<Apibody<StudentSummary>>, next: NextFunction) {
+  async searchStudents(req: Request, res: Response<Apibody<StudentSummary[]>>, next: NextFunction) {
     try {
       const students = await StudentService.searchStudents(req.body);
       const key: ApiMessageKey = 'FETCH_SUCCESS';

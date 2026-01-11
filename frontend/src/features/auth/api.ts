@@ -2,13 +2,13 @@ import { api } from '@/api/api';
 import Cookies from 'js-cookie';
 import type { LoginForm } from '@shared/schemas/login';
 import { API_ROUTES } from '@shared/routes/routes';
-import type { LoginResponse } from '@shared/loginResponse';
+import type { Login } from '@shared/types/login';
 import type { PasswordForm } from '@shared/schemas/password';
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const authApi = {
   login: (data: LoginForm) =>
-    api<LoginResponse>(API_ROUTES.LOGIN, {
+    api<Login>(API_ROUTES.LOGIN, {
       method: 'POST',
       body: JSON.stringify(data),
     }),

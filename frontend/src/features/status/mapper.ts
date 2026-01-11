@@ -1,4 +1,4 @@
-import type { Status } from '@/features/status';
+import type { Status } from '@shared/types/status';
 import type { Option } from '@/components/ui/option';
 
 const statusOption = (status: Status): Option => ({

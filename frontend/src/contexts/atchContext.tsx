@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import type { Role } from '@shared/role';
+import type { Role } from '@shared/types/role';
 
 type AuthContextType = {
   role: Role | null;

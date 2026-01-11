@@ -1,15 +1,14 @@
 import bcrypt from 'bcrypt';
 import { InvalidCredentialsError } from '@/errors/authError';
 import { jwtUtil } from '@/utils/jwt';
-import { ROLE } from '@shared/role';
-import type { LoginResponse } from '@shared/loginResponse';
+import { ROLE } from '@shared/types/role';
 import { isPasswordUpdateRequired } from '@/utils/isPasswordUpdateRequired';
 import { StudentRepository } from '@/repositories/studentRepository';
 import { AdminRepository } from '@/repositories/adminRepository';
 import { PasswordRepository } from '@/repositories/passwordRepository';
 
 export const LoginService = {
-  async login(email: string, inputPassword: string): Promise<LoginResponse> {
+  async login(email: string, inputPassword: string) {
     // 管理者と学生の検索を同時に
     const [admin, student] = await Promise.all([
       AdminRepository.findByEmail(email),

@@ -1,10 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import { LoginService } from '@/services/loginService';
+import type { Apibody } from '@/types/apiBody';
+import type { Login } from '@shared/types/login';
 import { APIMESSAGE } from '@shared/apiMessage';
 import type { ApiMessageKey } from '@shared/apiMessage';
 
 export const LoginController = {
-  async login(req: Request, res: Response, next: NextFunction) {
+  async login(req: Request, res: Response<Apibody<Login>>, next: NextFunction) {
     const { email, password } = req.body;
     try {
       const result = await LoginService.login(email, password);
@@ -29,7 +31,7 @@ export const LoginController = {
       res.cookie('csrf', crypto.randomUUID(), { httpOnly: false });
 
       const key: ApiMessageKey = 'LOGIN_SUCCESS';
-      return res.status(200).json({ code: key, message: APIMESSAGE.LOGIN_SUCCESS, data: result });
+      return res.status(200).json({ code: key, data: result, message: APIMESSAGE.LOGIN_SUCCESS });
     } catch (error) {
       return next(error);
     }

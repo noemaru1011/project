@@ -2,10 +2,11 @@ import { Request, Response, NextFunction } from 'express';
 import { APIMESSAGE } from '@shared/apiMessage';
 import type { ApiMessageKey } from '@shared/apiMessage';
 import { tokenBlacklist } from '@/utils/tokenBlacklist';
+import type { Apibody } from '@/types/apiBody';
 import jwt from 'jsonwebtoken';
 
 export const LogoutController = {
-  async logout(req: Request, res: Response, next: NextFunction) {
+  async logout(req: Request, res: Response<Apibody<null>>, next: NextFunction) {
     try {
       const token = req.cookies.token;
 
@@ -41,7 +42,7 @@ export const LogoutController = {
       });
 
       const key: ApiMessageKey = 'LOGOUT_SUCCESS';
-      return res.status(200).json({ code: key, message: APIMESSAGE.LOGOUT_SUCCESS });
+      return res.status(200).json({ code: key, data: null, message: APIMESSAGE.LOGOUT_SUCCESS });
     } catch (error) {
       return next(error);
     }
