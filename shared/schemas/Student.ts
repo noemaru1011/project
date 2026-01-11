@@ -92,6 +92,8 @@ export const serverValidation = z.object({
     }),
 });
 
+export type StudentServerForm = z.infer<typeof serverValidation>;
+
 export const serverUpdateValidation = serverValidation.extend({
   updatedAt: z.coerce.date({
     error: (issue) => {
@@ -102,3 +104,5 @@ export const serverUpdateValidation = serverValidation.extend({
     },
   }),
 });
+
+export type StudentUpdateServerForm = z.infer<typeof serverUpdateValidation>;

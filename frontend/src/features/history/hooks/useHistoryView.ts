@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { HistoryDetail } from '@/features/history';
+import type { HistoryDetail } from '@shared/types/history';
 import { historyApi } from '@/features/history';
 import { useView } from '@/hooks/api/useView';
 

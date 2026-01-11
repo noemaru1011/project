@@ -1,10 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
 import { HistoryService } from '@/services/historyService';
+import type { Apibody } from '@/types/apiBody';
+import type { HistoryDetail, HistorySummary } from '@shared/types/history';
 import { APIMESSAGE } from '@shared/apiMessage';
 import type { ApiMessageKey } from '@shared/apiMessage';
 
 export const HistoryController = {
-  async searchHistories(req: Request, res: Response, next: NextFunction) {
+  async searchHistories(
+    req: Request,
+    res: Response<Apibody<HistorySummary[]>>,
+    next: NextFunction,
+  ) {
     try {
       const histories = await HistoryService.searchHistories(req.body);
       const key: ApiMessageKey = 'FETCH_SUCCESS';
@@ -19,7 +25,7 @@ export const HistoryController = {
   },
   async searchByStartTimeHistories(req: Request, res: Response, next: NextFunction) {
     try {
-      const datetimeStr = req.query.datetime as string; // ?datetime=2026-01-08T14:30
+      const datetimeStr = req.query.datetime as string;
       if (!datetimeStr) {
         return res.status(400).json({ message: APIMESSAGE.INVALID_DATETIME });
       }
@@ -40,16 +46,18 @@ export const HistoryController = {
     }
   },
 
-  async getHistory(req: Request, res: Response, next: NextFunction) {
+  async getHistory(req: Request, res: Response<Apibody<HistoryDetail>>, next: NextFunction) {
     try {
       const { id } = req.params;
       if (!id) {
-        return res.status(404).json({ message: APIMESSAGE.NO_HISTORY });
+        const key: ApiMessageKey = 'NO_HISTORY';
+        return res.status(404).json({ code: key, data: null, message: APIMESSAGE.NO_HISTORY });
       }
 
       const history = await HistoryService.getHistory(id);
       if (!history) {
-        return res.status(404).json({ message: APIMESSAGE.NO_HISTORY });
+        const key: ApiMessageKey = 'NO_HISTORY';
+        return res.status(404).json({ code: key, data: null, message: APIMESSAGE.NO_HISTORY });
       }
 
       const key: ApiMessageKey = 'FETCH_SUCCESS';

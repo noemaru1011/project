@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { Prisma } from '@prisma/client';
 import type { StudentDetail, StudentNew, StudentSummary } from '@shared/types/student';
+import type { StudentServerForm, StudentUpdateServerForm } from '@shared/schemas/student';
 
 const prisma = new PrismaClient();
 
@@ -30,7 +31,7 @@ export const StudentRepository = {
       grade: row.grade.toString(),
       departmentId: row.departmentId.toString(),
       email: row.email,
-      minorCategoryId: row.minorCategoryId?.toString() ?? null,
+      minorCategoryId: row.minorCategoryId.toString(),
       updatedAt: row.updatedAt.toISOString(),
     };
   },
@@ -43,16 +44,7 @@ export const StudentRepository = {
   },
 
   //学生新規作成(トランザクション前提)
-  async create(
-    tx: Prisma.TransactionClient,
-    data: {
-      studentName: string;
-      email: string;
-      departmentId: number;
-      minorCategoryId: number;
-      grade: number;
-    },
-  ): Promise<StudentNew> {
+  async create(tx: Prisma.TransactionClient, data: StudentServerForm): Promise<StudentNew> {
     const row = await tx.student.create({
       data: {
         studentName: data.studentName,
@@ -86,16 +78,7 @@ export const StudentRepository = {
   },
 
   //学生更新
-  async update(
-    studentId: string,
-    data: {
-      studentName: string;
-      departmentId: number;
-      minorCategoryId: number;
-      grade: number;
-      updatedAt: Date;
-    },
-  ): Promise<StudentDetail | null> {
+  async update(studentId: string, data: StudentUpdateServerForm): Promise<StudentDetail | null> {
     const result = await prisma.$transaction(async (tx) => {
       const updated = await tx.student.updateMany({
         where: {
@@ -169,7 +152,7 @@ export const StudentRepository = {
       ...(data.grades?.length ? { grade: { in: data.grades } } : {}),
     };
 
-    const students = await prisma.student.findMany({
+    const rows = await prisma.student.findMany({
       where,
       select: {
         deleteFlag: false,
@@ -200,14 +183,14 @@ export const StudentRepository = {
       orderBy: [{ minorCategory: { minorCategoryName: 'asc' } }, { grade: 'desc' }],
     });
 
-    return students.map((student) => ({
-      studentId: student.studentId.toString(),
-      studentName: student.studentName,
-      grade: student.grade.toString(),
-      departmentName: student.department.departmentName,
-      minorCategoryName: student.minorCategory.minorCategoryName,
-      subCategoryName: student.minorCategory.subCategory.subCategoryName,
-      categoryName: student.minorCategory.subCategory.category.categoryName,
+    return rows.map((row) => ({
+      studentId: row.studentId.toString(),
+      studentName: row.studentName,
+      grade: row.grade.toString(),
+      departmentName: row.department.departmentName,
+      minorCategoryName: row.minorCategory.minorCategoryName,
+      subCategoryName: row.minorCategory.subCategory.subCategoryName,
+      categoryName: row.minorCategory.subCategory.category.categoryName,
     }));
   },
 };

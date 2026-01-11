@@ -60,8 +60,13 @@ export const serverValidation = z.object({
     },
   }),
 
-  endTime: z.preprocess((v) => (v === "" || v === null ? undefined : v), z.coerce.date().optional()),
+  endTime: z.preprocess(
+    (v) => (v === "" || v === null ? undefined : v),
+    z.coerce.date().optional()
+  ),
 });
+
+export type HistoreServerForm = z.infer<typeof serverValidation>;
 
 export const serverUpdateValidation = serverValidation
   .omit({
@@ -80,3 +85,5 @@ export const serverUpdateValidation = serverValidation
       },
     }),
   });
+
+export type HistoryUpdateServerForm = z.infer<typeof serverUpdateValidation>;

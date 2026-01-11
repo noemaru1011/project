@@ -1,58 +1,25 @@
 import { HistoryRepository } from '@/repositories/historyRepository';
 import { MinorCategoryRepository } from '@/repositories/minorCategoryRepository';
-import { formatDateTime } from '@/utils/formatDateTime';
 import { ConflictError } from '@/errors/appError';
+import type { HistoreServerForm, HistoryUpdateServerForm } from '@shared/schemas/history';
+import type { StudentQuerySeverForm } from '@shared/schemas/studentQuery';
 
 export const HistoryService = {
   async getHistory(historyId: string) {
-    const history = await HistoryRepository.find(historyId);
-    if (!history) return null;
-    //DTO
-    return {
-      historyId: history.historyId,
-      studentName: history.student.studentName,
-      grade: history.student.grade,
-      departmentId: history.student.departmentId,
-      minorCategoryId: history.student.minorCategoryId,
-      statusId: history.statusId,
-      other: history.other,
-      validFlag: history.validFlag,
-      startTime: formatDateTime(history.startTime),
-      endTime: formatDateTime(history.endTime),
-      updatedAt: history.updatedAt,
-    };
+    return await HistoryRepository.find(historyId);
   },
 
-  async searchHistories(data: {
-    minorCategoryIds?: number[];
-    subCategoryIds?: number[];
-    categoryIds?: number[];
-    grades?: number[];
-    departmentIds?: number[];
-  }) {
+  async searchHistories(data: StudentQuerySeverForm) {
     const minorCategoryIds = await MinorCategoryRepository.resolveMinorCategoryIds(data);
 
-    const histories = await HistoryRepository.searchHistories({
+    return await HistoryRepository.searchHistories({
       minorCategoryIds,
       departmentIds: data.departmentIds,
       grades: data.grades,
     });
-
-    return histories.map((h) => ({
-      historyId: h.historyId,
-      studentName: h.student.studentName,
-      grade: h.student.grade,
-      departmentName: h.student.department.departmentName,
-      minorCategoryName: h.student.minorCategory.minorCategoryName,
-      statusName: h.status.statusName,
-      other: h.other,
-      startTime: formatDateTime(h.startTime),
-      endTime: formatDateTime(h.endTime),
-    }));
   },
 
   async searchByStartTimeHistories(query: Date) {
-    console.log(query);
     const histories = await HistoryRepository.searchByStartTimeHistories(query);
     const historiesMapped = histories.map((h) => ({
       statusId: h.statusId,
@@ -66,27 +33,11 @@ export const HistoryService = {
     const categoryAggregation = aggregateByCategoryHierarchy(historiesMapped);
     return { deptGradeAggregation, categoryAggregation };
   },
-  async createHistory(data: {
-    studentIds: string[];
-    statusId: number;
-    other: string;
-    startTime: Date;
-    endTime?: Date | null;
-  }) {
+  async createHistory(data: HistoreServerForm) {
     await HistoryRepository.createHistory(data);
   },
 
-  async updateHistory(
-    data: {
-      statusId: number;
-      other: string;
-      startTime: Date;
-      endTime?: Date | null;
-      validFlag: boolean;
-      updatedAt: Date;
-    },
-    historyId: string,
-  ) {
+  async updateHistory(data: HistoryUpdateServerForm, historyId: string) {
     const history = await HistoryRepository.updateHistory(data, historyId);
     if (history.count === 0) throw new ConflictError();
   },

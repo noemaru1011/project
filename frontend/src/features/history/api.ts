@@ -1,6 +1,6 @@
 import { api } from '@/api/api';
 import type { HistoryForm, HistoryUpdateForm } from '@shared/schemas/history';
-import type { HistoryDetail } from '@/features/history/types';
+import type { HistoryDetail } from '@shared/types/history';
 import { API_ROUTES } from '@shared/routes/routes';
 
 export const historyApi = {

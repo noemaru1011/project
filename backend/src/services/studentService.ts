@@ -9,19 +9,15 @@ import { generatePassword } from '@/utils/generatePassword';
 import { sendAccountEmail } from '@/utils/sendAccountEmail';
 import { ConflictError } from '@/errors/appError';
 import { EmailDuplicateError } from '@/errors/studentError';
+import type { StudentServerForm, StudentUpdateServerForm } from '@shared/schemas/student';
+import type { StudentQuerySeverForm } from '@shared/schemas/studentQuery';
 
 export const StudentService = {
   async getStudent(studentId: string) {
     return await StudentRepository.find(studentId);
   },
 
-  async createStudent(data: {
-    studentName: string;
-    email: string;
-    departmentId: number;
-    minorCategoryId: number;
-    grade: number;
-  }) {
+  async createStudent(data: StudentServerForm) {
     try {
       //パスワード作成
       const plainPassword = generatePassword();
@@ -55,16 +51,7 @@ export const StudentService = {
     }
   },
 
-  async updateStudent(
-    studentId: string,
-    data: {
-      studentName: string;
-      departmentId: number;
-      minorCategoryId: number;
-      grade: number;
-      updatedAt: Date;
-    },
-  ) {
+  async updateStudent(studentId: string, data: StudentUpdateServerForm) {
     const student = await StudentRepository.update(studentId, data);
     //楽観的エラー
     if (student === null) throw new ConflictError();
@@ -75,13 +62,7 @@ export const StudentService = {
     await StudentRepository.delete(studentId);
   },
 
-  async searchStudents(data: {
-    minorCategoryIds?: number[];
-    subCategoryIds?: number[];
-    categoryIds?: number[];
-    grades?: number[];
-    departmentIds?: number[];
-  }) {
+  async searchStudents(data: StudentQuerySeverForm) {
     const minorCategoryIds = await MinorCategoryRepository.resolveMinorCategoryIds(data);
 
     return await StudentRepository.searchStudents({

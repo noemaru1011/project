@@ -66,3 +66,5 @@ export const serverValidation = z.object({
     )
     .optional(),
 });
+
+export type StudentQuerySeverForm = z.infer<typeof serverValidation>;
