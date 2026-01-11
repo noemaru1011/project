@@ -50,8 +50,8 @@ export const HistoryDeletePage = () => {
   const historyDelete = {
     statusId: history.statusId,
     startTime: history.startTime,
-    endTime: history.endTime ?? undefined,
-    other: history.other,
+    endTime: history.endTime ?? '',
+    other: history.other ?? '',
     updatedAt: history.updatedAt,
     validFlag: history.validFlag,
   };

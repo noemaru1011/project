@@ -1,14 +1,12 @@
 import { PrismaClient } from '@prisma/client';
 import { Prisma } from '@prisma/client';
-import { formatDateTime } from '@/utils/formatDateTime';
-import type { HistoryDetail, HistorySummary } from '@shared/types/history';
 import type { HistoreServerForm, HistoryUpdateServerForm } from '@shared/schemas/history';
 
 const prisma = new PrismaClient();
 
 export const HistoryRepository = {
-  async find(historyId: string): Promise<HistoryDetail | null> {
-    const row = await prisma.history.findUnique({
+  async find(historyId: string) {
+    return await prisma.history.findUnique({
       where: {
         historyId,
         student: { deleteFlag: false },
@@ -31,28 +29,13 @@ export const HistoryRepository = {
         updatedAt: true,
       },
     });
-    if (!row) return null;
-
-    return {
-      historyId: row.historyId,
-      studentName: row.student.studentName,
-      grade: row.student.grade.toString(),
-      minorCategoryId: row.student.minorCategoryId.toString(),
-      departmentId: row.student.departmentId.toString(),
-      statusId: row.statusId.toString(),
-      other: row.other ?? null,
-      startTime: row.startTime.toISOString(),
-      endTime: row.endTime?.toISOString() ?? null,
-      validFlag: row.validFlag,
-      updatedAt: row.updatedAt?.toISOString(),
-    };
   },
 
   async searchHistories(data: {
     minorCategoryIds?: number[] | undefined;
     departmentIds?: number[] | undefined;
     grades?: number[] | undefined;
-  }): Promise<HistorySummary[]> {
+  }) {
     //小隊(大隊・中隊)、学科、学年
     const where: Prisma.HistoryWhereInput = {
       student: {
@@ -64,7 +47,7 @@ export const HistoryRepository = {
       },
     };
 
-    const rows = await prisma.history.findMany({
+    return await prisma.history.findMany({
       where,
       select: {
         student: {
@@ -97,18 +80,6 @@ export const HistoryRepository = {
         endTime: true,
       },
     });
-
-    return rows.map((row) => ({
-      historyId: row.historyId.toString(),
-      studentName: row.student.studentName,
-      grade: row.student.grade.toString(),
-      departmentName: row.student.department.departmentName,
-      minorCategoryName: row.student.minorCategory.minorCategoryName,
-      statusName: row.status.statusName,
-      other: row.other ?? '',
-      startTime: formatDateTime(row.startTime)!,
-      endTime: row.endTime ? formatDateTime(row.endTime) : '',
-    }));
   },
 
   async searchByStartTimeHistories(query: Date) {
@@ -148,7 +119,7 @@ export const HistoryRepository = {
     });
   },
   async createHistory(data: HistoreServerForm) {
-    const records = data.studentIds.map((id) => ({
+    const datas = data.studentIds.map((id) => ({
       studentId: id,
       statusId: data.statusId,
       other: data.other,
@@ -157,24 +128,30 @@ export const HistoryRepository = {
       validFlag: true,
     }));
 
-    return prisma.history.createMany({
-      data: records,
-    });
+    return await prisma.$transaction(datas.map((d) => prisma.history.create({ data: d })));
   },
 
   async updateHistory(data: HistoryUpdateServerForm, historyId: string) {
-    return await prisma.history.updateMany({
-      where: {
-        historyId,
-        updatedAt: data.updatedAt,
-      },
-      data: {
-        statusId: data.statusId,
-        other: data.other,
-        startTime: data.startTime,
-        endTime: data.endTime,
-        validFlag: data.validFlag,
-      },
+    return await prisma.$transaction(async (tx) => {
+      const updated = await tx.history.updateMany({
+        where: {
+          historyId,
+          updatedAt: data.updatedAt,
+        },
+        data: {
+          statusId: data.statusId,
+          other: data.other,
+          startTime: data.startTime,
+          endTime: data.endTime,
+          validFlag: data.validFlag,
+        },
+      });
+
+      if (updated.count === 0) return null; // 楽観ロック失敗
+
+      return tx.history.findUnique({
+        where: { historyId },
+      });
     });
   },
 

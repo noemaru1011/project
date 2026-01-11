@@ -1,14 +1,13 @@
 import { PrismaClient } from '@prisma/client';
 import { Prisma } from '@prisma/client';
-import type { StudentDetail, StudentNew, StudentSummary } from '@shared/types/student';
 import type { StudentServerForm, StudentUpdateServerForm } from '@shared/schemas/student';
 
 const prisma = new PrismaClient();
 
 export const StudentRepository = {
   //学生1件取得
-  async find(studentId: string): Promise<StudentDetail | null> {
-    const row = await prisma.student.findFirst({
+  async find(studentId: string) {
+    const student = await prisma.student.findFirst({
       where: {
         studentId,
         deleteFlag: false,
@@ -23,17 +22,7 @@ export const StudentRepository = {
         updatedAt: true,
       },
     });
-    if (!row) return null;
-
-    return {
-      studentId: row.studentId,
-      studentName: row.studentName,
-      grade: row.grade.toString(),
-      departmentId: row.departmentId.toString(),
-      email: row.email,
-      minorCategoryId: row.minorCategoryId.toString(),
-      updatedAt: row.updatedAt.toISOString(),
-    };
+    return student ?? null;
   },
 
   //メールアドレス検証用
@@ -44,8 +33,8 @@ export const StudentRepository = {
   },
 
   //学生新規作成(トランザクション前提)
-  async create(tx: Prisma.TransactionClient, data: StudentServerForm): Promise<StudentNew> {
-    const row = await tx.student.create({
+  async create(tx: Prisma.TransactionClient, data: StudentServerForm) {
+    return await tx.student.create({
       data: {
         studentName: data.studentName,
         email: data.email,
@@ -64,22 +53,11 @@ export const StudentRepository = {
         updatedAt: true,
       },
     });
-
-    return {
-      studentId: row.studentId,
-      studentName: row.studentName,
-      grade: row.grade.toString(),
-      departmentId: row.departmentId.toString(),
-      email: row.email,
-      minorCategoryId: row.minorCategoryId?.toString(),
-      createdAt: row.updatedAt.toISOString(),
-      updatedAt: row.updatedAt.toISOString(),
-    };
   },
 
   //学生更新
-  async update(studentId: string, data: StudentUpdateServerForm): Promise<StudentDetail | null> {
-    const result = await prisma.$transaction(async (tx) => {
+  async update(studentId: string, data: StudentUpdateServerForm) {
+    return await prisma.$transaction(async (tx) => {
       const updated = await tx.student.updateMany({
         where: {
           studentId,
@@ -94,36 +72,12 @@ export const StudentRepository = {
         },
       });
 
-      //更新失敗
-      if (updated.count === 0) {
-        return null;
-      }
+      if (updated.count === 0) return null; // 楽観ロック失敗
 
       return tx.student.findUnique({
         where: { studentId },
-        select: {
-          studentId: true,
-          studentName: true,
-          grade: true,
-          departmentId: true,
-          email: true,
-          minorCategoryId: true,
-          updatedAt: true,
-        },
       });
     });
-
-    if (!result) return null;
-
-    return {
-      studentId: result.studentId,
-      studentName: result.studentName,
-      grade: result.grade.toString(),
-      departmentId: result.departmentId.toString(),
-      email: result.email,
-      minorCategoryId: result.minorCategoryId?.toString() ?? null,
-      updatedAt: result.updatedAt.toISOString(),
-    };
   },
 
   //学生削除
@@ -143,7 +97,7 @@ export const StudentRepository = {
     minorCategoryIds?: number[] | undefined;
     departmentIds?: number[] | undefined;
     grades?: number[] | undefined;
-  }): Promise<StudentSummary[]> {
+  }) {
     //小隊(大隊・中隊)、学科、学年
     const where: Prisma.StudentWhereInput = {
       deleteFlag: false,
@@ -152,7 +106,7 @@ export const StudentRepository = {
       ...(data.grades?.length ? { grade: { in: data.grades } } : {}),
     };
 
-    const rows = await prisma.student.findMany({
+    return await prisma.student.findMany({
       where,
       select: {
         deleteFlag: false,
@@ -182,15 +136,5 @@ export const StudentRepository = {
       },
       orderBy: [{ minorCategory: { minorCategoryName: 'asc' } }, { grade: 'desc' }],
     });
-
-    return rows.map((row) => ({
-      studentId: row.studentId.toString(),
-      studentName: row.studentName,
-      grade: row.grade.toString(),
-      departmentName: row.department.departmentName,
-      minorCategoryName: row.minorCategory.minorCategoryName,
-      subCategoryName: row.minorCategory.subCategory.subCategoryName,
-      categoryName: row.minorCategory.subCategory.category.categoryName,
-    }));
   },
 };

@@ -1,22 +1,17 @@
 import { PrismaClient } from '@prisma/client';
 import { Prisma } from '@prisma/client';
-import type { MinorCategory } from '@shared/types/minorCategory';
 
 const prisma = new PrismaClient();
 
 export const MinorCategoryRepository = {
-  async findAll(): Promise<MinorCategory[]> {
-    const rows = await prisma.minorCategory.findMany({
+  async findAll() {
+    return await prisma.minorCategory.findMany({
       select: {
         minorCategoryId: true,
         minorCategoryName: true,
       },
       orderBy: { minorCategoryId: 'asc' },
     });
-    return rows.map((row) => ({
-      minorCategoryId: row.minorCategoryId.toString(),
-      minorCategoryName: row.minorCategoryName,
-    }));
   },
 
   //大分類、中分類に紐づいた小分類を変えす関数

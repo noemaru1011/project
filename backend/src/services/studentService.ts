@@ -9,15 +9,26 @@ import { generatePassword } from '@/utils/generatePassword';
 import { sendAccountEmail } from '@/utils/sendAccountEmail';
 import { ConflictError } from '@/errors/appError';
 import { EmailDuplicateError } from '@/errors/studentError';
+import type { StudentNew, StudentDetail, StudentSummary } from '@shared/types/student';
 import type { StudentServerForm, StudentUpdateServerForm } from '@shared/schemas/student';
 import type { StudentQuerySeverForm } from '@shared/schemas/studentQuery';
 
 export const StudentService = {
-  async getStudent(studentId: string) {
-    return await StudentRepository.find(studentId);
+  async getStudent(studentId: string): Promise<StudentDetail | null> {
+    const student = await StudentRepository.find(studentId);
+    if (student == null) return null;
+    return {
+      studentId: student.studentId,
+      studentName: student.studentName,
+      grade: student.grade.toString(),
+      departmentId: student.departmentId.toString(),
+      email: student.email,
+      minorCategoryId: student.minorCategoryId.toString(),
+      updatedAt: student.updatedAt.toISOString(),
+    };
   },
 
-  async createStudent(data: StudentServerForm) {
+  async createStudent(data: StudentServerForm): Promise<StudentNew> {
     try {
       //パスワード作成
       const plainPassword = generatePassword();
@@ -35,7 +46,17 @@ export const StudentService = {
 
       //メール送信
       await sendAccountEmail(data.email, plainPassword);
-      return student;
+      //DTO
+      return {
+        studentId: student.studentId,
+        studentName: student.studentName,
+        grade: student.grade.toString(),
+        departmentId: student.departmentId.toString(),
+        email: student.email,
+        minorCategoryId: student.minorCategoryId.toString(),
+        createdAt: student.createdAt.toISOString(),
+        updatedAt: student.updatedAt.toISOString(),
+      };
     } catch (err: unknown) {
       //メールアドレス重複時のエラー
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
@@ -51,24 +72,43 @@ export const StudentService = {
     }
   },
 
-  async updateStudent(studentId: string, data: StudentUpdateServerForm) {
+  async updateStudent(studentId: string, data: StudentUpdateServerForm): Promise<StudentDetail> {
     const student = await StudentRepository.update(studentId, data);
-    //楽観的エラー
-    if (student === null) throw new ConflictError();
-    return student;
+
+    if (!student) throw new ConflictError();
+    //DTO
+    return {
+      studentId: student.studentId,
+      studentName: student.studentName,
+      grade: student.grade.toString(),
+      departmentId: student.departmentId.toString(),
+      email: student.email,
+      minorCategoryId: student.minorCategoryId.toString(),
+      updatedAt: student.updatedAt.toISOString(),
+    };
   },
 
   async deleteStudent(studentId: string) {
     await StudentRepository.delete(studentId);
   },
 
-  async searchStudents(data: StudentQuerySeverForm) {
+  async searchStudents(data: StudentQuerySeverForm): Promise<StudentSummary[]> {
     const minorCategoryIds = await MinorCategoryRepository.resolveMinorCategoryIds(data);
 
-    return await StudentRepository.searchStudents({
+    const students = await StudentRepository.searchStudents({
       minorCategoryIds,
       departmentIds: data.departmentIds,
       grades: data.grades,
     });
+    //DTO
+    return students.map((student) => ({
+      studentId: student.studentId.toString(),
+      studentName: student.studentName,
+      grade: student.grade.toString(),
+      departmentName: student.department.departmentName,
+      minorCategoryName: student.minorCategory.minorCategoryName,
+      subCategoryName: student.minorCategory.subCategory.subCategoryName,
+      categoryName: student.minorCategory.subCategory.category.categoryName,
+    }));
   },
 };

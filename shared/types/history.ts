@@ -1,3 +1,4 @@
+//明細画面用
 export interface HistoryDetail {
   historyId: string;
   studentName: string;
@@ -12,19 +13,26 @@ export interface HistoryDetail {
   updatedAt: string;
 }
 
-export interface Stdent {
+export interface StdentInfo {
   studentName: string;
   grade: string;
   minorCategoryId: string;
   departmentId: string;
 }
 
-export interface History {
+export interface kari {
+  historyId: string;
+  studentId: string;
   statusId: string;
   startTime: string;
-  endTime?: string;
-  other?: string;
+  endTime: string | null;
+  other: string | null;
   validFlag: boolean;
+  updatedAt: string;
+}
+
+export interface HistoryNew extends kari {
+  createdAt: string;
 }
 
 //テーブル用

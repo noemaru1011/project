@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { HistoryService } from '@/services/historyService';
 import type { Apibody } from '@/types/apiBody';
-import type { HistoryDetail, HistorySummary } from '@shared/types/history';
+import type { HistoryDetail, HistorySummary, HistoryNew } from '@shared/types/history';
 import { APIMESSAGE } from '@shared/apiMessage';
 import type { ApiMessageKey } from '@shared/apiMessage';
 
@@ -67,11 +67,11 @@ export const HistoryController = {
     }
   },
 
-  async createHistory(req: Request, res: Response, next: NextFunction) {
+  async createHistory(req: Request, res: Response<Apibody<HistoryNew[]>>, next: NextFunction) {
     try {
-      await HistoryService.createHistory(req.body);
+      const history = await HistoryService.createHistory(req.body);
       const key: ApiMessageKey = 'CREATE_SUCCESS';
-      return res.status(201).json({ code: key, message: APIMESSAGE.CREATE_SUCCESS });
+      return res.status(201).json({ code: key, data: history, message: APIMESSAGE.CREATE_SUCCESS });
     } catch (error) {
       return next(error);
     }
@@ -100,7 +100,7 @@ export const HistoryController = {
 
       await HistoryService.deleteHistory(id);
       const key: ApiMessageKey = 'DELETE_SUCCESS';
-      return res.status(200).json({ code: key, message: APIMESSAGE.DELETE_SUCCESS });
+      return res.status(204).json({ code: key, message: APIMESSAGE.DELETE_SUCCESS });
     } catch (error) {
       return next(error);
     }

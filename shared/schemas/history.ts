@@ -10,7 +10,7 @@ export const validation = z.object({
         : undefined,
   }),
 
-  other: z.string().max(30, "備考は30文字以内で入力してください。").optional(),
+  other: z.string().max(30, "備考は30文字以内で入力してください。").default(""),
 
   startTime: z.string().min(1, { error: "有効開始日は必須です。" }),
 

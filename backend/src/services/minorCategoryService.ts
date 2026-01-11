@@ -1,8 +1,12 @@
 import { MinorCategoryRepository } from '@/repositories/minorCategoryRepository';
+import type { MinorCategory } from '@shared/types/minorCategory';
 
 export const MinorCategoryService = {
-  async getAllMinorCategories() {
+  async getAllMinorCategories(): Promise<MinorCategory[]> {
     const minorCategories = await MinorCategoryRepository.findAll();
-    return minorCategories;
+    return minorCategories.map((minorCategory) => ({
+      minorCategoryId: minorCategory.minorCategoryId.toString(),
+      minorCategoryName: minorCategory.minorCategoryName,
+    }));
   },
 };

@@ -1,8 +1,12 @@
 import { DepartmentRepository } from '@/repositories/departmentRepository';
+import type { Department } from '@shared/types/department';
 
 export const DepartmentService = {
-  async getAllDepartments() {
+  async getAllDepartments(): Promise<Department[]> {
     const departments = await DepartmentRepository.findAll();
-    return departments;
+    return departments.map((department) => ({
+      departmentId: department.departmentId.toString(),
+      departmentName: department.departmentName,
+    }));
   },
 };

@@ -3,20 +3,48 @@ import { MinorCategoryRepository } from '@/repositories/minorCategoryRepository'
 import { ConflictError } from '@/errors/appError';
 import type { HistoreServerForm, HistoryUpdateServerForm } from '@shared/schemas/history';
 import type { StudentQuerySeverForm } from '@shared/schemas/studentQuery';
+import type { HistoryDetail, HistorySummary, HistoryNew, kari } from '@shared/types/history';
 
 export const HistoryService = {
-  async getHistory(historyId: string) {
-    return await HistoryRepository.find(historyId);
+  async getHistory(historyId: string): Promise<HistoryDetail | null> {
+    const history = await HistoryRepository.find(historyId);
+    if (history == null) return null;
+    //DTO
+    return {
+      historyId: history.historyId,
+      studentName: history.student.studentName,
+      grade: history.student.grade.toString(),
+      departmentId: history.student.departmentId.toString(),
+      minorCategoryId: history.student.minorCategoryId.toString(),
+      statusId: history.statusId.toString(),
+      other: history.other,
+      startTime: history.startTime.toISOString(),
+      endTime: history.endTime ? history.endTime.toISOString() : '',
+      validFlag: history.validFlag,
+      updatedAt: history.updatedAt.toISOString(),
+    };
   },
 
-  async searchHistories(data: StudentQuerySeverForm) {
+  async searchHistories(data: StudentQuerySeverForm): Promise<HistorySummary[]> {
     const minorCategoryIds = await MinorCategoryRepository.resolveMinorCategoryIds(data);
 
-    return await HistoryRepository.searchHistories({
+    const histories = await HistoryRepository.searchHistories({
       minorCategoryIds,
       departmentIds: data.departmentIds,
       grades: data.grades,
     });
+    //DTO
+    return histories.map((history) => ({
+      historyId: history.historyId,
+      studentName: history.student.studentName,
+      grade: history.student.grade.toString(),
+      departmentName: history.student.department.departmentName,
+      minorCategoryName: history.student.minorCategory.minorCategoryName,
+      statusName: history.status.statusName,
+      other: history.other,
+      startTime: history.startTime.toISOString(),
+      endTime: history.endTime ? history.endTime.toISOString() : '',
+    }));
   },
 
   async searchByStartTimeHistories(query: Date) {
@@ -33,13 +61,37 @@ export const HistoryService = {
     const categoryAggregation = aggregateByCategoryHierarchy(historiesMapped);
     return { deptGradeAggregation, categoryAggregation };
   },
-  async createHistory(data: HistoreServerForm) {
-    await HistoryRepository.createHistory(data);
+
+  async createHistory(data: HistoreServerForm): Promise<HistoryNew[]> {
+    const histories = await HistoryRepository.createHistory(data);
+    //DTO
+    return histories.map((history) => ({
+      historyId: history.historyId,
+      studentId: history.studentId,
+      statusId: history.statusId.toString(),
+      other: history.other,
+      startTime: history.startTime.toISOString(),
+      endTime: history.endTime ? history.endTime.toISOString() : '',
+      validFlag: history.validFlag,
+      createdAt: history.createdAt.toISOString(),
+      updatedAt: history.updatedAt.toISOString(),
+    }));
   },
 
-  async updateHistory(data: HistoryUpdateServerForm, historyId: string) {
+  async updateHistory(data: HistoryUpdateServerForm, historyId: string): Promise<kari> {
     const history = await HistoryRepository.updateHistory(data, historyId);
-    if (history.count === 0) throw new ConflictError();
+    if (history == null) throw new ConflictError();
+    //DTO
+    return {
+      historyId: history.historyId,
+      studentId: history.studentId,
+      statusId: history.statusId.toString(),
+      other: history.other,
+      startTime: history.startTime.toISOString(),
+      endTime: history.endTime ? history.endTime.toISOString() : '',
+      validFlag: history.validFlag,
+      updatedAt: history.updatedAt.toISOString(),
+    };
   },
 
   async deleteHistory(historyId: string) {
