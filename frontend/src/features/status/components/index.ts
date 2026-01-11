@@ -1,1 +1,1 @@
-export * from './StatusRadioGroup';
+export * from './Status.RadioGroup';

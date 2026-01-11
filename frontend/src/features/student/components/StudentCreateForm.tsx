@@ -3,8 +3,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/Button/Button';
 import { StudentNameInput, StudentEmailInput } from '@/features/student/components';
 import { GradeRadioGroup } from '@/features/grade/components';
-import { MinorCategorySelect } from '@/features/minorCategory/components/MinorCategorySelect';
-import { DepartmentSelect } from '@/features/department/components/DepartmentSelect';
+import { MinorCategorySelect } from '@/features/minorCategory/components/MinorCategory.Select';
+import { DepartmentSelect } from '@/features/department/components/Department.Select';
 import { validation } from '@shared/schemas/student';
 import type { StudentForm } from '@shared/schemas/student';
 

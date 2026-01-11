@@ -1,3 +1,3 @@
-export * from './GradeRadioGroup';
-export * from './GradeCheckboxGroup';
-export * from './GradeSelect';
+export * from './Grade.RadioGroup';
+export * from './Grade.CheckboxGroup';
+export * from './Grade.Select';

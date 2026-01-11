@@ -1,2 +1,2 @@
-export * from './StudentSearchAccordion';
+export * from './StudentSearch.Accordion';
 export * from './StudentSearchForm';

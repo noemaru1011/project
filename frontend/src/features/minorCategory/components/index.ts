@@ -1,2 +1,2 @@
-export * from './MinorCategoryCheckboxGroup';
-export * from './MinorCategorySelect';
+export * from './MinorCategory.CheckboxGroup';
+export * from './MinorCategory.Select';

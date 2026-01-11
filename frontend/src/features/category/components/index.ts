@@ -1,1 +1,1 @@
-export * from './CategoryCheckboxGroup';
+export * from './Category.CheckboxGroup';

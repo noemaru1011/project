@@ -4,8 +4,8 @@ import { Input } from '@/components/ui/Input/Input';
 import { Button } from '@/components/ui/Button/Button';
 import { StudentNameInput, StudentEmailInput } from '@/features/student/components';
 import { GradeRadioGroup } from '@/features/grade/components';
-import { MinorCategorySelect } from '@/features/minorCategory/components/MinorCategorySelect';
-import { DepartmentSelect } from '@/features/department/components/DepartmentSelect';
+import { MinorCategorySelect } from '@/features/minorCategory/components/MinorCategory.Select';
+import { DepartmentSelect } from '@/features/department/components/Department.Select';
 import { updateValidation } from '@shared/schemas/student';
 import type { StudentUpdateForm as StudentUpdateFormType } from '@shared/schemas/student';
 

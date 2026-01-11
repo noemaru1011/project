@@ -1,2 +1,2 @@
-export * from './DepartmentCheckboxGroup';
-export * from './DepartmentSelect';
+export * from './Department.CheckboxGroup';
+export * from './Department.Select';
