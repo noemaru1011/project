@@ -60,7 +60,7 @@ export const serverValidation = z.object({
     },
   }),
 
-  endTime: z.coerce.date().optional(),
+  endTime: z.preprocess((v) => (v === "" || v === null ? undefined : v), z.coerce.date().optional()),
 });
 
 export const serverUpdateValidation = serverValidation
