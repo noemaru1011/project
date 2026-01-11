@@ -17,6 +17,11 @@ describe('store', () => {
     expect(state.departments.loading).toBe(false);
     expect(state.categories.data).toEqual([]);
     expect(state.categories.loading).toBe(false);
+    expect(state.subCategories.data).toEqual([]);
+    expect(state.subCategories.loading).toBe(false);
+    expect(state.minorCategories.data).toEqual([]);
+    expect(state.minorCategories.loading).toBe(false);
+    expect(state.statuses.data).toEqual([]);
+    expect(state.statuses.loading).toBe(false);
   });
 });
-
