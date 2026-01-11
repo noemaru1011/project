@@ -20,7 +20,5 @@ export interface StudentSummary {
   studentName: string;
   grade: string;
   minorCategoryName: string;
-  subCategoryName: string;
-  categoryName: string;
   departmentName: string;
 }

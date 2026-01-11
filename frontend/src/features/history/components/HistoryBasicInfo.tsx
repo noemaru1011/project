@@ -2,10 +2,10 @@ import { StudentNameInput } from '@/features/student/components';
 import { GradeSelect } from '@/features/grade/components';
 import { MinorCategorySelect } from '@/features/minorCategory/components';
 import { DepartmentSelect } from '@/features/department/components';
-import type { Stdent } from '@/features/history';
+import type { StudentSummary } from '@shared/types/student';
 
 type Props = {
-  stdent: Stdent;
+  stdent: StudentSummary;
 };
 
 export const HistoryBasicInfo = ({ stdent }: Props) => (
@@ -31,9 +31,9 @@ export const HistoryBasicInfo = ({ stdent }: Props) => (
     {/* コンテンツ */}
     <div className="space-y-4">
       <StudentNameInput value={stdent.studentName} disabled />
-      <GradeSelect value={String(stdent.grade)} disabled />
-      <MinorCategorySelect value={String(stdent.minorCategoryId)} disabled />
-      <DepartmentSelect value={String(stdent.departmentId)} disabled />
+      <GradeSelect value={stdent.grade} disabled />
+      <MinorCategorySelect value={stdent.minorCategoryName} disabled />
+      <DepartmentSelect value={stdent.departmentName} disabled />
     </div>
   </section>
 );

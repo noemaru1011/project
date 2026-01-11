@@ -1,12 +1,12 @@
 import { Table } from '@/components/ui/Table/Table';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { historyResultLabels } from '@/features/history/constants/historyLabels';
-import type { HistoryResult } from '@/features/history/types';
+import type { HistorySummary } from '@shared/types/history';
 import type { Action } from '@/components/ui/Table/TableRowActions';
 import { ROUTES } from '@/routes/routes';
 
 type Props = {
-  data?: HistoryResult[];
+  data?: HistorySummary[];
   loading: boolean;
   actions?: Action[];
 };

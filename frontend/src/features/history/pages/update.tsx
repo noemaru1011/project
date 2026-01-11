@@ -4,13 +4,11 @@ import { useHistoryView } from '@/features/history/hooks/useHistoryView';
 import { useHistoryUpdate } from '@/features/history/hooks/useHistoryUpdate';
 import { HistoryUpdateForm } from '@/features/history/components';
 import { HistoryBasicInfo } from '@/features/history/components';
-import type { Stdent } from '@/features/history';
+import type { StudentSummary } from '@shared/types/student';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { handleApiError } from '@/utils/handleApiError';
 import { ROUTES } from '@/routes/routes';
 import type { HistoryUpdateForm as FormType } from '@shared/schemas/history';
-
-import type { HistoryUpdateForm as HistoryUpdateFormType } from '@shared/schemas/history';
 
 export const HistoryUpdatePage = () => {
   const navigate = useNavigate();
@@ -27,14 +25,14 @@ export const HistoryUpdatePage = () => {
 
   const defaultValues: FormType = {
     statusId: history.statusId.toString(),
-    other: history.other,
+    other: history.other ?? '',
     startTime: history.startTime,
-    endTime: history.endTime ?? undefined,
+    endTime: history.endTime ?? '',
     validFlag: history.validFlag,
     updatedAt: history.updatedAt,
   };
 
-  const handleSubmit = async (data: HistoryUpdateFormType) => {
+  const handleSubmit = async (data: FormType) => {
     if (!history) {
       navigate(ROUTES.ERROR.NOTFOUND, { replace: true });
       return;
@@ -53,11 +51,12 @@ export const HistoryUpdatePage = () => {
     }
   };
 
-  const historyBasic: Stdent = {
+  const historyBasic: StudentSummary = {
+    studentId: '',
     studentName: history.studentName,
-    grade: history.grade.toString(),
-    minorCategoryId: history.minorCategoryId.toString(),
-    departmentId: history.departmentId.toString(),
+    grade: history.grade,
+    minorCategoryName: history.minorCategoryId,
+    departmentName: history.departmentId,
   };
 
   return (

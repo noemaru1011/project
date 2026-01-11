@@ -3,8 +3,9 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useHistoryDelete } from '@/features/history/hooks/useHistoryDelete';
 import { useHistoryView } from '@/features/history/hooks/useHistoryView';
 
-import type { Stdent } from '@/features/history';
+import type { StudentSummary } from '@shared/types/student';
 import { HistoryDeleteView } from '@/features/history/components';
+import type { HistoryUpdateForm } from '@shared/schemas/history';
 import { HistoryBasicInfo } from '@/features/history/components';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { handleApiError } from '@/utils/handleApiError';
@@ -40,14 +41,15 @@ export const HistoryDeletePage = () => {
     }
   };
   //マッピング
-  const historyBasic: Stdent = {
+  const historyBasic: StudentSummary = {
+    studentId: '', //不要なため
     studentName: history.studentName,
     grade: history.grade.toString(),
-    minorCategoryId: history.minorCategoryId.toString(),
-    departmentId: history.departmentId.toString(),
+    minorCategoryName: history.minorCategoryId.toString(),
+    departmentName: history.departmentId.toString(),
   };
 
-  const historyDelete = {
+  const historyDelete: HistoryUpdateForm = {
     statusId: history.statusId,
     startTime: history.startTime,
     endTime: history.endTime ?? '',

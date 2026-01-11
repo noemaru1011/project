@@ -107,8 +107,6 @@ export const StudentService = {
       grade: student.grade.toString(),
       departmentName: student.department.departmentName,
       minorCategoryName: student.minorCategory.minorCategoryName,
-      subCategoryName: student.minorCategory.subCategory.subCategoryName,
-      categoryName: student.minorCategory.subCategory.category.categoryName,
     }));
   },
 };
