@@ -209,20 +209,22 @@ async function main() {
   const FIXED_START = new Date('2026-01-01T09:00:00+09:00');
   const FIXED_END = new Date('2026-01-10T15:00:00+09:00');
 
-  for (const student of students) {
-    // 各学生5件の履歴を作成
-    for (let i = 0; i < 5; i++) {
-      const status = statusesAll[Math.floor(Math.random() * statusesAll.length)];
+  // 学生リストをシャッフルして、ランダムに履歴を作成する（全学生の約30%に履歴を持たせる）
+  const shuffledStudents = [...students].sort(() => Math.random() - 0.5);
+  const targetStudentCount = Math.floor(shuffledStudents.length * 0.3);
 
-      histories.push({
-        studentId: student.studentId,
-        statusId: status.statusId,
-        startTime: FIXED_START,
-        endTime: FIXED_END,
-        validFlag: true,
-        other: null,
-      });
-    }
+  for (let i = 0; i < targetStudentCount; i++) {
+    const student = shuffledStudents[i];
+    const status = statusesAll[Math.floor(Math.random() * statusesAll.length)];
+
+    histories.push({
+      studentId: student.studentId,
+      statusId: status.statusId,
+      startTime: FIXED_START,
+      endTime: FIXED_END,
+      validFlag: true,
+      other: null,
+    });
   }
 
   console.log(`inserting ${histories.length} histories...`);
