@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
 import statusReducer, { fetchStatuses } from './slice';
-import { statusApi } from '@/features/status';
 
 vi.mock('@/features/status', () => ({
   statusApi: {
@@ -26,9 +25,9 @@ describe('statusSlice', () => {
 
   it('fetchStatuses.fulfilled アクションで data が更新され loading が false になること', () => {
     const mockData = [{ statusId: 1, statusName: '休務' }];
-    const action = { 
-      type: fetchStatuses.fulfilled.type, 
-      payload: { data: mockData } 
+    const action = {
+      type: fetchStatuses.fulfilled.type,
+      payload: { data: mockData },
     };
     const state = statusReducer({ ...initialState, loading: true }, action);
     expect(state.loading).toBe(false);
@@ -41,4 +40,3 @@ describe('statusSlice', () => {
     expect(state.loading).toBe(false);
   });
 });
-
