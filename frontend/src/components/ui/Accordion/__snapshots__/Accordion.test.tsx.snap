@@ -10,14 +10,15 @@ exports[`Accordion > スナップショット > アイテム展開時の HTML �
     <button
       aria-controls="Item 1-content"
       aria-expanded="true"
-      class="w-full flex items-center justify-between px-5 py-4 text-left transition-colors duration-200 bg-indigo-50"
+      class="w-full flex items-center justify-between px-5 py-4 text-left transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-inset bg-indigo-50"
+      id="Item 1-header"
       type="button"
     >
       <div
         class="flex items-center gap-3 flex-1"
       >
         <span
-          class="transition-colors duration-200 text-indigo-700"
+          class="transition-colors duration-200 font-medium text-indigo-700"
         >
           Item 1
         </span>
@@ -41,9 +42,11 @@ exports[`Accordion > スナップショット > アイテム展開時の HTML �
       </svg>
     </button>
     <div
+      aria-labelledby="Item 1-header"
       class="overflow-hidden transition-all duration-300 ease-in-out"
       id="Item 1-content"
-      style="height: 0px;"
+      role="region"
+      style="height: 0px; visibility: visible;"
     >
       <div
         class="px-5 py-4 bg-gray-50 overflow-x-auto"
@@ -58,14 +61,15 @@ exports[`Accordion > スナップショット > アイテム展開時の HTML �
     <button
       aria-controls="Item 2-content"
       aria-expanded="false"
-      class="w-full flex items-center justify-between px-5 py-4 text-left transition-colors duration-200 bg-white hover:bg-gray-50"
+      class="w-full flex items-center justify-between px-5 py-4 text-left transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-inset bg-white hover:bg-gray-50"
+      id="Item 2-header"
       type="button"
     >
       <div
         class="flex items-center gap-3 flex-1"
       >
         <span
-          class="transition-colors duration-200 text-gray-700"
+          class="transition-colors duration-200 font-medium text-gray-700"
         >
           Item 2
         </span>
@@ -89,9 +93,11 @@ exports[`Accordion > スナップショット > アイテム展開時の HTML �
       </svg>
     </button>
     <div
+      aria-labelledby="Item 2-header"
       class="overflow-hidden transition-all duration-300 ease-in-out"
       id="Item 2-content"
-      style="height: 0px;"
+      role="region"
+      style="height: 0px; visibility: hidden;"
     >
       <div
         class="px-5 py-4 bg-gray-50 overflow-x-auto"
@@ -113,14 +119,15 @@ exports[`Accordion > スナップショット > デフォルト状態の HTML �
     <button
       aria-controls="Item 1-content"
       aria-expanded="false"
-      class="w-full flex items-center justify-between px-5 py-4 text-left transition-colors duration-200 bg-white hover:bg-gray-50"
+      class="w-full flex items-center justify-between px-5 py-4 text-left transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-inset bg-white hover:bg-gray-50"
+      id="Item 1-header"
       type="button"
     >
       <div
         class="flex items-center gap-3 flex-1"
       >
         <span
-          class="transition-colors duration-200 text-gray-700"
+          class="transition-colors duration-200 font-medium text-gray-700"
         >
           Item 1
         </span>
@@ -144,9 +151,11 @@ exports[`Accordion > スナップショット > デフォルト状態の HTML �
       </svg>
     </button>
     <div
+      aria-labelledby="Item 1-header"
       class="overflow-hidden transition-all duration-300 ease-in-out"
       id="Item 1-content"
-      style="height: 0px;"
+      role="region"
+      style="height: 0px; visibility: hidden;"
     >
       <div
         class="px-5 py-4 bg-gray-50 overflow-x-auto"
@@ -161,14 +170,15 @@ exports[`Accordion > スナップショット > デフォルト状態の HTML �
     <button
       aria-controls="Item 2-content"
       aria-expanded="false"
-      class="w-full flex items-center justify-between px-5 py-4 text-left transition-colors duration-200 bg-white hover:bg-gray-50"
+      class="w-full flex items-center justify-between px-5 py-4 text-left transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-inset bg-white hover:bg-gray-50"
+      id="Item 2-header"
       type="button"
     >
       <div
         class="flex items-center gap-3 flex-1"
       >
         <span
-          class="transition-colors duration-200 text-gray-700"
+          class="transition-colors duration-200 font-medium text-gray-700"
         >
           Item 2
         </span>
@@ -192,9 +202,11 @@ exports[`Accordion > スナップショット > デフォルト状態の HTML �
       </svg>
     </button>
     <div
+      aria-labelledby="Item 2-header"
       class="overflow-hidden transition-all duration-300 ease-in-out"
       id="Item 2-content"
-      style="height: 0px;"
+      role="region"
+      style="height: 0px; visibility: hidden;"
     >
       <div
         class="px-5 py-4 bg-gray-50 overflow-x-auto"

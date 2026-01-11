@@ -112,46 +112,6 @@ exports[`Menu > スナップショット > 開いた状態の HTML 構造 1`] = 
       <a
         class="font-bold border-b border-gray-300 py-2 hover:text-indigo-500"
         data-discover="true"
-        href="/categories"
-        role="menuitem"
-      >
-        大分類マスタ
-      </a>
-      <a
-        class="font-bold border-b border-gray-300 py-2 hover:text-indigo-500"
-        data-discover="true"
-        href="/sub-categories"
-        role="menuitem"
-      >
-        中分類マスタ
-      </a>
-      <a
-        class="font-bold border-b border-gray-300 py-2 hover:text-indigo-500"
-        data-discover="true"
-        href="/minor-categories"
-        role="menuitem"
-      >
-        小分類マスタ
-      </a>
-      <a
-        class="font-bold border-b border-gray-300 py-2 hover:text-indigo-500"
-        data-discover="true"
-        href="/departments"
-        role="menuitem"
-      >
-        学科マスタ
-      </a>
-      <a
-        class="font-bold border-b border-gray-300 py-2 hover:text-indigo-500"
-        data-discover="true"
-        href="/statuses"
-        role="menuitem"
-      >
-        状態区分
-      </a>
-      <a
-        class="font-bold border-b border-gray-300 py-2 hover:text-indigo-500"
-        data-discover="true"
         href="/students"
         role="menuitem"
       >
