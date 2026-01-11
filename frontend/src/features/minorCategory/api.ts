@@ -1,5 +1,5 @@
 import { api } from '@/api/api';
-import type { MinorCategory } from '@/features/minorCategory';
+import type { MinorCategory } from '@shared/types/minorCategory';
 import { API_ROUTES } from '@shared/routes/routes';
 
 export const minorCategoryApi = {

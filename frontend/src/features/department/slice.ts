@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { departmentApi } from '@/features/department';
-import type { Department } from '@/features/department';
+import type { Department } from '@shared/types/department';
 
 //Redux Action
 export const fetchDepartments = createAsyncThunk('departments/fetchAll', async () => {

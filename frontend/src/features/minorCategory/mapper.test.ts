@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { minorCategoriesToOptions } from './mapper';
-import type { MinorCategory } from './types';
+import type { MinorCategory } from '@shared/types/minorCategory';
 
 describe('minorCategory mapper', () => {
   it('MinorCategoryの配列をOptionの配列に正しく変換すること', () => {
@@ -21,4 +21,3 @@ describe('minorCategory mapper', () => {
     expect(minorCategoriesToOptions([])).toEqual([]);
   });
 });
-

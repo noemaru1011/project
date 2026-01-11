@@ -1,4 +1,4 @@
-import type { Category } from '@shared/types/Category';
+import type { Category } from '@shared/types/category';
 import type { Option } from '@/components/ui/option';
 
 const categoryToOption = (category: Category): Option => ({

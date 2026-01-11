@@ -1,4 +1,4 @@
-import type { SubCategory } from '@/features/subCategory';
+import type { SubCategory } from '@shared/types/subCategory';
 import type { Option } from '@/components/ui/option';
 
 const subCategoryToOption = (subCategory: SubCategory): Option => ({

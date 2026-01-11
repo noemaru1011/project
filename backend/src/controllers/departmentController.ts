@@ -1,10 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import { DepartmentService } from '@/services/departmentService';
+import type { Apibody } from '@/types/apiBody';
+import type { Department } from '@shared/types/department';
 import { APIMESSAGE } from '@shared/apiMessage';
 import type { ApiMessageKey } from '@shared/apiMessage';
 
 export const DepartmentController = {
-  async getAllDepartments(_req: Request, res: Response, next: NextFunction) {
+  async getAllDepartments(_req: Request, res: Response<Apibody<Department[]>>, next: NextFunction) {
     try {
       const departments = await DepartmentService.getAllDepartments();
       const key: ApiMessageKey = 'FETCH_SUCCESS';

@@ -1,4 +1,4 @@
-import type { Department } from '@/features/department';
+import type { Department } from '@shared/types/department';
 import type { Option } from '@/components/ui/option';
 
 const departmentToOption = (department: Department): Option => ({

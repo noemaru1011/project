@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { departmentsToOptions } from './mapper';
-import type { Department } from './types';
+import type { Department } from '@shared/types/department';
 
 describe('department mapper', () => {
   it('Departmentの配列をOptionの配列に正しく変換すること', () => {
@@ -21,4 +21,3 @@ describe('department mapper', () => {
     expect(departmentsToOptions([])).toEqual([]);
   });
 });
-

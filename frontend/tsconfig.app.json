@@ -28,5 +28,5 @@
     },
     "types": ["node", "jest", "@testing-library/jest-dom"]
   },
-  "include": ["src", "setupTests.ts", "tests/auth.setup.ts"]
+  "include": ["src", "setupTests.ts", "tests/auth.setup.ts", "../shared/types/minorCategory.ts"]
 }

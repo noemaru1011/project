@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { subCategoriesToOptions } from './mapper';
-import type { SubCategory } from './types';
+import type { SubCategory } from '@shared/types/subCategory';
 
 describe('subCategory mapper', () => {
   it('SubCategoryの配列をOptionの配列に正しく変換すること', () => {
@@ -21,4 +21,3 @@ describe('subCategory mapper', () => {
     expect(subCategoriesToOptions([])).toEqual([]);
   });
 });
-

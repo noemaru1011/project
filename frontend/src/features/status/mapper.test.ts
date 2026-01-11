@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { statusesToOptions } from './mapper';
-import type { Status } from './types';
+import type { Status } from '@shared/types/status';
 
 describe('status mapper', () => {
   it('Statusの配列をOptionの配列に正しく変換すること', () => {
@@ -21,4 +21,3 @@ describe('status mapper', () => {
     expect(statusesToOptions([])).toEqual([]);
   });
 });
-

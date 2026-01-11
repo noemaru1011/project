@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { CategoryService } from '@/services/categoryService';
-import type { Apibody } from '@/types/Apibody';
-import type { Category } from '@shared/types/Category';
+import type { Apibody } from '@/types/apiBody';
+import type { Category } from '@shared/types/category';
 import { APIMESSAGE } from '@shared/apiMessage';
 import type { ApiMessageKey } from '@shared/apiMessage';
 
