@@ -9,12 +9,12 @@ export type OrgNode = {
   children?: OrgNode[];
 };
 
-interface HierarchyCountTableProps {
+interface Props {
   data: OrgNode[];
   statuses: Status[];
 }
 
-export const HierarchyCountTable: React.FC<HierarchyCountTableProps> = ({ data, statuses }) => {
+export const HierarchyCountTable = ({ data, statuses }: Props) => {
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
 
   const toggle = (id: string) => {
@@ -44,7 +44,6 @@ export const HierarchyCountTable: React.FC<HierarchyCountTableProps> = ({ data, 
     const isExpanded = expandedIds.has(node.id);
     const hasChildren = node.children && node.children.length > 0;
 
-    // 背景色を不透明な色に変更（透過 /50 を削除）
     const rowBgClass = depth === 0 ? 'bg-slate-100' : 'bg-white';
 
     const total = Object.values(node.counts).reduce((acc, val) => acc + val, 0);
