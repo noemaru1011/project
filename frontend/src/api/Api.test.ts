@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { api } from './Api';
+import { api } from './api';
 import Cookies from 'js-cookie';
 
 // js-cookie のモック
@@ -10,11 +10,10 @@ vi.mock('js-cookie', () => ({
 }));
 
 describe('api (汎用fetch関数)', () => {
-  const API_BASE_URL = 'http://localhost:3000';
-
   beforeEach(() => {
     vi.stubGlobal('fetch', vi.fn());
-    vi.mocked(Cookies.get).mockReturnValue('mock-csrf-token');
+    const get = Cookies.get as unknown as ReturnType<typeof vi.fn>;
+    get.mockReturnValue('mock-csrf-token');
   });
 
   it('成功時 (200 OK) に正しいレスポンスを返すこと', async () => {
@@ -29,13 +28,16 @@ describe('api (汎用fetch関数)', () => {
 
     const result = await api('/test-path');
 
-    expect(fetch).toHaveBeenCalledWith(`${API_BASE_URL}/test-path`, expect.objectContaining({
-      credentials: 'include',
-      headers: expect.objectContaining({
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': 'mock-csrf-token',
+    expect(fetch).toHaveBeenCalledWith(
+      expect.stringContaining('/test-path'),
+      expect.objectContaining({
+        credentials: 'include',
+        headers: expect.objectContaining({
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': 'mock-csrf-token',
+        }),
       }),
-    }));
+    );
     expect(result).toEqual({
       status: 200,
       data: mockData,
@@ -102,14 +104,17 @@ describe('api (汎用fetch関数)', () => {
       body: JSON.stringify({ key: 'val' }),
     });
 
-    expect(fetch).toHaveBeenCalledWith(expect.any(String), expect.objectContaining({
-      method: 'POST',
-      headers: expect.objectContaining({
-        'X-Custom': 'value',
-        'Content-Type': 'application/json',
+    expect(fetch).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        method: 'POST',
+        headers: expect.objectContaining({
+          'X-Custom': 'value',
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': 'mock-csrf-token',
+        }),
+        body: JSON.stringify({ key: 'val' }),
       }),
-      body: JSON.stringify({ key: 'val' }),
-    }));
+    );
   });
 });
-

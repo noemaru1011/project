@@ -15,14 +15,16 @@ export async function api<T>(path: string, options?: RequestInit): Promise<ApiRe
     // 【意図①】
     // fetch自体が失敗するのは「ネットワークエラー」のみ
     // ここで捕まえることで「通信できなかった」ケースを明確に分離する
+    const { headers: customHeaders, ...restOptions } = options || {};
+
     res = await fetch(`${API_BASE_URL}${path}`, {
       credentials: 'include',
+      ...restOptions,
       headers: {
         'Content-Type': 'application/json',
         'X-CSRF-Token': Cookies.get('csrf') ?? '',
-        ...(options?.headers || {}),
+        ...customHeaders,
       },
-      ...options,
     });
   } catch {
     // 【意図②】
