@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
 import minorCategoryReducer, { fetchMinorCategories } from './slice';
-import { minorCategoryApi } from '@/features/minorCategory';
 
 vi.mock('@/features/minorCategory', () => ({
   minorCategoryApi: {
@@ -26,9 +25,9 @@ describe('minorCategorySlice', () => {
 
   it('fetchMinorCategories.fulfilled アクションで data が更新され loading が false になること', () => {
     const mockData = [{ minorCategoryId: 1, minorCategoryName: '111小隊' }];
-    const action = { 
-      type: fetchMinorCategories.fulfilled.type, 
-      payload: { data: mockData } 
+    const action = {
+      type: fetchMinorCategories.fulfilled.type,
+      payload: { data: mockData },
     };
     const state = minorCategoryReducer({ ...initialState, loading: true }, action);
     expect(state.loading).toBe(false);
@@ -41,4 +40,3 @@ describe('minorCategorySlice', () => {
     expect(state.loading).toBe(false);
   });
 });
-

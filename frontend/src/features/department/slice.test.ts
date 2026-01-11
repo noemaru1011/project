@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
 import departmentReducer, { fetchDepartments } from './slice';
-import { departmentApi } from '@/features/department';
 
 vi.mock('@/features/department', () => ({
   departmentApi: {
@@ -26,9 +25,9 @@ describe('departmentSlice', () => {
 
   it('fetchDepartments.fulfilled アクションで data が更新され loading が false になること', () => {
     const mockData = [{ departmentId: 1, departmentName: '経済学部' }];
-    const action = { 
-      type: fetchDepartments.fulfilled.type, 
-      payload: { data: mockData } 
+    const action = {
+      type: fetchDepartments.fulfilled.type,
+      payload: { data: mockData },
     };
     const state = departmentReducer({ ...initialState, loading: true }, action);
     expect(state.loading).toBe(false);
@@ -41,4 +40,3 @@ describe('departmentSlice', () => {
     expect(state.loading).toBe(false);
   });
 });
-

@@ -5,8 +5,8 @@ import type { Category } from './types';
 describe('category mapper', () => {
   it('Categoryの配列をOptionの配列に正しく変換すること', () => {
     const categories: Category[] = [
-      { categoryId: 1, categoryName: '1大隊' },
-      { categoryId: 2, categoryName: '2大隊' },
+      { categoryId: '1', categoryName: '1大隊' },
+      { categoryId: '2', categoryName: '2大隊' },
     ];
 
     const expected = [
@@ -21,4 +21,3 @@ describe('category mapper', () => {
     expect(categoriesToOptions([])).toEqual([]);
   });
 });
-

@@ -1,22 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Table } from './Table';
-import { BrowserRouter } from 'react-router-dom';
 import React from 'react';
 
-const meta: Meta<typeof Table> = {
+const meta = {
   component: Table,
   title: 'UI/Table',
   tags: ['autodocs'],
-  decorators: [
-    (Story) => (
-      <BrowserRouter>
-        <Story />
-      </BrowserRouter>
-    ),
-  ],
-};
+} satisfies Meta<typeof Table>;
+
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Table>;
 
 const labels = {
   id: 'ID',

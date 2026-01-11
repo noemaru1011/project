@@ -10,11 +10,11 @@ type Props = {
 };
 
 export const StudentSearchSection = ({ selectedStudents, onChangeSelected }: Props) => {
-  const { search, data, loading } = useStudentSearch();
+  const { searchStudents, data, loading } = useStudentSearch();
 
   return (
     <div className="w-full">
-      <StudentSearchForm onSearch={search} />
+      <StudentSearchForm onSearch={searchStudents} loading={loading} />
 
       <Loading loading={loading}>
         <Table
