@@ -116,16 +116,6 @@ export const StudentRepository = {
         minorCategory: {
           select: {
             minorCategoryName: true,
-            subCategory: {
-              select: {
-                subCategoryName: true,
-                category: {
-                  select: {
-                    categoryName: true,
-                  },
-                },
-              },
-            },
           },
         },
         department: {
