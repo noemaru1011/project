@@ -22,8 +22,10 @@ const AccordionItem: React.FC<
   AccordionItemProps & {
     isOpen: boolean;
     onToggle: () => void;
+    onKeyDown?: (e: React.KeyboardEvent) => void;
+    buttonRef?: React.Ref<HTMLButtonElement>;
   }
-> = ({ title, children, isOpen, onToggle, icon, badge, className }) => {
+> = ({ title, children, isOpen, onToggle, icon, badge, className, onKeyDown, buttonRef }) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState<number | undefined>(isOpen ? undefined : 0);
 
@@ -51,12 +53,15 @@ const AccordionItem: React.FC<
   return (
     <div className={clsx('border-b border-gray-200 last:border-b-0', className)}>
       <button
+        id={`${title}-header`}
+        ref={buttonRef}
         type="button"
         onClick={onToggle}
+        onKeyDown={onKeyDown}
         aria-expanded={isOpen}
         aria-controls={contentId}
         className={clsx(
-          'w-full flex items-center justify-between px-5 py-4 text-left transition-colors duration-200',
+          'w-full flex items-center justify-between px-5 py-4 text-left transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-inset',
           isOpen ? 'bg-indigo-50' : 'bg-white hover:bg-gray-50',
         )}
       >
@@ -73,7 +78,7 @@ const AccordionItem: React.FC<
           )}
           <span
             className={clsx(
-              'transition-colors duration-200',
+              'transition-colors duration-200 font-medium',
               isOpen ? 'text-indigo-700' : 'text-gray-700',
             )}
           >
@@ -102,8 +107,10 @@ const AccordionItem: React.FC<
       <div
         ref={contentRef}
         id={contentId}
-        style={{ height }}
+        style={{ height, visibility: isOpen || height !== 0 ? 'visible' : 'hidden' }}
         className="overflow-hidden transition-all duration-300 ease-in-out"
+        role="region"
+        aria-labelledby={`${title}-header`}
       >
         <div className="px-5 py-4 bg-gray-50 overflow-x-auto">{children}</div>
       </div>
@@ -122,6 +129,8 @@ export const Accordion = ({ items, allowMultiple = false, className }: Accordion
     return initialOpen;
   });
 
+  const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
   const toggleItem = (id: string) => {
     setOpenItems((prev) => {
       const newSet = new Set(prev);
@@ -137,14 +146,37 @@ export const Accordion = ({ items, allowMultiple = false, className }: Accordion
     });
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        buttonRefs.current[(index + 1) % items.length]?.focus();
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        buttonRefs.current[(index - 1 + items.length) % items.length]?.focus();
+        break;
+      case 'Home':
+        e.preventDefault();
+        buttonRefs.current[0]?.focus();
+        break;
+      case 'End':
+        e.preventDefault();
+        buttonRefs.current[items.length - 1]?.focus();
+        break;
+    }
+  };
+
   return (
     <div className={clsx('bg-white border border-gray-200 rounded-lg overflow-hidden', className)}>
-      {items.map((item) => (
+      {items.map((item, index) => (
         <AccordionItem
           key={item.id}
           {...item}
           isOpen={openItems.has(item.id)}
           onToggle={() => toggleItem(item.id)}
+          onKeyDown={(e) => handleKeyDown(e, index)}
+          buttonRef={(el) => (buttonRefs.current[index] = el)}
         />
       ))}
     </div>
