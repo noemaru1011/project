@@ -21,7 +21,7 @@ const initialState: StatusState = {
 };
 
 export const statusSlice = createSlice({
-  name: 'minorCategories',
+  name: 'statuses',
   initialState,
   //stateは変更しないので空
   reducers: {},
