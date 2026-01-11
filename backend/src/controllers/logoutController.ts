@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { APIMESSAGE } from '@shared/apiMessage';
+import type { ApiMessageKey } from '@shared/apiMessage';
 import { tokenBlacklist } from '@/utils/tokenBlacklist';
 import jwt from 'jsonwebtoken';
 
@@ -39,7 +40,8 @@ export const LogoutController = {
         sameSite: 'strict',
       });
 
-      return res.status(200).json({ message: APIMESSAGE.LOGOUT_SUCCESS });
+      const key: ApiMessageKey = 'LOGOUT_SUCCESS';
+      return res.status(200).json({ code: key, message: APIMESSAGE.LOGOUT_SUCCESS });
     } catch (error) {
       return next(error);
     }

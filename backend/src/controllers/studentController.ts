@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { StudentService } from '@/services/studentService';
 import { APIMESSAGE } from '@shared/apiMessage';
+import type { ApiMessageKey } from '@shared/apiMessage';
 
 export const StudentController = {
   async getStudent(req: Request, res: Response, next: NextFunction) {
@@ -13,7 +14,8 @@ export const StudentController = {
       if (!student) {
         return res.status(404).json({ message: APIMESSAGE.NO_STUDENT });
       }
-      return res.status(200).json({ data: student, message: APIMESSAGE.FETCH_SUCCESS });
+      const key: ApiMessageKey = 'FETCH_SUCCESS';
+      return res.status(200).json({ code: key, data: student, message: APIMESSAGE.FETCH_SUCCESS });
     } catch (error) {
       return next(error);
     }
@@ -22,7 +24,8 @@ export const StudentController = {
   async searchStudents(req: Request, res: Response, next: NextFunction) {
     try {
       const students = await StudentService.searchStudents(req.body);
-      return res.status(200).json({ data: students, message: APIMESSAGE.FETCH_SUCCESS });
+      const key: ApiMessageKey = 'FETCH_SUCCESS';
+      return res.status(200).json({ code: key, data: students, message: APIMESSAGE.FETCH_SUCCESS });
     } catch (error) {
       return next(error);
     }
@@ -31,7 +34,8 @@ export const StudentController = {
   async createStudent(req: Request, res: Response, next: NextFunction) {
     try {
       await StudentService.createStudent(req.body);
-      return res.status(201).json({ message: APIMESSAGE.CREATE_SUCCESS });
+      const key: ApiMessageKey = 'CREATE_SUCCESS';
+      return res.status(201).json({ code: key, message: APIMESSAGE.CREATE_SUCCESS });
     } catch (error) {
       return next(error);
     }
@@ -44,7 +48,8 @@ export const StudentController = {
         return res.status(404).json({ message: APIMESSAGE.NO_STUDENT });
       }
       await StudentService.updateStudent(id, req.body);
-      return res.status(200).json({ message: APIMESSAGE.UPDATE_SUCCESS });
+      const key: ApiMessageKey = 'UPDATE_SUCCESS';
+      return res.status(200).json({ code: key, message: APIMESSAGE.UPDATE_SUCCESS });
     } catch (error) {
       return next(error);
     }
@@ -57,7 +62,8 @@ export const StudentController = {
         return res.status(404).json({ message: APIMESSAGE.NO_STUDENT });
       }
       await StudentService.deleteStudent(id);
-      return res.status(200).json({ message: APIMESSAGE.DELETE_SUCCESS });
+      const key: ApiMessageKey = 'DELETE_SUCCESS';
+      return res.status(200).json({ code: key, message: APIMESSAGE.DELETE_SUCCESS });
     } catch (error) {
       return next(error);
     }
