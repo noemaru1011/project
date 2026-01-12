@@ -25,7 +25,7 @@ describe('useUpdate', () => {
     const res = await updatePromise;
 
     expect(mockUpdateFn).toHaveBeenCalledWith('1', { name: 'updated name' });
-    expect(res.message).toBe('updated');
+    expect(res.message).toBe(APIMESSAGE[code]);
     expect(result.current.loading).toBe(false);
   });
 
@@ -44,4 +44,3 @@ describe('useUpdate', () => {
     expect(result.current.loading).toBe(false);
   });
 });
-

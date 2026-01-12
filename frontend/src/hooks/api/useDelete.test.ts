@@ -25,7 +25,7 @@ describe('useDelete', () => {
     const res = await deletePromise;
 
     expect(mockDeleteFn).toHaveBeenCalledWith('1');
-    expect(res.message).toBe('deleted');
+    expect(res.message).toBe(APIMESSAGE[code]);
     expect(result.current.loading).toBe(false);
   });
 
@@ -44,4 +44,3 @@ describe('useDelete', () => {
     expect(result.current.loading).toBe(false);
   });
 });
-

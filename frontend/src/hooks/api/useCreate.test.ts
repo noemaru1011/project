@@ -25,7 +25,7 @@ describe('useCreate', () => {
     const res = await createPromise;
 
     expect(mockCreateFn).toHaveBeenCalledWith({ name: 'new item' });
-    expect(res.message).toBe('success');
+    expect(res.message).toBe(APIMESSAGE[code]);
     expect(result.current.loading).toBe(false);
   });
 
@@ -44,4 +44,3 @@ describe('useCreate', () => {
     expect(result.current.loading).toBe(false);
   });
 });
-
