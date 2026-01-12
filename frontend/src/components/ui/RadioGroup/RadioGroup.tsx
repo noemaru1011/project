@@ -87,7 +87,7 @@ export const RadioGroup = ({
                     checked={value === option.value}
                     onChange={() => handleChange(option.value)}
                     disabled={disabled}
-                    className="flex items-center font-bold mb-2 sm:mb-0 text-gray-800 p-2 transition-colors rounded-lg hover:bg-gray-100"
+                    className="flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
                   />
                 ),
             )}
