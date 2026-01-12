@@ -14,7 +14,7 @@ export const StatusRadioGroup = ({ disabled, ...rest }: Props) => {
       {...rest}
       options={options}
       label="ステータス"
-      column={7}
+      column={8}
       required
       disabled={loading || disabled}
     />
