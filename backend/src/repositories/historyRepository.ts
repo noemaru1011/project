@@ -94,9 +94,16 @@ export const HistoryRepository = {
         startTime: {
           lte: query, // 開始時刻 <= query
         },
-        endTime: {
-          gte: query, // 終了時刻 >= query
-        },
+        OR: [
+          {
+            endTime: {
+              gte: query, // 終了時刻 >= query
+            },
+          },
+          {
+            endTime: null,
+          },
+        ],
       },
       select: {
         statusId: true,
