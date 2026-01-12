@@ -85,10 +85,6 @@ async function main() {
     { departmentId: 1, departmentName: '人間文化学科' },
     { departmentId: 2, departmentName: '公共政策学科' },
     { departmentId: 3, departmentName: '国際関係学科' },
-    { departmentId: 4, departmentName: '理学部' },
-    { departmentId: 5, departmentName: '工学部' },
-    { departmentId: 6, departmentName: '農学部' },
-    { departmentId: 7, departmentName: '医学部' },
     { departmentId: 4, departmentName: '応用物理学科' },
     { departmentId: 5, departmentName: '応用化学科' },
     { departmentId: 6, departmentName: '地球海洋学科' },
@@ -190,7 +186,7 @@ async function main() {
 
           const rLastName = romajiLastNames[nameIdx];
           const rFirstName = romajiFirstNames[firstIdx];
-          const email = `${rFirstName}.${rLastName}${grade}${bat}${i}@example.com`;
+          const email = `${rFirstName}.${rLastName}${grade}${bat}${deptId}${i}@example.com`;
 
           const minorCat = batMinorCats[i % batMinorCats.length];
           const studentId = crypto.randomUUID();
