@@ -37,7 +37,7 @@ export const HeaderNav = ({
                     onClick={actionHandlers[opt.action!]}
                     disabled={loading}
                     aria-busy={loading}
-                    className={`font-bold mb-2 sm:mb-0 cursor-pointer transition-colors rounded-lg  transition-colors hover:bg-gray-300 ${spacing}`}
+                    className={`font-bold mb-2 sm:mb-0 cursor-pointer p-2 transition-colors rounded-lg hover:bg-gray-100 ${spacing}`}
                   >
                     {opt.label}
                   </button>
