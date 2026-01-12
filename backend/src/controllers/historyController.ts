@@ -1,13 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 import { HistoryService } from '@/services/historyService';
-import type { Apibody } from '@shared/types/api';
-import type { HistoryDetail, HistorySummary, HistoryNew } from '@shared/types/history';
+import type { ApiBody } from '@shared/models/common';
+import type { HistoryResponse, HistorySummary } from '@shared/models/history';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
 import type { ApiMessageCode } from '@shared/constants/apiMessage';
 export const HistoryController = {
   async searchHistories(
     req: Request,
-    res: Response<Apibody<HistorySummary[]>>,
+    res: Response<ApiBody<HistorySummary[]>>,
     next: NextFunction,
   ) {
     try {
@@ -45,7 +45,7 @@ export const HistoryController = {
     }
   },
 
-  async getHistory(req: Request, res: Response<Apibody<HistoryDetail>>, next: NextFunction) {
+  async getHistory(req: Request, res: Response<ApiBody<HistoryResponse>>, next: NextFunction) {
     try {
       const { id } = req.params;
       if (!id) {
@@ -66,7 +66,7 @@ export const HistoryController = {
     }
   },
 
-  async createHistory(req: Request, res: Response<Apibody<HistoryNew[]>>, next: NextFunction) {
+  async createHistory(req: Request, res: Response<ApiBody<HistoryResponse[]>>, next: NextFunction) {
     try {
       const history = await HistoryService.createHistory(req.body);
       const key: ApiMessageCode = 'CREATE_SUCCESS';

@@ -6,13 +6,13 @@ import { StudentNameInput, StudentEmailInput } from '@/features/student/componen
 import { GradeRadioGroup } from '@/features/grade/components';
 import { MinorCategorySelect } from '@/features/minorCategory/components/MinorCategory.Select';
 import { DepartmentSelect } from '@/features/department/components/Department.Select';
-import { updateValidation } from '@shared/schemas/student';
-import type { StudentUpdateForm as StudentUpdateFormType } from '@shared/schemas/student';
+import { StudentUpdateSchema } from '@shared/models/student';
+import type { StudentUpdateInput } from '@shared/models/student';
 
 type Props = {
-  defaultValues: StudentUpdateFormType;
+  defaultValues: StudentUpdateInput;
   loading: boolean;
-  onSubmit: (data: StudentUpdateFormType) => void;
+  onSubmit: (data: StudentUpdateInput) => void;
   onBack: () => void;
 };
 
@@ -22,8 +22,8 @@ export const StudentUpdateForm = ({ defaultValues, loading, onSubmit, onBack }: 
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm({
-    resolver: zodResolver(updateValidation),
+  } = useForm<StudentUpdateInput>({
+    resolver: zodResolver(StudentUpdateSchema),
     defaultValues,
   });
 

@@ -1,6 +1,6 @@
 import { historySearchApi } from '@/features/search/history/api';
-import type { HistorySummary } from '@shared/types/history';
-import type { StudentQueryForm } from '@shared/schemas/studentQuery';
+import type { HistorySummary } from '@shared/models/history';
+import type { StudentSearchInput } from '@shared/models/student';
 import { useSearch } from '@/hooks/api/useSearch';
 
 export const useHistorySearch = () => {

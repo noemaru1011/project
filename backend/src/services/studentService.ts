@@ -9,12 +9,10 @@ import { generatePassword } from '@/utils/common/generatePassword';
 import { sendAccountEmail } from '@/utils/mail/sendAccountEmail';
 import { ConflictError } from '@/errors/appError';
 import { EmailDuplicateError } from '@/errors/studentError';
-import type { StudentNew, StudentDetail, StudentSummary } from '@shared/types/student';
-import type { StudentServerForm, StudentUpdateServerForm } from '@shared/schemas/student';
-import type { StudentQuerySeverForm } from '@shared/schemas/studentQuery';
+import type { StudentResponse, StudentSummary, StudentServerCreateInput, StudentServerUpdateInput, StudentServerSearchInput } from '@shared/models/student';
 
 export const StudentService = {
-  async getStudent(studentId: string): Promise<StudentDetail | null> {
+  async getStudent(studentId: string): Promise<StudentResponse | null> {
     const student = await StudentRepository.find(studentId);
     if (student == null) return null;
     return {
@@ -28,7 +26,7 @@ export const StudentService = {
     };
   },
 
-  async createStudent(data: StudentServerForm): Promise<StudentNew> {
+  async createStudent(data: StudentServerCreateInput): Promise<StudentResponse> {
     try {
       //パスワード作成
       const plainPassword = generatePassword();
@@ -72,7 +70,7 @@ export const StudentService = {
     }
   },
 
-  async updateStudent(studentId: string, data: StudentUpdateServerForm): Promise<StudentDetail> {
+  async updateStudent(studentId: string, data: StudentServerUpdateInput): Promise<StudentResponse> {
     const student = await StudentRepository.update(studentId, data);
 
     if (!student) throw new ConflictError();
@@ -92,7 +90,7 @@ export const StudentService = {
     await StudentRepository.delete(studentId);
   },
 
-  async searchStudents(data: StudentQuerySeverForm): Promise<StudentSummary[]> {
+  async searchStudents(data: StudentServerSearchInput): Promise<StudentSummary[]> {
     const minorCategoryIds = await MinorCategoryRepository.resolveMinorCategoryIds(data);
 
     const students = await StudentRepository.searchStudents({

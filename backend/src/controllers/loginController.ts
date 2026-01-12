@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import { LoginService } from '@/services/loginService';
-import type { Apibody } from '@shared/types/api';
-import type { Login } from '@shared/types/login';
+import type { ApiBody } from '@shared/models/common';
+import type { LoginResponse } from '@shared/models/auth';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
 import type { ApiMessageCode } from '@shared/constants/apiMessage';
 export const LoginController = {
-  async login(req: Request, res: Response<Apibody<Login>>, next: NextFunction) {
+  async login(req: Request, res: Response<ApiBody<LoginResponse>>, next: NextFunction) {
     const { email, password } = req.body;
     try {
       const result = await LoginService.login(email, password);

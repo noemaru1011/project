@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import { StudentService } from '@/services/studentService';
-import type { Apibody } from '@shared/types/api';
-import type { StudentDetail, StudentNew, StudentSummary } from '@shared/types/student';
+import type { ApiBody } from '@shared/models/common';
+import type { StudentResponse, StudentSummary } from '@shared/models/student';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
 import type { ApiMessageCode } from '@shared/constants/apiMessage';
 export const StudentController = {
-  async getStudent(req: Request, res: Response<Apibody<StudentDetail>>, next: NextFunction) {
+  async getStudent(req: Request, res: Response<ApiBody<StudentResponse>>, next: NextFunction) {
     try {
       const { id } = req.params;
       if (!id) {
@@ -24,7 +24,7 @@ export const StudentController = {
     }
   },
 
-  async searchStudents(req: Request, res: Response<Apibody<StudentSummary[]>>, next: NextFunction) {
+  async searchStudents(req: Request, res: Response<ApiBody<StudentSummary[]>>, next: NextFunction) {
     try {
       const students = await StudentService.searchStudents(req.body);
       const key: ApiMessageCode = 'FETCH_SUCCESS';
@@ -34,7 +34,7 @@ export const StudentController = {
     }
   },
 
-  async createStudent(req: Request, res: Response<Apibody<StudentNew>>, next: NextFunction) {
+  async createStudent(req: Request, res: Response<ApiBody<StudentResponse>>, next: NextFunction) {
     try {
       const student = await StudentService.createStudent(req.body);
       const key: ApiMessageCode = 'CREATE_SUCCESS';
@@ -44,7 +44,7 @@ export const StudentController = {
     }
   },
 
-  async updateStudent(req: Request, res: Response<Apibody<StudentDetail>>, next: NextFunction) {
+  async updateStudent(req: Request, res: Response<ApiBody<StudentResponse>>, next: NextFunction) {
     try {
       const { id } = req.params;
       if (!id) {
@@ -59,7 +59,7 @@ export const StudentController = {
     }
   },
 
-  async deleteStudet(req: Request, res: Response<Apibody<null>>, next: NextFunction) {
+  async deleteStudet(req: Request, res: Response<ApiBody<null>>, next: NextFunction) {
     try {
       const { id } = req.params;
       if (!id) {

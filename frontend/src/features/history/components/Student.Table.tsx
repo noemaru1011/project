@@ -1,6 +1,6 @@
 import { Table } from '@/components/ui/Table/Table';
 import { historySearchLabels } from '@/features/history/constants/historyLabels';
-import type { StudentSummary } from '@shared/types/student';
+import type { StudentSummary } from '@shared/models/student';
 
 type Props = {
   data: StudentSummary[];

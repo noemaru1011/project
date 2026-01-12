@@ -2,10 +2,10 @@ import { Checkbox } from '@/components/ui/Checkbox/Checkbox';
 import { Button } from '@/components/ui/Button/Button';
 import { StatusRadioGroup } from '@/features/status/components';
 import { StartTimeInput, EndTimeInput, OtherTextarea } from '@/features/history/components';
-import type { HistoryUpdateForm } from '@shared/schemas/history';
+import type { HistoryUpdateInput } from '@shared/models/history';
 
 type Props = {
-  history: HistoryUpdateForm;
+  history: HistoryUpdateInput;
   onDelete: () => void;
   onBack: () => void;
   loading: boolean;

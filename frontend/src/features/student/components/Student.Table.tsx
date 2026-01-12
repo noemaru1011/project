@@ -1,6 +1,6 @@
 import { Table } from '@/components/ui/Table/Table';
 import { studentLabels } from '@/features/student/constants';
-import type { StudentSummary } from '@shared/types/student';
+import type { StudentSummary } from '@shared/models/student';
 import type { Action } from '@/components/ui/Table/TableRowActions';
 import { ROUTES } from '@/routes/routes';
 

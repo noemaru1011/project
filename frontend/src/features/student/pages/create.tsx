@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/routes/routes';
 import { StudentCreateForm } from '@/features/student/components/StudentCreateForm';
 import { useStudentCreate } from '@/features/student/hooks/useStudentCreate';
-import type { StudentForm } from '@shared/schemas/student';
+import type { StudentCreateInput } from '@shared/models/student';
 import { handleApiError } from '@/utils';
 
 export const StudentCreatePage = () => {
   const navigate = useNavigate();
   const { createStudent, loading } = useStudentCreate();
 
-  const onSubmit = async (data: StudentForm) => {
+  const onSubmit = async (data: StudentCreateInput) => {
     try {
       const res = await createStudent(data);
       toast.success(res.message);

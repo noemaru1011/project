@@ -2,10 +2,10 @@ import bcrypt from 'bcrypt';
 import { PasswordRepository } from '@/repositories/passwordRepository';
 import { NoStudentError } from '@/errors/studentError';
 import { NotMatchPasswordError } from '@/errors/passwordError';
-import type { PasswordForm } from '@shared/schemas/password';
+import type { PasswordUpdateInput } from '@shared/models/auth';
 
 export const PasswordService = {
-  async updatePassword(data: PasswordForm, studentId: string) {
+  async updatePassword(data: PasswordUpdateInput, studentId: string) {
     //cookieの値
     const stundet = await PasswordRepository.findByStudentId(studentId);
     if (!stundet) throw new NoStudentError();

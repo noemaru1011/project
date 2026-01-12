@@ -3,7 +3,7 @@ import { useNavigate, Navigate } from 'react-router-dom';
 import { PasswordUpdateForm } from '@/features/auth/components/PasswordUpdateForm';
 import { usePassword } from '@/features/auth/hooks/useUpdatePassword';
 import { ROUTES } from '@/routes/routes';
-import type { PasswordForm } from '@shared/schemas/password';
+import type { PasswordUpdateInput } from '@shared/models/auth';
 import { handleApiError } from '@/utils';
 import { useAuth } from '@/contexts/atchContext';
 
@@ -15,7 +15,7 @@ export const ChangePassword = () => {
     return <Navigate to={ROUTES.ERROR.FORBIDDEN} replace />;
   }
 
-  const onSubmit = async (data: PasswordForm) => {
+  const onSubmit = async (data: PasswordUpdateInput) => {
     try {
       const res = await update(data);
       toast.success(res.message);

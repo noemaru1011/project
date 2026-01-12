@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { ApiResponse } from '@shared/types/api';
+import type { ApiResponse } from '@shared/models/common';
 import { useLoadingCounter } from '@/hooks/ux/useLoadingCounter';
 
 export function useSearch<T, Query = void>(searchFn: (query: Query) => Promise<ApiResponse<T[]>>) {

@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import { HistoryController } from '@/controllers/historyController';
 import { validateBody } from '@/middleware/validateMiddleware';
-import { serverValidation } from '@shared/schemas/studentQuery';
+import { StudentServerSearchSchema } from '@shared/models/student';
 import { csrfMiddleware } from '@/middleware';
 
 const router = Router();
 
-router.post('/', csrfMiddleware, validateBody(serverValidation), HistoryController.searchHistories);
+router.post('/', csrfMiddleware, validateBody(StudentServerSearchSchema), HistoryController.searchHistories);
 
 router.get('/', HistoryController.searchByStartTimeHistories);
 

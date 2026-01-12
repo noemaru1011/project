@@ -1,7 +1,7 @@
 import { Table } from '@/components/ui/Table/Table';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { historyResultLabels } from '@/features/history/constants/historyLabels';
-import type { HistorySummary } from '@shared/types/history';
+import type { HistorySummary } from '@shared/models/history';
 import type { Action } from '@/components/ui/Table/TableRowActions';
 import { ROUTES } from '@/routes/routes';
 

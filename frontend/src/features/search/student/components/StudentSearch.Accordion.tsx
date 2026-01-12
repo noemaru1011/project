@@ -7,7 +7,7 @@ import { SubCategoryCheckboxGroup } from '@/features/subCategory/components';
 import { MinorCategoryCheckboxGroup } from '@/features/minorCategory/components';
 import { GradeCheckboxGroup } from '@/features/grade/components';
 import { DepartmentCheckboxGroup } from '@/features/department/components';
-import type { StudentQueryForm } from '@shared/schemas/studentQuery';
+import type { StudentSearchInput } from '@shared/models/student';
 
 type Props = {
   control: Control<StudentQueryForm>;

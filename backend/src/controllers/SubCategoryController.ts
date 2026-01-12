@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { SubCategoryService } from '@/services/subCategoryService';
-import type { Apibody } from '@shared/types/api';
-import type { SubCategory } from '@shared/types/subCategory';
+import type { ApiBody } from '@shared/models/common';
+import type { SubCategory } from '@shared/models/master';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
 import type { ApiMessageCode } from '@shared/constants/apiMessage';
 export const SubCategoryController = {

@@ -1,5 +1,5 @@
 import { APIMESSAGE } from '@shared/constants/apiMessage';
-import type { ApiResponse } from '@shared/types/api';
+import type { ApiResponse } from '@shared/models/common';
 import type { ApiMessageCode } from '@shared/constants/apiMessage';
 
 //フロントのみで401と403を再現する関数

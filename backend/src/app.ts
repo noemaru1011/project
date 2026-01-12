@@ -1,7 +1,7 @@
 /// <reference path="./types/express.d.ts" />
 import express from 'express';
 import { API_ROUTES } from '@shared/routes/routes';
-import { ROLE } from '@shared/types/role';
+import { ROLE } from '@shared/models/common';
 import loginRoutes from '@/routes/loginRoutes';
 import logoutRoutes from '@/routes/logoutRoutes';
 import logRoutes from '@/routes/logRoutes';

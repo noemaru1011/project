@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { categoriesToOptions } from './mapper';
-import type { Category } from '@shared/types/category';
+import type { Category } from '@shared/models/master';
 
 describe('category mapper', () => {
   it('Categoryの配列をOptionの配列に正しく変換すること', () => {

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { DepartmentService } from '@/services/departmentService';
-import type { Apibody } from '@shared/types/api';
-import type { Department } from '@shared/types/department';
+import type { ApiBody } from '@shared/models/common';
+import type { Department } from '@shared/models/master';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
 import type { ApiMessageCode } from '@shared/constants/apiMessage';
 export const DepartmentController = {

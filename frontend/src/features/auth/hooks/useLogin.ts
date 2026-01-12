@@ -1,8 +1,5 @@
 import { authApi } from '@/features/auth/api';
-import type { LoginForm } from '@shared/schemas/login';
-import { useLoadingCounter } from '@/hooks/ux/useLoadingCounter';
-import type { ApiResponse } from '@shared/types/api';
-import type { Login } from '@shared/types/login';
+import type { LoginInput, LoginResponse } from '@shared/models/auth';
 import { usePasswordUpdateContext } from '@/contexts/passwordUpdateContext';
 import { useAuth } from '@/contexts/atchContext';
 
@@ -11,7 +8,7 @@ export function useLogin() {
   const { setPasswordUpdateRequired } = usePasswordUpdateContext();
   const { setRole } = useAuth();
 
-  const login = async (data: LoginForm): Promise<ApiResponse<Login>> => {
+  const login = async (data: LoginInput): Promise<ApiResponse<LoginResponse>> => {
     start();
     try {
       const res = await authApi.login(data);

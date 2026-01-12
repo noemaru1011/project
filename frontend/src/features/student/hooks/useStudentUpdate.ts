@@ -1,11 +1,11 @@
 import { useUpdate } from '@/hooks/api/useUpdate';
 import { studentApi } from '@/features/student';
-import type { StudentUpdateForm } from '@shared/schemas/student';
+import type { StudentUpdateInput } from '@shared/models/student';
 
 export const useStudentUpdate = () => {
-  const { update, loading } = useUpdate<StudentUpdateForm>(studentApi.update);
+  const { update, loading } = useUpdate<StudentUpdateInput>(studentApi.update);
 
-  const updateStudent = (studentId: string, data: StudentUpdateForm) => update(studentId, data);
+  const updateStudent = (studentId: string, data: StudentUpdateInput) => update(studentId, data);
 
   return { updateStudent, loading };
 };

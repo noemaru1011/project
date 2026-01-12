@@ -6,7 +6,7 @@ import { StudentTable } from '@/features/student/components';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { ROUTES } from '@/routes/routes';
 import { handleApiError } from '@/utils';
-import type { StudentQueryForm } from '@shared/schemas/studentQuery';
+import type { StudentSearchInput } from '@shared/models/student';
 
 export const StudentIndexPage = () => {
   const navigate = useNavigate();

@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { handleApiError } from '@/utils/handleApiError';
 import { authErrorGenerate } from '@/utils/authErrorGenerate';
-import type { Role } from '@shared/types/role';
+import type { Role } from '@shared/models/common';
 
 interface Props {
   children: ReactNode;

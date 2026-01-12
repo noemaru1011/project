@@ -1,5 +1,5 @@
 import { MinorCategoryRepository } from '@/repositories/minorCategoryRepository';
-import type { MinorCategory } from '@shared/types/minorCategory';
+import type { MinorCategory } from '@shared/models/master';
 
 export const MinorCategoryService = {
   async getAllMinorCategories(): Promise<MinorCategory[]> {

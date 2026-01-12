@@ -1,4 +1,4 @@
-import { Role } from '@shared/types/role';
+import { Role } from '@shared/models/common';
 
 export type JwtPayload = {
   id: string;

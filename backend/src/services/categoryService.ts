@@ -1,5 +1,5 @@
 import { CategoryRepository } from '@/repositories/categoryRepository';
-import type { Category } from '@shared/types/category';
+import type { Category } from '@shared/models/master';
 
 export const CategoryService = {
   async getAllCategories(): Promise<Category[]> {

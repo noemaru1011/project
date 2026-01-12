@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { minorCategoriesToOptions } from './mapper';
-import type { MinorCategory } from '@shared/types/minorCategory';
+import type { MinorCategory } from '@shared/models/master';
 
 describe('minorCategory mapper', () => {
   it('MinorCategoryの配列をOptionの配列に正しく変換すること', () => {

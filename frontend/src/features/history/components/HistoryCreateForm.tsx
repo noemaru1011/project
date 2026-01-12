@@ -3,12 +3,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from 'react-hook-form';
 import { Button } from '@/components/ui/Button/Button';
 import { StatusRadioGroup } from '@/features/status/components';
-import { validation } from '@shared/schemas/history';
-import type { HistoryForm } from '@shared/schemas/history';
+import { HistoryCreateSchema } from '@shared/models/history';
+import type { HistoryCreateInput } from '@shared/models/history';
 import { EndTimeInput, StartTimeInput, OtherTextarea } from '@/features/history/components';
 
 type Props = {
-  onSubmit: (data: HistoryForm) => void;
+  onSubmit: (data: HistoryCreateInput) => void;
   selectedStudents: { id: string; name: string }[];
   loading: boolean;
 };
@@ -20,8 +20,8 @@ export const HistoryCreateForm = ({ selectedStudents, onSubmit, loading }: Props
     setValue,
     handleSubmit,
     formState: { errors, isSubmitted },
-  } = useForm({
-    resolver: zodResolver(validation),
+  } = useForm<HistoryCreateInput>({
+    resolver: zodResolver(HistoryCreateSchema),
     defaultValues: { studentIds: [] },
   });
 

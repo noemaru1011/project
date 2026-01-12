@@ -5,7 +5,7 @@ import { ROUTES } from '@/routes/routes';
 import { StudentUpdateForm } from '@/features/student/components/StudentUpdateForm';
 import { useStudentUpdate } from '@/features/student/hooks/useStudentUpdate';
 import { useStudentView } from '@/features/student/hooks/useStudentView';
-import type { StudentUpdateForm as FormType } from '@shared/schemas/student';
+import type { StudentUpdateInput } from '@shared/models/student';
 import { handleApiError } from '@/utils';
 
 export const StudentUpdatePage = () => {
@@ -21,7 +21,7 @@ export const StudentUpdatePage = () => {
   if (loading || !student) {
     return <Loading loading={loading} />;
   }
-  const defaultValues: FormType = {
+  const defaultValues: StudentUpdateInput = {
     studentName: student.studentName,
     email: student.email,
     grade: student.grade,
@@ -30,7 +30,7 @@ export const StudentUpdatePage = () => {
     updatedAt: student.updatedAt,
   };
 
-  const handleSubmit = async (data: FormType) => {
+  const handleSubmit = async (data: StudentUpdateInput) => {
     if (!student) return navigate(ROUTES.ERROR.NOTFOUND);
     try {
       const res = await updateStudent(student.studentId, data);

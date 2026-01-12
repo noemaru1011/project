@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { PasswordService } from '@/services/passwordService';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
-import { Apibody } from '@shared/types/api';
+import { ApiBody } from '@shared/models/common';
 import type { ApiMessageCode } from '@shared/constants/apiMessage';
 import { TokenError } from '@/errors/authError';
 

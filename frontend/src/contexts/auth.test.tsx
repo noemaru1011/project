@@ -3,7 +3,7 @@ import { AuthProvider } from './authProvider';
 import { useAuth } from './atchContext';
 import Cookies from 'js-cookie';
 import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
-import type { Role } from '@shared/types/role';
+import type { Role } from '@shared/models/common';
 
 vi.mock('js-cookie', () => ({
   default: {

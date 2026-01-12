@@ -1,6 +1,5 @@
 import { studentSearchApi } from '@/features/search/student/api';
-import type { StudentSummary } from '@shared/types/student';
-import type { StudentQueryForm } from '@shared/schemas/studentQuery';
+import type { StudentSummary, StudentSearchInput } from '@shared/models/student';
 import { useSearch } from '@/hooks/api/useSearch';
 
 export const useStudentSearch = () => {

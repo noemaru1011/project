@@ -1,5 +1,5 @@
 import { SubCategoryRepository } from '@/repositories/subCategoryRepository';
-import type { SubCategory } from '@shared/types/subCategory';
+import type { SubCategory } from '@shared/models/master';
 
 export const SubCategoryService = {
   async getAllSubCategories(): Promise<SubCategory[]> {

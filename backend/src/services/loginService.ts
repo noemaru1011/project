@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { InvalidCredentialsError } from '@/errors/authError';
 import { jwtUtil } from '@/utils/auth/jwt';
-import { ROLE } from '@shared/types/role';
+import { ROLE } from '@shared/models/common';
 import { isPasswordUpdateRequired } from '@/utils/auth/isPasswordUpdateRequired';
 import { StudentRepository } from '@/repositories/studentRepository';
 import { AdminRepository } from '@/repositories/adminRepository';

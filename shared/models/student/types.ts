@@ -1,5 +1,7 @@
-//明細画面で表示する型
-export interface StudentDetail {
+/**
+ * APIから返却される詳細データ
+ */
+export interface StudentResponse {
   studentId: string;
   studentName: string;
   grade: string;
@@ -7,14 +9,12 @@ export interface StudentDetail {
   email: string;
   departmentId: string;
   updatedAt: string;
+  createdAt?: string; // 新規作成時のみ含まれる場合があるため、任意とするか必要に応じて分ける
 }
 
-//新規作成時の型
-export interface StudentNew extends StudentDetail {
-  createdAt: string;
-}
-
-//テーブルに表示する型
+/**
+ * テーブル表示用の一覧データ
+ */
 export interface StudentSummary {
   studentId: string;
   studentName: string;

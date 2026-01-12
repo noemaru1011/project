@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { Prisma } from '@prisma/client';
-import type { HistoreServerForm, HistoryUpdateServerForm } from '@shared/schemas/history';
+import type { HistoryServerCreateInput, HistoryServerUpdateInput } from '@shared/models/history';
 
 const prisma = new PrismaClient();
 
@@ -21,11 +21,13 @@ export const HistoryRepository = {
           },
         },
         historyId: true,
+        studentId: true,
         statusId: true,
         startTime: true,
         endTime: true,
         other: true,
         validFlag: true,
+        createdAt: true,
         updatedAt: true,
       },
     });
@@ -118,7 +120,7 @@ export const HistoryRepository = {
       },
     });
   },
-  async createHistory(data: HistoreServerForm) {
+  async createHistory(data: HistoryServerCreateInput) {
     const datas = data.studentIds.map((id) => ({
       studentId: id,
       statusId: data.statusId,
@@ -128,10 +130,28 @@ export const HistoryRepository = {
       validFlag: true,
     }));
 
-    return await prisma.$transaction(datas.map((d) => prisma.history.create({ data: d })));
+    return await prisma.$transaction(
+      datas.map((d) =>
+        prisma.history.create({
+          data: d,
+          select: {
+            historyId: true,
+            studentId: true,
+            student: { select: { studentName: true, grade: true, departmentId: true, minorCategoryId: true } },
+            statusId: true,
+            other: true,
+            startTime: true,
+            endTime: true,
+            validFlag: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        })
+      )
+    );
   },
 
-  async updateHistory(data: HistoryUpdateServerForm, historyId: string) {
+  async updateHistory(data: HistoryServerUpdateInput, historyId: string) {
     return await prisma.$transaction(async (tx) => {
       const updated = await tx.history.updateMany({
         where: {
@@ -151,6 +171,18 @@ export const HistoryRepository = {
 
       return tx.history.findUnique({
         where: { historyId },
+        select: {
+          historyId: true,
+          studentId: true,
+          student: { select: { studentName: true, grade: true, departmentId: true, minorCategoryId: true } },
+          statusId: true,
+          other: true,
+          startTime: true,
+          endTime: true,
+          validFlag: true,
+          createdAt: true,
+          updatedAt: true,
+        },
       });
     });
   },

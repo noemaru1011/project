@@ -4,11 +4,10 @@ import { useHistoryView } from '@/features/history/hooks/useHistoryView';
 import { useHistoryUpdate } from '@/features/history/hooks/useHistoryUpdate';
 import { HistoryUpdateForm } from '@/features/history/components';
 import { HistoryBasicInfo } from '@/features/history/components';
-import type { StdentInfo } from '@shared/types/history';
+import type { StudentBasicInfo, HistoryUpdateInput } from '@shared/models/history';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { handleApiError } from '@/utils/handleApiError';
 import { ROUTES } from '@/routes/routes';
-import type { HistoryUpdateForm as FormType } from '@shared/schemas/history';
 
 export const HistoryUpdatePage = () => {
   const navigate = useNavigate();
@@ -23,7 +22,7 @@ export const HistoryUpdatePage = () => {
     return <Loading loading={loading} />;
   }
 
-  const defaultValues: FormType = {
+  const defaultValues: HistoryUpdateInput = {
     statusId: history.statusId,
     other: history.other ?? '',
     startTime: history.startTime,
@@ -32,14 +31,14 @@ export const HistoryUpdatePage = () => {
     updatedAt: history.updatedAt,
   };
 
-  const historyBasic: StdentInfo = {
+  const historyBasic: StudentBasicInfo = {
     studentName: history.studentName,
     grade: history.grade,
     minorCategoryId: history.minorCategoryId,
     departmentId: history.departmentId,
   };
 
-  const handleSubmit = async (data: FormType) => {
+  const handleSubmit = async (data: HistoryUpdateInput) => {
     if (!history) {
       navigate(ROUTES.ERROR.NOTFOUND, { replace: true });
       return;

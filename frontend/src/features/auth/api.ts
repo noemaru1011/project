@@ -1,14 +1,11 @@
 import { api } from '@/api/api';
 import Cookies from 'js-cookie';
-import type { LoginForm } from '@shared/schemas/login';
-import { API_ROUTES } from '@shared/routes/routes';
-import type { Login } from '@shared/types/login';
-import type { PasswordForm } from '@shared/schemas/password';
+import type { LoginInput, LoginResponse, PasswordUpdateInput } from '@shared/models/auth';
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const authApi = {
-  login: (data: LoginForm) =>
-    api<Login>(API_ROUTES.LOGIN, {
+  login: (data: LoginInput) =>
+    api<LoginResponse>(API_ROUTES.LOGIN, {
       method: 'POST',
       body: JSON.stringify(data),
     }),
@@ -18,7 +15,7 @@ export const authApi = {
       method: 'POST',
     }),
 
-  updatePassword: (data: PasswordForm) =>
+  updatePassword: (data: PasswordUpdateInput) =>
     api(API_ROUTES.PASSWORD, {
       method: 'POST',
       body: JSON.stringify(data),

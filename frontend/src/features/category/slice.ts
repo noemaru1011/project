@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { categoryApi } from '@/features/category';
-import type { Category } from '@shared/types/category';
+import type { Category } from '@shared/models/master';
 
 //Redux Action
 export const fetchCategories = createAsyncThunk('category/fetchAll', async () => {

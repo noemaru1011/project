@@ -5,11 +5,11 @@ import { StudentNameInput, StudentEmailInput } from '@/features/student/componen
 import { GradeRadioGroup } from '@/features/grade/components';
 import { MinorCategorySelect } from '@/features/minorCategory/components/MinorCategory.Select';
 import { DepartmentSelect } from '@/features/department/components/Department.Select';
-import { validation } from '@shared/schemas/student';
-import type { StudentForm } from '@shared/schemas/student';
+import { StudentCreateSchema } from '@shared/models/student';
+import type { StudentCreateInput } from '@shared/models/student';
 
 type Props = {
-  onSubmit: (data: StudentForm) => void;
+  onSubmit: (data: StudentCreateInput) => void;
   onBack: () => void;
   loading: boolean;
 };
@@ -20,8 +20,8 @@ export const StudentCreateForm = ({ onSubmit, onBack, loading }: Props) => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: zodResolver(validation),
+  } = useForm<StudentCreateInput>({
+    resolver: zodResolver(StudentCreateSchema),
   });
 
   return (

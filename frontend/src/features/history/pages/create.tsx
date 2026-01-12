@@ -7,13 +7,13 @@ import {
   StudentTable,
 } from '@/features/history/components';
 import { StudentSearchForm } from '@/features/search/student/components';
-import type { HistoryForm } from '@shared/schemas/history';
+import type { HistoryCreateInput } from '@shared/models/history';
 import { useHistoryCreate } from '@/features/history/hooks/useHistoryCreate';
 import { ROUTES } from '@/routes/routes';
 import { handleApiError } from '@/utils/handleApiError';
 import { useStudentSearch } from '@/features/search/student/hooks/useStudentSearch';
 import { Loading } from '@/components/ui/Loading/Loading';
-import type { StudentQueryForm } from '@shared/schemas/studentQuery';
+import type { StudentSearchInput } from '@shared/models/student';
 
 export const HistoryCreatePage = () => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ export const HistoryCreatePage = () => {
   const { createHistory, loading: creating } = useHistoryCreate();
   const { searchStudents, data, loading: searching } = useStudentSearch();
 
-  const onSubmit = async (data: HistoryForm) => {
+  const onSubmit = async (data: HistoryCreateInput) => {
     try {
       const res = await createHistory(data);
       toast.success(res.message);
@@ -35,7 +35,7 @@ export const HistoryCreatePage = () => {
     }
   };
 
-  const handleSearch = async (query: StudentQueryForm) => {
+  const handleSearch = async (query: StudentSearchInput) => {
     try {
       const res = await searchStudents(query);
       toast.info(res.message);

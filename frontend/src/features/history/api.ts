@@ -1,10 +1,9 @@
 import { api } from '@/api/api';
-import type { HistoryForm, HistoryUpdateForm } from '@shared/schemas/history';
-import type { HistoryDetail } from '@shared/types/history';
+import type { HistoryCreateInput, HistoryUpdateInput, HistoryResponse } from '@shared/models/history';
 import { API_ROUTES } from '@shared/routes/routes';
 
 export const historyApi = {
-  create: (data: HistoryForm) =>
+  create: (data: HistoryCreateInput) =>
     api<void>(API_ROUTES.HISTORY, {
       method: 'POST',
       body: JSON.stringify(data),
@@ -16,7 +15,7 @@ export const historyApi = {
       body: JSON.stringify(data),
     }),
 
-  view: (id: string) => api<HistoryDetail>(`${API_ROUTES.HISTORY}/${id}`, { method: 'GET' }),
+  view: (id: string) => api<HistoryResponse>(`${API_ROUTES.HISTORY}/${id}`, { method: 'GET' }),
 
   delete: (id: string) => api<void>(`${API_ROUTES.HISTORY}/${id}`, { method: 'DELETE' }),
 };

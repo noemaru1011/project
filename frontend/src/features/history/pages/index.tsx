@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import type { StudentQueryForm } from '@shared/schemas/studentQuery';
+import type { StudentSearchInput } from '@shared/models/student';
 import { StudentSearchForm } from '@/features/search/student/components/StudentSearchForm';
 import { useHistorySearch } from '@/features/search/history/hooks/useHistorySearch';
 import { handleApiError } from '@/utils';

@@ -1,18 +1,18 @@
 import { Router } from 'express';
 import { validateBody } from '@/middleware/validateMiddleware';
-import { serverValidation, serverUpdateValidation } from '@shared/schemas/history';
+import { HistoryServerCreateSchema, HistoryServerUpdateSchema } from '@shared/models/history';
 import { HistoryController } from '@/controllers/historyController';
 import { csrfMiddleware } from '@/middleware';
 const router = Router();
 
-router.post('/', csrfMiddleware, validateBody(serverValidation), HistoryController.createHistory);
+router.post('/', csrfMiddleware, validateBody(HistoryServerCreateSchema), HistoryController.createHistory);
 
 router.get('/:id', HistoryController.getHistory);
 
 router.put(
   '/:id',
   csrfMiddleware,
-  validateBody(serverUpdateValidation),
+  validateBody(HistoryServerUpdateSchema),
   HistoryController.updateHistory,
 );
 

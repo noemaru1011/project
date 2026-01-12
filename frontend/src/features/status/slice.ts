@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { statusApi } from '@/features/status';
-import type { Status } from '@shared/types/status';
+import type { Status } from '@shared/models/master';
 
 //Redux Action
 export const fetchStatuses = createAsyncThunk('statuses/fetchAll', async () => {

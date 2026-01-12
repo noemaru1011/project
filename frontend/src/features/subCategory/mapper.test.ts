@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { subCategoriesToOptions } from './mapper';
-import type { SubCategory } from '@shared/types/subCategory';
+import type { SubCategory } from '@shared/models/master';
 
 describe('subCategory mapper', () => {
   it('SubCategoryの配列をOptionの配列に正しく変換すること', () => {

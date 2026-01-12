@@ -1,5 +1,5 @@
 import { StatusRepository } from '@/repositories/statusRepository';
-import type { Status } from '@shared/types/status';
+import type { Status } from '@shared/models/master';
 
 export const StatusService = {
   async getAllstatuses(): Promise<Status[]> {

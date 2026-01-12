@@ -1,4 +1,4 @@
-import type { ApiResponse } from '@shared/types/api';
+import type { ApiResponse } from '@shared/models/common';
 import { useLoadingCounter } from '@/hooks/ux/useLoadingCounter';
 
 export function useUpdate<I>(updateFn: (id: string, data: I) => Promise<ApiResponse<void>>) {

@@ -3,9 +3,7 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useHistoryDelete } from '@/features/history/hooks/useHistoryDelete';
 import { useHistoryView } from '@/features/history/hooks/useHistoryView';
 
-import type { StdentInfo } from '@shared/types/history';
-import { HistoryDeleteView } from '@/features/history/components';
-import type { HistoryUpdateForm } from '@shared/schemas/history';
+import type { StudentBasicInfo, HistoryUpdateInput } from '@shared/models/history';
 import { HistoryBasicInfo } from '@/features/history/components';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { handleApiError } from '@/utils/handleApiError';
@@ -41,14 +39,14 @@ export const HistoryDeletePage = () => {
     }
   };
   //マッピング
-  const historyBasic: StdentInfo = {
+  const historyBasic: StudentBasicInfo = {
     studentName: history.studentName,
     grade: history.grade,
     minorCategoryId: history.minorCategoryId,
     departmentId: history.departmentId,
   };
 
-  const historyDelete: HistoryUpdateForm = {
+  const historyDelete: HistoryUpdateInput = {
     statusId: history.statusId,
     startTime: history.startTime,
     endTime: history.endTime ?? '',

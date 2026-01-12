@@ -1,5 +1,5 @@
 import { ROUTES } from '@/routes/routes';
-import type { ApiResponse, ApiErrorResponse } from '@shared/types/api';
+import type { ApiResponse, ApiErrorResponse } from '@shared/models/common';
 import type { ApiMessageCode } from '@shared/constants/apiMessage';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
 //ネットワーク切断、バグ（undefined参照）、JSON parse errorなどを500番にマッピング

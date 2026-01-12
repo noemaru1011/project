@@ -1,7 +1,7 @@
 import { api } from '@/api/api';
 import { API_ROUTES } from '@shared/routes/routes';
-import type { StudentQueryForm } from '@shared/schemas/studentQuery';
-import type { HistorySummary } from '@shared/types/history';
+import type { StudentSearchInput } from '@shared/models/student';
+import type { HistorySummary } from '@shared/models/history';
 
 export const historySearchApi = {
   search: (query: StudentQueryForm) =>

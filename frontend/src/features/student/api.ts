@@ -1,17 +1,16 @@
 import { api } from '@/api/api';
-import type { StudentForm, StudentUpdateForm } from '@shared/schemas/student';
-import type { StudentDetail } from '@shared/types/student';
+import type { StudentCreateInput, StudentUpdateInput, StudentResponse } from '@shared/models/student';
 import { API_ROUTES } from '@shared/routes/routes';
 
 export const studentApi = {
-  create: (data: StudentForm) =>
+  create: (data: StudentCreateInput) =>
     api<void>(API_ROUTES.STUDENT, {
       method: 'POST',
 
       body: JSON.stringify(data),
     }),
 
-  update: (id: string, data: StudentUpdateForm) =>
+  update: (id: string, data: StudentUpdateInput) =>
     api<void>(`${API_ROUTES.STUDENT}/${id}`, {
       method: 'PUT',
       body: JSON.stringify(data),
@@ -22,5 +21,5 @@ export const studentApi = {
       method: 'DELETE',
     }),
 
-  view: (id: string) => api<StudentDetail>(`${API_ROUTES.STUDENT}/${id}`, { method: 'GET' }),
+  view: (id: string) => api<StudentResponse>(`${API_ROUTES.STUDENT}/${id}`, { method: 'GET' }),
 };

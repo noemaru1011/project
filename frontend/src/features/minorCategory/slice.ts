@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { minorCategoryApi } from '@/features/minorCategory';
-import type { MinorCategory } from '@shared/types/minorCategory';
+import type { MinorCategory } from '@shared/models/master';
 
 //Redux Action
 export const fetchMinorCategories = createAsyncThunk('minorCategories/fetchAll', async () => {

@@ -1,5 +1,5 @@
 import { api } from '@/api/api';
-import type { Category } from '@shared/types/category';
+import type { Category } from '@shared/models/master';
 import { API_ROUTES } from '@shared/routes/routes';
 
 export const categoryApi = {

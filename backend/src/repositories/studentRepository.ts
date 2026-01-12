@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { Prisma } from '@prisma/client';
-import type { StudentServerForm, StudentUpdateServerForm } from '@shared/schemas/student';
+import type { StudentServerCreateInput, StudentServerUpdateInput } from '@shared/models/student';
 
 const prisma = new PrismaClient();
 
@@ -33,7 +33,7 @@ export const StudentRepository = {
   },
 
   //学生新規作成(トランザクション前提)
-  async create(tx: Prisma.TransactionClient, data: StudentServerForm) {
+  async create(tx: Prisma.TransactionClient, data: StudentServerCreateInput) {
     return await tx.student.create({
       data: {
         studentName: data.studentName,
@@ -56,7 +56,7 @@ export const StudentRepository = {
   },
 
   //学生更新
-  async update(studentId: string, data: StudentUpdateServerForm) {
+  async update(studentId: string, data: StudentServerUpdateInput) {
     return await prisma.$transaction(async (tx) => {
       const updated = await tx.student.updateMany({
         where: {

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { CategoryService } from '@/services/categoryService';
-import type { Apibody } from '@shared/types/api';
-import type { Category } from '@shared/types/category';
+import type { ApiBody } from '@shared/models/common';
+import type { Category } from '@shared/models/master';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
 import type { ApiMessageCode } from '@shared/constants/apiMessage';
 export const CategoryController = {

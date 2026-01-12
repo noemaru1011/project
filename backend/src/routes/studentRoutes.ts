@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { validateBody } from '@/middleware/validateMiddleware';
-import { serverValidation, serverUpdateValidation } from '@shared/schemas/student';
+import { StudentServerCreateSchema, StudentServerUpdateSchema } from '@shared/models/student';
 import { StudentController } from '@/controllers/studentController';
 import { csrfMiddleware } from '@/middleware';
 
@@ -8,12 +8,12 @@ const router = Router();
 
 router.get('/:id', StudentController.getStudent);
 
-router.post('/', csrfMiddleware, validateBody(serverValidation), StudentController.createStudent);
+router.post('/', csrfMiddleware, validateBody(StudentServerCreateSchema), StudentController.createStudent);
 
 router.put(
   '/:id',
   csrfMiddleware,
-  validateBody(serverUpdateValidation),
+  validateBody(StudentServerUpdateSchema),
   StudentController.updateStudent,
 );
 

@@ -2,18 +2,18 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/Button/Button';
 import { StudentSearchAccordion } from '@/features/search/student/components';
-import type { StudentQueryForm } from '@shared/schemas/studentQuery';
-import { validation } from '@shared/schemas/studentQuery';
+import type { StudentSearchInput } from '@shared/models/student';
+import { StudentSearchSchema } from '@shared/models/student';
 
 type Props = {
-  onSearch: (query: StudentQueryForm) => void;
+  onSearch: (query: StudentSearchInput) => void;
   onCreate?: () => void;
   loading: boolean;
 };
 
 export const StudentSearchForm = ({ onSearch, onCreate, loading }: Props) => {
-  const { control, handleSubmit } = useForm<StudentQueryForm>({
-    resolver: zodResolver(validation),
+  const { control, handleSubmit } = useForm<StudentSearchInput>({
+    resolver: zodResolver(StudentSearchSchema),
     defaultValues: {
       categoryIds: [],
       subCategoryIds: [],

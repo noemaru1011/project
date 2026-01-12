@@ -5,11 +5,8 @@ import { useMinorCategoryList } from '@/features/minorCategory/hooks/useMinorCat
 import { useStatusList } from '@/features/status/hooks/useStatusList';
 import { useDepartmentList } from '@/features/department/hooks/useDepartmentList';
 import { gradeOptions } from '@/features/grade/constants/gradeOptions';
-import type { Category } from '@shared/types/category';
-import type { SubCategory } from '@shared/types/subCategory';
-import type { MinorCategory } from '@shared/types/minorCategory';
-import type { Department } from '@shared/types/department';
-import type { AggregationData } from '@shared/types/history';
+import type { Category, SubCategory, MinorCategory, Department } from '@shared/models/master';
+import type { AggregationData } from '@shared/models/history';
 import { HierarchyCountTable, type OrgNode } from './HierarchyCountTable';
 
 type Props = {

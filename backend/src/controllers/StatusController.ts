@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { StatusService } from '@/services/statusService';
-import type { Apibody } from '@shared/types/api';
-import type { Status } from '@shared/types/status';
+import type { ApiBody } from '@shared/models/common';
+import type { Status } from '@shared/models/master';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
 import type { ApiMessageCode } from '@shared/constants/apiMessage';
 export const StatusController = {

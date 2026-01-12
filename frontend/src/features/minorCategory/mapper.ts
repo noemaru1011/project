@@ -1,4 +1,4 @@
-import type { MinorCategory } from '@shared/types/minorCategory';
+import type { MinorCategory } from '@shared/models/master';
 import type { Option } from '@/components/ui/option';
 
 const minorCategoryToOption = (minorCategory: MinorCategory): Option => ({

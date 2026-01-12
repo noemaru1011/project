@@ -6,11 +6,11 @@ import {
   NewPasswordInput,
   CheckNewPasswordInput,
 } from '@/features/auth/components';
-import { validation } from '@shared/schemas/password';
-import type { PasswordForm } from '@shared/schemas/password';
+import { PasswordUpdateSchema } from '@shared/models/auth';
+import type { PasswordUpdateInput } from '@shared/models/auth';
 
 type Props = {
-  onSubmit: (data: PasswordForm) => void;
+  onSubmit: (data: PasswordUpdateInput) => void;
   loading: boolean;
 };
 
@@ -19,8 +19,8 @@ export const PasswordUpdateForm = ({ onSubmit, loading }: Props) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: zodResolver(validation),
+  } = useForm<PasswordUpdateInput>({
+    resolver: zodResolver(PasswordUpdateSchema),
   });
 
   return (

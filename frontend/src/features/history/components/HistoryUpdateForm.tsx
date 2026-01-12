@@ -9,12 +9,12 @@ import {
   VailFlagCheckbox,
 } from '@/features/history/components';
 import { Button } from '@/components/ui/Button/Button';
-import type { HistoryUpdateForm as HistoryUpdateFormType } from '@shared/schemas/history';
-import { updateValidation } from '@shared/schemas/history';
+import type { HistoryUpdateInput } from '@shared/models/history';
+import { HistoryUpdateSchema } from '@shared/models/history';
 
 type Props = {
-  defaultValues: HistoryUpdateFormType;
-  onSubmit: (data: HistoryUpdateFormType) => void;
+  defaultValues: HistoryUpdateInput;
+  onSubmit: (data: HistoryUpdateInput) => void;
   loading: boolean;
   onBack: () => void;
 };
@@ -25,8 +25,8 @@ export const HistoryUpdateForm = ({ defaultValues, onSubmit, loading, onBack }: 
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm({
-    resolver: zodResolver(updateValidation),
+  } = useForm<HistoryUpdateInput>({
+    resolver: zodResolver(HistoryUpdateSchema),
     defaultValues,
   });
   return (

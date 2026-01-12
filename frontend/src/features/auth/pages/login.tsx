@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import { LoginForm } from '@/features/auth/components';
-import type { LoginForm as LoginFormType } from '@shared/schemas/login';
+import type { LoginInput } from '@shared/models/auth';
 import { useLogin } from '@/features/auth/hooks/useLogin';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/routes/routes';
@@ -10,7 +10,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const { login, loading } = useLogin();
 
-  const onSubmit = async (data: LoginFormType) => {
+  const onSubmit = async (data: LoginInput) => {
     try {
       const res = await login(data);
       toast.success(res.message);

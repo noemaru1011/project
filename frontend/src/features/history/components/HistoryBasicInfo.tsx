@@ -2,10 +2,10 @@ import { StudentNameInput } from '@/features/student/components';
 import { GradeSelect } from '@/features/grade/components';
 import { MinorCategorySelect } from '@/features/minorCategory/components';
 import { DepartmentSelect } from '@/features/department/components';
-import type { StdentInfo } from '@shared/types/history';
+import type { StudentBasicInfo } from '@shared/models/history';
 
 type Props = {
-  stdent: StdentInfo;
+  stdent: StudentBasicInfo;
 };
 
 export const HistoryBasicInfo = ({ stdent }: Props) => (

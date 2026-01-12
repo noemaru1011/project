@@ -3,11 +3,11 @@ import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/Button/Button';
 import { LoginPasswordInput, LoginEmailInput, RememberCheckbox } from '@/features/auth/components';
-import { validation } from '@shared/schemas/login';
-import type { LoginForm as LoginFormType } from '@shared/schemas/login';
+import { LoginSchema } from '@shared/models/auth';
+import type { LoginInput } from '@shared/models/auth';
 
 type Props = {
-  onSubmit: (data: LoginFormType) => void;
+  onSubmit: (data: LoginInput) => void;
   loading: boolean;
 };
 
@@ -16,8 +16,8 @@ export const LoginForm = ({ onSubmit, loading }: Props) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: zodResolver(validation),
+  } = useForm<LoginInput>({
+    resolver: zodResolver(LoginSchema),
   });
 
   const [remember, setRemember] = useState(false);
