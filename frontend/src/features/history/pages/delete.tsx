@@ -4,7 +4,7 @@ import { useHistoryDelete } from '@/features/history/hooks/useHistoryDelete';
 import { useHistoryView } from '@/features/history/hooks/useHistoryView';
 
 import type { StudentBasicInfo, HistoryUpdateInput } from '@shared/models/history';
-import { HistoryBasicInfo } from '@/features/history/components';
+import { HistoryBasicInfo, HistoryDeleteView } from '@/features/history/components';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { handleApiError } from '@/utils/handleApiError';
 import { ROUTES } from '@/routes/routes';

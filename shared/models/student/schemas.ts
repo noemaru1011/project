@@ -6,10 +6,10 @@ import { z } from "zod";
 const baseStudentFields = {
   studentName: z
     .string()
-    .min(1, { message: "学生名は必須です。" })
-    .max(20, { message: "学生名は20文字以内で入力してください。" }),
-  email: z.string().email({
-    message: "正しいメールアドレスの形式で入力してください。",
+    .min(1, { error: "学生名は必須です。" })
+    .max(20, { error: "学生名は20文字以内で入力してください。" }),
+  email: z.email({
+    error: "正しいメールアドレスの形式で入力してください。",
   }),
 };
 
@@ -19,13 +19,13 @@ const baseStudentFields = {
  */
 export const StudentCreateSchema = z.object({
   ...baseStudentFields,
-  grade: z.string().min(1, { message: "学年は必須です。" }),
-  minorCategoryId: z.string().min(1, { message: "小分類は必須です。" }),
-  departmentId: z.string().min(1, { message: "学科は必須です。" }),
+  grade: z.string().min(1, { error: "学年は必須です。" }),
+  minorCategoryId: z.string().min(1, { error: "小分類は必須です。" }),
+  departmentId: z.string().min(1, { error: "学科は必須です。" }),
 });
 
 export const StudentUpdateSchema = StudentCreateSchema.extend({
-  updatedAt: z.string().min(1, { message: "更新日は必須です。" }),
+  updatedAt: z.string().min(1, { error: "更新日は必須です。" }),
 });
 
 export type StudentCreateInput = z.infer<typeof StudentCreateSchema>;
@@ -55,18 +55,15 @@ export const StudentServerCreateSchema = z.object({
 });
 
 export const StudentServerUpdateSchema = StudentServerCreateSchema.extend({
-  updatedAt: z.coerce.date({
-    errorMap: (issue, ctx) => {
-      if (issue.code === z.ZodIssueCode.invalid_date || issue.code === z.ZodIssueCode.invalid_type) {
-        return { message: "正しい更新日を入力してください。" };
-      }
-      return { message: ctx.defaultError };
-    }
-  }),
+  updatedAt: z.coerce.date({ error: "正しい更新日を入力してください。" }),
 });
 
-export type StudentServerCreateInput = z.infer<typeof StudentServerCreateSchema>;
-export type StudentServerUpdateInput = z.infer<typeof StudentServerUpdateSchema>;
+export type StudentServerCreateInput = z.infer<
+  typeof StudentServerCreateSchema
+>;
+export type StudentServerUpdateInput = z.infer<
+  typeof StudentServerUpdateSchema
+>;
 
 /**
  * 学生検索クエリバリデーション
@@ -86,7 +83,7 @@ export const StudentServerSearchSchema = z.object({
     .array(
       z.coerce
         .number()
-        .int({ message: "学年は整数である必要があります。" })
+        .int({ error: "学年は整数である必要があります。" })
         .min(1, "学年は1〜4で入力してください。")
         .max(4, "学年は1〜4で入力してください。")
     )
@@ -129,4 +126,6 @@ export const StudentServerSearchSchema = z.object({
     .optional(),
 });
 
-export type StudentServerSearchInput = z.infer<typeof StudentServerSearchSchema>;
+export type StudentServerSearchInput = z.infer<
+  typeof StudentServerSearchSchema
+>;

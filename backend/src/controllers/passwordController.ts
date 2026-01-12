@@ -6,7 +6,7 @@ import type { ApiMessageCode } from '@shared/constants/apiMessage';
 import { TokenError } from '@/errors/authError';
 
 export const PasswordController = {
-  async updatePassword(req: Request, res: Response<Apibody<null>>, next: NextFunction) {
+  async updatePassword(req: Request, res: Response<ApiBody<null>>, next: NextFunction) {
     try {
       //cookieのidからstudentIdを特定
       if (!req.user) return next(new TokenError());

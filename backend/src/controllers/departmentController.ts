@@ -5,7 +5,7 @@ import type { Department } from '@shared/models/master';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
 import type { ApiMessageCode } from '@shared/constants/apiMessage';
 export const DepartmentController = {
-  async getAllDepartments(_req: Request, res: Response<Apibody<Department[]>>, next: NextFunction) {
+  async getAllDepartments(_req: Request, res: Response<ApiBody<Department[]>>, next: NextFunction) {
     try {
       const departments = await DepartmentService.getAllDepartments();
       const key: ApiMessageCode = 'FETCH_SUCCESS';

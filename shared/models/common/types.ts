@@ -17,7 +17,7 @@ export interface ApiResponse<T> extends ApiBody<T> {
 }
 
 /**
- * APIエラーレスポンス
+ * APIエラーレスポンス (フロントエンドで使用)
  */
 export interface ApiErrorResponse extends ApiResponse<null> {
   redirectTo?: string;

@@ -10,7 +10,7 @@ import { DepartmentCheckboxGroup } from '@/features/department/components';
 import type { StudentSearchInput } from '@shared/models/student';
 
 type Props = {
-  control: Control<StudentQueryForm>;
+  control: Control<StudentSearchInput>;
 };
 
 export const StudentSearchAccordion = ({ control }: Props) => {

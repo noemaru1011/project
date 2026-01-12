@@ -1,5 +1,9 @@
 import { api } from '@/api/api';
-import type { HistoryCreateInput, HistoryUpdateInput, HistoryResponse } from '@shared/models/history';
+import type {
+  HistoryCreateInput,
+  HistoryUpdateInput,
+  HistoryResponse,
+} from '@shared/models/history';
 import { API_ROUTES } from '@shared/routes/routes';
 
 export const historyApi = {
@@ -9,7 +13,7 @@ export const historyApi = {
       body: JSON.stringify(data),
     }),
 
-  update: (id: string, data: HistoryUpdateForm) =>
+  update: (id: string, data: HistoryUpdateInput) =>
     api<void>(`${API_ROUTES.HISTORY}/${id}`, {
       method: 'PUT',
       body: JSON.stringify(data),

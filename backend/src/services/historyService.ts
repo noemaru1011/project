@@ -3,7 +3,12 @@ import { MinorCategoryRepository } from '@/repositories/minorCategoryRepository'
 import { ConflictError } from '@/errors/appError';
 import { formatDateTime } from '@/utils/common/formatDateTime';
 import { aggregateHistory } from '@/utils/history/aggregateHIstory';
-import type { HistoryServerCreateInput, HistoryServerUpdateInput, HistoryResponse, HistorySummary } from '@shared/models/history';
+import type {
+  HistoryServerCreateInput,
+  HistoryServerUpdateInput,
+  HistoryResponse,
+  HistorySummary,
+} from '@shared/models/history';
 import type { StudentServerSearchInput } from '@shared/models/student';
 
 export const HistoryService = {
@@ -91,7 +96,6 @@ export const HistoryService = {
     //DTO
     return {
       historyId: history.historyId,
-      studentId: history.studentId,
       studentName: history.student.studentName,
       grade: history.student.grade.toString(),
       departmentId: history.student.departmentId.toString(),

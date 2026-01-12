@@ -6,7 +6,7 @@ import type { ApiBody } from '@shared/models/common';
 import jwt from 'jsonwebtoken';
 
 export const LogoutController = {
-  async logout(req: Request, res: Response<Apibody<null>>, next: NextFunction) {
+  async logout(req: Request, res: Response<ApiBody<null>>, next: NextFunction) {
     try {
       const token = req.cookies.token;
 

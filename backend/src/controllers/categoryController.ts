@@ -5,7 +5,7 @@ import type { Category } from '@shared/models/master';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
 import type { ApiMessageCode } from '@shared/constants/apiMessage';
 export const CategoryController = {
-  async getAllCategories(_req: Request, res: Response<Apibody<Category[]>>, next: NextFunction) {
+  async getAllCategories(_req: Request, res: Response<ApiBody<Category[]>>, next: NextFunction) {
     try {
       const categories = await CategoryService.getAllCategories();
       const key: ApiMessageCode = 'FETCH_SUCCESS';

@@ -4,7 +4,7 @@ import type { StudentSearchInput } from '@shared/models/student';
 import type { HistorySummary } from '@shared/models/history';
 
 export const historySearchApi = {
-  search: (query: StudentQueryForm) =>
+  search: (query: StudentSearchInput) =>
     api<HistorySummary[]>(API_ROUTES.HISTORY_SEARCH, {
       method: 'POST',
       body: JSON.stringify(query),

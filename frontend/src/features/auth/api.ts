@@ -1,5 +1,6 @@
 import { api } from '@/api/api';
 import Cookies from 'js-cookie';
+import { API_ROUTES } from '@shared/routes/routes';
 import type { LoginInput, LoginResponse, PasswordUpdateInput } from '@shared/models/auth';
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 

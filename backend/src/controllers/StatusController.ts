@@ -5,7 +5,7 @@ import type { Status } from '@shared/models/master';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
 import type { ApiMessageCode } from '@shared/constants/apiMessage';
 export const StatusController = {
-  async getAllStatuses(_req: Request, res: Response<Apibody<Status[]>>, next: NextFunction) {
+  async getAllStatuses(_req: Request, res: Response<ApiBody<Status[]>>, next: NextFunction) {
     try {
       const statuses = await StatusService.getAllstatuses();
       const key: ApiMessageCode = 'FETCH_SUCCESS';

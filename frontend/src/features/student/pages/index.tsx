@@ -12,7 +12,7 @@ export const StudentIndexPage = () => {
   const navigate = useNavigate();
   const { data, searchStudents, loading } = useStudentSearch();
 
-  const handleSearch = async (query: StudentQueryForm) => {
+  const handleSearch = async (query: StudentSearchInput) => {
     try {
       const res = await searchStudents(query);
       toast.info(res.message);

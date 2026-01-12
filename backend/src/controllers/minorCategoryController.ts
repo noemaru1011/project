@@ -7,7 +7,7 @@ import type { ApiMessageCode } from '@shared/constants/apiMessage';
 export const MinorCategoryController = {
   async getAllMinorCategories(
     _req: Request,
-    res: Response<Apibody<MinorCategory[]>>,
+    res: Response<ApiBody<MinorCategory[]>>,
     next: NextFunction,
   ) {
     try {

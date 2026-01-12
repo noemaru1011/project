@@ -7,7 +7,7 @@ import type { ApiMessageCode } from '@shared/constants/apiMessage';
 export const SubCategoryController = {
   async getAllSubCategories(
     _req: Request,
-    res: Response<Apibody<SubCategory[]>>,
+    res: Response<ApiBody<SubCategory[]>>,
     next: NextFunction,
   ) {
     try {

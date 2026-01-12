@@ -17,7 +17,7 @@ export const HistoryIndexPage = () => {
     loading: timeSearching,
   } = useHistorySearchByTime();
 
-  const handleSearch = async (query: StudentQueryForm) => {
+  const handleSearch = async (query: StudentSearchInput) => {
     try {
       const res = await searchHistories(query);
       toast.info(res.message);
