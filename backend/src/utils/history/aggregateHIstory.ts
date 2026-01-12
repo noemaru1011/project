@@ -9,7 +9,7 @@ interface History {
 
 export const aggregateHistory = {
   //学年・学科の集計
-  async aggregateByDepartmentAndGrade(histories: History[]) {
+  aggregateByDepartmentAndGrade(histories: History[]) {
     const result: Record<number, Record<number, Record<number, number>>> = {};
 
     histories.forEach((h) => {
@@ -25,7 +25,7 @@ export const aggregateHistory = {
   },
 
   //小・中・大分類の集計
-  async aggregateByCategoryHierarchy(histories: History[]) {
+  aggregateByCategoryHierarchy(histories: History[]) {
     const result: Record<
       number, // categoryId (大分類)
       {

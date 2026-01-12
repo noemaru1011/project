@@ -35,7 +35,7 @@ export const HistoryController = {
 
       const histories = await HistoryService.searchByStartTimeHistories(query);
       const key: ApiMessageCode = 'FETCH_SUCCESS';
-      return res.status(201).json({
+      return res.status(200).json({
         code: key,
         data: histories,
         message: APIMESSAGE.FETCH_SUCCESS,
