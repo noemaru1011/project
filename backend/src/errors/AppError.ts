@@ -1,5 +1,5 @@
 import { APIMESSAGE } from '@shared/apiMessage';
-import type { ApiMessageKey } from '@shared/apiMessage';
+import type { ApiMessageCode } from '@shared/apiMessage';
 
 //エラーを拡張
 export class appError extends Error {
@@ -16,7 +16,7 @@ export class appError extends Error {
 ///共通　楽観的ロック違反
 export class ConflictError extends appError {
   constructor() {
-    const key: ApiMessageKey = 'CONFLICT';
+    const key: ApiMessageCode = 'CONFLICT';
     super(key, APIMESSAGE.CONFLICT, 409);
   }
 }

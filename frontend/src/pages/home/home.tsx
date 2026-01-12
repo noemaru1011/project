@@ -26,7 +26,7 @@ export const HomePage = () => {
 
             {/* 説明 */}
             <p id="history-create-desc" className="text-gray-600 leading-relaxed">
-              履歴作成画面画面では、学生のステータスを時間帯付きで登録できます。
+              履歴作成画面では、学生のステータスを時間帯付きで登録できます。
               以下の手順に従って入力してください。
             </p>
 

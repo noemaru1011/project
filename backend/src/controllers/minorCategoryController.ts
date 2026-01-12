@@ -3,7 +3,7 @@ import { MinorCategoryService } from '@/services/minorCategoryService';
 import type { Apibody } from '@/types/apiBody';
 import type { MinorCategory } from '@shared/types/minorCategory';
 import { APIMESSAGE } from '@shared/apiMessage';
-import type { ApiMessageKey } from '@shared/apiMessage';
+import type { ApiMessageCode } from '@shared/apiMessage';
 
 export const MinorCategoryController = {
   async getAllMinorCategories(
@@ -13,7 +13,7 @@ export const MinorCategoryController = {
   ) {
     try {
       const minorcategories = await MinorCategoryService.getAllMinorCategories();
-      const key: ApiMessageKey = 'FETCH_SUCCESS';
+      const key: ApiMessageCode = 'FETCH_SUCCESS';
       res.json({
         code: key,
         data: minorcategories,

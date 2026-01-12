@@ -20,4 +20,5 @@ export const APIMESSAGE = {
   CSRF_INVALID: "CSRFトークンが異なります",
 } as const;
 
-export type ApiMessageKey = keyof typeof APIMESSAGE;
+export type ApiMessageCode = keyof typeof APIMESSAGE;
+export type ApiMessage = (typeof APIMESSAGE)[ApiMessageCode];

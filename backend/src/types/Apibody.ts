@@ -1,7 +1,7 @@
-import type { ApiMessageKey } from '@shared/apiMessage';
+import type { ApiMessageCode, ApiMessage } from '@shared/apiMessage';
 
 export interface Apibody<T> {
-  code: ApiMessageKey;
+  code: ApiMessageCode;
   data: T | null;
-  message: string;
+  message: ApiMessage;
 }

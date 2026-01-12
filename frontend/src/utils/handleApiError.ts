@@ -1,6 +1,6 @@
 import { ROUTES } from '@/routes/routes';
 import type { ApiResponse, ApiErrorResponse } from '@/api/types';
-import type { ApiMessageKey } from '@shared/apiMessage';
+import type { ApiMessageCode } from '@shared/apiMessage';
 import { APIMESSAGE } from '@shared/apiMessage';
 
 //ネットワーク切断、バグ（undefined参照）、JSON parse errorなどを500番にマッピング
@@ -28,7 +28,7 @@ export const handleApiError = (err: unknown): ApiErrorResponse => {
 
     case 401:
       //ログイン失敗時は、その場でメッセージを出す
-      const key: ApiMessageKey = 'INVALID_CREDENTIALS';
+      const key: ApiMessageCode = 'INVALID_CREDENTIALS';
       if (code === key) {
         return { status, code, message };
       }

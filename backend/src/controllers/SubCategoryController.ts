@@ -3,7 +3,7 @@ import { SubCategoryService } from '@/services/subCategoryService';
 import type { Apibody } from '@/types/apiBody';
 import type { SubCategory } from '@shared/types/subCategory';
 import { APIMESSAGE } from '@shared/apiMessage';
-import type { ApiMessageKey } from '@shared/apiMessage';
+import type { ApiMessageCode } from '@shared/apiMessage';
 
 export const SubCategoryController = {
   async getAllSubCategories(
@@ -13,7 +13,7 @@ export const SubCategoryController = {
   ) {
     try {
       const subCategories = await SubCategoryService.getAllSubCategories();
-      const key: ApiMessageKey = 'FETCH_SUCCESS';
+      const key: ApiMessageCode = 'FETCH_SUCCESS';
       res.status(200).json({
         code: key,
         data: subCategories,

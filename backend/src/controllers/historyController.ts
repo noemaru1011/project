@@ -3,7 +3,7 @@ import { HistoryService } from '@/services/historyService';
 import type { Apibody } from '@/types/apiBody';
 import type { HistoryDetail, HistorySummary, HistoryNew } from '@shared/types/history';
 import { APIMESSAGE } from '@shared/apiMessage';
-import type { ApiMessageKey } from '@shared/apiMessage';
+import type { ApiMessageCode } from '@shared/apiMessage';
 
 export const HistoryController = {
   async searchHistories(
@@ -13,7 +13,7 @@ export const HistoryController = {
   ) {
     try {
       const histories = await HistoryService.searchHistories(req.body);
-      const key: ApiMessageKey = 'FETCH_SUCCESS';
+      const key: ApiMessageCode = 'FETCH_SUCCESS';
       return res.status(201).json({
         code: key,
         data: histories,
@@ -35,7 +35,7 @@ export const HistoryController = {
       }
 
       const histories = await HistoryService.searchByStartTimeHistories(query);
-      const key: ApiMessageKey = 'FETCH_SUCCESS';
+      const key: ApiMessageCode = 'FETCH_SUCCESS';
       return res.status(201).json({
         code: key,
         data: histories,
@@ -50,17 +50,17 @@ export const HistoryController = {
     try {
       const { id } = req.params;
       if (!id) {
-        const key: ApiMessageKey = 'NO_HISTORY';
+        const key: ApiMessageCode = 'NO_HISTORY';
         return res.status(404).json({ code: key, data: null, message: APIMESSAGE.NO_HISTORY });
       }
 
       const history = await HistoryService.getHistory(id);
       if (!history) {
-        const key: ApiMessageKey = 'NO_HISTORY';
+        const key: ApiMessageCode = 'NO_HISTORY';
         return res.status(404).json({ code: key, data: null, message: APIMESSAGE.NO_HISTORY });
       }
 
-      const key: ApiMessageKey = 'FETCH_SUCCESS';
+      const key: ApiMessageCode = 'FETCH_SUCCESS';
       return res.status(200).json({ code: key, data: history, message: APIMESSAGE.FETCH_SUCCESS });
     } catch (error) {
       return next(error);
@@ -70,7 +70,7 @@ export const HistoryController = {
   async createHistory(req: Request, res: Response<Apibody<HistoryNew[]>>, next: NextFunction) {
     try {
       const history = await HistoryService.createHistory(req.body);
-      const key: ApiMessageKey = 'CREATE_SUCCESS';
+      const key: ApiMessageCode = 'CREATE_SUCCESS';
       return res.status(201).json({ code: key, data: history, message: APIMESSAGE.CREATE_SUCCESS });
     } catch (error) {
       return next(error);
@@ -84,7 +84,7 @@ export const HistoryController = {
         return res.status(404).json({ message: APIMESSAGE.NO_HISTORY });
       }
       await HistoryService.updateHistory(req.body, id);
-      const key: ApiMessageKey = 'UPDATE_SUCCESS';
+      const key: ApiMessageCode = 'UPDATE_SUCCESS';
       return res.status(200).json({ code: key, message: APIMESSAGE.UPDATE_SUCCESS });
     } catch (error) {
       return next(error);
@@ -99,7 +99,7 @@ export const HistoryController = {
       }
 
       await HistoryService.deleteHistory(id);
-      const key: ApiMessageKey = 'DELETE_SUCCESS';
+      const key: ApiMessageCode = 'DELETE_SUCCESS';
       return res.status(204).json({ code: key, message: APIMESSAGE.DELETE_SUCCESS });
     } catch (error) {
       return next(error);

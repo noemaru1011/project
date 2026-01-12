@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { appError } from '@/errors/appError';
 import { APIMESSAGE } from '@shared/apiMessage';
-import type { ApiMessageKey } from '@shared/apiMessage';
+import type { ApiMessageCode } from '@shared/apiMessage';
 import { logger } from '@/utils/logger';
 
 export const errorLogger = (err: unknown, req: Request, res: Response, _next: NextFunction) => {
@@ -38,7 +38,7 @@ export const errorLogger = (err: unknown, req: Request, res: Response, _next: Ne
     Promise.resolve(logger.error(msg)).catch(console.error);
   }
 
-  const key: ApiMessageKey = 'INTERNAL_SERVER_ERROR';
+  const key: ApiMessageCode = 'INTERNAL_SERVER_ERROR';
   return res.status(500).json({
     code: key,
     message: APIMESSAGE.INTERNAL_SERVER_ERROR,

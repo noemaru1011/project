@@ -1,11 +1,11 @@
 import { appError } from '@/errors/appError';
 import { APIMESSAGE } from '@shared/apiMessage';
-import type { ApiMessageKey } from '@shared/apiMessage';
+import type { ApiMessageCode } from '@shared/apiMessage';
 
 ///ログイン失敗敗
 export class InvalidCredentialsError extends appError {
   constructor() {
-    const key: ApiMessageKey = 'INVALID_CREDENTIALS';
+    const key: ApiMessageCode = 'INVALID_CREDENTIALS';
     super(key, APIMESSAGE.INVALID_CREDENTIALS, 401);
   }
 }
@@ -13,7 +13,7 @@ export class InvalidCredentialsError extends appError {
 ///権限がない場合
 export class ForbiddenError extends appError {
   constructor() {
-    const key: ApiMessageKey = 'FORBIDDEN';
+    const key: ApiMessageCode = 'FORBIDDEN';
     super(key, APIMESSAGE.FORBIDDEN, 403);
   }
 }
@@ -21,7 +21,7 @@ export class ForbiddenError extends appError {
 ///トークンが期切れ、もしくはトークンなしなど、トークン系のエラー
 export class TokenError extends appError {
   constructor() {
-    const key: ApiMessageKey = 'TOKEN_ERROR';
+    const key: ApiMessageCode = 'TOKEN_ERROR';
     super(key, APIMESSAGE.TOKEN_ERROR, 401);
   }
 }

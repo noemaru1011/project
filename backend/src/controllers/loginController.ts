@@ -3,7 +3,7 @@ import { LoginService } from '@/services/loginService';
 import type { Apibody } from '@/types/apiBody';
 import type { Login } from '@shared/types/login';
 import { APIMESSAGE } from '@shared/apiMessage';
-import type { ApiMessageKey } from '@shared/apiMessage';
+import type { ApiMessageCode } from '@shared/apiMessage';
 
 export const LoginController = {
   async login(req: Request, res: Response<Apibody<Login>>, next: NextFunction) {
@@ -30,7 +30,7 @@ export const LoginController = {
       // csrf用
       res.cookie('csrf', crypto.randomUUID(), { httpOnly: false });
 
-      const key: ApiMessageKey = 'LOGIN_SUCCESS';
+      const key: ApiMessageCode = 'LOGIN_SUCCESS';
       return res.status(200).json({ code: key, data: result, message: APIMESSAGE.LOGIN_SUCCESS });
     } catch (error) {
       return next(error);
