@@ -4,7 +4,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { authApi } from '@/features/auth/api';
 import { useLoadingCounter } from '@/hooks/ux/useLoadingCounter';
 import { useAuth } from '@/contexts/atchContext';
-import { APIMESSAGE, type ApiMessageCode } from '@shared/apiMessage';
+import { APIMESSAGE, type ApiMessageCode } from '@shared/constants/apiMessage';
 
 // モックの設定
 vi.mock('@/features/auth/api', () => ({

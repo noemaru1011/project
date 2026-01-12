@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { authErrorGenerate } from './authErrorGenerate';
-import { APIMESSAGE } from '@shared/apiMessage';
+import { APIMESSAGE } from '@shared/constants/apiMessage';
 
 describe('authErrorGenerate', () => {
   it('401ステータスに対して正しいエラーオブジェクトを生成すること', () => {

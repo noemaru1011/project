@@ -1,4 +1,4 @@
-import type { ApiMessageCode, ApiMessage } from "../apiMessage";
+import type { ApiMessageCode, ApiMessage } from "../constants/apiMessage";
 
 export interface Apibody<T> {
   code: ApiMessageCode;

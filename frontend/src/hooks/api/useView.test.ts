@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react';
 import { useView } from './useView';
 import { describe, it, expect, vi } from 'vitest';
-import { APIMESSAGE, type ApiMessageCode } from '@shared/apiMessage';
+import { APIMESSAGE, type ApiMessageCode } from '@shared/constants/apiMessage';
 
 describe('useView', () => {
   it('詳細取得を実行するとデータが返され、loading 状態が制御されること', async () => {
@@ -45,4 +45,3 @@ describe('useView', () => {
     expect(result.current.loading).toBe(false);
   });
 });
-

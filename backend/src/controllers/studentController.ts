@@ -2,9 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import { StudentService } from '@/services/studentService';
 import type { Apibody } from '@shared/types/api';
 import type { StudentDetail, StudentNew, StudentSummary } from '@shared/types/student';
-import { APIMESSAGE } from '@shared/apiMessage';
-import type { ApiMessageCode } from '@shared/apiMessage';
-
+import { APIMESSAGE } from '@shared/constants/apiMessage';
+import type { ApiMessageCode } from '@shared/constants/apiMessage';
 export const StudentController = {
   async getStudent(req: Request, res: Response<Apibody<StudentDetail>>, next: NextFunction) {
     try {

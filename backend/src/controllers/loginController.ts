@@ -2,9 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import { LoginService } from '@/services/loginService';
 import type { Apibody } from '@shared/types/api';
 import type { Login } from '@shared/types/login';
-import { APIMESSAGE } from '@shared/apiMessage';
-import type { ApiMessageCode } from '@shared/apiMessage';
-
+import { APIMESSAGE } from '@shared/constants/apiMessage';
+import type { ApiMessageCode } from '@shared/constants/apiMessage';
 export const LoginController = {
   async login(req: Request, res: Response<Apibody<Login>>, next: NextFunction) {
     const { email, password } = req.body;

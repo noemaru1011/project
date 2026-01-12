@@ -1,8 +1,7 @@
 import { ROUTES } from '@/routes/routes';
 import type { ApiResponse, ApiErrorResponse } from '@shared/types/api';
-import type { ApiMessageCode } from '@shared/apiMessage';
-import { APIMESSAGE } from '@shared/apiMessage';
-
+import type { ApiMessageCode } from '@shared/constants/apiMessage';
+import { APIMESSAGE } from '@shared/constants/apiMessage';
 //ネットワーク切断、バグ（undefined参照）、JSON parse errorなどを500番にマッピング
 const isApiResponse = (err: unknown): err is ApiResponse<unknown> => {
   return typeof err === 'object' && err !== null && 'status' in err && 'message' in err;

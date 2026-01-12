@@ -1,6 +1,6 @@
-import { APIMESSAGE } from '@shared/apiMessage';
+import { APIMESSAGE } from '@shared/constants/apiMessage';
 import type { ApiResponse } from '@shared/types/api';
-import type { ApiMessageCode } from '@shared/apiMessage';
+import type { ApiMessageCode } from '@shared/constants/apiMessage';
 
 //フロントのみで401と403を再現する関数
 export const authErrorGenerate = (status: 401 | 403): ApiResponse<unknown> => {

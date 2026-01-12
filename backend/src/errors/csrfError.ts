@@ -1,7 +1,6 @@
 import { appError } from '@/errors/appError';
-import { APIMESSAGE } from '@shared/apiMessage';
-import type { ApiMessageCode } from '@shared/apiMessage';
-
+import { APIMESSAGE } from '@shared/constants/apiMessage';
+import type { ApiMessageCode } from '@shared/constants/apiMessage';
 ///CSRFエラー
 export class CsrfError extends appError {
   constructor() {

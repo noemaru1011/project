@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react';
 import { useSearch } from './useSearch';
 import { describe, it, expect, vi } from 'vitest';
-import { APIMESSAGE, type ApiMessageCode } from '@shared/apiMessage';
+import { APIMESSAGE, type ApiMessageCode } from '@shared/constants/apiMessage';
 
 describe('useSearch', () => {
   it('検索を実行すると data が更新され、loading 状態が制御されること', async () => {
@@ -47,4 +47,3 @@ describe('useSearch', () => {
     expect(result.current.loading).toBe(false);
   });
 });
-

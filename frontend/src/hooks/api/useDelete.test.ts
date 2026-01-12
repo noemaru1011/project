@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react';
 import { useDelete } from './useDelete';
 import { describe, it, expect, vi } from 'vitest';
-import { APIMESSAGE, type ApiMessageCode } from '@shared/apiMessage';
+import { APIMESSAGE, type ApiMessageCode } from '@shared/constants/apiMessage';
 
 describe('useDelete', () => {
   it('削除を実行すると loading 状態が制御されること', async () => {

@@ -2,9 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import { CategoryService } from '@/services/categoryService';
 import type { Apibody } from '@shared/types/api';
 import type { Category } from '@shared/types/category';
-import { APIMESSAGE } from '@shared/apiMessage';
-import type { ApiMessageCode } from '@shared/apiMessage';
-
+import { APIMESSAGE } from '@shared/constants/apiMessage';
+import type { ApiMessageCode } from '@shared/constants/apiMessage';
 export const CategoryController = {
   async getAllCategories(_req: Request, res: Response<Apibody<Category[]>>, next: NextFunction) {
     try {

@@ -1,8 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { handleApiError } from './handleApiError';
 import { ROUTES } from '@/routes/routes';
-import { APIMESSAGE } from '@shared/apiMessage';
-
+import { APIMESSAGE } from '@shared/constants/apiMessage';
 describe('handleApiError', () => {
   it('ApiResponse形式でないエラーを500エラーとして処理すること', () => {
     const error = new Error('Unexpected error');

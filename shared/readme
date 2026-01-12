@@ -1,6 +1,6 @@
 フロントエンドとバックエンドの共通の情報があります
 
 routesにはAPIのURI
-schemasにはバリデーションロジックと型(フロントでは文字列、バックエンドではDBの型にパース)
-typeにはDTO用の型とrole
+schemasにはフォームのバリデーションロジックと型(フロントでは文字列、バックエンドではDBの型にパース)
+typeにはDTO用の型とrole(STUDENTとADMIN)
 apiMessageにはレスポンスのメッセージとコード(識別コード)
