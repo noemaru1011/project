@@ -1,7 +1,7 @@
 import { authApi } from '@/features/auth/api';
 import type { LoginForm } from '@shared/schemas/login';
 import { useLoadingCounter } from '@/hooks/ux/useLoadingCounter';
-import type { ApiResponse } from '@/api/types';
+import type { ApiResponse } from '@shared/types/api';
 import type { Login } from '@shared/types/login';
 import { usePasswordUpdateContext } from '@/contexts/passwordUpdateContext';
 import { useAuth } from '@/contexts/atchContext';

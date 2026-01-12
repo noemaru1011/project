@@ -7,6 +7,7 @@ describe('authErrorGenerate', () => {
     const result = authErrorGenerate(401);
     expect(result).toEqual({
       status: 401,
+      data: null,
       code: 'TOKEN_ERROR',
       message: APIMESSAGE.TOKEN_ERROR,
     });
@@ -16,6 +17,7 @@ describe('authErrorGenerate', () => {
     const result = authErrorGenerate(403);
     expect(result).toEqual({
       status: 403,
+      data: null,
       code: 'FORBIDDEN',
       message: APIMESSAGE.FORBIDDEN,
     });

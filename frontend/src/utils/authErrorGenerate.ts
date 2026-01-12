@@ -1,5 +1,5 @@
 import { APIMESSAGE } from '@shared/apiMessage';
-import type { ApiResponse } from '@/api/types';
+import type { ApiResponse } from '@shared/types/api';
 import type { ApiMessageCode } from '@shared/apiMessage';
 
 //フロントのみで401と403を再現する関数
@@ -9,6 +9,7 @@ export const authErrorGenerate = (status: 401 | 403): ApiResponse<unknown> => {
   return {
     status,
     code,
+    data: null,
     message: status === 401 ? APIMESSAGE.TOKEN_ERROR : APIMESSAGE.FORBIDDEN,
   };
 };

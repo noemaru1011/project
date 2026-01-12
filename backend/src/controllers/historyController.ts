@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { HistoryService } from '@/services/historyService';
-import type { Apibody } from '@/types/apiBody';
+import type { Apibody } from '@shared/types/api';
 import type { HistoryDetail, HistorySummary, HistoryNew } from '@shared/types/history';
 import { APIMESSAGE } from '@shared/apiMessage';
 import type { ApiMessageCode } from '@shared/apiMessage';

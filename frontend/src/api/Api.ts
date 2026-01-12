@@ -1,4 +1,4 @@
-import type { ApiResponse } from '@/api/types';
+import type { ApiResponse } from '@shared/types/api';
 import Cookies from 'js-cookie';
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 

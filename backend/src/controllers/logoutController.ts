@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { APIMESSAGE } from '@shared/apiMessage';
 import type { ApiMessageCode } from '@shared/apiMessage';
 import { tokenBlacklist } from '@/utils/tokenBlacklist';
-import type { Apibody } from '@/types/apiBody';
+import type { Apibody } from '@shared/types/api';
 import jwt from 'jsonwebtoken';
 
 export const LogoutController = {

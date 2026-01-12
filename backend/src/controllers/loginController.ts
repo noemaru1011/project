@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { LoginService } from '@/services/loginService';
-import type { Apibody } from '@/types/apiBody';
+import type { Apibody } from '@shared/types/api';
 import type { Login } from '@shared/types/login';
 import { APIMESSAGE } from '@shared/apiMessage';
 import type { ApiMessageCode } from '@shared/apiMessage';

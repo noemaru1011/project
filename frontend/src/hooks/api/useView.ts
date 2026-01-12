@@ -1,4 +1,4 @@
-import type { ApiResponse } from '@/api/types';
+import type { ApiResponse } from '@shared/types/api';
 import { useLoadingCounter } from '@/hooks/ux/useLoadingCounter';
 
 export function useView<T>(viewFn: (id: string) => Promise<ApiResponse<T>>) {

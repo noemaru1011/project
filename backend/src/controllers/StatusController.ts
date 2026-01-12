@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { StatusService } from '@/services/statusService';
-import type { Apibody } from '@/types/apiBody';
+import type { Apibody } from '@shared/types/api';
 import type { Status } from '@shared/types/status';
 import { APIMESSAGE } from '@shared/apiMessage';
 import type { ApiMessageCode } from '@shared/apiMessage';

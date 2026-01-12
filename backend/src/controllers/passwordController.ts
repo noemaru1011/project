@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { PasswordService } from '@/services/passwordService';
 import { APIMESSAGE } from '@shared/apiMessage';
-import { Apibody } from '@/types/apiBody';
+import { Apibody } from '@shared/types/api';
 import type { ApiMessageCode } from '@shared/apiMessage';
 import { TokenError } from '@/errors/authError';
 
