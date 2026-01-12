@@ -149,12 +149,23 @@ async function main() {
     },
   });
 
-  const departmentBatMap: Record<number, number[]> = {
-    1: [5, 7], // 1大隊: 工学部(5), 医学部(7)
-    2: [1, 2], // 2大隊: 経済学部(1), 法学部(2)
-    3: [3, 4], // 3大隊: 文学部(3), 理学部(4)
-    4: [6], // 4大隊: 農学部(6)
-  };
+  const numbers: number[] = Array.from({ length: 14 }, (_, i) => i + 1);
+
+  // Fisher–Yates shuffle
+  for (let i = numbers.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
+  }
+
+  const sizes = [4, 4, 4, 2];
+
+  const departmentBatMap: Record<number, number[]> = {};
+
+  let index = 0;
+  sizes.forEach((size, i) => {
+    departmentBatMap[i + 1] = numbers.slice(index, index + size);
+    index += size;
+  });
 
   const studentData: any[] = [];
   const passwordData: any[] = [];
