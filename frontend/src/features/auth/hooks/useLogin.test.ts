@@ -5,6 +5,7 @@ import { authApi } from '@/features/auth/api';
 import { useLoadingCounter } from '@/hooks/ux/useLoadingCounter';
 import { usePasswordUpdateContext } from '@/contexts/passwordUpdateContext';
 import { useAuth } from '@/contexts/atchContext';
+import { APIMESSAGE, type ApiMessageCode } from '@shared/apiMessage';
 
 // モックの設定
 vi.mock('@/features/auth/api', () => ({
@@ -49,8 +50,11 @@ describe('useLogin', () => {
   });
 
   it('ログインに成功したとき、ローディング状態が管理され、role とパスワード更新フラグが更新されること', async () => {
+    const code: ApiMessageCode = 'LOGIN_SUCCESS';
     const mockResponse = {
       status: 200,
+      code,
+      message: APIMESSAGE[code],
       data: {
         role: 'ADMIN',
         passwordUpdateRequired: true,

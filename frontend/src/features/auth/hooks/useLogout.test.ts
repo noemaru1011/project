@@ -4,6 +4,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { authApi } from '@/features/auth/api';
 import { useLoadingCounter } from '@/hooks/ux/useLoadingCounter';
 import { useAuth } from '@/contexts/atchContext';
+import { APIMESSAGE, type ApiMessageCode } from '@shared/apiMessage';
 
 // モックの設定
 vi.mock('@/features/auth/api', () => ({
@@ -39,7 +40,8 @@ describe('useLogout', () => {
   });
 
   it('ログアウトに成功したとき、ローディング状態が管理され、role が null になること', async () => {
-    const mockResponse = { status: 200, code: 'SUCCESS', message: 'Logout successful' };
+    const code: ApiMessageCode = 'LOGOUT_SUCCESS';
+    const mockResponse = { status: 200, code, message: APIMESSAGE[code], data: null };
     vi.mocked(authApi.logout).mockResolvedValue(mockResponse as any);
 
     const { result } = renderHook(() => useLogout());

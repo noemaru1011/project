@@ -1,13 +1,16 @@
 import { renderHook, act } from '@testing-library/react';
 import { useView } from './useView';
 import { describe, it, expect, vi } from 'vitest';
+import { APIMESSAGE, type ApiMessageCode } from '@shared/apiMessage';
 
 describe('useView', () => {
   it('詳細取得を実行するとデータが返され、loading 状態が制御されること', async () => {
     const mockData = { id: '1', name: 'item' };
+    const code: ApiMessageCode = 'FETCH_SUCCESS';
     const mockViewFn = vi.fn().mockResolvedValue({
       data: mockData,
-      message: 'success',
+      code,
+      message: APIMESSAGE[code],
       status: 200,
     });
 

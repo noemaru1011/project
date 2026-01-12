@@ -1,13 +1,16 @@
 import { renderHook, act } from '@testing-library/react';
 import { useSearch } from './useSearch';
 import { describe, it, expect, vi } from 'vitest';
+import { APIMESSAGE, type ApiMessageCode } from '@shared/apiMessage';
 
 describe('useSearch', () => {
   it('検索を実行すると data が更新され、loading 状態が制御されること', async () => {
     const mockData = [{ id: '1', name: 'test' }];
+    const code: ApiMessageCode = 'FETCH_SUCCESS';
     const mockSearchFn = vi.fn().mockResolvedValue({
       data: mockData,
-      message: 'success',
+      code,
+      message: APIMESSAGE[code],
       status: 200,
     });
 

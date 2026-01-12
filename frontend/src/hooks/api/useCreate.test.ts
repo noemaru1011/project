@@ -1,11 +1,14 @@
 import { renderHook, act } from '@testing-library/react';
 import { useCreate } from './useCreate';
 import { describe, it, expect, vi } from 'vitest';
+import { APIMESSAGE } from '@shared/apiMessage';
 
 describe('useCreate', () => {
   it('作成を実行すると loading 状態が制御されること', async () => {
     const mockCreateFn = vi.fn().mockResolvedValue({
-      message: 'success',
+      data: null,
+      code: 'CREATE_SUCCESS',
+      message: APIMESSAGE.CREATE_SUCCESS,
       status: 201,
     });
 

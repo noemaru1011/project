@@ -1,13 +1,16 @@
 import { renderHook, act } from '@testing-library/react';
 import { useFetchAll } from './useFetchAll';
 import { describe, it, expect, vi } from 'vitest';
+import { APIMESSAGE, type ApiMessageCode } from '@shared/apiMessage';
 
 describe('useFetchAll', () => {
   it('全件取得を実行すると data が更新され、loading 状態が制御されること', async () => {
     const mockData = [{ id: '1' }, { id: '2' }];
+    const code: ApiMessageCode = 'FETCH_SUCCESS';
     const mockFetchAllFn = vi.fn().mockResolvedValue({
       data: mockData,
-      message: 'success',
+      code,
+      message: APIMESSAGE[code],
       status: 200,
     });
 
