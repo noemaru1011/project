@@ -82,13 +82,24 @@ async function main() {
 
   console.log('department seed...');
   const departments = [
-    { departmentId: 1, departmentName: '経済学部' },
-    { departmentId: 2, departmentName: '法学部' },
-    { departmentId: 3, departmentName: '文学部' },
+    { departmentId: 1, departmentName: '人間文化学科' },
+    { departmentId: 2, departmentName: '公共政策学科' },
+    { departmentId: 3, departmentName: '国際関係学科' },
     { departmentId: 4, departmentName: '理学部' },
     { departmentId: 5, departmentName: '工学部' },
     { departmentId: 6, departmentName: '農学部' },
     { departmentId: 7, departmentName: '医学部' },
+    { departmentId: 4, departmentName: '応用物理学科' },
+    { departmentId: 5, departmentName: '応用化学科' },
+    { departmentId: 6, departmentName: '地球海洋学科' },
+    { departmentId: 7, departmentName: '電気電子工学科' },
+    { departmentId: 8, departmentName: '通信工学科' },
+    { departmentId: 9, departmentName: '情報工学科' },
+    { departmentId: 10, departmentName: '機能材料工学科' },
+    { departmentId: 11, departmentName: '機械工学科' },
+    { departmentId: 12, departmentName: '機械システム工学科' },
+    { departmentId: 13, departmentName: '航空宇宙工学科' },
+    { departmentId: 14, departmentName: '建設環境工学科' },
   ];
 
   for (const department of departments) {
@@ -108,6 +119,7 @@ async function main() {
     { statusId: 5, statusName: '特別休暇' },
     { statusId: 6, statusName: '年次休暇' },
     { statusId: 7, statusName: '海外派遣' },
+    { statusId: 8, statusName: '停学' },
   ];
 
   for (const status of statuses) {
