@@ -1,14 +1,15 @@
 import { renderHook, act } from '@testing-library/react';
 import { useDelete } from './useDelete';
 import { describe, it, expect, vi } from 'vitest';
-import { APIMESSAGE } from '@shared/apiMessage';
+import { APIMESSAGE, type ApiMessageCode } from '@shared/apiMessage';
 
 describe('useDelete', () => {
   it('削除を実行すると loading 状態が制御されること', async () => {
+    const code: ApiMessageCode = 'DELETE_SUCCESS';
     const mockDeleteFn = vi.fn().mockResolvedValue({
       data: null,
-      code: 'DELETE_SUCCESS',
-      message: APIMESSAGE.DELETE_SUCCESS,
+      code,
+      message: APIMESSAGE[code],
       status: 200,
     });
 

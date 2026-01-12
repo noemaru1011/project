@@ -1,14 +1,15 @@
 import { renderHook, act } from '@testing-library/react';
 import { useUpdate } from './useUpdate';
 import { describe, it, expect, vi } from 'vitest';
-import { APIMESSAGE } from '@shared/apiMessage';
+import { APIMESSAGE, type ApiMessageCode } from '@shared/apiMessage';
 
 describe('useUpdate', () => {
   it('更新を実行すると loading 状態が制御されること', async () => {
+    const code: ApiMessageCode = 'UPDATE_SUCCESS';
     const mockUpdateFn = vi.fn().mockResolvedValue({
       data: null,
-      code: 'UPDATE_SUCCESS',
-      message: APIMESSAGE.UPDATE_SUCCESS,
+      code,
+      message: APIMESSAGE[code],
       status: 200,
     });
 
