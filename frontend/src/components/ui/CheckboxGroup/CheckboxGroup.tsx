@@ -88,7 +88,6 @@ export const CheckboxGroup = ({
                     id={`${name}-${option.value}`}
                     label={option.label}
                     disabled={disabled}
-                    className="flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
                   />
                 ),
             )}
