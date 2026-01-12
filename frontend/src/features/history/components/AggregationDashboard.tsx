@@ -9,7 +9,7 @@ import type { Category } from '@shared/types/category';
 import type { SubCategory } from '@shared/types/subCategory';
 import type { MinorCategory } from '@shared/types/minorCategory';
 import type { Department } from '@shared/types/department';
-import type { AggregationData } from '../types';
+import type { AggregationData } from '@shared/types/history';
 import { HierarchyCountTable, type OrgNode } from './HierarchyCountTable';
 
 type Props = {
