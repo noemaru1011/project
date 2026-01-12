@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { logger } from '@/utils/logger';
+import { logger } from '@/utils/log/logger';
 
 export const requestLogger = (req: Request, res: Response, next: NextFunction) => {
   const start = process.hrtime.bigint(); // 高精度タイマー

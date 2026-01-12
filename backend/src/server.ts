@@ -1,5 +1,5 @@
 import app from './app';
-import { logger } from '@/utils/logger';
+import { logger } from '@/utils/log/logger';
 import { monitorEventLoopDelay } from 'perf_hooks';
 
 const PORT = Number(process.env.BACK_PORT);

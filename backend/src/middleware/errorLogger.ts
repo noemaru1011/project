@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { appError } from '@/errors/appError';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
 import type { ApiMessageCode } from '@shared/constants/apiMessage';
-import { logger } from '@/utils/logger';
+import { logger } from '@/utils/log/logger';
 
 export const errorLogger = (err: unknown, req: Request, res: Response, _next: NextFunction) => {
   const userId = req.user?.id ?? 'anonymous';

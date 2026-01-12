@@ -1,3 +1,4 @@
+//DBのDate型をフロントのDatetime-Local用に
 export function formatDateTime(date: Date | null): string | null {
   if (!date) return null;
 

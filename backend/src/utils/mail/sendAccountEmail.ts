@@ -1,5 +1,6 @@
 import { Resend } from 'resend';
 
+//Resendでメールを送信
 export const sendAccountEmail = async (email: string, password: string) => {
   try {
     const RESEND_API_KEY = process.env.RESEND_API_KEY;

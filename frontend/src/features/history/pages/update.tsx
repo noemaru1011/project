@@ -4,7 +4,7 @@ import { useHistoryView } from '@/features/history/hooks/useHistoryView';
 import { useHistoryUpdate } from '@/features/history/hooks/useHistoryUpdate';
 import { HistoryUpdateForm } from '@/features/history/components';
 import { HistoryBasicInfo } from '@/features/history/components';
-import type { StudentSummary } from '@shared/types/student';
+import type { StdentInfo } from '@shared/types/history';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { handleApiError } from '@/utils/handleApiError';
 import { ROUTES } from '@/routes/routes';
@@ -32,12 +32,11 @@ export const HistoryUpdatePage = () => {
     updatedAt: history.updatedAt,
   };
 
-  const historyBasic: StudentSummary = {
-    studentId: '',
+  const historyBasic: StdentInfo = {
     studentName: history.studentName,
     grade: history.grade,
-    minorCategoryName: history.minorCategoryId,
-    departmentName: history.departmentId,
+    minorCategoryId: history.minorCategoryId,
+    departmentId: history.departmentId,
   };
 
   const handleSubmit = async (data: FormType) => {

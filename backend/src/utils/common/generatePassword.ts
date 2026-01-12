@@ -1,4 +1,4 @@
-// ランダムパスワード生成
+// 初期のランダムパスワード生成
 export function generatePassword(length = 12) {
   const chars =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+[]{}|;:,.<>?';

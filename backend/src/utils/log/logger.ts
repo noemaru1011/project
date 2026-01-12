@@ -1,6 +1,7 @@
 import winston from 'winston';
 import path from 'path';
 
+//日本時刻に変更
 const jstTimestamp = () => {
   return new Date().toLocaleString('ja-JP', {
     timeZone: 'Asia/Tokyo',
@@ -13,6 +14,7 @@ const jstTimestamp = () => {
   });
 };
 
+//ログを取る関数
 export const logger = winston.createLogger({
   level: 'info',
   format: winston.format.combine(

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
 import type { ApiMessageCode } from '@shared/constants/apiMessage';
-import { tokenBlacklist } from '@/utils/tokenBlacklist';
+import { tokenBlacklist } from '@/utils/auth/tokenBlacklist';
 import type { Apibody } from '@shared/types/api';
 import jwt from 'jsonwebtoken';
 

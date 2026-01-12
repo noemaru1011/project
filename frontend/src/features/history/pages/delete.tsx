@@ -3,7 +3,7 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useHistoryDelete } from '@/features/history/hooks/useHistoryDelete';
 import { useHistoryView } from '@/features/history/hooks/useHistoryView';
 
-import type { StudentSummary } from '@shared/types/student';
+import type { StdentInfo } from '@shared/types/history';
 import { HistoryDeleteView } from '@/features/history/components';
 import type { HistoryUpdateForm } from '@shared/schemas/history';
 import { HistoryBasicInfo } from '@/features/history/components';
@@ -41,12 +41,11 @@ export const HistoryDeletePage = () => {
     }
   };
   //マッピング
-  const historyBasic: StudentSummary = {
-    studentId: '', //不要なため
+  const historyBasic: StdentInfo = {
     studentName: history.studentName,
     grade: history.grade,
-    minorCategoryName: history.minorCategoryId,
-    departmentName: history.departmentId,
+    minorCategoryId: history.minorCategoryId,
+    departmentId: history.departmentId,
   };
 
   const historyDelete: HistoryUpdateForm = {
