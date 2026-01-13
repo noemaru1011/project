@@ -139,7 +139,7 @@ export class HistoryRepository extends BaseRepository {
       validFlag: true,
     }));
 
-    return await this.prisma.$transaction(
+    return Promise.all(
       datas.map((d) =>
         this.prisma.history.create({
           data: d,
@@ -162,8 +162,8 @@ export class HistoryRepository extends BaseRepository {
             createdAt: true,
             updatedAt: true,
           },
-        })
-      )
+        }),
+      ),
     );
   }
 

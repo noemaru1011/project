@@ -53,7 +53,7 @@ export const studentService = new StudentService(
   passwordRepo,
   minorCategoryRepo,
   sendAccountEmail,
-  generatePassword
+  generatePassword,
 );
 export const categoryService = new CategoryService(categoryRepo);
 export const departmentService = new DepartmentService(departmentRepo);
@@ -75,5 +75,3 @@ export const passwordController = new PasswordController(passwordService);
 export const loginController = new LoginController(loginService);
 export const logoutController = new LogoutController();
 export const logController = new LogController(logService);
-
-// 今後、category, department などが増えたらここに追記していく
