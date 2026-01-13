@@ -27,8 +27,8 @@ export const PasswordUpdateSchema = z
     checkNewPassword: passwordSchema,
   })
   .refine((data) => data.newPassword === data.checkNewPassword, {
-    message: "新しいパスワードが一致しません",
-    path: ["checkNewPassword"],
+    error: "新しいパスワードが一致しません",
+    path: ["checkNewPassword"], //バリデーションメッセージの位置
   });
 
 export type PasswordUpdateInput = z.infer<typeof PasswordUpdateSchema>;

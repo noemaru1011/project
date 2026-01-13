@@ -18,6 +18,7 @@ export const HistoryService = {
     //DTO
     return {
       historyId: history.historyId,
+      studentId: history.studentId,
       studentName: history.student.studentName,
       grade: history.student.grade.toString(),
       departmentId: history.student.departmentId.toString(),
@@ -96,6 +97,7 @@ export const HistoryService = {
     //DTO
     return {
       historyId: history.historyId,
+      studentId: history.studentId,
       studentName: history.student.studentName,
       grade: history.student.grade.toString(),
       departmentId: history.student.departmentId.toString(),

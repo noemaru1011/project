@@ -9,10 +9,11 @@ export interface StudentBasicInfo {
 }
 
 /**
- * 履歴詳細データ (Entityに近い形)
+ * 履歴詳細データ(APIから返却される詳細データ)
  */
 export interface HistoryResponse extends StudentBasicInfo {
   historyId: string;
+  studentId: string;
   statusId: string;
   other: string | null;
   startTime: string;

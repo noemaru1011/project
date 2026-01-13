@@ -10,7 +10,7 @@ export interface ApiBody<T> {
 }
 
 /**
- * APIレスポンス (フロントエンドで使用)
+ * APIレスポンス (フロントエンドで使用、Bodyにはステータスコードを含まないため)
  */
 export interface ApiResponse<T> extends ApiBody<T> {
   status: number;
