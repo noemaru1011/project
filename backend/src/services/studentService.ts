@@ -72,15 +72,13 @@ export class StudentService {
         createdAt: student.createdAt.toISOString(),
         updatedAt: student.updatedAt.toISOString(),
       };
-    } catch (err: unknown) {
-      if (err instanceof Prisma.PrismaClientKnownRequestError) {
-        if (
-          err.code === 'P2002' &&
-          Array.isArray(err.meta?.target) &&
-          err.meta.target.includes('email')
-        ) {
-          throw new EmailDuplicateError();
-        }
+    } catch (err: any) {
+      if (
+        err.code === 'P2002' &&
+        Array.isArray(err.meta?.target) &&
+        err.meta.target.includes('email')
+      ) {
+        throw new EmailDuplicateError();
       }
       throw err;
     }
