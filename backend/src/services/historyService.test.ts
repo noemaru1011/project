@@ -112,4 +112,93 @@ describe('HistoryService', () => {
       expect(result).toBeNull();
     });
   });
+
+  describe('createHistory', () => {
+    it('履歴を作成し、整形して返すこと', async () => {
+      const mockDate = new Date();
+      const input = { studentIds: ['s1'], statusId: 1, startTime: mockDate };
+      const mockCreated = [
+        {
+          historyId: 'h1',
+          studentId: 's1',
+          student: { studentName: '学生1', grade: 1, departmentId: 1, minorCategoryId: 101 },
+          statusId: 1,
+          startTime: mockDate,
+          endTime: null,
+          validFlag: true,
+          createdAt: mockDate,
+          updatedAt: mockDate,
+        },
+      ];
+      mockHistoryRepo.createHistory.mockResolvedValue(mockCreated);
+
+      const result = await historyService.createHistory(input as any);
+
+      expect(result).toHaveLength(1);
+      expect(result[0].historyId).toBe('h1');
+      expect(mockHistoryRepo.createHistory).toHaveBeenCalledWith(input);
+    });
+  });
+
+  describe('updateHistory', () => {
+    it('履歴を更新し、整形して返すこと', async () => {
+      const mockDate = new Date();
+      const input = { statusId: 2 };
+      mockHistoryRepo.updateHistory.mockResolvedValue({
+        historyId: 'h1',
+        studentId: 's1',
+        student: { studentName: '学生1', grade: 1, departmentId: 1, minorCategoryId: 101 },
+        statusId: 2,
+        startTime: mockDate,
+        endTime: null,
+        validFlag: true,
+        updatedAt: mockDate,
+      });
+
+      const result = await historyService.updateHistory(input as any, 'h1');
+
+      expect(result.statusId).toBe('2');
+      expect(mockHistoryRepo.updateHistory).toHaveBeenCalledWith(input, 'h1');
+    });
+
+    it('更新対象がない場合、ConflictErrorを投げること', async () => {
+      mockHistoryRepo.updateHistory.mockResolvedValue(null);
+      await expect(historyService.updateHistory({} as any, 'unknown'))
+        .rejects.toThrow();
+    });
+  });
+
+  describe('deleteHistory', () => {
+    it('リポジトリの削除メソッドを呼び出すこと', async () => {
+      await historyService.deleteHistory('h1');
+      expect(mockHistoryRepo.deleteHistory).toHaveBeenCalledWith('h1');
+    });
+  });
+
+  describe('searchByStartTimeHistories', () => {
+    it('開始時刻に基づき履歴を検索し、集計結果を返すこと', async () => {
+      const mockDate = new Date();
+      const mockHistories = [
+        {
+          statusId: 1,
+          student: {
+            grade: 1,
+            departmentId: 1,
+            minorCategoryId: 101,
+            minorCategory: {
+              subCategoryId: 11,
+              subCategory: { categoryId: 1 }
+            }
+          }
+        }
+      ];
+      mockHistoryRepo.searchByStartTimeHistories.mockResolvedValue(mockHistories);
+
+      const result = await historyService.searchByStartTimeHistories(mockDate);
+
+      expect(result).toHaveProperty('deptGradeAggregation');
+      expect(result).toHaveProperty('categoryAggregation');
+      expect(mockHistoryRepo.searchByStartTimeHistories).toHaveBeenCalledWith(mockDate);
+    });
+  });
 });

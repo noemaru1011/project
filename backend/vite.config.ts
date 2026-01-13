@@ -9,5 +9,9 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
       '@shared': path.resolve(__dirname, '../shared'),
     },
+    env: {
+      REDIS_URL: 'redis://localhost:6379',
+      JWT_SECRET: 'test-secret',
+    },
   },
 });

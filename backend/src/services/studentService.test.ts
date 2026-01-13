@@ -26,6 +26,7 @@ describe('StudentService', () => {
       create: vi.fn(),
       update: vi.fn(),
       delete: vi.fn(),
+      searchStudents: vi.fn(),
       withTransaction: vi.fn().mockReturnThis(),
     };
     mockPasswordRepo = {
@@ -145,6 +146,67 @@ describe('StudentService', () => {
       const result = await studentService.getStudent('UNKNOWN');
 
       expect(result).toBeNull();
+    });
+  });
+
+  describe('updateStudent', () => {
+    it('正常に学生情報を更新すること', async () => {
+      const mockDate = new Date();
+      const input = { studentName: '更新後' };
+      mockStudentRepo.update.mockResolvedValue({
+        studentId: 'STUDENT001',
+        studentName: '更新後',
+        grade: 2,
+        departmentId: 1,
+        email: 'test@example.com',
+        minorCategoryId: 101,
+        updatedAt: mockDate,
+      });
+
+      const result = await studentService.updateStudent('STUDENT001', input as any);
+
+      expect(result.studentName).toBe('更新後');
+      expect(mockStudentRepo.update).toHaveBeenCalledWith('STUDENT001', input);
+    });
+
+    it('更新対象が見つからない場合、ConflictErrorを投げること', async () => {
+      mockStudentRepo.update.mockResolvedValue(null);
+      await expect(studentService.updateStudent('UNKNOWN', {} as any))
+        .rejects.toThrow(); // ConflictError
+    });
+  });
+
+  describe('deleteStudent', () => {
+    it('リポジトリの削除メソッドを呼び出すこと', async () => {
+      await studentService.deleteStudent('STUDENT001');
+      expect(mockStudentRepo.delete).toHaveBeenCalledWith('STUDENT001');
+    });
+  });
+
+  describe('searchStudents', () => {
+    it('検索結果をDTOに変換して返すこと', async () => {
+      const mockStudents = [
+        {
+          studentId: 1,
+          studentName: '学生1',
+          grade: 1,
+          department: { departmentName: '学科1' },
+          minorCategory: { minorCategoryName: '小分類1' },
+        },
+      ];
+      mockMinorCategoryRepo.resolveMinorCategoryIds.mockResolvedValue([101]);
+      mockStudentRepo.searchStudents.mockResolvedValue(mockStudents);
+
+      const result = await studentService.searchStudents({} as any);
+
+      expect(result).toHaveLength(1);
+      expect(result[0]).toEqual({
+        studentId: '1',
+        studentName: '学生1',
+        grade: '1',
+        departmentName: '学科1',
+        minorCategoryName: '小分類1',
+      });
     });
   });
 });
