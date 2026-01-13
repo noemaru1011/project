@@ -1,5 +1,9 @@
-import { getLogFiles } from '@/repositories/logRepository';
+import { LogRepository } from '@/repositories/logRepository';
 
-export const getDownloadableLogs = () => {
-  return getLogFiles();
-};
+export class LogService {
+  constructor(private logRepo: LogRepository) {}
+
+  getDownloadableLogs() {
+    return this.logRepo.getLogFiles();
+  }
+}

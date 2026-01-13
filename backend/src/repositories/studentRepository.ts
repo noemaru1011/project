@@ -1,8 +1,11 @@
 import { Prisma, PrismaClient } from '@prisma/client';
+import { BaseRepository } from './baseRepository';
 import type { StudentServerCreateInput, StudentServerUpdateInput } from '@shared/models/student';
 
-export class StudentRepository {
-  constructor(private prisma: Prisma.TransactionClient | PrismaClient) {}
+export class StudentRepository extends BaseRepository {
+  withTransaction(tx: Prisma.TransactionClient): StudentRepository {
+    return new StudentRepository(tx);
+  }
 
   //学生1件取得
   async find(studentId: string) {

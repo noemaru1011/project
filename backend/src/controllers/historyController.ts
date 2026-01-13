@@ -4,14 +4,17 @@ import type { ApiBody } from '@shared/models/common';
 import type { HistoryResponse, HistorySummary } from '@shared/models/history';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
 import type { ApiMessageCode } from '@shared/constants/apiMessage';
-export const HistoryController = {
-  async searchHistories(
+
+export class HistoryController {
+  constructor(private historyService: HistoryService) {}
+
+  searchHistories = async (
     req: Request,
     res: Response<ApiBody<HistorySummary[]>>,
-    next: NextFunction,
-  ) {
+    next: NextFunction
+  ) => {
     try {
-      const histories = await HistoryService.searchHistories(req.body);
+      const histories = await this.historyService.searchHistories(req.body);
       const key: ApiMessageCode = 'FETCH_SUCCESS';
       return res.status(201).json({
         code: key,
@@ -21,8 +24,9 @@ export const HistoryController = {
     } catch (error) {
       return next(error);
     }
-  },
-  async searchByStartTimeHistories(req: Request, res: Response, next: NextFunction) {
+  };
+
+  searchByStartTimeHistories = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const datetimeStr = req.query.datetime as string;
       if (!datetimeStr) {
@@ -33,7 +37,7 @@ export const HistoryController = {
         return res.status(400).json({ message: APIMESSAGE.INVALID_DATETIME });
       }
 
-      const histories = await HistoryService.searchByStartTimeHistories(query);
+      const histories = await this.historyService.searchByStartTimeHistories(query);
       const key: ApiMessageCode = 'FETCH_SUCCESS';
       return res.status(200).json({
         code: key,
@@ -43,9 +47,9 @@ export const HistoryController = {
     } catch (error) {
       return next(error);
     }
-  },
+  };
 
-  async getHistory(req: Request, res: Response<ApiBody<HistoryResponse>>, next: NextFunction) {
+  getHistory = async (req: Request, res: Response<ApiBody<HistoryResponse>>, next: NextFunction) => {
     try {
       const { id } = req.params;
       if (!id) {
@@ -53,7 +57,7 @@ export const HistoryController = {
         return res.status(404).json({ code: key, data: null, message: APIMESSAGE.NO_HISTORY });
       }
 
-      const history = await HistoryService.getHistory(id);
+      const history = await this.historyService.getHistory(id);
       if (!history) {
         const key: ApiMessageCode = 'NO_HISTORY';
         return res.status(404).json({ code: key, data: null, message: APIMESSAGE.NO_HISTORY });
@@ -64,44 +68,48 @@ export const HistoryController = {
     } catch (error) {
       return next(error);
     }
-  },
+  };
 
-  async createHistory(req: Request, res: Response<ApiBody<HistoryResponse[]>>, next: NextFunction) {
+  createHistory = async (
+    req: Request,
+    res: Response<ApiBody<HistoryResponse[]>>,
+    next: NextFunction
+  ) => {
     try {
-      const history = await HistoryService.createHistory(req.body);
+      const history = await this.historyService.createHistory(req.body);
       const key: ApiMessageCode = 'CREATE_SUCCESS';
       return res.status(201).json({ code: key, data: history, message: APIMESSAGE.CREATE_SUCCESS });
     } catch (error) {
       return next(error);
     }
-  },
+  };
 
-  async updateHistory(req: Request, res: Response, next: NextFunction) {
+  updateHistory = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
       if (!id) {
         return res.status(404).json({ message: APIMESSAGE.NO_HISTORY });
       }
-      await HistoryService.updateHistory(req.body, id);
+      await this.historyService.updateHistory(req.body, id);
       const key: ApiMessageCode = 'UPDATE_SUCCESS';
       return res.status(200).json({ code: key, message: APIMESSAGE.UPDATE_SUCCESS });
     } catch (error) {
       return next(error);
     }
-  },
+  };
 
-  async deleteHistory(req: Request, res: Response, next: NextFunction) {
+  deleteHistory = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
       if (!id) {
         return res.status(404).json({ message: APIMESSAGE.NO_HISTORY });
       }
 
-      await HistoryService.deleteHistory(id);
+      await this.historyService.deleteHistory(id);
       const key: ApiMessageCode = 'DELETE_SUCCESS';
       return res.status(204).json({ code: key, message: APIMESSAGE.DELETE_SUCCESS });
     } catch (error) {
       return next(error);
     }
-  },
-};
+  };
+}

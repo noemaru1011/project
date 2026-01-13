@@ -5,17 +5,17 @@ import { ApiBody } from '@shared/models/common';
 import type { ApiMessageCode } from '@shared/constants/apiMessage';
 import { TokenError } from '@/errors/authError';
 
-export const PasswordController = {
-  async updatePassword(req: Request, res: Response<ApiBody<null>>, next: NextFunction) {
+export class PasswordController {
+  constructor(private passwordService: PasswordService) {}
+
+  updatePassword = async (req: Request, res: Response<ApiBody<null>>, next: NextFunction) => {
     try {
-      //cookieのidからstudentIdを特定
       if (!req.user) return next(new TokenError());
-      await PasswordService.updatePassword(req.body, req.user.id);
+      await this.passwordService.updatePassword(req.body, req.user.id);
       const key: ApiMessageCode = 'UPDATE_SUCCESS';
-      //パスワードはRESTfulでもresponseに含めない
       res.status(200).json({ code: key, data: null, message: APIMESSAGE.UPDATE_SUCCESS });
     } catch (error) {
       return next(error);
     }
-  },
-};
+  };
+}

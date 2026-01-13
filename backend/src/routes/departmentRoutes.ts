@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { DepartmentController } from '@/controllers/departmentController';
+import { departmentController } from '@/registry';
 
 const router = Router();
 
-router.get('/', DepartmentController.getAllDepartments);
+router.get('/', departmentController.getAllDepartments);
 
 export default router;

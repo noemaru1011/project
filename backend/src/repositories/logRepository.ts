@@ -1,24 +1,24 @@
 import path from 'path';
 import fs from 'fs';
 
-const LOG_DIR = path.join(process.cwd(), 'logs');
+export class LogRepository {
+  private readonly LOG_DIR = path.join(process.cwd(), 'logs');
+  private readonly ALLOWED_LOG_FILES = ['access.log', 'error.log'];
 
-// サーバー側で許可するログファイルを固定
-const ALLOWED_LOG_FILES = ['access.log', 'error.log'];
+  getLogFiles() {
+    const files = this.ALLOWED_LOG_FILES.map((file) => {
+      const fullPath = path.join(this.LOG_DIR, file);
 
-export const getLogFiles = () => {
-  const files = ALLOWED_LOG_FILES.map((file) => {
-    const fullPath = path.join(LOG_DIR, file);
+      if (!fs.existsSync(fullPath)) {
+        throw new Error(`${file} が存在しません`);
+      }
 
-    if (!fs.existsSync(fullPath)) {
-      throw new Error(`${file} が存在しません`);
-    }
+      return {
+        filename: file,
+        path: fullPath,
+      };
+    });
 
-    return {
-      filename: file,
-      path: fullPath,
-    };
-  });
-
-  return files;
-};
+    return files;
+  }
+}

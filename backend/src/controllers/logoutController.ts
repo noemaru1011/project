@@ -5,13 +5,12 @@ import { tokenBlacklist } from '@/utils/auth/tokenBlacklist';
 import type { ApiBody } from '@shared/models/common';
 import jwt from 'jsonwebtoken';
 
-export const LogoutController = {
-  async logout(req: Request, res: Response<ApiBody<null>>, next: NextFunction) {
+export class LogoutController {
+  logout = async (req: Request, res: Response<ApiBody<null>>, next: NextFunction) => {
     try {
       const token = req.cookies.token;
 
       if (token) {
-        // トークンをデコードして有効期限(exp)を取得
         const decoded = jwt.decode(token) as { exp?: number };
 
         if (decoded?.exp) {
@@ -19,7 +18,6 @@ export const LogoutController = {
           const expiresIn = decoded.exp - now;
 
           if (expiresIn > 0) {
-            // Redisのブラックリストに追加
             await tokenBlacklist.add(token, expiresIn);
           }
         }
@@ -46,5 +44,5 @@ export const LogoutController = {
     } catch (error) {
       return next(error);
     }
-  },
-};
+  };
+}

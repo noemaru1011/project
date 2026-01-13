@@ -4,10 +4,17 @@ import type { ApiBody } from '@shared/models/common';
 import type { Department } from '@shared/models/master';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
 import type { ApiMessageCode } from '@shared/constants/apiMessage';
-export const DepartmentController = {
-  async getAllDepartments(_req: Request, res: Response<ApiBody<Department[]>>, next: NextFunction) {
+
+export class DepartmentController {
+  constructor(private departmentService: DepartmentService) {}
+
+  getAllDepartments = async (
+    _req: Request,
+    res: Response<ApiBody<Department[]>>,
+    next: NextFunction
+  ) => {
     try {
-      const departments = await DepartmentService.getAllDepartments();
+      const departments = await this.departmentService.getAllDepartments();
       const key: ApiMessageCode = 'FETCH_SUCCESS';
       return res.status(200).json({
         code: key,
@@ -17,5 +24,5 @@ export const DepartmentController = {
     } catch (error) {
       return next(error);
     }
-  },
-};
+  };
+}

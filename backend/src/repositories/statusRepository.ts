@@ -1,14 +1,18 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import { Prisma, PrismaClient } from '@prisma/client';
+import { BaseRepository } from './baseRepository';
 
-export const StatusRepository = {
+export class StatusRepository extends BaseRepository {
+  withTransaction(tx: Prisma.TransactionClient): StatusRepository {
+    return new StatusRepository(tx);
+  }
+
   async findAll() {
-    return await prisma.status.findMany({
+    return await this.prisma.status.findMany({
       select: {
         statusId: true,
         statusName: true,
       },
       orderBy: { statusId: 'asc' },
     });
-  },
-};
+  }
+}

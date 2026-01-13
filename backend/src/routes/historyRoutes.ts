@@ -1,21 +1,26 @@
 import { Router } from 'express';
 import { validateBody } from '@/middleware/validateMiddleware';
 import { HistoryServerCreateSchema, HistoryServerUpdateSchema } from '@shared/models/history';
-import { HistoryController } from '@/controllers/historyController';
+import { historyController } from '@/registry';
 import { csrfMiddleware } from '@/middleware';
 const router = Router();
 
-router.post('/', csrfMiddleware, validateBody(HistoryServerCreateSchema), HistoryController.createHistory);
+router.post(
+  '/',
+  csrfMiddleware,
+  validateBody(HistoryServerCreateSchema),
+  historyController.createHistory
+);
 
-router.get('/:id', HistoryController.getHistory);
+router.get('/:id', historyController.getHistory);
 
 router.put(
   '/:id',
   csrfMiddleware,
   validateBody(HistoryServerUpdateSchema),
-  HistoryController.updateHistory,
+  historyController.updateHistory
 );
 
-router.delete('/:id', csrfMiddleware, HistoryController.deleteHistory);
+router.delete('/:id', csrfMiddleware, historyController.deleteHistory);
 
 export default router;

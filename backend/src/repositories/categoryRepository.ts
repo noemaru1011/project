@@ -1,14 +1,18 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import { Prisma, PrismaClient } from '@prisma/client';
+import { BaseRepository } from './baseRepository';
 
-export const CategoryRepository = {
+export class CategoryRepository extends BaseRepository {
+  withTransaction(tx: Prisma.TransactionClient): CategoryRepository {
+    return new CategoryRepository(tx);
+  }
+
   async findAll() {
-    return await prisma.category.findMany({
+    return await this.prisma.category.findMany({
       select: {
         categoryId: true,
         categoryName: true,
       },
       orderBy: { categoryId: 'asc' },
     });
-  },
-};
+  }
+}

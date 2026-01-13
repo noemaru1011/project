@@ -1,7 +1,10 @@
 import { Prisma, PrismaClient } from '@prisma/client';
+import { BaseRepository } from './baseRepository';
 
-export class MinorCategoryRepository {
-  constructor(private prisma: Prisma.TransactionClient | PrismaClient) {}
+export class MinorCategoryRepository extends BaseRepository {
+  withTransaction(tx: Prisma.TransactionClient): MinorCategoryRepository {
+    return new MinorCategoryRepository(tx);
+  }
 
   async findAll() {
     return await this.prisma.minorCategory.findMany({

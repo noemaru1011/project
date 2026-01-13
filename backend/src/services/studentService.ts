@@ -47,9 +47,9 @@ export class StudentService {
 
       //トランザクション内での登録
       const student = await this.prisma.$transaction(async (tx) => {
-        // トランザクション用のリポジトリインスタンスを作成
-        const txStudentRepo = new StudentRepository(tx);
-        const txPasswordRepo = new PasswordRepository(tx);
+        // withTransaction を使って、その場でトランザクション用のリポジトリを取得
+        const txStudentRepo = this.studentRepo.withTransaction(tx);
+        const txPasswordRepo = this.passwordRepo.withTransaction(tx);
         
         const student = await txStudentRepo.create(data);
         await txPasswordRepo.create({

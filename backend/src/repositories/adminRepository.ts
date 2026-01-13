@@ -1,11 +1,14 @@
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
+import { BaseRepository } from './baseRepository';
 
-const prisma = new PrismaClient();
+export class AdminRepository extends BaseRepository {
+  withTransaction(tx: Prisma.TransactionClient): AdminRepository {
+    return new AdminRepository(tx);
+  }
 
-export const AdminRepository = {
   async findByEmail(email: string) {
-    return prisma.admin.findUnique({
+    return (this.prisma as PrismaClient).admin.findUnique({
       where: { email },
     });
-  },
-};
+  }
+}

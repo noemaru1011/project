@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { StatusController } from '@/controllers/statusController';
+import { statusController } from '@/registry';
 
 const router = Router();
 
-router.get('/', StatusController.getAllStatuses);
+router.get('/', statusController.getAllStatuses);
 
 export default router;

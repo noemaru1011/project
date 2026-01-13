@@ -4,10 +4,17 @@ import type { ApiBody } from '@shared/models/common';
 import type { Category } from '@shared/models/master';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
 import type { ApiMessageCode } from '@shared/constants/apiMessage';
-export const CategoryController = {
-  async getAllCategories(_req: Request, res: Response<ApiBody<Category[]>>, next: NextFunction) {
+
+export class CategoryController {
+  constructor(private categoryService: CategoryService) {}
+
+  getAllCategories = async (
+    _req: Request,
+    res: Response<ApiBody<Category[]>>,
+    next: NextFunction
+  ) => {
     try {
-      const categories = await CategoryService.getAllCategories();
+      const categories = await this.categoryService.getAllCategories();
       const key: ApiMessageCode = 'FETCH_SUCCESS';
       return res.status(200).json({
         code: key,
@@ -17,5 +24,5 @@ export const CategoryController = {
     } catch (error) {
       return next(error);
     }
-  },
-};
+  };
+}

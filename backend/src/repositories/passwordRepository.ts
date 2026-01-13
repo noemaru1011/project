@@ -1,7 +1,10 @@
 import { Prisma, PrismaClient } from '@prisma/client';
+import { BaseRepository } from './baseRepository';
 
-export class PasswordRepository {
-  constructor(private prisma: Prisma.TransactionClient | PrismaClient) {}
+export class PasswordRepository extends BaseRepository {
+  withTransaction(tx: Prisma.TransactionClient): PasswordRepository {
+    return new PasswordRepository(tx);
+  }
 
   async findByStudentId(studentId: string) {
     return (this.prisma as PrismaClient).studentPassword.findUnique({ where: { studentId } });

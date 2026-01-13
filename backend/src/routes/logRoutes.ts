@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { downloadLogsController } from '@/controllers/logController';
+import { logController } from '@/registry';
 
 const router = Router();
 
-router.get('/', downloadLogsController);
+router.get('/', logController.downloadLogs);
 
 export default router;

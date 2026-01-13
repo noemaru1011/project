@@ -1,14 +1,18 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import { Prisma, PrismaClient } from '@prisma/client';
+import { BaseRepository } from './baseRepository';
 
-export const DepartmentRepository = {
+export class DepartmentRepository extends BaseRepository {
+  withTransaction(tx: Prisma.TransactionClient): DepartmentRepository {
+    return new DepartmentRepository(tx);
+  }
+
   async findAll() {
-    return await prisma.department.findMany({
+    return await this.prisma.department.findMany({
       select: {
         departmentId: true,
         departmentName: true,
       },
       orderBy: { departmentId: 'asc' },
     });
-  },
-};
+  }
+}
