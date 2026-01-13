@@ -1,7 +1,5 @@
 import bcrypt from 'bcrypt';
-import { Prisma } from '@prisma/client';
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import { Prisma, PrismaClient } from '@prisma/client';
 import { StudentRepository } from '@/repositories/studentRepository';
 import { PasswordRepository } from '@/repositories/passwordRepository';
 import { MinorCategoryRepository } from '@/repositories/minorCategoryRepository';
@@ -9,11 +7,26 @@ import { generatePassword } from '@/utils/common/generatePassword';
 import { sendAccountEmail } from '@/utils/mail/sendAccountEmail';
 import { ConflictError } from '@/errors/appError';
 import { EmailDuplicateError } from '@/errors/studentError';
-import type { StudentResponse, StudentSummary, StudentServerCreateInput, StudentServerUpdateInput, StudentServerSearchInput } from '@shared/models/student';
+import type {
+  StudentResponse,
+  StudentSummary,
+  StudentServerCreateInput,
+  StudentServerUpdateInput,
+  StudentServerSearchInput,
+} from '@shared/models/student';
 
-export const StudentService = {
+export class StudentService {
+  constructor(
+    private prisma: PrismaClient,
+    private studentRepo: StudentRepository,
+    private passwordRepo: PasswordRepository,
+    private minorCategoryRepo: MinorCategoryRepository,
+    private mailer: typeof sendAccountEmail,
+    private passwordGenerator: typeof generatePassword
+  ) {}
+
   async getStudent(studentId: string): Promise<StudentResponse | null> {
-    const student = await StudentRepository.find(studentId);
+    const student = await this.studentRepo.find(studentId);
     if (student == null) return null;
     return {
       studentId: student.studentId,
@@ -24,18 +37,22 @@ export const StudentService = {
       minorCategoryId: student.minorCategoryId.toString(),
       updatedAt: student.updatedAt.toISOString(),
     };
-  },
+  }
 
   async createStudent(data: StudentServerCreateInput): Promise<StudentResponse> {
     try {
       //パスワード作成
-      const plainPassword = generatePassword();
+      const plainPassword = this.passwordGenerator();
       const hashedPassword = await bcrypt.hash(plainPassword, 10);
 
-      //学生マスタとパスワードテーブルに登録トランザクション
-      const student = await prisma.$transaction(async (tx) => {
-        const student = await StudentRepository.create(tx, data);
-        await PasswordRepository.create(tx, {
+      //トランザクション内での登録
+      const student = await this.prisma.$transaction(async (tx) => {
+        // トランザクション用のリポジトリインスタンスを作成
+        const txStudentRepo = new StudentRepository(tx);
+        const txPasswordRepo = new PasswordRepository(tx);
+        
+        const student = await txStudentRepo.create(data);
+        await txPasswordRepo.create({
           studentId: student.studentId,
           password: hashedPassword,
         });
@@ -43,8 +60,8 @@ export const StudentService = {
       });
 
       //メール送信
-      await sendAccountEmail(data.email, plainPassword);
-      //DTO
+      await this.mailer(data.email, plainPassword);
+
       return {
         studentId: student.studentId,
         studentName: student.studentName,
@@ -56,7 +73,6 @@ export const StudentService = {
         updatedAt: student.updatedAt.toISOString(),
       };
     } catch (err: unknown) {
-      //メールアドレス重複時のエラー
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
         if (
           err.code === 'P2002' &&
@@ -68,13 +84,13 @@ export const StudentService = {
       }
       throw err;
     }
-  },
+  }
 
   async updateStudent(studentId: string, data: StudentServerUpdateInput): Promise<StudentResponse> {
-    const student = await StudentRepository.update(studentId, data);
+    const student = await this.studentRepo.update(studentId, data);
 
     if (!student) throw new ConflictError();
-    //DTO
+
     return {
       studentId: student.studentId,
       studentName: student.studentName,
@@ -84,21 +100,21 @@ export const StudentService = {
       minorCategoryId: student.minorCategoryId.toString(),
       updatedAt: student.updatedAt.toISOString(),
     };
-  },
+  }
 
   async deleteStudent(studentId: string) {
-    await StudentRepository.delete(studentId);
-  },
+    await this.studentRepo.delete(studentId);
+  }
 
   async searchStudents(data: StudentServerSearchInput): Promise<StudentSummary[]> {
-    const minorCategoryIds = await MinorCategoryRepository.resolveMinorCategoryIds(data);
+    const minorCategoryIds = await this.minorCategoryRepo.resolveMinorCategoryIds(data);
 
-    const students = await StudentRepository.searchStudents({
+    const students = await this.studentRepo.searchStudents({
       minorCategoryIds,
       departmentIds: data.departmentIds,
       grades: data.grades,
     });
-    //DTO
+
     return students.map((student) => ({
       studentId: student.studentId.toString(),
       studentName: student.studentName,
@@ -106,5 +122,5 @@ export const StudentService = {
       departmentName: student.department.departmentName,
       minorCategoryName: student.minorCategory.minorCategoryName,
     }));
-  },
-};
+  }
+}

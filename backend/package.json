@@ -29,6 +29,7 @@
     "@types/pg": "^8.15.5",
     "@typescript-eslint/eslint-plugin": "^8.47.0",
     "@typescript-eslint/parser": "^8.47.0",
+    "@vitest/coverage-v8": "^4.0.17",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-node": "^11.1.0",
@@ -39,14 +40,17 @@
     "prisma": "^6.18.0",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.16",
-    "tsconfig-paths": "^4.2.0"
+    "tsconfig-paths": "^4.2.0",
+    "vitest": "^4.0.17"
   },
   "name": "backend",
   "version": "1.0.0",
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "dev": "nodemon --verbose -e ts,json --exec ts-node --project tsconfig.json -r tsconfig-paths/register src/server.ts",
     "lint": "eslint . --ext .ts,.js",
     "lint:fix": "eslint . --ext .ts,.js --fix",

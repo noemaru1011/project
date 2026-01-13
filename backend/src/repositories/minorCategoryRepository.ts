@@ -1,18 +1,17 @@
-import { PrismaClient } from '@prisma/client';
-import { Prisma } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
+export class MinorCategoryRepository {
+  constructor(private prisma: Prisma.TransactionClient | PrismaClient) {}
 
-export const MinorCategoryRepository = {
   async findAll() {
-    return await prisma.minorCategory.findMany({
+    return await this.prisma.minorCategory.findMany({
       select: {
         minorCategoryId: true,
         minorCategoryName: true,
       },
       orderBy: { minorCategoryId: 'asc' },
     });
-  },
+  }
 
   //大分類、中分類に紐づいた小分類を変えす関数
   //例：1大隊→111,112,113,121...
@@ -50,11 +49,11 @@ export const MinorCategoryRepository = {
       ],
     };
 
-    const rows = await prisma.minorCategory.findMany({
+    const rows = await this.prisma.minorCategory.findMany({
       where,
       select: { minorCategoryId: true },
     });
 
     return rows.map((r) => r.minorCategoryId);
-  },
-};
+  }
+}

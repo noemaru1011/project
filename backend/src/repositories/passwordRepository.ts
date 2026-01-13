@@ -1,22 +1,22 @@
-import { PrismaClient } from '@prisma/client';
-import { Prisma } from '@prisma/client';
-const prisma = new PrismaClient();
+import { Prisma, PrismaClient } from '@prisma/client';
 
-export const PasswordRepository = {
+export class PasswordRepository {
+  constructor(private prisma: Prisma.TransactionClient | PrismaClient) {}
+
   async findByStudentId(studentId: string) {
-    return prisma.studentPassword.findUnique({ where: { studentId } });
-  },
+    return (this.prisma as PrismaClient).studentPassword.findUnique({ where: { studentId } });
+  }
 
-  async create(tx: Prisma.TransactionClient, data: { studentId: string; password: string }) {
-    return tx.studentPassword.create({ data });
-  },
+  async create(data: { studentId: string; password: string }) {
+    return this.prisma.studentPassword.create({ data });
+  }
 
   async update(studentId: string, hashedPassword: string) {
-    return prisma.studentPassword.update({
+    return (this.prisma as PrismaClient).studentPassword.update({
       where: { studentId },
       data: {
         password: hashedPassword,
       },
     });
-  },
-};
+  }
+}
