@@ -11,7 +11,7 @@ export class SubCategoryController {
   getAllSubCategories = async (
     _req: Request,
     res: Response<ApiBody<SubCategory[]>>,
-    next: NextFunction
+    next: NextFunction,
   ) => {
     try {
       const subCategories = await this.subCategoryService.getAllSubCategories();
