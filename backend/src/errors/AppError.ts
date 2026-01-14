@@ -19,3 +19,11 @@ export class ConflictError extends appError {
     super(key, APIMESSAGE.CONFLICT, 409);
   }
 }
+
+///共通　FK 制約違反
+export class InvalidReferenceError extends appError {
+  constructor() {
+    const key: ApiMessageCode = 'FOREIGNKEY_COSTRAINT';
+    super(key, APIMESSAGE.FOREIGNKEY_COSTRAINT, 400);
+  }
+}

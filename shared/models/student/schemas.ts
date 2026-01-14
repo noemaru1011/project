@@ -4,13 +4,15 @@ import { z } from "zod";
  * 学生共通バリデーション定義
  */
 const baseStudentFields = {
-  studentName: z
+  studentName: z.coerce
     .string()
     .min(1, { error: "学生名は必須です。" })
     .max(20, { error: "学生名は20文字以内で入力してください。" }),
-  email: z.email({
-    error: "正しいメールアドレスの形式で入力してください。",
-  }),
+  email: z
+    .email({
+      error: "正しいメールアドレスの形式で入力してください。",
+    })
+    .max(100, { error: "パスワードは100文字以内で入力してください。" }),
 };
 
 /**
@@ -19,13 +21,13 @@ const baseStudentFields = {
  */
 export const StudentCreateSchema = z.object({
   ...baseStudentFields,
-  grade: z.string().min(1, { error: "学年は必須です。" }),
-  minorCategoryId: z.string().min(1, { error: "小分類は必須です。" }),
-  departmentId: z.string().min(1, { error: "学科は必須です。" }),
+  grade: z.coerce.string().min(1, { error: "学年は必須です。" }),
+  minorCategoryId: z.coerce.string().min(1, { error: "小分類は必須です。" }),
+  departmentId: z.coerce.string().min(1, { error: "学科は必須です。" }),
 });
 
 export const StudentUpdateSchema = StudentCreateSchema.extend({
-  updatedAt: z.string().min(1, { error: "更新日は必須です。" }),
+  updatedAt: z.coerce.string().min(1, { error: "更新日は必須です。" }),
 });
 
 export type StudentCreateInput = z.infer<typeof StudentCreateSchema>;
@@ -38,24 +40,46 @@ export type StudentUpdateInput = z.infer<typeof StudentUpdateSchema>;
 export const StudentServerCreateSchema = z.object({
   ...baseStudentFields,
   grade: z.coerce
-    .number()
-    .int()
-    .min(1, "学年は1〜4で入力してください。")
-    .max(4, "学年は1〜4で入力してください。"),
+    .number({
+      error: (issue) =>
+        issue.input === undefined
+          ? "学年は必須です。"
+          : "学年は数値を入力してください。",
+    })
+    .int({
+      error: "学年は整数を入力してくださ。。",
+    })
+    .min(1, { error: "学年は1〜4で入力してください。" })
+    .max(4, { error: "学年は1〜4で入力してください。" }),
   minorCategoryId: z.coerce
-    .number()
-    .int()
-    .min(1, "正しい小分類を入力してください。")
-    .max(48, "正しい小分類を入力してください。"),
+    .number({
+      error: (issue) =>
+        issue.input === undefined
+          ? "小分類は必須です。"
+          : "小分類は数値を入力してください。",
+    })
+    .int({
+      error: "小分類は整数を入力してください。",
+    }),
   departmentId: z.coerce
-    .number()
-    .int()
-    .min(1, "正しい学科を入力してください。")
-    .max(7, "正しい学科を入力してください。"),
+    .number({
+      error: (issue) =>
+        issue.input === undefined
+          ? "学科は必須です。"
+          : "学科は数値を入力してください。",
+    })
+    .int({
+      error: "学科は整数を入力してください。",
+    }),
 });
 
 export const StudentServerUpdateSchema = StudentServerCreateSchema.extend({
-  updatedAt: z.coerce.date({ error: "正しい更新日を入力してください。" }),
+  updatedAt: z.coerce.date({
+    error: (issue) =>
+      issue.input === undefined
+        ? "更新日は必須です"
+        : "正しい更新日を入力してください。",
+  }),
 });
 
 export type StudentServerCreateInput = z.infer<
@@ -82,46 +106,58 @@ export const StudentServerSearchSchema = z.object({
   grades: z
     .array(
       z.coerce
-        .number()
-        .int({ error: "学年は整数である必要があります。" })
-        .min(1, "学年は1〜4で入力してください。")
-        .max(4, "学年は1〜4で入力してください。")
+        .number({
+          error: "学年は数値を入力してください。",
+        })
+        .int({
+          error: "学年は整数を入力してくださ。。",
+        })
+        .min(1, { error: "学年は1〜4で入力してください。" })
+        .max(4, { error: "学年は1〜4で入力してください。" })
     )
     .optional(),
   categoryIds: z
     .array(
       z.coerce
-        .number()
-        .int()
-        .min(1, "正しい大分類を入力してください")
-        .max(4, "正しい大分類を入力してください")
+        .number({
+          error: "大分類は数値を入力してください。",
+        })
+        .int({
+          error: "大分類は整数を入力してください。",
+        })
     )
     .optional(),
   subCategoryIds: z
     .array(
       z.coerce
-        .number()
-        .int()
-        .min(1, "正しい中分類を入力してください")
-        .max(16, "正しい中分類を入力してください")
+        .number({
+          error: "中分類は数値を入力してください。",
+        })
+        .int({
+          error: "中分類は整数を入力してください。",
+        })
     )
     .optional(),
   minorCategoryIds: z
     .array(
       z.coerce
-        .number()
-        .int()
-        .min(1, "正しい小分類を入力してください")
-        .max(48, "正しい小分類を入力してください")
+        .number({
+          error: "小分類は数値を入力してください。",
+        })
+        .int({
+          error: "小分類は整数を入力してください。",
+        })
     )
     .optional(),
   departmentIds: z
     .array(
       z.coerce
-        .number()
-        .int()
-        .min(1, "正しい学科を入力してください")
-        .max(7, "正しい学科を入力してください")
+        .number({
+          error: "学科は数値を入力してください。",
+        })
+        .int({
+          error: "学科は整数を入力してください。",
+        })
     )
     .optional(),
 });

@@ -1,11 +1,11 @@
 import bcrypt from 'bcrypt';
-import { Prisma, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { StudentRepository } from '@/repositories/studentRepository';
 import { PasswordRepository } from '@/repositories/passwordRepository';
 import { MinorCategoryRepository } from '@/repositories/minorCategoryRepository';
 import { generatePassword } from '@/utils/common/generatePassword';
 import { sendAccountEmail } from '@/utils/mail/sendAccountEmail';
-import { ConflictError } from '@/errors/appError';
+import { ConflictError, InvalidReferenceError } from '@/errors/appError';
 import { EmailDuplicateError } from '@/errors/studentError';
 import type {
   StudentResponse,
@@ -22,7 +22,7 @@ export class StudentService {
     private passwordRepo: PasswordRepository,
     private minorCategoryRepo: MinorCategoryRepository,
     private mailer: typeof sendAccountEmail,
-    private passwordGenerator: typeof generatePassword
+    private passwordGenerator: typeof generatePassword,
   ) {}
 
   async getStudent(studentId: string): Promise<StudentResponse | null> {
@@ -50,7 +50,7 @@ export class StudentService {
         // withTransaction を使って、その場でトランザクション用のリポジトリを取得
         const txStudentRepo = this.studentRepo.withTransaction(tx);
         const txPasswordRepo = this.passwordRepo.withTransaction(tx);
-        
+
         const student = await txStudentRepo.create(data);
         await txPasswordRepo.create({
           studentId: student.studentId,
@@ -80,24 +80,34 @@ export class StudentService {
       ) {
         throw new EmailDuplicateError();
       }
+      if (err.code === 'P2003') {
+        throw new InvalidReferenceError();
+      }
       throw err;
     }
   }
 
   async updateStudent(studentId: string, data: StudentServerUpdateInput): Promise<StudentResponse> {
-    const student = await this.studentRepo.update(studentId, data);
+    try {
+      const student = await this.studentRepo.update(studentId, data);
 
-    if (!student) throw new ConflictError();
+      if (!student) throw new ConflictError();
 
-    return {
-      studentId: student.studentId,
-      studentName: student.studentName,
-      grade: student.grade.toString(),
-      departmentId: student.departmentId.toString(),
-      email: student.email,
-      minorCategoryId: student.minorCategoryId.toString(),
-      updatedAt: student.updatedAt.toISOString(),
-    };
+      return {
+        studentId: student.studentId,
+        studentName: student.studentName,
+        grade: student.grade.toString(),
+        departmentId: student.departmentId.toString(),
+        email: student.email,
+        minorCategoryId: student.minorCategoryId.toString(),
+        updatedAt: student.updatedAt.toISOString(),
+      };
+    } catch (err: any) {
+      if (err.code === 'P2003') {
+        throw new InvalidReferenceError();
+      }
+      throw err;
+    }
   }
 
   async deleteStudent(studentId: string) {

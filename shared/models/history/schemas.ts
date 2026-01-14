@@ -37,10 +37,12 @@ export const HistoryServerCreateSchema = z.object({
     .array(z.string())
     .min(1, { error: "学生を1人以上選択してください" }),
   statusId: z.coerce
-    .number()
-    .int()
-    .min(1, { error: "正しいステータスを入力してください" })
-    .max(8, { error: "正しいステータスを入力してください" }),
+    .number({
+      error: "ステータスは数値を入力してください。",
+    })
+    .int({
+      error: "ステータスは整数を入力してくださ。。",
+    }),
   other: z
     .string()
     .max(30, { error: "備考は30文字以内で入力してください。" })
@@ -58,7 +60,12 @@ export const HistoryServerUpdateSchema = HistoryServerCreateSchema.omit({
   studentIds: true,
 }).extend({
   validFlag: z.boolean({ error: "true か false を選択してください。" }),
-  updatedAt: z.coerce.date({ error: "正しい更新日を入力してください。" }),
+  updatedAt: z.coerce.date({
+    error: (issue) =>
+      issue.input === undefined
+        ? "更新日は必須です"
+        : "正しい更新日を入力してください。",
+  }),
 });
 
 export type HistoryServerCreateInput = z.infer<
