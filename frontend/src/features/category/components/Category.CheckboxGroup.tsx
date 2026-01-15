@@ -6,12 +6,6 @@ type Props = Omit<React.ComponentProps<typeof CheckboxGroup>, 'options' | 'label
 export const CategoryCheckboxGroup = ({ disabled, ...rest }: Props) => {
   const { options, loading } = useCategoryOptions();
   return (
-    <CheckboxGroup
-      {...rest}
-      options={options}
-      label="大分類"
-      disabled={disabled || loading}
-      column={4}
-    />
+    <CheckboxGroup {...rest} options={options} label="大分類" disabled={disabled || loading} />
   );
 };

@@ -1,11 +1,11 @@
 import { toast } from 'react-toastify';
 import type { StudentSearchInput } from '@shared/models/student';
-import { StudentSearchForm } from '@/features/search/student/components/StudentSearchForm';
+import { StudentSearchForm } from '@/features/search/student/components/layouts/StudentSearchForm';
 import { useHistorySearch } from '@/features/search/history/hooks/useHistorySearch';
 import { handleApiError } from '@/utils';
 import { useNavigate } from 'react-router-dom';
-import { HistoryTable, AggregationDashboard } from '@/features/history/components';
-import { HitorySearchForm } from '@/features/search/history/components/HitorySearchForm';
+import { HistoryTable } from '@/features/history/components';
+import { HitorySearchForm, AggregationDashboard } from '@/features/search/history/components/';
 import { useHistorySearchByTime } from '@/features/search/history/hooks/useHistorySearchByTime';
 
 export const HistoryIndexPage = () => {

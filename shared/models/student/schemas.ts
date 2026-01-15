@@ -4,7 +4,7 @@ import { z } from "zod";
  * 学生共通バリデーション定義
  */
 const baseStudentFields = {
-  studentName: z.coerce
+  studentName: z
     .string()
     .min(1, { error: "学生名は必須です。" })
     .max(20, { error: "学生名は20文字以内で入力してください。" }),
@@ -21,13 +21,13 @@ const baseStudentFields = {
  */
 export const StudentCreateSchema = z.object({
   ...baseStudentFields,
-  grade: z.coerce.string().min(1, { error: "学年は必須です。" }),
-  minorCategoryId: z.coerce.string().min(1, { error: "小分類は必須です。" }),
-  departmentId: z.coerce.string().min(1, { error: "学科は必須です。" }),
+  grade: z.string().min(1, { error: "学年は必須です。" }),
+  minorCategoryId: z.string().min(1, { error: "小分類は必須です。" }),
+  departmentId: z.string().min(1, { error: "学科は必須です。" }),
 });
 
 export const StudentUpdateSchema = StudentCreateSchema.extend({
-  updatedAt: z.coerce.string().min(1, { error: "更新日は必須です。" }),
+  updatedAt: z.string().min(1, { error: "更新日は必須です。" }),
 });
 
 export type StudentCreateInput = z.infer<typeof StudentCreateSchema>;

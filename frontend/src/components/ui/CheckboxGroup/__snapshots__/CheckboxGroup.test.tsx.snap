@@ -9,7 +9,7 @@ exports[`CheckboxGroup > スナップショット > 複数列表示 (column指�
     class="flex flex-col space-y-3"
   >
     <div
-      class="flex flex-row gap-6 whitespace-nowrap"
+      class="flex flex-row gap-6 flex-wrap"
     >
       <div
         class="flex items-center space-x-2"
@@ -47,7 +47,7 @@ exports[`CheckboxGroup > スナップショット > 複数列表示 (column指�
       </div>
     </div>
     <div
-      class="flex flex-row gap-6 whitespace-nowrap"
+      class="flex flex-row gap-6 flex-wrap"
     >
       <div
         class="flex items-center space-x-2"
@@ -80,7 +80,7 @@ exports[`CheckboxGroup > スナップショット > 通常状態の HTML 構造 
     class="flex flex-col space-y-3"
   >
     <div
-      class="flex flex-row gap-6 whitespace-nowrap"
+      class="flex flex-row gap-6 flex-wrap"
     >
       <div
         class="flex items-center space-x-2"
@@ -99,10 +99,6 @@ exports[`CheckboxGroup > スナップショット > 通常状態の HTML 構造 
           Option 1
         </label>
       </div>
-    </div>
-    <div
-      class="flex flex-row gap-6 whitespace-nowrap"
-    >
       <div
         class="flex items-center space-x-2"
       >
@@ -120,10 +116,6 @@ exports[`CheckboxGroup > スナップショット > 通常状態の HTML 構造 
           Option 2
         </label>
       </div>
-    </div>
-    <div
-      class="flex flex-row gap-6 whitespace-nowrap"
-    >
       <div
         class="flex items-center space-x-2"
       >

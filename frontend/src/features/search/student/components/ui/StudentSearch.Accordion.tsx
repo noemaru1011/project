@@ -21,7 +21,6 @@ export const StudentSearchAccordion = ({ control }: Props) => {
         {
           id: 'category',
           title: '大分類',
-          badge: 4,
           icon: <Group className="size-4" />,
           children: (
             <Controller
@@ -30,7 +29,7 @@ export const StudentSearchAccordion = ({ control }: Props) => {
               render={({ field }) => (
                 <CategoryCheckboxGroup
                   name={field.name}
-                  value={(field.value ?? []) as string[]}
+                  value={field.value}
                   onChange={field.onChange}
                 />
               )}
@@ -40,7 +39,6 @@ export const StudentSearchAccordion = ({ control }: Props) => {
         {
           id: 'subCategory',
           title: '中分類',
-          badge: 16,
           icon: <Group className="size-4" />,
           children: (
             <Controller
@@ -49,7 +47,7 @@ export const StudentSearchAccordion = ({ control }: Props) => {
               render={({ field }) => (
                 <SubCategoryCheckboxGroup
                   name={field.name}
-                  value={(field.value ?? []) as string[]}
+                  value={field.value}
                   onChange={field.onChange}
                 />
               )}
@@ -59,7 +57,6 @@ export const StudentSearchAccordion = ({ control }: Props) => {
         {
           id: 'minorCategory',
           title: '小分類',
-          badge: 48,
           icon: <Group className="size-4" />,
           children: (
             <Controller
@@ -68,7 +65,7 @@ export const StudentSearchAccordion = ({ control }: Props) => {
               render={({ field }) => (
                 <MinorCategoryCheckboxGroup
                   name={field.name}
-                  value={(field.value ?? []) as string[]}
+                  value={field.value}
                   onChange={field.onChange}
                 />
               )}
@@ -78,7 +75,6 @@ export const StudentSearchAccordion = ({ control }: Props) => {
         {
           id: 'grade',
           title: '学年',
-          badge: 4,
           icon: <School className="size-4" />,
           children: (
             <Controller
@@ -87,7 +83,7 @@ export const StudentSearchAccordion = ({ control }: Props) => {
               render={({ field }) => (
                 <GradeCheckboxGroup
                   name={field.name}
-                  value={(field.value ?? []) as string[]}
+                  value={field.value}
                   onChange={field.onChange}
                 />
               )}
@@ -97,7 +93,6 @@ export const StudentSearchAccordion = ({ control }: Props) => {
         {
           id: 'department',
           title: '学科',
-          badge: 7,
           icon: <Library className="size-4" />,
           children: (
             <Controller
@@ -106,7 +101,7 @@ export const StudentSearchAccordion = ({ control }: Props) => {
               render={({ field }) => (
                 <DepartmentCheckboxGroup
                   name={field.name}
-                  value={(field.value ?? []) as string[]}
+                  value={field.value}
                   onChange={field.onChange}
                 />
               )}

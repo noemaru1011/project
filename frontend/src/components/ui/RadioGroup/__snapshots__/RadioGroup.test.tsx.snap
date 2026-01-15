@@ -105,10 +105,6 @@ exports[`RadioGroup > スナップショット > disabled の HTML 構造 1`] = 
           オプション1
         </label>
       </div>
-    </div>
-    <div
-      class="flex flex-row gap-6 flex-wrap"
-    >
       <div
         class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
       >
@@ -128,10 +124,6 @@ exports[`RadioGroup > スナップショット > disabled の HTML 構造 1`] = 
           オプション2
         </label>
       </div>
-    </div>
-    <div
-      class="flex flex-row gap-6 flex-wrap"
-    >
       <div
         class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
       >
@@ -186,10 +178,6 @@ exports[`RadioGroup > スナップショット > error ありの HTML 構造 1`]
           オプション1
         </label>
       </div>
-    </div>
-    <div
-      class="flex flex-row gap-6 flex-wrap"
-    >
       <div
         class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
       >
@@ -208,10 +196,6 @@ exports[`RadioGroup > スナップショット > error ありの HTML 構造 1`]
           オプション2
         </label>
       </div>
-    </div>
-    <div
-      class="flex flex-row gap-6 flex-wrap"
-    >
       <div
         class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
       >
@@ -282,10 +266,6 @@ exports[`RadioGroup > スナップショット > label + required の HTML 構�
           オプション1
         </label>
       </div>
-    </div>
-    <div
-      class="flex flex-row gap-6 flex-wrap"
-    >
       <div
         class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
       >
@@ -304,10 +284,6 @@ exports[`RadioGroup > スナップショット > label + required の HTML 構�
           オプション2
         </label>
       </div>
-    </div>
-    <div
-      class="flex flex-row gap-6 flex-wrap"
-    >
       <div
         class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
       >
@@ -360,10 +336,6 @@ exports[`RadioGroup > スナップショット > value 選択済みの HTML 構�
           オプション1
         </label>
       </div>
-    </div>
-    <div
-      class="flex flex-row gap-6 flex-wrap"
-    >
       <div
         class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
       >
@@ -383,10 +355,6 @@ exports[`RadioGroup > スナップショット > value 選択済みの HTML 構�
           オプション2
         </label>
       </div>
-    </div>
-    <div
-      class="flex flex-row gap-6 flex-wrap"
-    >
       <div
         class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
       >
@@ -439,10 +407,6 @@ exports[`RadioGroup > スナップショット > 基本形の HTML 構造 1`] = 
           オプション1
         </label>
       </div>
-    </div>
-    <div
-      class="flex flex-row gap-6 flex-wrap"
-    >
       <div
         class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
       >
@@ -461,10 +425,6 @@ exports[`RadioGroup > スナップショット > 基本形の HTML 構造 1`] = 
           オプション2
         </label>
       </div>
-    </div>
-    <div
-      class="flex flex-row gap-6 flex-wrap"
-    >
       <div
         class="flex items-center space-x-2 flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"
       >

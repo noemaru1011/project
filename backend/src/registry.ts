@@ -30,6 +30,8 @@ import { LogoutController } from './controllers/logoutController';
 import { LogController } from './controllers/logController';
 import { sendAccountEmail } from './utils/mail/sendAccountEmail';
 import { generatePassword } from './utils/common/generatePassword';
+import { MinorCategoryService } from './services/minorCategoryService';
+import { MinorCategoryController } from './controllers/minorCategoryController';
 
 // 1. PrismaClient (シングルトン)
 export const prisma = new PrismaClient();
@@ -59,6 +61,7 @@ export const categoryService = new CategoryService(categoryRepo);
 export const departmentService = new DepartmentService(departmentRepo);
 export const statusService = new StatusService(statusRepo);
 export const subCategoryService = new SubCategoryService(subCategoryRepo);
+export const minorCategoryService = new MinorCategoryService(minorCategoryRepo);
 export const historyService = new HistoryService(historyRepo, minorCategoryRepo);
 export const passwordService = new PasswordService(passwordRepo);
 export const loginService = new LoginService(adminRepo, studentRepo, passwordRepo);
@@ -70,6 +73,7 @@ export const categoryController = new CategoryController(categoryService);
 export const departmentController = new DepartmentController(departmentService);
 export const statusController = new StatusController(statusService);
 export const subCategoryController = new SubCategoryController(subCategoryService);
+export const minorCategoryController = new MinorCategoryController(minorCategoryService);
 export const historyController = new HistoryController(historyService);
 export const passwordController = new PasswordController(passwordService);
 export const loginController = new LoginController(loginService);

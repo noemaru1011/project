@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { MinorCategoryController } from '@/controllers/minorCategoryController';
+import { minorCategoryController } from '@/registry';
 
 const router = Router();
 
-router.get('/', MinorCategoryController.getAllMinorCategories);
+router.get('/', minorCategoryController.getAllMinorCategories);
 
 export default router;

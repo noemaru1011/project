@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import { useNavigate, Navigate } from 'react-router-dom';
-import { PasswordUpdateForm } from '@/features/auth/components/PasswordUpdateForm';
+import { PasswordUpdateForm } from '@/features/auth/components/layouts/PasswordUpdateForm';
 import { usePassword } from '@/features/auth/hooks/useUpdatePassword';
 import { ROUTES } from '@/routes/routes';
 import type { PasswordUpdateInput } from '@shared/models/auth';

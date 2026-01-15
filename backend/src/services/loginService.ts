@@ -11,7 +11,7 @@ export class LoginService {
   constructor(
     private adminRepo: AdminRepository,
     private studentRepo: StudentRepository,
-    private passwordRepo: PasswordRepository
+    private passwordRepo: PasswordRepository,
   ) {}
 
   async login(email: string, inputPassword: string) {
@@ -44,7 +44,7 @@ export class LoginService {
 
     const passwordUpdateRequired = isPasswordUpdateRequired(
       studentPasswordData!.createdAt,
-      studentPasswordData!.updatedAt
+      studentPasswordData!.updatedAt,
     );
 
     const token = jwtUtil.createToken(student.studentId, ROLE.STUDENT);

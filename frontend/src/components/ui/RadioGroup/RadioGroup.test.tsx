@@ -142,10 +142,10 @@ describe('RadioGroup', () => {
     });
 
     describe('column', () => {
-      it('column 未指定で縦一列に表示される', () => {
+      it('column 未指定で横一列に表示される', () => {
         const { container } = render(<RadioGroup name="test" options={mockOptions} />);
         const rows = container.querySelectorAll('.flex.flex-row');
-        expect(rows).toHaveLength(3); // 3つのオプション = 3行
+        expect(rows).toHaveLength(1);
       });
 
       it('column=2 で2列グリッドになる', () => {
@@ -163,13 +163,13 @@ describe('RadioGroup', () => {
       it('column=1 で縦一列になる', () => {
         const { container } = render(<RadioGroup name="test" options={mockOptions} column={1} />);
         const rows = container.querySelectorAll('.flex.flex-row');
-        expect(rows).toHaveLength(3); // 3つのオプション ÷ 1列 = 3行
+        expect(rows).toHaveLength(3);
       });
 
-      it('column=0 で縦一列になる（デフォルト動作）', () => {
+      it('column=0 で横一列になる（デフォルト動作）', () => {
         const { container } = render(<RadioGroup name="test" options={mockOptions} column={0} />);
         const rows = container.querySelectorAll('.flex.flex-row');
-        expect(rows).toHaveLength(3);
+        expect(rows).toHaveLength(1);
       });
 
       it('column が options より多い場合、1行になる', () => {

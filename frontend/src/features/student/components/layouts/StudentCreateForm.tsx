@@ -34,7 +34,7 @@ export const StudentCreateForm = ({ onSubmit, onBack, loading }: Props) => {
         render={({ field, fieldState }) => (
           <GradeRadioGroup
             name={field.name}
-            value={field.value !== undefined ? String(field.value) : undefined}
+            value={field.value}
             onChange={(val) => field.onChange(val)}
             error={fieldState.error?.message}
           />

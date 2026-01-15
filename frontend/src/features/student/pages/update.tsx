@@ -2,7 +2,7 @@ import { useNavigate, useParams, Navigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { ROUTES } from '@/routes/routes';
-import { StudentUpdateForm } from '@/features/student/components/StudentUpdateForm';
+import { StudentUpdateForm } from '@/features/student/components/layouts/StudentUpdateForm';
 import { useStudentUpdate } from '@/features/student/hooks/useStudentUpdate';
 import { useStudentView } from '@/features/student/hooks/useStudentView';
 import type { StudentUpdateInput } from '@shared/models/student';

@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/routes/routes';
-import { StudentCreateForm } from '@/features/student/components/StudentCreateForm';
+import { StudentCreateForm } from '@/features/student/components/layouts/StudentCreateForm';
 import { useStudentCreate } from '@/features/student/hooks/useStudentCreate';
 import type { StudentCreateInput } from '@shared/models/student';
 import { handleApiError } from '@/utils';

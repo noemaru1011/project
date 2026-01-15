@@ -1,2 +1,2 @@
-export * from './StudentSearch.Accordion';
-export * from './StudentSearchForm';
+export * from './ui/StudentSearch.Accordion';
+export * from './layouts/StudentSearchForm';

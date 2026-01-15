@@ -5,13 +5,5 @@ type Props = Omit<React.ComponentProps<typeof CheckboxGroup>, 'options' | 'label
 
 export const DepartmentCheckboxGroup = ({ disabled, ...rest }: Props) => {
   const { options, loading } = useDepartmentOptions();
-  return (
-    <CheckboxGroup
-      {...rest}
-      options={options}
-      label="学科"
-      disabled={disabled || loading}
-      column={7}
-    />
-  );
+  return <CheckboxGroup {...rest} options={options} label="学科" disabled={disabled || loading} />;
 };

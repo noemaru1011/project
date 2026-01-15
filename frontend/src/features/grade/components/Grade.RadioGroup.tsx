@@ -7,5 +7,5 @@ type Props = Omit<
 >;
 
 export const GradeRadioGroup = ({ ...rest }: Props) => {
-  return <RadioGroup {...rest} label="学年" required column={4} options={gradeOptions} />;
+  return <RadioGroup {...rest} label="学年" required options={gradeOptions} />;
 };

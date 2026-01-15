@@ -30,11 +30,12 @@ export const CheckboxGroup = ({
 }: Props) => {
   /**
    * options を column 指定に基づいて 2D 配列へ変換
-   * column 未指定時は縦一列
+   * column 未指定時は [options] を返し、1行にすべて表示する（横一列）
    */
   const grid = useMemo(() => {
     if (!column || column <= 0) {
-      return options.map((option) => [option]);
+      // 変更点: 全てのoptionを1つの配列（1行）として返す
+      return [options];
     }
 
     const rows = Math.ceil(options.length / column);
@@ -45,9 +46,9 @@ export const CheckboxGroup = ({
   const handleChange = (optionValue: string, checked: boolean) => {
     if (!onChange) return;
     if (checked) {
-      onChange([...value, optionValue]); // チェック追加
+      onChange([...value, optionValue]);
     } else {
-      onChange(value.filter((v) => v !== optionValue)); // チェック解除
+      onChange(value.filter((v) => v !== optionValue));
     }
   };
 
@@ -76,7 +77,12 @@ export const CheckboxGroup = ({
 
       <div className="flex flex-col space-y-3">
         {grid.map((rowOptions, rowIndex) => (
-          <div key={rowIndex} className="flex flex-row gap-6 whitespace-nowrap">
+          <div
+            key={rowIndex}
+            // 変更点: 横一列になった際、要素が多いと画面からはみ出るため flex-wrap を追加して折り返し可能にすると安全です
+            // 不要であれば flex-wrap は削除してください
+            className="flex flex-row gap-6 flex-wrap"
+          >
             {rowOptions.map(
               (option) =>
                 option.label && (

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { StudentSearchForm } from '@/features/search/student/components/StudentSearchForm';
+import { StudentSearchForm } from '@/features/search/student/components/layouts/StudentSearchForm';
 import { useStudentSearch } from '@/features/search/student/hooks/useStudentSearch';
 import { StudentTable } from '@/features/student/components';
 import { Loading } from '@/components/ui/Loading/Loading';

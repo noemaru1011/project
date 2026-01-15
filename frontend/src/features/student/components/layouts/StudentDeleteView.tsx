@@ -14,10 +14,10 @@ type Props = {
 
 export const StudentDeleteView = ({ student, onDelete, onBack, loading }: Props) => {
   return (
-    <>
+    <section className="space-y-6">
       <StudentNameInput value={student.studentName} disabled />
 
-      <GradeRadioGroup name="grade" value={String(student.grade)} disabled />
+      <GradeRadioGroup name="grade" value={student.grade} disabled />
 
       <MinorCategorySelect value={student.minorCategoryId} disabled />
 
@@ -35,6 +35,6 @@ export const StudentDeleteView = ({ student, onDelete, onBack, loading }: Props)
         />
         <Button type="button" variant="Back" className="w-32 mx-auto py-2" onClick={onBack} />
       </div>
-    </>
+    </section>
   );
 };

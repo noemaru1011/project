@@ -1,8 +1,7 @@
 import { Router } from 'express';
-import { validateBody } from '@/middleware/validateMiddleware';
 import { StudentServerCreateSchema, StudentServerUpdateSchema } from '@shared/models/student';
 import { studentController } from '@/registry';
-import { csrfMiddleware } from '@/middleware';
+import { csrfMiddleware, validateBody } from '@/middleware';
 
 const router = Router();
 

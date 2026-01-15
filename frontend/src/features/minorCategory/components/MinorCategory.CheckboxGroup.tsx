@@ -6,12 +6,6 @@ type Props = Omit<React.ComponentProps<typeof CheckboxGroup>, 'options' | 'label
 export const MinorCategoryCheckboxGroup = ({ disabled, ...rest }: Props) => {
   const { options, loading } = useMinorCategoryOptions();
   return (
-    <CheckboxGroup
-      {...rest}
-      options={options}
-      label="小分類"
-      disabled={disabled || loading}
-      column={12}
-    />
+    <CheckboxGroup {...rest} options={options} label="小分類" disabled={disabled || loading} />
   );
 };
