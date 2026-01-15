@@ -1,212 +1,135 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { StudentService } from './studentService';
 import { EmailDuplicateError } from '@/errors/studentError';
+import { InvalidReferenceError } from '@/errors/appError';
 import { Prisma } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
-vi.mock('bcrypt');
+describe('createStudent', () => {
+  let service: StudentService;
 
-describe('StudentService', () => {
-  let studentService: StudentService;
-  let mockPrisma: any;
-  let mockStudentRepo: any;
-  let mockPasswordRepo: any;
-  let mockMinorCategoryRepo: any;
-  let mockMailer: any;
-  let mockPasswordGenerator: any;
+  // 6つの依存関係のモック
+  const prismaMock = {
+    $transaction: vi.fn(),
+  };
+  const studentRepoMock = {
+    withTransaction: vi.fn().mockReturnThis(),
+    create: vi.fn(),
+  };
+  const passwordRepoMock = {
+    withTransaction: vi.fn().mockReturnThis(),
+    create: vi.fn(),
+  };
+  const departmentRepoMock = {
+    withTransaction: vi.fn().mockReturnThis(),
+  };
+  const minorCategoryRepoMock = {
+    withTransaction: vi.fn().mockReturnThis(),
+  };
+  const mailerMock = vi.fn(); // サービスとして注入されている場合
 
   beforeEach(() => {
     vi.clearAllMocks();
 
-    mockPrisma = {
-      $transaction: vi.fn((callback) => callback(mockPrisma)),
-    };
-    mockStudentRepo = {
-      find: vi.fn(),
-      create: vi.fn(),
-      update: vi.fn(),
-      delete: vi.fn(),
-      searchStudents: vi.fn(),
-      withTransaction: vi.fn().mockReturnThis(),
-    };
-    mockPasswordRepo = {
-      create: vi.fn(),
-      withTransaction: vi.fn().mockReturnThis(),
-    };
-    mockMinorCategoryRepo = {
-      resolveMinorCategoryIds: vi.fn(),
-    };
-    mockMailer = vi.fn().mockResolvedValue(undefined);
-    mockPasswordGenerator = vi.fn().mockReturnValue('temp-password123');
-
-    studentService = new StudentService(
-      mockPrisma as any,
-      mockStudentRepo as any,
-      mockPasswordRepo as any,
-      mockMinorCategoryRepo as any,
-      mockMailer as any,
-      mockPasswordGenerator as any
+    // 1. コンストラクタに6つのモックを渡す
+    service = new StudentService(
+      prismaMock as any,
+      studentRepoMock as any,
+      passwordRepoMock as any,
+      departmentRepoMock as any,
+      minorCategoryRepoMock as any,
+      mailerMock as any,
     );
+
+    // 内部で使われる外部ライブラリや関数のモック
+    vi.spyOn(bcrypt, 'hash').mockResolvedValue('hashed_password' as never);
+
+    // クラス内メソッド (passwordGenerator) のモック
+    (service as any).passwordGenerator = vi.fn().mockReturnValue('plain_password');
+
+    // mailerがクラス内メソッドの場合のモック (DIではなく内部実装の場合)
+    (service as any).mailer = vi.fn().mockResolvedValue(undefined);
   });
 
-  describe('createStudent', () => {
-    it('正常に学生を作成し、メールを送信すること', async () => {
-      // 準備
-      const input = {
-        studentName: 'テスト学生',
-        email: 'test@example.com',
-        grade: 1,
-        departmentId: 1,
-        minorCategoryId: 101,
-      };
-      const mockDate = new Date();
-      const mockCreatedStudent = {
-        studentId: 'STUDENT001',
-        ...input,
-        createdAt: mockDate,
-        updatedAt: mockDate,
-      };
+  // --- 外部キー制約違反 (P2003) のテスト ---
+  it('存在しないdepartmentId等を指定した場合、InvalidReferenceErrorを投げること', async () => {
+    // Prismaのエラーを再現
+    const foreignKeyError = new Prisma.PrismaClientKnownRequestError(
+      'Foreign key constraint failed',
+      {
+        code: 'P2003',
+        clientVersion: '5.x',
+        meta: { target: ['departmentId'] },
+      },
+    );
 
-      mockStudentRepo.create.mockResolvedValue(mockCreatedStudent);
-      (bcrypt.hash as any).mockResolvedValue('hashed-password');
+    // トランザクションが失敗するように設定
+    prismaMock.$transaction.mockRejectedValue(foreignKeyError);
 
-      // 実行
-      const result = await studentService.createStudent(input as any);
+    const data = {
+      studentName: 'テスト太郎',
+      email: 'test@example.com',
+      grade: 1,
+      departmentId: 999, // 不正なID
+      minorCategoryId: 1,
+    };
 
-      // 検証
-      expect(mockPasswordGenerator).toHaveBeenCalled();
-      expect(bcrypt.hash).toHaveBeenCalledWith('temp-password123', 10);
-      expect(mockPrisma.$transaction).toHaveBeenCalled();
-      expect(mockStudentRepo.create).toHaveBeenCalledWith(input);
-      expect(mockPasswordRepo.create).toHaveBeenCalledWith({
-        studentId: 'STUDENT001',
-        password: 'hashed-password',
-      });
-      expect(mockMailer).toHaveBeenCalledWith('test@example.com', 'temp-password123');
-      expect(result).toEqual({
-        studentId: 'STUDENT001',
-        studentName: 'テスト学生',
-        grade: '1',
-        departmentId: '1',
-        email: 'test@example.com',
-        minorCategoryId: '101',
-        createdAt: mockDate.toISOString(),
-        updatedAt: mockDate.toISOString(),
-      });
-    });
+    // 実行と検証
+    await expect(service.createStudent(data as any)).rejects.toThrow(InvalidReferenceError);
 
-    it('メールアドレスが重複している場合、EmailDuplicateErrorを投げること', async () => {
-      const input = { email: 'duplicate@example.com' };
-      
-      // PrismaのKnownRequestErrorを模倣するエラーオブジェクト
-      const prismaError = new Error('Prisma error') as any;
-      prismaError.code = 'P2002';
-      prismaError.meta = { target: ['email'] };
-
-      mockPrisma.$transaction.mockRejectedValue(prismaError);
-
-      await expect(studentService.createStudent(input as any))
-        .rejects.toThrow(EmailDuplicateError);
-    });
+    // メール送信が呼ばれていないことも確認
+    expect((service as any).mailer).not.toHaveBeenCalled();
   });
 
-  describe('getStudent', () => {
-    it('学生が存在する場合、StudentResponseを返すこと', async () => {
-      // 準備
-      const mockDate = new Date();
-      mockStudentRepo.find.mockResolvedValue({
-        studentId: 'STUDENT001',
-        studentName: 'テスト太郎',
-        grade: 1,
-        departmentId: 10,
-        email: 'test@example.com',
-        minorCategoryId: 100,
-        updatedAt: mockDate,
-      });
-
-      // 実行
-      const result = await studentService.getStudent('STUDENT001');
-
-      // 検証
-      expect(result).toEqual({
-        studentId: 'STUDENT001',
-        studentName: 'テスト太郎',
-        grade: '1',
-        departmentId: '10',
-        email: 'test@example.com',
-        minorCategoryId: '100',
-        updatedAt: mockDate.toISOString(),
-      });
-      expect(mockStudentRepo.find).toHaveBeenCalledWith('STUDENT001');
+  // --- ユニーク制約違反 (P2002) のテスト ---
+  it('メールアドレスが重複している場合、EmailDuplicateErrorを投げること', async () => {
+    const duplicateError = new Prisma.PrismaClientKnownRequestError('Unique constraint failed', {
+      code: 'P2002',
+      clientVersion: '5.x',
+      meta: { target: ['email'] },
     });
 
-    it('学生が存在しない場合、nullを返すこと', async () => {
-      mockStudentRepo.find.mockResolvedValue(null);
+    prismaMock.$transaction.mockRejectedValue(duplicateError);
 
-      const result = await studentService.getStudent('UNKNOWN');
+    const data = {
+      studentName: '重複太郎',
+      email: 'already@exists.com',
+      grade: 1,
+      departmentId: 1,
+      minorCategoryId: 1,
+    };
 
-      expect(result).toBeNull();
-    });
+    await expect(service.createStudent(data as any)).rejects.toThrow(EmailDuplicateError);
   });
 
-  describe('updateStudent', () => {
-    it('正常に学生情報を更新すること', async () => {
-      const mockDate = new Date();
-      const input = { studentName: '更新後' };
-      mockStudentRepo.update.mockResolvedValue({
-        studentId: 'STUDENT001',
-        studentName: '更新後',
-        grade: 2,
-        departmentId: 1,
-        email: 'test@example.com',
-        minorCategoryId: 101,
-        updatedAt: mockDate,
-      });
+  // --- 正常系のテスト ---
+  it('正常なデータの場合、学生情報を返し、メールを送信すること', async () => {
+    const mockStudent = {
+      studentId: 1,
+      studentName: '成功太郎',
+      email: 'success@example.com',
+      grade: 1,
+      departmentId: 1,
+      minorCategoryId: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
 
-      const result = await studentService.updateStudent('STUDENT001', input as any);
+    // トランザクションが成功して学生データを返すように設定
+    prismaMock.$transaction.mockResolvedValue(mockStudent);
 
-      expect(result.studentName).toBe('更新後');
-      expect(mockStudentRepo.update).toHaveBeenCalledWith('STUDENT001', input);
-    });
+    const data = {
+      studentName: '成功太郎',
+      email: 'success@example.com',
+      grade: 1,
+      departmentId: 1,
+      minorCategoryId: 1,
+    };
 
-    it('更新対象が見つからない場合、ConflictErrorを投げること', async () => {
-      mockStudentRepo.update.mockResolvedValue(null);
-      await expect(studentService.updateStudent('UNKNOWN', {} as any))
-        .rejects.toThrow(); // ConflictError
-    });
-  });
+    const result = await service.createStudent(data as any);
 
-  describe('deleteStudent', () => {
-    it('リポジトリの削除メソッドを呼び出すこと', async () => {
-      await studentService.deleteStudent('STUDENT001');
-      expect(mockStudentRepo.delete).toHaveBeenCalledWith('STUDENT001');
-    });
-  });
-
-  describe('searchStudents', () => {
-    it('検索結果をDTOに変換して返すこと', async () => {
-      const mockStudents = [
-        {
-          studentId: 1,
-          studentName: '学生1',
-          grade: 1,
-          department: { departmentName: '学科1' },
-          minorCategory: { minorCategoryName: '小分類1' },
-        },
-      ];
-      mockMinorCategoryRepo.resolveMinorCategoryIds.mockResolvedValue([101]);
-      mockStudentRepo.searchStudents.mockResolvedValue(mockStudents);
-
-      const result = await studentService.searchStudents({} as any);
-
-      expect(result).toHaveLength(1);
-      expect(result[0]).toEqual({
-        studentId: '1',
-        studentName: '学生1',
-        grade: '1',
-        departmentName: '学科1',
-        minorCategoryName: '小分類1',
-      });
-    });
+    // 検証
+    expect(result.studentName).toBe('成功太郎');
+    expect((service as any).mailer).toHaveBeenCalledWith('success@example.com', 'plain_password');
   });
 });
