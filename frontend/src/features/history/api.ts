@@ -8,13 +8,13 @@ import { API_ROUTES } from '@shared/routes/routes';
 
 export const historyApi = {
   create: (data: HistoryCreateInput) =>
-    api<void>(API_ROUTES.HISTORY, {
+    api<HistoryResponse>(API_ROUTES.HISTORY, {
       method: 'POST',
       body: JSON.stringify(data),
     }),
 
   update: (id: string, data: HistoryUpdateInput) =>
-    api<void>(`${API_ROUTES.HISTORY}/${id}`, {
+    api<HistoryResponse>(`${API_ROUTES.HISTORY}/${id}`, {
       method: 'PUT',
       body: JSON.stringify(data),
     }),

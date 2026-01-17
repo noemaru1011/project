@@ -20,7 +20,7 @@ export interface HistoryResponse extends StudentBasicInfo {
   endTime: string | null;
   validFlag: boolean;
   updatedAt: string;
-  createdAt?: string;
+  createdAt: string;
 }
 
 /**

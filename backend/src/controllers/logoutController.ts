@@ -11,7 +11,8 @@ export class LogoutController {
       const token = req.cookies.token;
 
       if (token) {
-        const decoded = jwt.decode(token) as { exp?: number };
+        // ここでは「署名検証済みトークン」である前提
+        const decoded = jwt.decode(token) as { exp?: number } | null;
 
         if (decoded?.exp) {
           const now = Math.floor(Date.now() / 1000);

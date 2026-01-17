@@ -1,17 +1,17 @@
 import type { ApiResponse } from '@shared/models/common';
 import { useLoadingCounter } from '@/hooks/ux/useLoadingCounter';
 
-export function useCreate<I>(createFn: (data: I) => Promise<ApiResponse<void>>) {
+export function useCreate<I, O>(createFn: (data: I) => Promise<ApiResponse<O>>) {
   const { loading, start, end } = useLoadingCounter();
 
-  const create = async (data: I) => {
+  const create = async (data: I): Promise<ApiResponse<O>> => {
     start();
     try {
-      const res = await createFn(data);
-      return res;
+      return await createFn(data);
     } finally {
       end();
     }
   };
+
   return { create, loading };
 }

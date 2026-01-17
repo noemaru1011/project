@@ -9,7 +9,7 @@ export interface StudentResponse {
   email: string;
   departmentId: string;
   updatedAt: string;
-  createdAt?: string; // 新規作成時のみ含まれる場合があるため、任意とするか必要に応じて分ける
+  createdAt: string; // 新規作成時のみ含まれる場合があるため、任意とするか必要に応じて分ける
 }
 
 /**

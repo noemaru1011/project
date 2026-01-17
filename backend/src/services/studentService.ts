@@ -35,6 +35,7 @@ export class StudentService {
       departmentId: student.departmentId.toString(),
       email: student.email,
       minorCategoryId: student.minorCategoryId.toString(),
+      createdAt: student.updatedAt.toISOString(),
       updatedAt: student.updatedAt.toISOString(),
     };
   }
@@ -99,6 +100,7 @@ export class StudentService {
         departmentId: student.departmentId.toString(),
         email: student.email,
         minorCategoryId: student.minorCategoryId.toString(),
+        createdAt: student.updatedAt.toISOString(),
         updatedAt: student.updatedAt.toISOString(),
       };
     } catch (err: any) {

@@ -7,8 +7,7 @@ export function useDelete(deleteFn: (id: string) => Promise<ApiResponse<void>>) 
   const remove = async (id: string) => {
     start();
     try {
-      const res = await deleteFn(id);
-      return res;
+      return await deleteFn(id);
     } finally {
       end();
     }

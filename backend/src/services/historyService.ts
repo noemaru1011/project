@@ -32,6 +32,7 @@ export class HistoryService {
       startTime: formatDateTime(history.startTime)!,
       endTime: formatDateTime(history.endTime),
       validFlag: history.validFlag,
+      createdAt: history.updatedAt.toISOString(),
       updatedAt: history.updatedAt.toISOString(),
     };
   }
@@ -115,6 +116,7 @@ export class HistoryService {
         startTime: formatDateTime(history.startTime)!,
         endTime: formatDateTime(history.endTime),
         validFlag: history.validFlag,
+        createdAt: history.updatedAt.toISOString(),
         updatedAt: history.updatedAt.toISOString(),
       };
     } catch (err: any) {

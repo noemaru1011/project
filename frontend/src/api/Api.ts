@@ -12,7 +12,6 @@ export async function api<T>(path: string, options?: RequestInit): Promise<ApiRe
   let res: Response;
 
   try {
-    // 【意図①】
     // fetch自体が失敗するのは「ネットワークエラー」のみ
     // ここで捕まえることで「通信できなかった」ケースを明確に分離する
     const { headers: customHeaders, ...restOptions } = options || {};
@@ -39,7 +38,6 @@ export async function api<T>(path: string, options?: RequestInit): Promise<ApiRe
   let json: any = null;
 
   try {
-    // 【意図③】
     // 常に res.json() を呼ぶと 204 No Content や
     // 非JSONレスポンスで例外が出るため、
     // Content-Type を見てから JSON をパースする
@@ -48,13 +46,11 @@ export async function api<T>(path: string, options?: RequestInit): Promise<ApiRe
       json = await res.json();
     }
   } catch {
-    // 【意図④】
     // JSONとして壊れていた場合でも
     // fetchの責務外なのでここでは落とさない
     json = null;
   }
 
-  // 【意図⑤】
   // ApiResponse は「業務的なレスポンス表現」
   // HTTPステータスとは概念的に分離して扱う
   const response: ApiResponse<T> = {
@@ -66,7 +62,6 @@ export async function api<T>(path: string, options?: RequestInit): Promise<ApiRe
   //TODO 確認用、完成したら消す
   console.log(response);
 
-  // 【意図⑥】
   // HTTP的に失敗している場合は throw して
   // 呼び出し元の try/catch に制御を委ねる
   if (!res.ok) {
@@ -77,7 +72,6 @@ export async function api<T>(path: string, options?: RequestInit): Promise<ApiRe
     };
   }
 
-  // 【意図⑦】
   // 成功時のみ ApiResponse<T> を返す
   return response;
 }

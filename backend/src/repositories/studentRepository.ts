@@ -21,6 +21,7 @@ export class StudentRepository extends BaseRepository {
         departmentId: true,
         email: true,
         minorCategoryId: true,
+        createdAt: true,
         updatedAt: true,
       },
     });
