@@ -8,6 +8,7 @@ export const APIMESSAGE = {
   //以下エラーメッセージ
   NO_STUDENT: "学生が見つかりません。",
   NO_HISTORY: "履歴が見つかりません。",
+  RESOURCE_NOT_FOUND: "指定されたリソースは存在しないか、無効です。",
   FOREIGNKEY_COSTRAINT: "予期せぬデータが入力(選択)されました。",
   INVALID_DATETIME: "日時の形式が正しくありません。",
   VALIDATE_ERROR: "入力エラー",
@@ -16,7 +17,8 @@ export const APIMESSAGE = {
   EMAIL_DUPLICATE: "このメールアドレスはすでに登録されています。",
   FORBIDDEN: "権限がありません。",
   TOKEN_ERROR: "ログインしてください。",
-  CONFLICT: "他のユーザーによって更新されています。再読み込みしてください",
+  OPTIMISTIC_LOCK:
+    "他のユーザーによって更新されています。再読み込みしてください",
   INTERNAL_SERVER_ERROR: "予期せぬエラーが発生しました。",
   CSRF_INVALID: "CSRFトークンが異なります。",
 } as const;

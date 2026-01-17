@@ -1,5 +1,5 @@
 import jwt, { SignOptions } from 'jsonwebtoken';
-import type { JwtPayload } from '@/types/jwtPayload';
+import type { JwtPayload } from '@/types/JwtPayload';
 import type { Role } from '@shared/models/common';
 
 //jwtの生成(idとroleを持ち1時間で切れる)
