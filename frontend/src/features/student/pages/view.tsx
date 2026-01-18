@@ -27,7 +27,7 @@ export const StudentViewPage = () => {
       }
     };
     fetchStudent();
-  }, [studentId, viewStudent, navigate]);
+  }, []);
 
   if (!student) {
     return <Loading loading={loading} />;
