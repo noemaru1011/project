@@ -17,30 +17,6 @@ const firstNames = [
   '彩香',
   '真理子',
 ];
-const romajiLastNames = [
-  'sato',
-  'suzuki',
-  'takahashi',
-  'tanaka',
-  'ito',
-  'watanabe',
-  'yamamoto',
-  'nakamura',
-  'kobayashi',
-  'kato',
-];
-const romajiFirstNames = [
-  'kenta',
-  'daisuke',
-  'naoki',
-  'koji',
-  'shuhei',
-  'yui',
-  'yoko',
-  'misaki',
-  'ayaka',
-  'mariko',
-];
 
 async function main() {
   const categories = ['1大隊', '2大隊', '3大隊', '4大隊'];
