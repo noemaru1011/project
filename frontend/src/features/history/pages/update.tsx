@@ -31,7 +31,7 @@ export const HistoryUpdatePage = () => {
     };
 
     fetchStudent();
-  }, [historyId, viewHistory, navigate]);
+  }, []);
 
   if (loading || !history) {
     return <Loading loading={loading} />;

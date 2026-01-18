@@ -29,7 +29,7 @@ export const StudentViewPage = () => {
     fetchStudent();
   }, []);
 
-  if (!student) {
+  if (loading || !student) {
     return <Loading loading={loading} />;
   }
 

@@ -29,7 +29,7 @@ export const HistoryDeletePage = () => {
       }
     };
     fetchHistory();
-  }, [historyId, viewHistory, navigate]);
+  }, []);
 
   if (loading || !history) {
     return <Loading loading={loading} />;

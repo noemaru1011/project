@@ -30,7 +30,7 @@ export const StudentUpdatePage = () => {
       }
     };
     fetchStudent();
-  }, [studentId, viewStudent, navigate]);
+  }, []);
 
   if (loading || !student) {
     return <Loading loading={loading} />;

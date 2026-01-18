@@ -30,7 +30,7 @@ export const StudentDeletePage = () => {
       }
     };
     fetchStudent();
-  }, [studentId, viewStudent, navigate]);
+  }, []);
 
   const handleDelete = async () => {
     if (!student) return navigate(ROUTES.ERROR.NOTFOUND, { replace: true });
