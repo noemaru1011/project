@@ -9,7 +9,7 @@ datasource db {
 
 model Category {
   categoryId    Int @id @default(autoincrement())
-  categoryName  String        @unique
+  categoryName  String        @db.VarChar(10)@unique
   subCategories SubCategory[]
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
@@ -17,7 +17,7 @@ model Category {
 
 model SubCategory {
   subCategoryId  Int @id @default(autoincrement())
-  subCategoryName String        @unique
+  subCategoryName String        @db.VarChar(10)@unique
   categoryId      Int
   category        Category      @relation(fields: [categoryId], references: [categoryId])
   minorCategories MinorCategory[]
@@ -27,7 +27,7 @@ model SubCategory {
 
 model MinorCategory {
   minorCategoryId   Int @id @default(autoincrement())
-  minorCategoryName String        @unique
+  minorCategoryName String        @db.VarChar(10)@unique
   subCategoryId     Int
   subCategory       SubCategory   @relation(fields: [subCategoryId], references: [subCategoryId])
   students          Student[]
@@ -37,7 +37,7 @@ model MinorCategory {
 
 model Department {
   departmentId   Int @id @default(autoincrement())
-  departmentName String        @unique
+  departmentName String        @db.VarChar(30)@unique
   students       Student[]
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
@@ -45,7 +45,7 @@ model Department {
 
 model Status {
   statusId      Int @id @default(autoincrement())
-  statusName    String @unique
+  statusName    String @db.VarChar(10)@unique
   histories     History[]
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt 
@@ -59,8 +59,8 @@ model Student {
   department      Department    @relation(fields: [departmentId], references: [departmentId])
   studentName     String
   password        StudentPassword?
-  grade           Int
-  email    String @unique  
+  grade           Int  
+  email           String @db.VarChar(255)@unique  
   histories       History[]
   deleteFlag      Boolean @default(false)
   createdAt       DateTime     @default(now())
@@ -70,7 +70,7 @@ model Student {
 model StudentPassword{
   studentId     String@id
   student           Student @relation(fields: [studentId], references: [studentId])
-  password          String
+  password          String@db.VarChar(255)
   createdAt         DateTime     @default(now())
   updatedAt         DateTime     @updatedAt
 }
@@ -81,7 +81,7 @@ model History {
   student         Student   @relation(fields: [studentId], references: [studentId])
   statusId        Int
   status          Status       @relation(fields: [statusId], references: [statusId])
-  other           String?
+  other           String?@db.VarChar(30)
   startTime       DateTime
   endTime         DateTime?
   validFlag       Boolean      @default(true)
@@ -91,8 +91,8 @@ model History {
 
 model Admin {
   adminId        String @id @default(uuid())
-  email    String @unique  
-  password       String  
+  email          String @db.VarChar(255) @unique
+  password       String @db.VarChar(255)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
