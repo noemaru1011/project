@@ -52,8 +52,8 @@ export const HistoryDeletePage = () => {
   const historyBasic: StudentBasicInfo = {
     studentName: history.studentName,
     grade: history.grade,
-    minorCategoryId: history.minorCategoryId,
-    departmentId: history.departmentId,
+    minorCategoryName: history.minorCategoryName,
+    departmentName: history.departmentName,
   };
 
   const historyDelete: HistoryUpdateInput = {

@@ -17,9 +17,17 @@ export class HistoryRepository extends BaseRepository {
         student: {
           select: {
             studentName: true,
-            departmentId: true,
+            department: {
+              select: {
+                departmentName: true,
+              },
+            },
             grade: true,
-            minorCategoryId: true,
+            minorCategory: {
+              select: {
+                minorCategoryName: true,
+              },
+            },
           },
         },
         historyId: true,
@@ -143,25 +151,6 @@ export class HistoryRepository extends BaseRepository {
       datas.map((d) =>
         this.prisma.history.create({
           data: d,
-          select: {
-            historyId: true,
-            studentId: true,
-            student: {
-              select: {
-                studentName: true,
-                grade: true,
-                departmentId: true,
-                minorCategoryId: true,
-              },
-            },
-            statusId: true,
-            other: true,
-            startTime: true,
-            endTime: true,
-            validFlag: true,
-            createdAt: true,
-            updatedAt: true,
-          },
         }),
       ),
     );
@@ -186,25 +175,6 @@ export class HistoryRepository extends BaseRepository {
 
     return this.prisma.history.findUnique({
       where: { historyId },
-      select: {
-        historyId: true,
-        studentId: true,
-        student: {
-          select: {
-            studentName: true,
-            grade: true,
-            departmentId: true,
-            minorCategoryId: true,
-          },
-        },
-        statusId: true,
-        other: true,
-        startTime: true,
-        endTime: true,
-        validFlag: true,
-        createdAt: true,
-        updatedAt: true,
-      },
     });
   }
 

@@ -1,39 +1,51 @@
 import { useNavigate, useParams, Navigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useEffect, useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { ROUTES } from '@/routes/routes';
 import { StudentUpdateForm } from '@/features/student/components/layouts/StudentUpdateForm';
-import { useStudentUpdate } from '@/features/student/hooks/useStudentUpdate';
-import { useStudentView } from '@/features/student/hooks/useStudentView';
+import { studentApi } from '@/features/student';
 import type { StudentUpdateInput } from '@shared/models/student';
-import type { StudentResponse } from '@shared/models/student';
 import { handleApiErrorWithUI } from '@/utils';
 
 export const StudentUpdatePage = () => {
   const navigate = useNavigate();
-  const { viewStudent, loading } = useStudentView();
-  const { updateStudent, loading: updating } = useStudentUpdate();
-  const [student, setStudent] = useState<StudentResponse | null>(null);
   const { studentId } = useParams<{ studentId: string }>();
+  const queryClient = useQueryClient();
+
+  const { data: response, isLoading: isFetching } = useQuery({
+    queryKey: ['student', studentId],
+    queryFn: () => studentApi.view(studentId!),
+    enabled: !!studentId,
+    meta: {
+      onError: (err: any) => handleApiErrorWithUI(err, navigate),
+    },
+  });
+
+  const student = response?.data;
+
+  const updateMutation = useMutation({
+    mutationFn: (data: StudentUpdateInput) => studentApi.update(studentId!, data),
+    onSuccess: (res) => {
+      queryClient.invalidateQueries({ queryKey: ['students'] });
+      queryClient.invalidateQueries({ queryKey: ['student', studentId] });
+
+      toast.success(res.message);
+      navigate(ROUTES.STUDENT.INDEX);
+    },
+    onError: (err) => handleApiErrorWithUI(err, navigate),
+  });
+
   if (!studentId) {
     return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
   }
 
-  useEffect(() => {
-    const fetchStudent = async () => {
-      try {
-        const res = await viewStudent(studentId);
-        setStudent(res.data);
-      } catch (err) {
-        handleApiErrorWithUI(err, navigate);
-      }
-    };
-    fetchStudent();
-  }, []);
+  if (isFetching) {
+    return <Loading loading={isFetching} />;
+  }
 
-  if (loading || !student) {
-    return <Loading loading={loading} />;
+  if (!student) {
+    return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
   }
   const defaultValues: StudentUpdateInput = {
     studentName: student.studentName,
@@ -44,15 +56,8 @@ export const StudentUpdatePage = () => {
     updatedAt: student.updatedAt,
   };
 
-  const handleSubmit = async (data: StudentUpdateInput) => {
-    if (!student) return navigate(ROUTES.ERROR.NOTFOUND, { replace: true });
-    try {
-      const res = await updateStudent(student.studentId, data);
-      toast.success(res.message);
-      navigate(ROUTES.STUDENT.INDEX);
-    } catch (err) {
-      handleApiErrorWithUI(err, navigate);
-    }
+  const handleSubmit = (data: StudentUpdateInput) => {
+    updateMutation.mutate(data);
   };
 
   return (
@@ -61,7 +66,7 @@ export const StudentUpdatePage = () => {
         <h2 className="text-2xl font-bold text-gray-800 text-center">学生更新</h2>
         <StudentUpdateForm
           defaultValues={defaultValues}
-          loading={updating}
+          loading={updateMutation.isPending}
           onSubmit={handleSubmit}
           onBack={() => navigate(ROUTES.STUDENT.INDEX)}
         />

@@ -1,4 +1,4 @@
-import { historySearchApi } from '@/features/search/history/api';
+import { historySearchApi } from '@/features/history/api';
 import type { HistorySummary } from '@shared/models/history';
 import type { StudentSearchInput } from '@shared/models/student';
 import { useSearch } from '@/hooks/api/useSearch';

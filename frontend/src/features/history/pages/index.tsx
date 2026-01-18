@@ -2,13 +2,13 @@ import { toast } from 'react-toastify';
 import { useState } from 'react';
 import type { StudentSearchInput } from '@shared/models/student';
 import type { HistorySummary } from '@shared/models/history';
-import { StudentSearchForm } from '@/features/search/student/components/layouts/StudentSearchForm';
-import { useHistorySearch } from '@/features/search/history/hooks/useHistorySearch';
+import { StudentSearchForm } from '@/features/student/components/layouts/StudentSearchForm';
+import { useHistorySearch } from '@/features/history/hooks/useHistorySearch';
 import { handleApiErrorWithUI } from '@/utils';
 import { useNavigate } from 'react-router-dom';
 import { HistoryTable } from '@/features/history/components';
-import { HitorySearchForm, AggregationDashboard } from '@/features/search/history/components/';
-import { useHistorySearchByTime } from '@/features/search/history/hooks/useHistorySearchByTime';
+import { HitorySearchForm, AggregationDashboard } from '@/features/history/components/';
+import { useHistorySearchByTime } from '@/features/history/hooks/useHistorySearchByTime';
 
 export const HistoryIndexPage = () => {
   const navigate = useNavigate();

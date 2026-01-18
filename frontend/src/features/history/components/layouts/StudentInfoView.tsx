@@ -1,7 +1,4 @@
-import { StudentNameInput } from '@/features/student/components';
-import { GradeSelect } from '@/features/grade/components';
-import { MinorCategorySelect } from '@/features/minorCategory/components';
-import { DepartmentSelect } from '@/features/department/components';
+import { Input } from '@/components/ui/Input/Input';
 import type { StudentBasicInfo } from '@shared/models/history';
 
 type Props = {
@@ -30,10 +27,10 @@ export const HistoryBasicInfo = ({ stdent }: Props) => (
 
     {/* コンテンツ */}
     <div className="space-y-4">
-      <StudentNameInput value={stdent.studentName} disabled />
-      <GradeSelect value={stdent.grade} disabled />
-      <MinorCategorySelect value={stdent.minorCategoryId} disabled />
-      <DepartmentSelect value={stdent.departmentId} disabled />
+      <Input label="学生名" value={stdent.studentName} disabled />
+      <Input label="学年" value={stdent.grade} disabled />
+      <Input label="小分類名" value={stdent.minorCategoryName} disabled />
+      <Input label="学科名" value={stdent.departmentName} disabled />
     </div>
   </section>
 );

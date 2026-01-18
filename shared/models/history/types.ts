@@ -2,10 +2,10 @@
  * 学生の基本情報 (履歴詳細の左側などで使用)
  */
 export interface StudentBasicInfo {
-  studentName: string;
-  grade: string;
-  minorCategoryId: string;
-  departmentId: string;
+  studentName?: string;
+  grade?: string;
+  minorCategoryName?: string;
+  departmentName?: string;
 }
 
 /**

@@ -1,26 +1,40 @@
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
-import { StudentSearchForm } from '@/features/search/student/components/layouts/StudentSearchForm';
-import { useStudentSearch } from '@/features/search/student/hooks/useStudentSearch';
+import { useQuery } from '@tanstack/react-query';
+import { StudentSearchForm } from '@/features/student/components/layouts/StudentSearchForm';
 import { StudentTable } from '@/features/student/components';
+import { studentApi } from '@/features/student';
 import { ROUTES } from '@/routes/routes';
 import { handleApiErrorWithUI } from '@/utils';
-import type { StudentSearchInput, StudentSummary } from '@shared/models/student';
+import type { StudentSearchInput } from '@shared/models/student';
 
 export const StudentIndexPage = () => {
   const navigate = useNavigate();
-  const { searchStudents, loading } = useStudentSearch();
-  const [student, setStudent] = useState<StudentSummary[] | null>(null);
+  const [searchParams, setSearchParams] = useState<StudentSearchInput>({});
 
-  const handleSearch = async (query: StudentSearchInput) => {
-    try {
-      const res = await searchStudents(query);
-      setStudent(res.data);
-      toast.info(res.message);
-    } catch (err) {
-      handleApiErrorWithUI(err, navigate);
-    }
+  const {
+    data: response,
+    isLoading,
+    isFetching,
+  } = useQuery({
+    queryKey: ['students', searchParams],
+    queryFn: async () => {
+      const res = await studentApi.search(searchParams);
+      if (Object.keys(searchParams).length > 0) {
+        toast.info(res.message);
+      }
+      return res;
+    },
+    meta: {
+      onError: (err: any) => handleApiErrorWithUI(err, navigate),
+    },
+  });
+
+  const students = response?.data ?? [];
+
+  const handleSearch = (query: StudentSearchInput) => {
+    setSearchParams(query);
   };
 
   return (
@@ -28,10 +42,14 @@ export const StudentIndexPage = () => {
       <h2 className="text-2xl font-bold text-gray-800 text-center">学生一覧</h2>
       <StudentSearchForm
         onSearch={handleSearch}
-        loading={loading}
+        loading={isLoading || isFetching}
         onCreate={() => navigate(ROUTES.STUDENT.CREATE)}
       />
-      <StudentTable loading={loading} data={student ?? []} actions={['Update', 'Read', 'Delete']} />
+      <StudentTable
+        loading={isLoading || isFetching}
+        data={students}
+        actions={['Update', 'Read', 'Delete']}
+      />
     </div>
   );
 };

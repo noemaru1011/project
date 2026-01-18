@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { historySearchApi } from '@/features/search/history/api';
+import { historySearchApi } from '@/features/history/api';
 import { useLoadingCounter } from '@/hooks/ux/useLoadingCounter';
 import type { AggregationData } from '@shared/models/history';
 

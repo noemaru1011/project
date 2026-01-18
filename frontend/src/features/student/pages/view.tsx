@@ -1,36 +1,32 @@
 import { useNavigate, useParams, Navigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { ROUTES } from '@/routes/routes';
 import { StudentView } from '@/features/student/components/layouts/StudentDetailView';
-import { useStudentView } from '@/features/student/hooks/useStudentView';
-import { useEffect, useState } from 'react';
-import type { StudentResponse } from '@shared/models/student';
+import { studentApi } from '@/features/student';
 import { handleApiErrorWithUI } from '@/utils';
 
 export const StudentViewPage = () => {
   const navigate = useNavigate();
-  const { viewStudent, loading } = useStudentView();
   const { studentId } = useParams<{ studentId: string }>();
-  const [student, setStudent] = useState<StudentResponse | null>(null);
+
+  const { data: response, isLoading } = useQuery({
+    queryKey: ['student', studentId],
+    queryFn: () => studentApi.view(studentId!),
+    enabled: !!studentId,
+    meta: {
+      onError: (err: any) => handleApiErrorWithUI(err, navigate),
+    },
+  });
+
+  const student = response?.data;
 
   if (!studentId) {
     return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
   }
 
-  useEffect(() => {
-    const fetchStudent = async () => {
-      try {
-        const res = await viewStudent(studentId);
-        setStudent(res.data);
-      } catch (err) {
-        handleApiErrorWithUI(err, navigate);
-      }
-    };
-    fetchStudent();
-  }, []);
-
-  if (loading || !student) {
-    return <Loading loading={loading} />;
+  if (isLoading || !student) {
+    return <Loading loading={isLoading} />;
   }
 
   return (

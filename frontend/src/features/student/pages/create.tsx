@@ -1,27 +1,28 @@
+import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/routes/routes';
 import { StudentCreateForm } from '@/features/student/components/layouts/StudentCreateForm';
-import { useStudentCreate } from '@/features/student/hooks/useStudentCreate';
+import { studentApi } from '@/features/student';
 import type { StudentCreateInput } from '@shared/models/student';
-import { handleApiError } from '@/utils';
+import { handleApiErrorWithUI } from '@/utils';
 
 export const StudentCreatePage = () => {
   const navigate = useNavigate();
-  const { createStudent, loading } = useStudentCreate();
 
-  const onSubmit = async (data: StudentCreateInput) => {
-    try {
-      const res = await createStudent(data);
+  const mutation = useMutation({
+    mutationFn: (data: StudentCreateInput) => studentApi.create(data),
+    onSuccess: (res) => {
       toast.success(res.message);
       navigate(ROUTES.STUDENT.INDEX);
-    } catch (err) {
-      const error = handleApiError(err);
-      toast.error(error.message);
-      if (error.redirectTo) {
-        navigate(error.redirectTo);
-      }
-    }
+    },
+    onError: (err) => {
+      handleApiErrorWithUI(err, navigate);
+    },
+  });
+
+  const onSubmit = (data: StudentCreateInput) => {
+    mutation.mutate(data);
   };
 
   return (
@@ -31,7 +32,7 @@ export const StudentCreatePage = () => {
         <StudentCreateForm
           onSubmit={onSubmit}
           onBack={() => navigate(ROUTES.STUDENT.INDEX)}
-          loading={loading}
+          loading={mutation.isPending}
         />
       </div>
     </div>

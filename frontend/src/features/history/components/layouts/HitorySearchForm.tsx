@@ -1,9 +1,5 @@
 import { useState } from 'react';
-import {
-  SearchTimeInput,
-  PrevTimeButton,
-  NextTimeButton,
-} from '@/features/search/history/components';
+import { SearchTimeInput, PrevTimeButton, NextTimeButton } from '@/features/history/components';
 
 type Props = {
   onSearch: (query: string) => void;
