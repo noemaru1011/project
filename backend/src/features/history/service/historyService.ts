@@ -95,7 +95,8 @@ export class HistoryService {
 
       // 重複学生がいたらまとめて例外
       if (duplicateStudents.length > 0) {
-        throw new StatusDuplicateError(duplicateStudents.join(', '));
+        const allStudents = duplicateStudents.join(', ');
+        throw new StatusDuplicateError(allStudents);
       }
 
       try {
