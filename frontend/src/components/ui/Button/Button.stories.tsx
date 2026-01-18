@@ -11,7 +11,8 @@ type Story = StoryObj<typeof meta>;
 
 export const defultButton: Story = {
   args: {
-    variant: 'Create',
+    variant: 'Primary',
+    label: 'クリックしてね',
     type: 'button',
     onClick: () => alert('クリックされました！'),
   },

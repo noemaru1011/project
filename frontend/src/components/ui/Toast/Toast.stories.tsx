@@ -16,18 +16,25 @@ export const Default: Story = {
     <div>
       <div className="flex gap-2 mb-4">
         <Button
-          variant="Create"
+          variant="Primary"
+          label="成功トーストを表示"
           type="button"
           onClick={() => toast.success('成功メッセージです')}
         />
 
         <Button
-          variant="Delete"
+          variant="Danger"
+          label="エラートーストを表示"
           type="button"
           onClick={() => toast.error('エラーメッセージです')}
         />
 
-        <Button variant="Search" type="button" onClick={() => toast.info('情報メッセージです')} />
+        <Button
+          variant="Secondary"
+          label="情報トーストを表示"
+          type="button"
+          onClick={() => toast.info('情報メッセージです')}
+        />
       </div>
       <Toast />
     </div>

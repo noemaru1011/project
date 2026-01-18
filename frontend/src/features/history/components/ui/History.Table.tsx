@@ -13,13 +13,13 @@ type Props = {
 
 export const HistoryTable = ({ data, loading, actions = ['Update', 'Delete'] }: Props) => {
   const routeMap: Partial<Record<Action, (id: string) => string>> = {
-    Update: (id) => ROUTES.HISTORY.UPDATE(id),
-    Delete: (id) => ROUTES.HISTORY.DELETE(id),
+    Update: (id: string) => ROUTES.HISTORY.UPDATE(id),
+    Delete: (id: string) => ROUTES.HISTORY.DELETE(id),
   };
 
   return (
     <Loading loading={loading}>
-      <Table
+      <Table<HistorySummary>
         labels={historyResultLabels}
         data={data ?? []}
         keyField="historyId"

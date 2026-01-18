@@ -1,119 +1,103 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { vi } from 'vitest';
 import { Button } from './Button';
-import { VARIANT_STYLES, type ButtonVariant } from './ButtonVariants';
+import { VARIANT_STYLES, type ButtonVariant } from './ButtonVariant';
 
-describe('Button', () => {
+describe('Button コンポーネント', () => {
   // ============================================
   // Props テスト
   // ============================================
-  describe('Props テスト', () => {
-    describe('variant', () => {
-      it.each<ButtonVariant>([
-        'Create',
-        'Read',
-        'Update',
-        'Delete',
-        'Search',
-        'Login',
-        'Back',
-        'Home',
-        'Retry',
-        'LastPage',
-      ])('variant="%s" で正しいラベルが表示される', (variant) => {
-        render(<Button variant={variant} type="button" />);
-        expect(
-          screen.getByRole('button', { name: VARIANT_STYLES[variant].label })
-        ).toBeInTheDocument();
-      });
+  describe('Props', () => {
+    it.each(Object.entries(VARIANT_STYLES) as [ButtonVariant, { class: string }][])(
+      'variant=%s で正しいクラスが適用される',
+      (variant, style) => {
+        render(<Button variant={variant} type="button" label="Test" />);
+        const button = screen.getByRole('button', { name: 'Test' });
 
-      it.each<ButtonVariant>([
-        'Create',
-        'Read',
-        'Update',
-        'Delete',
-        'Search',
-        'Login',
-        'Back',
-        'Home',
-        'Retry',
-        'LastPage',
-      ])('variant="%s" で正しい背景色クラスが適用される', (variant) => {
-        render(<Button variant={variant} type="button" />);
-        const button = screen.getByRole('button');
-        const bgClass = VARIANT_STYLES[variant].bg.split(' ')[0];
-        expect(button.className).toContain(bgClass);
-      });
+        // variant クラスを含む
+        expect(button.className).toContain(style.class.split(' ')[0]);
+
+        // 基本クラスも保持
+        expect(button).toHaveClass('px-3', 'py-1', 'rounded-lg');
+      },
+    );
+
+    it('type 属性が正しく設定される', () => {
+      render(<Button variant="Primary" type="submit" label="Submit" />);
+      expect(screen.getByRole('button')).toHaveAttribute('type', 'submit');
     });
 
-    describe('type', () => {
-      it.each<'button' | 'submit' | 'reset'>(['button', 'submit', 'reset'])(
-        'type="%s" が正しく設定される',
-        (type) => {
-          render(<Button variant="Create" type={type} />);
-          expect(screen.getByRole('button')).toHaveAttribute('type', type);
-        }
+    it('disabled=true でボタンが無効化される', () => {
+      const handleClick = vi.fn();
+      render(
+        <Button variant="Primary" type="button" disabled onClick={handleClick} label="Click" />,
       );
+      const button = screen.getByRole('button', { name: 'Click' });
+
+      expect(button).toBeDisabled();
+      expect(button).toHaveAttribute('aria-disabled', 'true');
+
+      fireEvent.click(button);
+      expect(handleClick).not.toHaveBeenCalled();
     });
 
-    describe('disabled', () => {
-      it('disabled=true でボタンが無効化される', () => {
-        render(<Button variant="Create" type="button" disabled />);
-        const button = screen.getByRole('button');
-        expect(button).toBeDisabled();
-        expect(button).toHaveAttribute('aria-disabled', 'true');
-      });
+    it('onClick が呼ばれる', () => {
+      const handleClick = vi.fn();
+      render(<Button variant="Primary" type="button" onClick={handleClick} label="Click" />);
+      const button = screen.getByRole('button', { name: 'Click' });
 
-      it('disabled=false でボタンが有効化される', () => {
-        render(<Button variant="Create" type="button" disabled={false} />);
-        const button = screen.getByRole('button');
-        expect(button).not.toBeDisabled();
-        expect(button).toHaveAttribute('aria-disabled', 'false');
-      });
-
-      it('disabled=true でクリックイベントが発火しない', () => {
-        const handleClick = vi.fn();
-        render(<Button variant="Create" type="button" disabled onClick={handleClick} />);
-        fireEvent.click(screen.getByRole('button'));
-        expect(handleClick).not.toHaveBeenCalled();
-      });
+      fireEvent.click(button);
+      expect(handleClick).toHaveBeenCalledTimes(1);
     });
 
-    describe('onClick', () => {
-      it('クリック時に onClick が呼ばれる', () => {
-        const handleClick = vi.fn();
-        render(<Button variant="Create" type="button" onClick={handleClick} />);
-        fireEvent.click(screen.getByRole('button'));
-        expect(handleClick).toHaveBeenCalledTimes(1);
-      });
+    it('カスタム className が追加される', () => {
+      render(<Button variant="Primary" type="button" label="Test" className="custom" />);
+      const button = screen.getByRole('button', { name: 'Test' });
+      expect(button).toHaveClass('custom');
+      expect(button).toHaveClass('px-3', 'py-1', 'rounded-lg');
+    });
+  });
+
+  // ============================================
+  // アクセシビリティ テスト
+  // ============================================
+  describe('Accessibility', () => {
+    it('role="button" でアクセス可能', () => {
+      render(<Button variant="Primary" type="button" label="Label" />);
+      const button = screen.getByRole('button');
+      expect(button).toBeInTheDocument();
     });
 
-    describe('className', () => {
-      it('カスタム className が追加される', () => {
-        render(<Button variant="Create" type="button" className="custom-class" />);
-        expect(screen.getByRole('button')).toHaveClass('custom-class');
-      });
+    it('icon ボタンは ariaLabel が必須', () => {
+      render(
+        <Button variant="Primary" type="button" ariaLabel="Settings">
+          <span data-testid="icon">Icon</span>
+        </Button>,
+      );
 
-      it('複数の className が追加される', () => {
-        render(<Button variant="Create" type="button" className="custom-1 custom-2" />);
-        const button = screen.getByRole('button');
-        expect(button).toHaveClass('custom-1', 'custom-2');
-      });
+      const button = screen.getByRole('button', { name: 'Settings' });
+      expect(button).toBeInTheDocument();
+      expect(screen.getByTestId('icon')).toBeInTheDocument();
+    });
 
-      it('カスタム className があっても基本クラスは保持される', () => {
-        render(<Button variant="Create" type="button" className="custom" />);
-        const button = screen.getByRole('button');
-        expect(button).toHaveClass('custom', 'px-3', 'py-1', 'rounded-lg');
-      });
+    it('disabled 時に aria-disabled が正しく設定される', () => {
+      const { rerender } = render(
+        <Button variant="Primary" type="button" disabled label="Disabled" />,
+      );
+      const button = screen.getByRole('button');
+      expect(button).toHaveAttribute('aria-disabled', 'true');
+
+      rerender(<Button variant="Primary" type="button" disabled={false} label="Enabled" />);
+      expect(screen.getByRole('button')).toHaveAttribute('aria-disabled', 'false');
     });
   });
 
   // ============================================
   // スタイリング テスト
   // ============================================
-  describe('スタイリング', () => {
-    it('基本的なスタイルクラスが適用される', () => {
-      render(<Button variant="Create" type="button" />);
+  describe('Styling', () => {
+    it('基本スタイルが適用される', () => {
+      render(<Button variant="Primary" type="button" label="Test" />);
       const button = screen.getByRole('button');
       expect(button).toHaveClass(
         'px-3',
@@ -121,81 +105,41 @@ describe('Button', () => {
         'rounded-lg',
         'text-white',
         'font-semibold',
-        'cursor-pointer'
+        'cursor-pointer',
       );
     });
 
-    it('disabled 用のスタイルクラスが適用される', () => {
-      render(<Button variant="Create" type="button" disabled />);
+    it('disabled 用スタイルが適用される', () => {
+      render(<Button variant="Primary" type="button" disabled label="Disabled" />);
       const button = screen.getByRole('button');
       expect(button).toHaveClass('disabled:opacity-50', 'disabled:cursor-not-allowed');
     });
   });
 
   // ============================================
-  // アクセシビリティ テスト
-  // ============================================
-  describe('アクセシビリティ', () => {
-    it('role="button" でアクセス可能', () => {
-      render(<Button variant="Create" type="button" />);
-      expect(screen.getByRole('button')).toBeInTheDocument();
-    });
-
-    it('disabled 時に aria-disabled が正しく設定される', () => {
-      const { rerender } = render(<Button variant="Create" type="button" disabled />);
-      expect(screen.getByRole('button')).toHaveAttribute('aria-disabled', 'true');
-
-      rerender(<Button variant="Create" type="button" disabled={false} />);
-      expect(screen.getByRole('button')).toHaveAttribute('aria-disabled', 'false');
-    });
-  });
-
-  // ============================================
   // スナップショット テスト
   // ============================================
-  describe('スナップショット', () => {
-    describe('variant ごとの構造', () => {
-      it.each<ButtonVariant>([
-        'Create',
-        'Read',
-        'Update',
-        'Delete',
-        'Search',
-        'Login',
-        'Back',
-        'Home',
-        'Retry',
-        'LastPage',
-      ])('variant="%s" の HTML 構造', (variant) => {
-        const { container } = render(<Button variant={variant} type="button" />);
+  describe('Snapshots', () => {
+    it.each(Object.entries(VARIANT_STYLES) as [ButtonVariant, { class: string }][])(
+      'variant=%s の HTML 構造',
+      (variant) => {
+        const { container } = render(<Button variant={variant} type="button" label="Snap" />);
         expect(container.firstChild).toMatchSnapshot();
-      });
-    });
+      },
+    );
 
-    describe('type 属性の違い', () => {
-      it.each<'button' | 'submit' | 'reset'>(['button', 'submit', 'reset'])(
-        'type="%s" の HTML 構造',
-        (type) => {
-          const { container } = render(<Button variant="Create" type={type} />);
-          expect(container.firstChild).toMatchSnapshot();
-        }
+    it('disabled 状態のスナップショット', () => {
+      const { container } = render(
+        <Button variant="Primary" type="button" disabled label="Disabled" />,
       );
+      expect(container.firstChild).toMatchSnapshot();
     });
 
-    describe('disabled 状態の違い', () => {
-      it('disabled=true の HTML 構造', () => {
-        const { container } = render(<Button variant="Create" type="button" disabled />);
-        expect(container.firstChild).toMatchSnapshot();
-      });
-    });
-
-    describe('className の違い', () => {
-      it('カスタム className ありの HTML 構造', () => {
-        const { container } = render(
-          <Button variant="Create" type="button" className="custom-class" />
-        );
-        expect(container.firstChild).toMatchSnapshot();
-      });
+    it('カスタム className のスナップショット', () => {
+      const { container } = render(
+        <Button variant="Primary" type="button" label="Custom" className="my-class" />,
+      );
+      expect(container.firstChild).toMatchSnapshot();
     });
   });
 });
