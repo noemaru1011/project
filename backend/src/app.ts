@@ -48,7 +48,7 @@ app.use(API_ROUTES.SUBCATEGORY, authMiddleware, requestLogger, SubCategoryRoutes
 app.use(API_ROUTES.MINOR_CATEGORY, authMiddleware, requestLogger, MinorCategoryRoutes);
 app.use(API_ROUTES.DEPARTMENT, authMiddleware, requestLogger, DepartmentRoutes);
 app.use(API_ROUTES.STATUS, authMiddleware, requestLogger, statusRoutes);
-//(学生マスタの操作)管理者のみ
+//管理者のみ
 app.use(
   API_ROUTES.STUDENT,
   authMiddleware,

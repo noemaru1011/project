@@ -1,8 +1,10 @@
 import path from 'path';
 import fs from 'fs';
 
+const logDir = process.env.NODE_ENV === 'development' ? 'logs-test' : 'logs';
+
 export class LogRepository {
-  private readonly LOG_DIR = path.join(process.cwd(), 'logs');
+  private readonly LOG_DIR = path.join(process.cwd(), logDir);
   private readonly ALLOWED_LOG_FILES = ['access.log', 'error.log'];
 
   getLogFiles() {
