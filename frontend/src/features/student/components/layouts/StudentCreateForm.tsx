@@ -62,8 +62,20 @@ export const StudentCreateForm = ({ onSubmit, onBack, loading }: Props) => {
       <DepartmentSelect error={errors.departmentId?.message} {...register('departmentId')} />
 
       <div className="flex justify-center gap-4 mt-6">
-        <Button type="submit" variant="Create" disabled={loading} className="w-32 mx-auto py-2" />
-        <Button type="button" variant="Back" onClick={onBack} className="w-32 mx-auto py-2" />
+        <Button
+          type="submit"
+          variant="Primary"
+          label="新規作成"
+          disabled={loading}
+          className="w-32 mx-auto py-2"
+        />
+        <Button
+          type="button"
+          variant="Neutral"
+          label="一覧へ戻る"
+          onClick={onBack}
+          className="w-32 mx-auto py-2"
+        />
       </div>
     </form>
   );

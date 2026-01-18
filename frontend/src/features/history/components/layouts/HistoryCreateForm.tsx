@@ -67,7 +67,13 @@ export const HistoryCreateForm = ({ selectedStudents, onSubmit, loading }: Props
         <p className="text-red-500 text-sm text-center mt-4">{errors.studentIds.message}</p>
       )}
       <div className="flex justify-center gap-4">
-        <Button variant="Create" type="submit" disabled={loading} className="w-64 mx-auto py-2" />
+        <Button
+          variant="Primary"
+          label="新規作成"
+          type="submit"
+          disabled={loading}
+          className="w-64 mx-auto py-2"
+        />
       </div>
     </form>
   );

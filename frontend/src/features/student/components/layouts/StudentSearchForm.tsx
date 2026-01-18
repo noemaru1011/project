@@ -29,9 +29,21 @@ export const StudentSearchForm = ({ onSearch, onCreate, loading }: Props) => {
         <StudentSearchAccordion control={control} />
         <div className="flex justify-center gap-4 mt-4">
           {onCreate && (
-            <Button type="button" variant="Create" className="w-64" onClick={onCreate} />
+            <Button
+              type="button"
+              variant="Primary"
+              label="新規作成"
+              className="w-64"
+              onClick={onCreate}
+            />
           )}
-          <Button type="submit" disabled={loading} variant="Search" className="w-64" />
+          <Button
+            type="submit"
+            disabled={loading}
+            variant="Secondary"
+            label="検索"
+            className="w-64"
+          />
         </div>
       </form>
     </div>

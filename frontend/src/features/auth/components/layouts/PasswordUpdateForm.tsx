@@ -32,7 +32,13 @@ export const PasswordUpdateForm = ({ onSubmit, loading }: Props) => {
         {...register('checkNewPassword')}
       />
 
-      <Button type="submit" variant="Update" disabled={loading} className="w-full mt-4" />
+      <Button
+        type="submit"
+        variant="Primary"
+        label="パスワードを更新"
+        disabled={loading}
+        className="w-full mt-4"
+      />
     </form>
   );
 };

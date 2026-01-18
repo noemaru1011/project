@@ -60,8 +60,20 @@ export const StudentUpdateForm = ({ defaultValues, loading, onSubmit, onBack }: 
       <Input type="hidden" error={errors.updatedAt?.message} {...register('updatedAt')} />
 
       <div className="flex justify-center gap-4 mt-4">
-        <Button type="submit" variant="Update" disabled={loading} className="w-32 py-2" />
-        <Button type="button" variant="Back" onClick={onBack} className="w-32 py-2" />
+        <Button
+          type="submit"
+          variant="Primary"
+          label="更新"
+          disabled={loading}
+          className="w-32 py-2"
+        />
+        <Button
+          type="button"
+          variant="Neutral"
+          label="一覧へ戻る"
+          onClick={onBack}
+          className="w-32 py-2"
+        />
       </div>
     </form>
   );

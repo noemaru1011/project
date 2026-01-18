@@ -24,7 +24,13 @@ export const StudentView = ({ student, onBack }: Props) => {
       <DepartmentSelect value={student.departmentId} disabled />
 
       <div className="flex justify-center mt-4">
-        <Button type="button" variant="Back" className="w-64 py-2" onClick={onBack} />
+        <Button
+          type="button"
+          variant="Neutral"
+          label="一覧へ戻る"
+          className="w-64 py-2"
+          onClick={onBack}
+        />
       </div>
     </section>
   );

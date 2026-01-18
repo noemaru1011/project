@@ -32,7 +32,13 @@ export const LoginForm = ({ onSubmit, loading }: Props) => {
         {...register('password')}
       />
 
-      <Button type="submit" variant="Login" className="w-full py-3 mt-2" disabled={loading} />
+      <Button
+        type="submit"
+        variant="Primary"
+        label="ログイン"
+        className="w-full py-3 mt-2"
+        disabled={loading}
+      />
     </form>
   );
 };

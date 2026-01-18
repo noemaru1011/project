@@ -22,7 +22,8 @@ export const RowActions = ({ rowKey, actions = [], routeMap = {} }: Props) => {
           <Button
             type="button"
             key={action}
-            variant={action}
+            variant={action == 'Update' ? 'Primary' : action === 'Read' ? 'Secondary' : 'Danger'}
+            label={action === 'Update' ? '更新' : action === 'Read' ? '参照' : '削除'}
             onClick={() => navigate(path(rowKey))}
           />
         );

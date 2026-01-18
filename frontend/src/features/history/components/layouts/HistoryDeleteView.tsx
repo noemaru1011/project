@@ -30,12 +30,19 @@ export const HistoryDeleteView = ({ history, onDelete, onBack, loading }: Props)
     <div className="flex justify-center gap-4 mt-4">
       <Button
         type="button"
-        variant="Delete"
+        variant="Danger"
+        label="削除"
         disabled={loading}
         className="w-32 mx-auto py-2"
         onClick={onDelete}
       />
-      <Button type="button" variant="Back" className="w-32 mx-auto py-2" onClick={onBack} />
+      <Button
+        type="button"
+        variant="Neutral"
+        label="一覧へ戻る"
+        className="w-32 mx-auto py-2"
+        onClick={onBack}
+      />
     </div>
   </section>
 );

@@ -54,8 +54,14 @@ export const HistoryUpdateForm = ({ defaultValues, onSubmit, loading, onBack }: 
       <Input type="hidden" {...register('updatedAt')} error={errors.updatedAt?.message} />
 
       <div className="flex justify-center gap-4 mt-6">
-        <Button type="submit" variant="Update" disabled={loading} className="w-32" />
-        <Button type="button" variant="Back" onClick={onBack} className="w-32" />
+        <Button type="submit" variant="Primary" label="更新" disabled={loading} className="w-32" />
+        <Button
+          type="button"
+          variant="Neutral"
+          label="一覧へ戻る"
+          onClick={onBack}
+          className="w-32"
+        />
       </div>
     </form>
   );

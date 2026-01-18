@@ -162,7 +162,8 @@ export const ErrorLayout = ({
               <div className="flex items-center gap-2">
                 <Button
                   type="button"
-                  variant="LastPage"
+                  variant="Retry"
+                  label="戻る"
                   onClick={onGoBack}
                   className="px-6 py-3 rounded-xl"
                 />
@@ -173,7 +174,8 @@ export const ErrorLayout = ({
               <div className="flex items-center gap-2">
                 <Button
                   type="button"
-                  variant="Home"
+                  variant="Retry"
+                  label="ホームへ"
                   onClick={onGoHome}
                   className="px-6 py-3 rounded-xl"
                 />
@@ -185,6 +187,7 @@ export const ErrorLayout = ({
                 <Button
                   type="button"
                   variant="Retry"
+                  label="再試行"
                   onClick={onRetry}
                   className="px-6 py-3 rounded-xl"
                 />
