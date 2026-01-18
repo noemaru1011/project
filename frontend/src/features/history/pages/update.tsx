@@ -45,9 +45,14 @@ export const HistoryUpdatePage = () => {
     return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
   }
 
-  // 取得中、またはデータがまだ無い場合の表示
-  if (isLoading || !history) {
+  // 取得中
+  if (isLoading) {
     return <Loading loading={isLoading} />;
+  }
+
+  // データがない場合もリダイレクト
+  if (!history) {
+    return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
   }
 
   // マッピング処理

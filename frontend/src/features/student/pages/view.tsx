@@ -25,8 +25,12 @@ export const StudentViewPage = () => {
     return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
   }
 
-  if (isLoading || !student) {
+  if (isLoading) {
     return <Loading loading={isLoading} />;
+  }
+
+  if (!student) {
+    return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
   }
 
   return (
