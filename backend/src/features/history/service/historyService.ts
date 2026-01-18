@@ -77,6 +77,7 @@ export class HistoryService {
 
   async createHistory(data: HistoryServerCreateInput): Promise<HistoryResponse[]> {
     const results: HistoryResponse[] = [];
+    const duplicateStudents: string[] = [];
 
     for (const studentId of data.studentIds) {
       // 指定期間と重複する履歴をチェック
@@ -87,9 +88,14 @@ export class HistoryService {
       );
 
       if (overlaps.length > 0) {
-        // 重複がある学生名をまとめて例外に渡す
+        // 名前を取得して配列に追加
         const studentNames = overlaps.map((h) => h.student.studentName ?? '不明な学生').join(', ');
-        throw new StatusDuplicateError(studentNames);
+        duplicateStudents.push(studentNames);
+      }
+
+      // 重複学生がいたらまとめて例外
+      if (duplicateStudents.length > 0) {
+        throw new StatusDuplicateError(duplicateStudents.join(', '));
       }
 
       try {
