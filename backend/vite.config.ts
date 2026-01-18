@@ -1,9 +1,10 @@
 import { defineConfig } from 'vitest/config';
-import path from 'path';
+import * as path from 'path';
 
 export default defineConfig({
   test: {
     globals: true,
+    include: ['src/**/*.test.{ts,tsx}'], // Vitest が読む対象を制限
     environment: 'node',
     alias: {
       '@': path.resolve(__dirname, './src'),

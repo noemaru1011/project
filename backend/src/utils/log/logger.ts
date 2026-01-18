@@ -1,9 +1,9 @@
 import winston from 'winston';
-import path from 'path';
+import DailyRotateFile from 'winston-daily-rotate-file';
 
-//日本時刻に修正
-const jstTimestamp = () => {
-  return new Date().toLocaleString('ja-JP', {
+// 日本時刻
+const jstTimestamp = () =>
+  new Date().toLocaleString('ja-JP', {
     timeZone: 'Asia/Tokyo',
     year: 'numeric',
     month: '2-digit',
@@ -12,7 +12,6 @@ const jstTimestamp = () => {
     minute: '2-digit',
     second: '2-digit',
   });
-};
 
 export const createLogger = (logDir: string) => {
   return winston.createLogger({
@@ -24,13 +23,19 @@ export const createLogger = (logDir: string) => {
       winston.format.json(),
     ),
     transports: [
-      new winston.transports.File({
-        filename: path.join(logDir, 'error.log'),
+      new DailyRotateFile({
+        dirname: logDir,
+        filename: 'error-%DATE%.log',
+        datePattern: 'YYYY-MM-DD',
         level: 'error',
+        maxFiles: '14d',
       }),
-      new winston.transports.File({
-        filename: path.join(logDir, 'access.log'),
+      new DailyRotateFile({
+        dirname: logDir,
+        filename: 'access-%DATE%.log',
+        datePattern: 'YYYY-MM-DD',
         level: 'info',
+        maxFiles: '14d',
       }),
     ],
   });

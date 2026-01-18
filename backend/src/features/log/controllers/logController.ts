@@ -16,7 +16,7 @@ export class LogController {
       archive.pipe(res);
 
       for (const file of files) {
-        archive.file(file.path, { name: file.filename });
+        archive.file(file!.path, { name: file!.filename });
       }
 
       await archive.finalize();
