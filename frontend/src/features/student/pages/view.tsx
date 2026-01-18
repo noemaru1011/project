@@ -29,8 +29,8 @@ export const StudentViewPage = () => {
     fetchStudent();
   }, [studentId, viewStudent, navigate]);
 
-  if (loading || !student) {
-    return <Loading loading />;
+  if (!student) {
+    return <Loading loading={loading} />;
   }
 
   return (
