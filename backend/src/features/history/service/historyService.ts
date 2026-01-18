@@ -89,46 +89,48 @@ export class HistoryService {
 
       if (overlaps.length > 0) {
         // 名前を取得して配列に追加
-        const studentNames = overlaps.map((h) => h.student.studentName ?? '不明な学生').join(', ');
+        const studentNames = [
+          ...new Set(overlaps.map((h) => h.student.studentName ?? '不明な学生')),
+        ].join(', ');
         duplicateStudents.push(studentNames);
       }
+    }
 
-      // 重複学生がいたらまとめて例外
-      if (duplicateStudents.length > 0) {
-        const allStudents = duplicateStudents.join(', ');
-        throw new StatusDuplicateError(allStudents);
+    // 重複学生がいたらまとめて例外
+    if (duplicateStudents.length > 0) {
+      const allStudents = duplicateStudents.join(', ');
+      throw new StatusDuplicateError(allStudents);
+    }
+
+    try {
+      // 重複なしなら履歴作成
+      const created = await this.historyRepo.createHistory({
+        studentIds: data.studentIds,
+        statusId: data.statusId,
+        other: data.other,
+        startTime: data.startTime,
+        endTime: data.endTime,
+      });
+
+      // Prisma型 → API型に変換
+      results.push(
+        ...created.map((history) => ({
+          historyId: history.historyId,
+          studentId: history.studentId,
+          statusId: history.statusId.toString(),
+          other: history.other,
+          startTime: formatDateTime(history.startTime)!,
+          endTime: formatDateTime(history.endTime),
+          validFlag: history.validFlag,
+          createdAt: history.createdAt.toISOString(),
+          updatedAt: history.updatedAt.toISOString(),
+        })),
+      );
+    } catch (err: any) {
+      if (err.code === 'P2003') {
+        throw new InvalidReferenceError();
       }
-
-      try {
-        // 重複なしなら履歴作成
-        const created = await this.historyRepo.createHistory({
-          studentIds: [studentId],
-          statusId: data.statusId,
-          other: data.other,
-          startTime: data.startTime,
-          endTime: data.endTime,
-        });
-
-        // Prisma型 → API型に変換
-        results.push(
-          ...created.map((history) => ({
-            historyId: history.historyId,
-            studentId: history.studentId,
-            statusId: history.statusId.toString(),
-            other: history.other,
-            startTime: formatDateTime(history.startTime)!,
-            endTime: formatDateTime(history.endTime),
-            validFlag: history.validFlag,
-            createdAt: history.createdAt.toISOString(),
-            updatedAt: history.updatedAt.toISOString(),
-          })),
-        );
-      } catch (err: any) {
-        if (err.code === 'P2003') {
-          throw new InvalidReferenceError();
-        }
-        throw err;
-      }
+      throw err;
     }
 
     // すべての学生分の処理が終わったら結果を返す

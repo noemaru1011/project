@@ -204,7 +204,6 @@ export class HistoryRepository extends BaseRepository {
         ],
       },
       select: {
-        studentId: true,
         student: { select: { studentName: true } },
       },
     });
