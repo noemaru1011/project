@@ -1,19 +1,14 @@
 import { toast } from 'react-toastify';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { PasswordUpdateForm } from '@/features/auth/components/layouts/PasswordUpdateForm';
 import { useUpdatePassword } from '@/features/auth/hooks/useUpdatePassword';
 import { ROUTES } from '@/routes/routes';
 import type { PasswordUpdateInput } from '@shared/models/auth';
-import { handleApiError } from '@/utils';
-import { useAuth } from '@/contexts/atchContext';
+import { handleApiErrorWithUI } from '@/utils';
 
 export const ChangePassword = () => {
   const navigate = useNavigate();
   const { update, loading } = useUpdatePassword();
-  const { role } = useAuth();
-  if (role !== 'STUDENT') {
-    return <Navigate to={ROUTES.ERROR.FORBIDDEN} replace />;
-  }
 
   const onSubmit = async (data: PasswordUpdateInput) => {
     try {
@@ -21,11 +16,7 @@ export const ChangePassword = () => {
       toast.success(res.message);
       navigate(ROUTES.HOME);
     } catch (err) {
-      const error = handleApiError(err);
-      toast.error(error.message);
-      if (error.redirectTo) {
-        navigate(error.redirectTo);
-      }
+      handleApiErrorWithUI(err, navigate);
     }
   };
 
