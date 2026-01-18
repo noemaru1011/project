@@ -35,8 +35,8 @@ export const StudentDeletePage = () => {
   const handleDelete = async () => {
     if (!student) return navigate(ROUTES.ERROR.NOTFOUND, { replace: true });
     try {
-      const res = await deleteStudent(student.studentId);
-      toast.success(res.message);
+      await deleteStudent(student.studentId);
+      toast.success('削除に成功しました。');
       navigate(ROUTES.STUDENT.INDEX);
     } catch (err) {
       handleApiErrorWithUI(err, navigate);

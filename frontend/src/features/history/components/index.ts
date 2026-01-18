@@ -2,7 +2,6 @@ export * from './ui/StartTime.Input';
 export * from './ui/EndTime.Input';
 export * from './ui/Other.Textarea';
 export * from './layouts/HistoryCreateForm';
-export * from './ui/StudentSearchSection';
 export * from './ui/SelectedStudentsFloat';
 export * from './ui/Student.Table';
 export * from './ui/History.Table';

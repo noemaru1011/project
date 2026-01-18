@@ -41,8 +41,8 @@ export const HistoryDeletePage = () => {
       return;
     }
     try {
-      const res = await deleteHistory(history.historyId);
-      toast.success(res.message);
+      await deleteHistory(history.historyId);
+      toast.success('削除に成功しました。');
       navigate(ROUTES.HISTORY.INDEX);
     } catch (err) {
       handleApiErrorWithUI(err, navigate);

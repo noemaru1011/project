@@ -1,5 +1,7 @@
 import { toast } from 'react-toastify';
+import { useState } from 'react';
 import type { StudentSearchInput } from '@shared/models/student';
+import type { HistorySummary } from '@shared/models/history';
 import { StudentSearchForm } from '@/features/search/student/components/layouts/StudentSearchForm';
 import { useHistorySearch } from '@/features/search/history/hooks/useHistorySearch';
 import { handleApiErrorWithUI } from '@/utils';
@@ -10,16 +12,18 @@ import { useHistorySearchByTime } from '@/features/search/history/hooks/useHisto
 
 export const HistoryIndexPage = () => {
   const navigate = useNavigate();
-  const { data, searchHistories, loading } = useHistorySearch();
+  const { searchHistories, loading } = useHistorySearch();
   const {
     data: aggregationData,
     searchHistoriesByTime,
     loading: timeSearching,
   } = useHistorySearchByTime();
+  const [history, setHistory] = useState<HistorySummary[] | null>(null);
 
   const handleSearch = async (query: StudentSearchInput) => {
     try {
       const res = await searchHistories(query);
+      setHistory(res.data);
       toast.info(res.message);
     } catch (err) {
       handleApiErrorWithUI(err, navigate);
@@ -50,7 +54,7 @@ export const HistoryIndexPage = () => {
           <h3 className="text-lg font-semibold mb-4 text-gray-700">履歴検索</h3>
           <StudentSearchForm onSearch={handleSearch} loading={loading} />
           <div className="mt-6">
-            <HistoryTable data={data} loading={loading} />
+            <HistoryTable data={history ?? []} loading={loading} />
           </div>
         </section>
       </div>
