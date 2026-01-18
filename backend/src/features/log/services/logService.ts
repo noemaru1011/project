@@ -6,7 +6,7 @@ export class LogService {
 
   getDownloadableLogs() {
     const logFiles = this.logRepo.getLogFiles();
-    if (!logFiles.length) {
+    if (logFiles.length === 0) {
       throw new NotFoundError();
     }
     return logFiles;
