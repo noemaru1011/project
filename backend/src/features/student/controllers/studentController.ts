@@ -3,7 +3,6 @@ import { StudentService } from '@/features/student/services/studentService';
 import type { ApiBody } from '@shared/models/common';
 import type { StudentResponse, StudentSummary } from '@shared/models/student';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
-import type { ApiMessageCode } from '@shared/constants/apiMessage';
 
 export class StudentController {
   constructor(private readonly studentService: StudentService) {}
@@ -67,8 +66,9 @@ export class StudentController {
     try {
       const { id } = req.params;
       const student = await this.studentService.updateStudent(id, req.body);
-      const key: ApiMessageCode = 'UPDATE_SUCCESS';
-      return res.status(200).json({ code: key, data: student, message: APIMESSAGE.UPDATE_SUCCESS });
+      return res
+        .status(200)
+        .json({ code: 'UPDATE_SUCCESS', data: student, message: APIMESSAGE.UPDATE_SUCCESS });
     } catch (error) {
       return next(error);
     }

@@ -9,9 +9,11 @@ const passwordSchema = z
  * ログインバリデーション
  */
 export const LoginSchema = z.object({
-  email: z.email({
-    error: "正しいメールアドレスの形式で入力してください",
-  }),
+  email: z
+    .email({
+      error: "正しいメールアドレスの形式で入力してください",
+    })
+    .max(255, { error: "メールアドレスは255文字以内で入力してください" }),
   password: passwordSchema,
 });
 

@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { PasswordRepository } from '@/features/auth/repositories/passwordRepository';
-import { NoStudentError } from '@/errors/studentError';
+import { NotFoundError } from '@/errors/appError';
 import { NotMatchPasswordError } from '@/errors/passwordError';
 import type { PasswordUpdateInput } from '@shared/models/auth';
 
@@ -9,7 +9,7 @@ export class PasswordService {
 
   async updatePassword(data: PasswordUpdateInput, studentId: string) {
     const student = await this.passwordRepo.findByStudentId(studentId);
-    if (!student) throw new NoStudentError();
+    if (!student) throw new NotFoundError();
 
     const isMatch = await bcrypt.compare(data.oldPassword, student.password);
     if (!isMatch) throw new NotMatchPasswordError();

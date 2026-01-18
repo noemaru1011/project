@@ -6,8 +6,6 @@ export const APIMESSAGE = {
   LOGIN_SUCCESS: "ログインが成功しました。",
   LOGOUT_SUCCESS: "ログアウトしました。",
   //以下エラーメッセージ
-  NO_STUDENT: "学生が見つかりません。",
-  NO_HISTORY: "履歴が見つかりません。",
   RESOURCE_NOT_FOUND: "指定されたリソースは存在しないか、無効です。",
   FOREIGNKEY_COSTRAINT: "予期せぬデータが入力(選択)されました。",
   INVALID_DATETIME: "日時の形式が正しくありません。",

@@ -7,6 +7,7 @@ import { HistoryBasicInfo, HistoryDeleteView } from '@/features/history/componen
 import { Loading } from '@/components/ui/Loading/Loading';
 import { handleApiErrorWithUI } from '@/utils/handleApiError';
 import { ROUTES } from '@/routes/routes';
+import { APIMESSAGE } from '@shared/constants/apiMessage';
 
 export const HistoryDeletePage = () => {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ export const HistoryDeletePage = () => {
     onSuccess: () => {
       // 削除に成功したら履歴一覧のキャッシュを無効化する
       queryClient.invalidateQueries({ queryKey: ['histories'] });
-      toast.success('削除に成功しました。');
+      toast.success(APIMESSAGE.DELETE_SUCCESS);
       navigate(ROUTES.HISTORY.INDEX);
     },
     onError: (err) => handleApiErrorWithUI(err, navigate),

@@ -6,6 +6,7 @@ import { ROUTES } from '@/routes/routes';
 import { StudentDeleteView } from '@/features/student/components/layouts/StudentDeleteView';
 import { studentApi } from '@/features/student';
 import { handleApiErrorWithUI } from '@/utils';
+import { APIMESSAGE } from '@shared/constants/apiMessage';
 
 export const StudentDeletePage = () => {
   const { studentId } = useParams<{ studentId: string }>();
@@ -27,7 +28,7 @@ export const StudentDeletePage = () => {
     mutationFn: (id: string) => studentApi.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['students'] });
-      toast.success('削除に成功しました。');
+      toast.success(APIMESSAGE.DELETE_SUCCESS);
       navigate(ROUTES.STUDENT.INDEX);
     },
     onError: (err) => handleApiErrorWithUI(err, navigate),

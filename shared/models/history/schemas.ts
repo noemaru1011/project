@@ -18,12 +18,11 @@ const baseHistoryFields = {
  */
 export const HistoryCreateSchema = z.object({
   ...baseHistoryFields,
-  studentIds: z.array(z.string(), {
-    error: (issue) =>
-      issue.message === "too_small"
-        ? "学生を1人以上選択してください。"
-        : "学生の形式が正しくありません。",
-  }),
+  studentIds: z
+    .array(z.string().min(1), {
+      error: "学生を1人以上選択してください。",
+    })
+    .min(1, { error: "学生を1人以上選択してください。" }),
 });
 
 export const HistoryUpdateSchema = z.object({
@@ -39,51 +38,21 @@ export type HistoryUpdateInput = z.infer<typeof HistoryUpdateSchema>;
  * サーバーサイド用
  */
 export const HistoryServerCreateSchema = z.object({
-  studentIds: z.array(
-    z.string().nonempty({ error: "学生を1人以上選択してください。" })
-  ),
-  statusId: z.coerce
-    .number({
-      error: (issue) => {
-        if (issue.code === "invalid_type" || issue.code === "invalid_number") {
-          return "ステータスは必須です。";
-        }
-        return "ステータスは数値を入力してください。";
-      },
-    })
-    .int({
-      error: "ステータスは整数を入力してください。",
-    }),
-  other: z
-    .string()
-    .max(30, { error: "備考は30文字以内で入力してください。" })
-    .optional(),
-  startTime: z.coerce.date({
-    error: (issue) => {
-      if (issue.code === "invalid_type" || issue.code === "invalid_date") {
-        return "有効開始時間は必須です。";
-      }
-      return "正しい有効開始時間を入力してください。";
-    },
-  }),
+  studentIds: z.array(z.string().nonempty()),
+  statusId: z.coerce.number().int(),
+  other: z.string().max(30).optional(),
+  startTime: z.coerce.date(),
   endTime: z.preprocess(
     (v) => (v === "" || v === null ? undefined : v),
-    z.coerce.date({ error: "正しい有効終了日を入力してください。" }).optional()
+    z.coerce.date().optional(),
   ),
 });
 
 export const HistoryServerUpdateSchema = HistoryServerCreateSchema.omit({
   studentIds: true,
 }).extend({
-  validFlag: z.boolean({ error: "trueかfalseを選択してください。" }),
-  updatedAt: z.coerce.date({
-    error: (issue) => {
-      if (issue.code === "invalid_type" || issue.code === "invalid_date") {
-        return "更新日は必須です。";
-      }
-      return "正しい更新日を入力してください。";
-    },
-  }),
+  validFlag: z.boolean(),
+  updatedAt: z.coerce.date(),
 });
 
 export type HistoryServerCreateInput = z.infer<

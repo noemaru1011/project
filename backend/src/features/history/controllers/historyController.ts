@@ -86,7 +86,9 @@ export class HistoryController {
     try {
       const { id } = req.params;
       if (!id) {
-        return res.status(404).json({ message: APIMESSAGE.NO_HISTORY });
+        return res
+          .status(404)
+          .json({ code: 'RESOURCE_NOT_FOUND', data: null, message: APIMESSAGE.RESOURCE_NOT_FOUND });
       }
       await this.historyService.updateHistory(req.body, id);
       return res.status(200).json({ code: 'UPDATE_SUCCESS', message: APIMESSAGE.UPDATE_SUCCESS });
@@ -99,7 +101,9 @@ export class HistoryController {
     try {
       const { id } = req.params;
       if (!id) {
-        return res.status(404).json({ message: APIMESSAGE.NO_HISTORY });
+        return res
+          .status(404)
+          .json({ code: 'RESOURCE_NOT_FOUND', data: null, message: APIMESSAGE.RESOURCE_NOT_FOUND });
       }
 
       await this.historyService.deleteHistory(id);
