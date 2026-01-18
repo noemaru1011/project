@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { PasswordUpdateForm } from '@/features/auth/components/layouts/PasswordUpdateForm';
-import { usePassword } from '@/features/auth/hooks/useUpdatePassword';
+import { useUpdatePassword } from '@/features/auth/hooks/useUpdatePassword';
 import { ROUTES } from '@/routes/routes';
 import type { PasswordUpdateInput } from '@shared/models/auth';
 import { handleApiError } from '@/utils';
@@ -9,7 +9,7 @@ import { useAuth } from '@/contexts/atchContext';
 
 export const ChangePassword = () => {
   const navigate = useNavigate();
-  const { update, loading } = usePassword();
+  const { update, loading } = useUpdatePassword();
   const { role } = useAuth();
   if (role !== 'STUDENT') {
     return <Navigate to={ROUTES.ERROR.FORBIDDEN} replace />;

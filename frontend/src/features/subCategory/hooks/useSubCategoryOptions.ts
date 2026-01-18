@@ -1,11 +1,20 @@
 import { useMemo } from 'react';
-import { useSubCategoryList } from '@/features/subCategory/hooks/useSubCategoryList';
-import { subCategoriesToOptions } from '@/features/subCategory';
+import { useQuery } from '@tanstack/react-query';
+import { subCategoryApi, subCategoriesToOptions } from '@/features/subCategory';
 
 export const useSubCategoryOptions = () => {
-  const { data, loading } = useSubCategoryList();
+  // 1. API 取得
+  const { data: response, isLoading } = useQuery({
+    queryKey: ['subCategories'],
+    queryFn: () => subCategoryApi.index(),
+    staleTime: Infinity, // マスタデータなので、一度取ったらアプリをリロードするまで再取得しない
+    gcTime: 1000 * 60 * 60 * 24, // 24時間キャッシュを保持
+  });
 
+  const data = response?.data ?? [];
+
+  // 2. マッピング
   const options = useMemo(() => subCategoriesToOptions(data), [data]);
 
-  return { options, loading };
+  return { data, options, loading: isLoading };
 };

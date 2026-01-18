@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { APIMESSAGE } from '@shared/constants/apiMessage';
 import { api } from './api';
 import Cookies from 'js-cookie';
 
@@ -85,7 +86,7 @@ describe('api (汎用fetch関数)', () => {
 
     await expect(api('/network-fail')).rejects.toEqual({
       status: 0,
-      message: 'サーバーに接続できません。ネットワークをご確認ください。',
+      message: APIMESSAGE.INTERNAL_SERVER_ERROR,
     });
   });
 

@@ -1,11 +1,10 @@
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { useEffect, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
-import { useHistoryView } from '@/features/history/hooks/useHistoryView';
-import { useHistoryUpdate } from '@/features/history/hooks/useHistoryUpdate';
+import { historyApi } from '@/features/history/api';
 import { HistoryUpdateForm } from '@/features/history/components';
 import { HistoryBasicInfo } from '@/features/history/components';
-import type { StudentBasicInfo, HistoryResponse, HistoryUpdateInput } from '@shared/models/history';
+import type { StudentBasicInfo, HistoryUpdateInput } from '@shared/models/history';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { handleApiErrorWithUI } from '@/utils/handleApiError';
 import { ROUTES } from '@/routes/routes';
@@ -13,30 +12,45 @@ import { ROUTES } from '@/routes/routes';
 export const HistoryUpdatePage = () => {
   const navigate = useNavigate();
   const { historyId } = useParams<{ historyId: string }>();
-  const { updateHistory, loading: updating } = useHistoryUpdate();
-  const { viewHistory, loading } = useHistoryView();
-  const [history, setHistory] = useState<HistoryResponse | null>(null);
+  const queryClient = useQueryClient();
 
+  // 1. 履歴データの取得
+  const { data: response, isLoading } = useQuery({
+    queryKey: ['history', historyId],
+    queryFn: () => historyApi.view(historyId!),
+    enabled: !!historyId,
+    meta: {
+      onError: (err: any) => handleApiErrorWithUI(err, navigate),
+    },
+  });
+
+  const history = response?.data;
+
+  // 2. 履歴データの更新
+  const updateMutation = useMutation({
+    mutationFn: (data: HistoryUpdateInput) => historyApi.update(historyId!, data),
+    onSuccess: (res) => {
+      // 一覧と、この詳細データのキャッシュを更新
+      queryClient.invalidateQueries({ queryKey: ['histories'] });
+      queryClient.invalidateQueries({ queryKey: ['history', historyId] });
+
+      toast.success(res.message);
+      navigate(ROUTES.HISTORY.INDEX);
+    },
+    onError: (err) => handleApiErrorWithUI(err, navigate),
+  });
+
+  // IDがない場合は即リダイレクト
   if (!historyId) {
     return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
   }
-  useEffect(() => {
-    const fetchStudent = async () => {
-      try {
-        const res = await viewHistory(historyId);
-        setHistory(res.data);
-      } catch (err) {
-        handleApiErrorWithUI(err, navigate);
-      }
-    };
 
-    fetchStudent();
-  }, []);
-
-  if (loading || !history) {
-    return <Loading loading={loading} />;
+  // 取得中、またはデータがまだ無い場合の表示
+  if (isLoading || !history) {
+    return <Loading loading={isLoading} />;
   }
 
+  // マッピング処理
   const defaultValues: HistoryUpdateInput = {
     statusId: history.statusId,
     other: history.other ?? '',
@@ -53,18 +67,8 @@ export const HistoryUpdatePage = () => {
     departmentName: history.departmentName,
   };
 
-  const handleSubmit = async (data: HistoryUpdateInput) => {
-    if (!history) {
-      navigate(ROUTES.ERROR.NOTFOUND, { replace: true });
-      return;
-    }
-    try {
-      const res = await updateHistory(history.historyId, data);
-      toast.success(res.message);
-      navigate(ROUTES.HISTORY.INDEX);
-    } catch (err) {
-      handleApiErrorWithUI(err, navigate);
-    }
+  const handleSubmit = (data: HistoryUpdateInput) => {
+    updateMutation.mutate(data);
   };
 
   return (
@@ -82,7 +86,7 @@ export const HistoryUpdatePage = () => {
           <div className="space-y-6">
             <HistoryUpdateForm
               defaultValues={defaultValues}
-              loading={updating}
+              loading={updateMutation.isPending}
               onSubmit={handleSubmit}
               onBack={() => navigate(ROUTES.HISTORY.INDEX)}
             />

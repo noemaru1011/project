@@ -2,7 +2,7 @@ import type { Category } from '@shared/models/master';
 import type { Option } from '@/components/ui/option';
 
 const categoryToOption = (category: Category): Option => ({
-  value: String(category.categoryId),
+  value: category.categoryId,
   label: category.categoryName,
 });
 

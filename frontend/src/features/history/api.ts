@@ -25,9 +25,7 @@ export const historyApi = {
   view: (id: string) => api<HistoryResponse>(`${API_ROUTES.HISTORY}/${id}`, { method: 'GET' }),
 
   delete: (id: string) => api<void>(`${API_ROUTES.HISTORY}/${id}`, { method: 'DELETE' }),
-};
 
-export const historySearchApi = {
   search: (query: StudentSearchInput) =>
     api<HistorySummary[]>(API_ROUTES.HISTORY_SEARCH, {
       method: 'POST',

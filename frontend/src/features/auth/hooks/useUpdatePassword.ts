@@ -1,22 +1,24 @@
+import { useMutation } from '@tanstack/react-query';
 import { authApi } from '@/features/auth/api';
-import type { PasswordUpdateInput } from '@shared/models/auth';
-import { useLoadingCounter } from '@/hooks/ux/useLoadingCounter';
 import { usePasswordUpdateContext } from '@/contexts/passwordUpdateContext';
+import type { PasswordUpdateInput } from '@shared/models/auth';
 
-export function usePassword() {
-  const { loading, start, end } = useLoadingCounter();
+export function useUpdatePassword() {
   const { setPasswordUpdateRequired } = usePasswordUpdateContext();
 
-  const update = async (data: PasswordUpdateInput) => {
-    start();
-    try {
-      const res = await authApi.updatePassword(data);
-      setPasswordUpdateRequired(false);
-      return res;
-    } finally {
-      end();
-    }
-  };
+  const mutation = useMutation({
+    // 実行するAPI関数
+    mutationFn: (data: PasswordUpdateInput) => authApi.updatePassword(data),
 
-  return { update, loading };
+    // 成功時の処理
+    onSuccess: () => {
+      // パスワード更新が完了したので、!マークを消す
+      setPasswordUpdateRequired(false);
+    },
+  });
+
+  return {
+    update: mutation.mutateAsync,
+    loading: mutation.isPending,
+  };
 }

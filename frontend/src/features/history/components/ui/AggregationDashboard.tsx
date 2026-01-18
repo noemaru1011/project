@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
-import { useCategoryList } from '@/features/category/hooks/useCategoryList';
-import { useSubCategoryList } from '@/features/subCategory/hooks/useSubCategoryList';
-import { useMinorCategoryList } from '@/features/minorCategory/hooks/useMinorCategoryList';
-import { useStatusList } from '@/features/status/hooks/useStatusList';
-import { useDepartmentList } from '@/features/department/hooks/useDepartmentList';
+import { useCategoryOptions } from '@/features/category/hooks/useCategoryOptions';
+import { useSubCategoryOptions } from '@/features/subCategory/hooks/useSubCategoryOptions';
+import { useMinorCategoryOptions } from '@/features/minorCategory/hooks/useMinorCategoryOptions';
+import { useStatusOptions } from '@/features/status/hooks/useStatusOptions';
+import { useDepartmentOptions } from '@/features/department/hooks/useDepartmentOptions';
 import { gradeOptions } from '@/features/grade/constants/gradeOptions';
 import type { Category, SubCategory, MinorCategory, Department } from '@shared/models/master';
 import type { AggregationData } from '@shared/models/history';
@@ -14,11 +14,11 @@ type Props = {
 };
 
 export const AggregationDashboard = ({ data }: Props) => {
-  const { data: categories } = useCategoryList();
-  const { data: subCategories } = useSubCategoryList();
-  const { data: minorCategories } = useMinorCategoryList();
-  const { data: statuses } = useStatusList();
-  const { data: departments } = useDepartmentList();
+  const { data: categories } = useCategoryOptions();
+  const { data: subCategories } = useSubCategoryOptions();
+  const { data: minorCategories } = useMinorCategoryOptions();
+  const { data: statuses } = useStatusOptions();
+  const { data: departments } = useDepartmentOptions();
 
   // 組織別集計データの作成
   const orgNodes = useMemo((): OrgNode[] => {

@@ -4,7 +4,7 @@ import type { LoginInput } from '@shared/models/auth';
 import { useLogin } from '@/features/auth/hooks/useLogin';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/routes/routes';
-import { handleApiError } from '@/utils';
+import { handleApiErrorWithUI } from '@/utils';
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -16,11 +16,7 @@ export const Login = () => {
       toast.success(res.message);
       navigate(ROUTES.HOME);
     } catch (err) {
-      const error = handleApiError(err);
-      toast.error(error.message);
-      if (error.redirectTo) {
-        navigate(error.redirectTo);
-      }
+      handleApiErrorWithUI(err, navigate);
     }
   };
 

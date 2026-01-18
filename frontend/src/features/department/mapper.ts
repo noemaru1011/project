@@ -2,7 +2,7 @@ import type { Department } from '@shared/models/master';
 import type { Option } from '@/components/ui/option';
 
 const departmentToOption = (department: Department): Option => ({
-  value: String(department.departmentId),
+  value: department.departmentId,
   label: department.departmentName,
 });
 

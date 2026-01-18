@@ -1,26 +1,27 @@
+import { useMutation } from '@tanstack/react-query';
 import { authApi } from '@/features/auth/api';
-import type { LoginInput, LoginResponse } from '@shared/models/auth';
 import { usePasswordUpdateContext } from '@/contexts/passwordUpdateContext';
 import { useAuth } from '@/contexts/atchContext';
-import { useLoadingCounter } from '@/hooks/ux/useLoadingCounter';
-import type { ApiResponse } from '@shared/models/common';
+import type { LoginInput } from '@shared/models/auth';
 
 export function useLogin() {
-  const { loading, start, end } = useLoadingCounter();
   const { setPasswordUpdateRequired } = usePasswordUpdateContext();
   const { setRole } = useAuth();
 
-  const login = async (data: LoginInput): Promise<ApiResponse<LoginResponse>> => {
-    start();
-    try {
-      const res = await authApi.login(data);
+  const mutation = useMutation({
+    // 実行するAPI関数
+    mutationFn: (data: LoginInput) => authApi.login(data),
+
+    // 成功時の共通処理（Contextの更新など）をここに集約できる
+    onSuccess: (res) => {
       const required = res.data?.passwordUpdateRequired ?? false;
       setPasswordUpdateRequired(required);
       setRole(res.data?.role ?? null);
-      return res;
-    } finally {
-      end();
-    }
+    },
+  });
+
+  return {
+    login: mutation.mutateAsync, // 非同期(async/await)で呼び出せる関数
+    loading: mutation.isPending, // 通信中フラグ
   };
-  return { login, loading };
 }

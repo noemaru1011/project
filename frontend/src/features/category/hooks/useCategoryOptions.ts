@@ -1,11 +1,20 @@
 import { useMemo } from 'react';
-import { useCategoryList } from '@/features/category/hooks//useCategoryList';
-import { categoriesToOptions } from '@/features/category/';
+import { useQuery } from '@tanstack/react-query';
+import { categoryApi, categoriesToOptions } from '@/features/category';
 
 export const useCategoryOptions = () => {
-  const { data, loading } = useCategoryList();
+  // 1. API 取得
+  const { data: response, isLoading } = useQuery({
+    queryKey: ['categories'],
+    queryFn: () => categoryApi.index(),
+    staleTime: Infinity, // マスタデータなので、一度取ったらアプリをリロードするまで再取得しない
+    gcTime: 1000 * 60 * 60 * 24, // 24時間キャッシュを保持
+  });
 
+  const data = response?.data ?? [];
+
+  // 2. マッピング
   const options = useMemo(() => categoriesToOptions(data), [data]);
 
-  return { options, loading };
+  return { data, options, loading: isLoading };
 };

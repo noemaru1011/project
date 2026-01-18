@@ -1,9 +1,8 @@
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
-import { useHistoryDelete } from '@/features/history/hooks/useHistoryDelete';
-import { useHistoryView } from '@/features/history/hooks/useHistoryView';
-import { useEffect, useState } from 'react';
-import type { StudentBasicInfo, HistoryUpdateInput, HistoryResponse } from '@shared/models/history';
+import { historyApi } from '@/features/history/api';
+import type { StudentBasicInfo, HistoryUpdateInput } from '@shared/models/history';
 import { HistoryBasicInfo, HistoryDeleteView } from '@/features/history/components';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { handleApiErrorWithUI } from '@/utils/handleApiError';
@@ -12,43 +11,48 @@ import { ROUTES } from '@/routes/routes';
 export const HistoryDeletePage = () => {
   const navigate = useNavigate();
   const { historyId } = useParams<{ historyId: string }>();
-  const { deleteHistory, loading: deleting } = useHistoryDelete();
-  const { viewHistory, loading } = useHistoryView();
-  const [history, setHistory] = useState<HistoryResponse | null>(null);
+  const queryClient = useQueryClient();
 
+  // 1. 履歴データの取得 (useQuery)
+  const { data: response, isLoading } = useQuery({
+    queryKey: ['history', historyId],
+    queryFn: () => historyApi.view(historyId!),
+    enabled: !!historyId,
+    meta: {
+      onError: (err: any) => handleApiErrorWithUI(err, navigate),
+    },
+  });
+
+  const history = response?.data;
+
+  // 2. 削除実行 (useMutation)
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => historyApi.delete(id),
+    onSuccess: () => {
+      // 削除に成功したら履歴一覧のキャッシュを無効化する
+      queryClient.invalidateQueries({ queryKey: ['histories'] });
+      toast.success('削除に成功しました。');
+      navigate(ROUTES.HISTORY.INDEX);
+    },
+    onError: (err) => handleApiErrorWithUI(err, navigate),
+  });
+
+  // IDがない場合のガード
   if (!historyId) {
     return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
   }
-  useEffect(() => {
-    const fetchHistory = async () => {
-      try {
-        const res = await viewHistory(historyId);
-        setHistory(res.data);
-      } catch (err) {
-        handleApiErrorWithUI(err, navigate);
-      }
-    };
-    fetchHistory();
-  }, []);
 
-  if (loading || !history) {
-    return <Loading loading={loading} />;
+  // データ取得中の表示
+  if (isLoading) {
+    return <Loading loading={isLoading} />;
   }
 
-  const handleSubmit = async () => {
-    if (!history) {
-      navigate(ROUTES.ERROR.NOTFOUND, { replace: true });
-      return;
-    }
-    try {
-      await deleteHistory(history.historyId);
-      toast.success('削除に成功しました。');
-      navigate(ROUTES.HISTORY.INDEX);
-    } catch (err) {
-      handleApiErrorWithUI(err, navigate);
-    }
-  };
-  //マッピング
+  // データが見つからない場合のガード
+  if (!history) {
+    return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
+  }
+
+  // マッピング処理
   const historyBasic: StudentBasicInfo = {
     studentName: history.studentName,
     grade: history.grade,
@@ -65,6 +69,10 @@ export const HistoryDeletePage = () => {
     validFlag: history.validFlag,
   };
 
+  const handleSubmit = () => {
+    deleteMutation.mutate(history.historyId);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-4">
       <div className="mx-auto w-full max-w-6xl">
@@ -76,11 +84,11 @@ export const HistoryDeletePage = () => {
             <HistoryBasicInfo stdent={historyBasic} />
           </div>
 
-          {/* 右：編集フォーム */}
+          {/* 右：削除確認フォーム */}
           <div className="space-y-6">
             <HistoryDeleteView
               history={historyDelete}
-              loading={deleting}
+              loading={deleteMutation.isPending} // 削除中のステート
               onDelete={handleSubmit}
               onBack={() => navigate(ROUTES.HISTORY.INDEX)}
             />

@@ -21,7 +21,7 @@ export const StudentIndexPage = () => {
     queryKey: ['students', searchParams],
     queryFn: async () => {
       const res = await studentApi.search(searchParams);
-      if (Object.keys(searchParams).length > 0) {
+      if (searchParams) {
         toast.info(res.message);
       }
       return res;
