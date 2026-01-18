@@ -24,9 +24,10 @@ export const authApi = {
 
   logDownload: async (): Promise<Blob> => {
     const res = await fetch(`${API_BASE_URL}${API_ROUTES.LOG}`, {
-      method: 'GET',
       credentials: 'include',
+      method: 'GET',
       headers: {
+        'Content-Type': 'application/json',
         'X-CSRF-Token': Cookies.get('csrf') ?? '',
       },
     });
