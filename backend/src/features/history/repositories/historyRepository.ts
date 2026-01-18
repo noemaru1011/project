@@ -185,4 +185,28 @@ export class HistoryRepository extends BaseRepository {
       },
     });
   }
+
+  /**
+   * repository に重複確認用のヘルパーメソッド
+   */
+  async findOverlappingHistories(studentId: string, startTime: Date, endTime: Date | null) {
+    return this.prisma.history.findMany({
+      where: {
+        studentId,
+        validFlag: true,
+        AND: [
+          {
+            startTime: { lte: endTime ?? new Date('9999-12-31') },
+          },
+          {
+            OR: [{ endTime: { gte: startTime } }, { endTime: null }],
+          },
+        ],
+      },
+      select: {
+        studentId: true,
+        student: { select: { studentName: true } },
+      },
+    });
+  }
 }

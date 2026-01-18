@@ -9,7 +9,7 @@ export class StudentRepository extends BaseRepository {
   }
 
   //学生1件取得
-  async find(studentId: string) {
+  async findById(studentId: string) {
     const student = await this.prisma.student.findFirst({
       where: {
         studentId,

@@ -10,11 +10,14 @@ import type {
   HistorySummary,
 } from '@shared/models/history';
 import type { StudentServerSearchInput } from '@shared/models/student';
+import { StatusDuplicateError } from '@/errors/historyError';
+import { StudentRepository } from '@/features/student/repositories/studentRepository';
 
 export class HistoryService {
   constructor(
     private readonly historyRepo: HistoryRepository,
     private readonly minorCategoryRepo: MinorCategoryRepository,
+    private readonly studentRepo: StudentRepository,
   ) {}
 
   async getHistory(historyId: string): Promise<HistoryResponse | null> {
@@ -75,25 +78,56 @@ export class HistoryService {
   }
 
   async createHistory(data: HistoryServerCreateInput): Promise<HistoryResponse[]> {
-    try {
-      const histories = await this.historyRepo.createHistory(data);
-      return histories.map((history) => ({
-        historyId: history.historyId,
-        studentId: history.studentId,
-        statusId: history.statusId.toString(),
-        other: history.other,
-        startTime: formatDateTime(history.startTime)!,
-        endTime: formatDateTime(history.endTime),
-        validFlag: history.validFlag,
-        createdAt: history.createdAt.toISOString(),
-        updatedAt: history.updatedAt.toISOString(),
-      }));
-    } catch (err: any) {
-      if (err.code === 'P2003') {
-        throw new InvalidReferenceError();
+    const results: HistoryResponse[] = [];
+
+    for (const studentId of data.studentIds) {
+      // 指定期間と重複する履歴をチェック
+      const overlaps = await this.historyRepo.findOverlappingHistories(
+        studentId,
+        data.startTime,
+        data.endTime ?? null,
+      );
+
+      if (overlaps.length > 0) {
+        // 重複がある学生名をまとめて例外に渡す
+        const studentNames = overlaps.map((h) => h.student.studentName ?? '不明な学生').join(', ');
+        throw new StatusDuplicateError(studentNames);
       }
-      throw err;
+
+      try {
+        // 重複なしなら履歴作成
+        const created = await this.historyRepo.createHistory({
+          studentIds: [studentId],
+          statusId: data.statusId,
+          other: data.other,
+          startTime: data.startTime,
+          endTime: data.endTime,
+        });
+
+        // Prisma型 → API型に変換
+        results.push(
+          ...created.map((history) => ({
+            historyId: history.historyId,
+            studentId: history.studentId,
+            statusId: history.statusId.toString(),
+            other: history.other,
+            startTime: formatDateTime(history.startTime)!,
+            endTime: formatDateTime(history.endTime),
+            validFlag: history.validFlag,
+            createdAt: history.createdAt.toISOString(),
+            updatedAt: history.updatedAt.toISOString(),
+          })),
+        );
+      } catch (err: any) {
+        if (err.code === 'P2003') {
+          throw new InvalidReferenceError();
+        }
+        throw err;
+      }
     }
+
+    // すべての学生分の処理が終わったら結果を返す
+    return results;
   }
 
   async updateHistory(data: HistoryServerUpdateInput, historyId: string): Promise<HistoryResponse> {

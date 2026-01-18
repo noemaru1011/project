@@ -26,7 +26,7 @@ export class StudentService {
   ) {}
 
   async getStudent(studentId: string): Promise<StudentResponse | null> {
-    const student = await this.studentRepo.find(studentId);
+    const student = await this.studentRepo.findById(studentId);
     if (student == null) return null;
     return {
       studentId: student.studentId,

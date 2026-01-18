@@ -13,6 +13,7 @@ export const APIMESSAGE = {
   INVALID_CREDENTIALS: "メールアドレスかパスワードが違います。",
   NOT_MACTH_PASSWORD: "古いメールアドレスが違います。",
   EMAIL_DUPLICATE: "このメールアドレスはすでに登録されています。",
+  STATUS_DUPLICATE: "{details}はすでに有効なステータスがあります",
   FORBIDDEN: "権限がありません。",
   TOKEN_ERROR: "ログインしてください。",
   OPTIMISTIC_LOCK:

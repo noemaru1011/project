@@ -92,6 +92,8 @@ async function main() {
     { statusId: 6, statusName: '年次休暇' },
     { statusId: 7, statusName: '海外派遣' },
     { statusId: 8, statusName: '停学' },
+    { statusId: 9, statusName: '課業整列免除' },
+    { statusId: 10, statusName: '点呼免除' },
   ];
 
   for (const status of statuses) {
