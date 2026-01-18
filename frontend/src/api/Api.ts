@@ -1,4 +1,5 @@
 import type { ApiResponse } from '@shared/models/common';
+import { APIMESSAGE } from '@shared/constants/apiMessage';
 import Cookies from 'js-cookie';
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -26,12 +27,11 @@ export async function api<T>(path: string, options?: RequestInit): Promise<ApiRe
       },
     });
   } catch {
-    // 【意図②】
     // HTTPレスポンス以前の失敗（DNS / CORS / サーバーダウン等）
     // status=0 としてアプリ全体で特別扱いしやすくする
     throw {
       status: 0,
-      message: 'サーバーに接続できません。ネットワークをご確認ください。',
+      message: APIMESSAGE.INTERNAL_SERVER_ERROR,
     };
   }
 
@@ -68,7 +68,7 @@ export async function api<T>(path: string, options?: RequestInit): Promise<ApiRe
     throw {
       status: res.status,
       code: response.code,
-      message: response.message ?? 'APIエラーが発生しました',
+      message: response.message ?? APIMESSAGE.INTERNAL_SERVER_ERROR,
     };
   }
 

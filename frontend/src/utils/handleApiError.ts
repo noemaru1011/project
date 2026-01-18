@@ -1,4 +1,6 @@
 import { ROUTES } from '@/routes/routes';
+import { toast } from 'react-toastify';
+import type { NavigateFunction } from 'react-router-dom';
 import type { ApiResponse, ApiErrorResponse } from '@shared/models/common';
 import type { ApiMessageCode } from '@shared/constants/apiMessage';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
@@ -49,4 +51,16 @@ export const handleApiError = (err: unknown): ApiErrorResponse => {
       }
       return { status, data, code, message };
   }
+};
+
+export const handleApiErrorWithUI = (err: unknown, navigate: NavigateFunction) => {
+  const error = handleApiError(err);
+
+  toast.error(error.message);
+
+  if (error.redirectTo) {
+    navigate(error.redirectTo);
+  }
+
+  return error;
 };

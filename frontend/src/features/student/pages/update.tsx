@@ -1,22 +1,36 @@
 import { useNavigate, useParams, Navigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { ROUTES } from '@/routes/routes';
 import { StudentUpdateForm } from '@/features/student/components/layouts/StudentUpdateForm';
 import { useStudentUpdate } from '@/features/student/hooks/useStudentUpdate';
 import { useStudentView } from '@/features/student/hooks/useStudentView';
 import type { StudentUpdateInput } from '@shared/models/student';
-import { handleApiError } from '@/utils';
+import type { StudentResponse } from '@shared/models/student';
+import { handleApiErrorWithUI } from '@/utils';
 
 export const StudentUpdatePage = () => {
   const navigate = useNavigate();
+  const { viewStudent, loading } = useStudentView();
+  const { updateStudent, loading: updating } = useStudentUpdate();
+  const [student, setStudent] = useState<StudentResponse | null>(null);
   const { studentId } = useParams<{ studentId: string }>();
   if (!studentId) {
     return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
   }
 
-  const { student, loading } = useStudentView(studentId);
-  const { updateStudent, loading: updating } = useStudentUpdate();
+  useEffect(() => {
+    const fetchStudent = async () => {
+      try {
+        const res = await viewStudent(studentId);
+        setStudent(res.data);
+      } catch (err) {
+        handleApiErrorWithUI(err, navigate);
+      }
+    };
+    fetchStudent();
+  }, [studentId, viewStudent, navigate]);
 
   if (loading || !student) {
     return <Loading loading={loading} />;
@@ -31,17 +45,13 @@ export const StudentUpdatePage = () => {
   };
 
   const handleSubmit = async (data: StudentUpdateInput) => {
-    if (!student) return navigate(ROUTES.ERROR.NOTFOUND);
+    if (!student) return navigate(ROUTES.ERROR.NOTFOUND, { replace: true });
     try {
       const res = await updateStudent(student.studentId, data);
       toast.success(res.message);
       navigate(ROUTES.STUDENT.INDEX);
     } catch (err) {
-      const error = handleApiError(err);
-      toast.error(error.message);
-      if (error.redirectTo) {
-        navigate(error.redirectTo);
-      }
+      handleApiErrorWithUI(err, navigate);
     }
   };
 

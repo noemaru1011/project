@@ -2,33 +2,44 @@ import { toast } from 'react-toastify';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { ROUTES } from '@/routes/routes';
+import { useEffect, useState } from 'react';
+import type { StudentResponse } from '@shared/models/student';
 import { StudentDeleteView } from '@/features/student/components/layouts/StudentDeleteView';
 import { useStudentDelete } from '@/features/student/hooks/useStudentDelete';
 import { useStudentView } from '@/features/student/hooks/useStudentView';
-import { handleApiError } from '@/utils';
+import { handleApiErrorWithUI } from '@/utils';
 
 export const StudentDeletePage = () => {
   const { studentId } = useParams<{ studentId: string }>();
+  const { viewStudent, loading } = useStudentView();
+  const { deleteStudent, loading: deleting } = useStudentDelete();
+  const [student, setStudent] = useState<StudentResponse | null>(null);
   const navigate = useNavigate();
 
   if (!studentId) {
     return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
   }
-  const { student, loading } = useStudentView(studentId);
-  const { deleteStudent, loading: deleting } = useStudentDelete();
+
+  useEffect(() => {
+    const fetchStudent = async () => {
+      try {
+        const res = await viewStudent(studentId);
+        setStudent(res.data);
+      } catch (err) {
+        handleApiErrorWithUI(err, navigate);
+      }
+    };
+    fetchStudent();
+  }, [studentId, viewStudent, navigate]);
 
   const handleDelete = async () => {
-    if (!student) return navigate(ROUTES.ERROR.NOTFOUND);
+    if (!student) return navigate(ROUTES.ERROR.NOTFOUND, { replace: true });
     try {
       const res = await deleteStudent(student.studentId);
       toast.success(res.message);
       navigate(ROUTES.STUDENT.INDEX);
     } catch (err) {
-      const error = handleApiError(err);
-      toast.error(error.message);
-      if (error.redirectTo) {
-        navigate(error.redirectTo);
-      }
+      handleApiErrorWithUI(err, navigate);
     }
   };
 

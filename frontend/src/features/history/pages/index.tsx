@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import type { StudentSearchInput } from '@shared/models/student';
 import { StudentSearchForm } from '@/features/search/student/components/layouts/StudentSearchForm';
 import { useHistorySearch } from '@/features/search/history/hooks/useHistorySearch';
-import { handleApiError } from '@/utils';
+import { handleApiErrorWithUI } from '@/utils';
 import { useNavigate } from 'react-router-dom';
 import { HistoryTable } from '@/features/history/components';
 import { HitorySearchForm, AggregationDashboard } from '@/features/search/history/components/';
@@ -22,11 +22,7 @@ export const HistoryIndexPage = () => {
       const res = await searchHistories(query);
       toast.info(res.message);
     } catch (err) {
-      const error = handleApiError(err);
-      toast.error(error.message);
-      if (error.redirectTo) {
-        navigate(error.redirectTo);
-      }
+      handleApiErrorWithUI(err, navigate);
     }
   };
 
@@ -35,11 +31,7 @@ export const HistoryIndexPage = () => {
       const res = await searchHistoriesByTime(query);
       toast.info(res.message);
     } catch (err) {
-      const error = handleApiError(err);
-      toast.error(error.message);
-      if (error.redirectTo) {
-        navigate(error.redirectTo);
-      }
+      handleApiErrorWithUI(err, navigate);
     }
   };
 

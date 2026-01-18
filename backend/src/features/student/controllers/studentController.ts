@@ -19,7 +19,7 @@ export class StudentController {
       if (!student) {
         return res
           .status(404)
-          .json({ code: 'NO_STUDENT', data: null, message: APIMESSAGE.NO_STUDENT });
+          .json({ code: 'RESOURCE_NOT_FOUND', data: null, message: APIMESSAGE.RESOURCE_NOT_FOUND });
       }
       return res
         .status(200)

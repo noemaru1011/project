@@ -5,7 +5,7 @@ import { useStudentSearch } from '@/features/search/student/hooks/useStudentSear
 import { StudentTable } from '@/features/student/components';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { ROUTES } from '@/routes/routes';
-import { handleApiError } from '@/utils';
+import { handleApiErrorWithUI } from '@/utils';
 import type { StudentSearchInput } from '@shared/models/student';
 
 export const StudentIndexPage = () => {
@@ -17,11 +17,7 @@ export const StudentIndexPage = () => {
       const res = await searchStudents(query);
       toast.info(res.message);
     } catch (err) {
-      const error = handleApiError(err);
-      toast.error(error.message);
-      if (error.redirectTo) {
-        navigate(error.redirectTo);
-      }
+      handleApiErrorWithUI(err, navigate);
     }
   };
 

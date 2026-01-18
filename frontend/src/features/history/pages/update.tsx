@@ -1,23 +1,38 @@
 import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useHistoryView } from '@/features/history/hooks/useHistoryView';
 import { useHistoryUpdate } from '@/features/history/hooks/useHistoryUpdate';
 import { HistoryUpdateForm } from '@/features/history/components';
 import { HistoryBasicInfo } from '@/features/history/components';
-import type { StudentBasicInfo, HistoryUpdateInput } from '@shared/models/history';
+import type { StudentBasicInfo, HistoryResponse, HistoryUpdateInput } from '@shared/models/history';
 import { Loading } from '@/components/ui/Loading/Loading';
-import { handleApiError } from '@/utils/handleApiError';
+import { handleApiErrorWithUI } from '@/utils/handleApiError';
 import { ROUTES } from '@/routes/routes';
 
 export const HistoryUpdatePage = () => {
   const navigate = useNavigate();
   const { historyId } = useParams<{ historyId: string }>();
   const { updateHistory, loading: updating } = useHistoryUpdate();
+  const { viewHistory, loading } = useHistoryView();
+  const [history, setHistory] = useState<HistoryResponse | null>(null);
+
   if (!historyId) {
     return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
   }
+  useEffect(() => {
+    const fetchStudent = async () => {
+      try {
+        const res = await viewHistory(historyId);
+        setHistory(res.data);
+      } catch (err) {
+        handleApiErrorWithUI(err, navigate);
+      }
+    };
 
-  const { history, loading } = useHistoryView(historyId);
+    fetchStudent();
+  }, [historyId, viewHistory, navigate]);
+
   if (loading || !history) {
     return <Loading loading={loading} />;
   }
@@ -43,17 +58,12 @@ export const HistoryUpdatePage = () => {
       navigate(ROUTES.ERROR.NOTFOUND, { replace: true });
       return;
     }
-
     try {
       const res = await updateHistory(history.historyId, data);
       toast.success(res.message);
       navigate(ROUTES.HISTORY.INDEX);
     } catch (err) {
-      const error = handleApiError(err);
-      toast.error(error.message);
-      if (error.redirectTo) {
-        navigate(error.redirectTo);
-      }
+      handleApiErrorWithUI(err, navigate);
     }
   };
 

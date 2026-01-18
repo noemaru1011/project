@@ -2,21 +2,35 @@ import { toast } from 'react-toastify';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useHistoryDelete } from '@/features/history/hooks/useHistoryDelete';
 import { useHistoryView } from '@/features/history/hooks/useHistoryView';
-
-import type { StudentBasicInfo, HistoryUpdateInput } from '@shared/models/history';
+import { useEffect, useState } from 'react';
+import type { StudentBasicInfo, HistoryUpdateInput, HistoryResponse } from '@shared/models/history';
 import { HistoryBasicInfo, HistoryDeleteView } from '@/features/history/components';
 import { Loading } from '@/components/ui/Loading/Loading';
-import { handleApiError } from '@/utils/handleApiError';
+import { handleApiErrorWithUI } from '@/utils/handleApiError';
 import { ROUTES } from '@/routes/routes';
 
 export const HistoryDeletePage = () => {
   const navigate = useNavigate();
   const { historyId } = useParams<{ historyId: string }>();
   const { deleteHistory, loading: deleting } = useHistoryDelete();
+  const { viewHistory, loading } = useHistoryView();
+  const [history, setHistory] = useState<HistoryResponse | null>(null);
+
   if (!historyId) {
     return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
   }
-  const { history, loading } = useHistoryView(historyId);
+  useEffect(() => {
+    const fetchHistory = async () => {
+      try {
+        const res = await viewHistory(historyId);
+        setHistory(res.data);
+      } catch (err) {
+        handleApiErrorWithUI(err, navigate);
+      }
+    };
+    fetchHistory();
+  }, [historyId, viewHistory, navigate]);
+
   if (loading || !history) {
     return <Loading loading={loading} />;
   }
@@ -31,11 +45,7 @@ export const HistoryDeletePage = () => {
       toast.success(res.message);
       navigate(ROUTES.HISTORY.INDEX);
     } catch (err) {
-      const error = handleApiError(err);
-      toast.error(error.message);
-      if (error.redirectTo) {
-        navigate(error.redirectTo);
-      }
+      handleApiErrorWithUI(err, navigate);
     }
   };
   //マッピング

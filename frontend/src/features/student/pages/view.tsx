@@ -3,15 +3,31 @@ import { Loading } from '@/components/ui/Loading/Loading';
 import { ROUTES } from '@/routes/routes';
 import { StudentView } from '@/features/student/components/layouts/StudentDetailView';
 import { useStudentView } from '@/features/student/hooks/useStudentView';
+import { useEffect, useState } from 'react';
+import type { StudentResponse } from '@shared/models/student';
+import { handleApiErrorWithUI } from '@/utils';
 
 export const StudentViewPage = () => {
   const navigate = useNavigate();
+  const { viewStudent, loading } = useStudentView();
   const { studentId } = useParams<{ studentId: string }>();
+  const [student, setStudent] = useState<StudentResponse | null>(null);
+
   if (!studentId) {
     return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
   }
 
-  const { student, loading } = useStudentView(studentId);
+  useEffect(() => {
+    const fetchStudent = async () => {
+      try {
+        const res = await viewStudent(studentId);
+        setStudent(res.data);
+      } catch (err) {
+        handleApiErrorWithUI(err, navigate);
+      }
+    };
+    fetchStudent();
+  }, [studentId, viewStudent, navigate]);
 
   if (loading || !student) {
     return <Loading loading />;

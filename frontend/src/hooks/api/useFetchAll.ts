@@ -1,20 +1,17 @@
-import { useState } from 'react';
 import type { ApiResponse } from '@shared/models/common';
 import { useLoadingCounter } from '@/hooks/ux/useLoadingCounter';
 
 export function useFetchAll<T>(indexFn: () => Promise<ApiResponse<T[]>>) {
-  const [data, setData] = useState<T[]>([]);
   const { loading, start, end } = useLoadingCounter();
 
-  const fetchAll = async (): Promise<void> => {
+  const fetchAll = async (): Promise<ApiResponse<T[]>> => {
     start();
     try {
-      const res = await indexFn();
-      setData(res.data ?? []);
+      return await indexFn();
     } finally {
       end();
     }
   };
 
-  return { data, fetchAll, loading };
+  return { fetchAll, loading };
 }
