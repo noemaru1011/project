@@ -184,9 +184,7 @@ async function main() {
           const firstName = firstNames[firstIdx];
           const studentName = `${lastName} ${firstName}`;
 
-          const rLastName = romajiLastNames[nameIdx];
-          const rFirstName = romajiFirstNames[firstIdx];
-          const email = `${rFirstName}.${rLastName}${grade}${bat}${deptId}${i}@example.com`;
+          const email = `${crypto.randomUUID()}@example.com`;
 
           const minorCat = batMinorCats[i % batMinorCats.length];
           const studentId = crypto.randomUUID();
