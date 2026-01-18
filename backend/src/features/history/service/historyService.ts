@@ -11,13 +11,11 @@ import type {
 } from '@shared/models/history';
 import type { StudentServerSearchInput } from '@shared/models/student';
 import { StatusDuplicateError } from '@/errors/historyError';
-import { StudentRepository } from '@/features/student/repositories/studentRepository';
 
 export class HistoryService {
   constructor(
     private readonly historyRepo: HistoryRepository,
     private readonly minorCategoryRepo: MinorCategoryRepository,
-    private readonly studentRepo: StudentRepository,
   ) {}
 
   async getHistory(historyId: string): Promise<HistoryResponse | null> {
