@@ -12,14 +12,14 @@
 |---------|-----------|------|
 | **ルーティング** | React Router (`react-router-dom`) | ページ遷移の管理 |
 | **状態管理** | `useState` / `useContext` / TanStack Query | ローカル状態、グローバル状態（パスワード変更フラグ等）、サーバー状態管理 |
-| **フォーム** | React Hook Form + Zod | フォーム制御とバリデーション |
+| **フォーム** | React Hook Form + Zod | フォーム制御とバリデーション(sharedにスキーマ定義) |
 | **スタイリング** | Tailwind CSS | ユーティリティファーストCSS |
 | **テスト** | Vitest / Playwright | ユニットテスト / E2Eテスト |
 | **UIカタログ** | Storybook | コンポーネントの可視化・管理 |
 
 ### 状態管理の使い分け
 
-- **useState**: コンポーネント内のローカル状態
+- **useState**: コンポーネント内のローカル状態(基本的にReact Hook Formが行う)
 - **useContext**: パスワード変更促進フラグ、ログインユーザーのロール管理
 - **TanStack Query**: マスタデータの取得、データ操作（CRUD）
 
@@ -27,27 +27,27 @@
 src/
 ├── api/ # API通信の汎用関数
 │ └── ... # 汎用fetchラッパー（CSRF、JWT自動付与）
-│ # ※JSON専用（バイナリファイルは非対応）
+│         # ※JSON専用（バイナリファイルは非対応）
 │
 ├── assets/ # 静的ファイル（画像など）
 │
 ├── components/ # 共通UIコンポーネント
-│ ├── base/ # Button, Input等の基本コンポーネント
-│ └── layout/ # レイアウトコンポーネント
+│ ├── UI/ # Button, Input等の基本コンポーネント
+│ └── Layouts/ # レイアウトコンポーネント
 │ # ※Storybookで管理
 │
 ├── contexts/ # React Context定義
-│ ├── PasswordChangeContext # パスワード変更フラグ
-│ └── UserRoleContext # ログインユーザーロール
+│ ├── passwordUpdateContextt # パスワード変更フラグ
+│ └── auth # ログインユーザーロール
 │
 ├── features/ # 機能別モジュール
 │ └── [feature-name]/
-│ ├── pages/ # 機能のページコンポーネント
-│ ├── components/ # 機能固有のコンポーネント
-│ ├── constants/ # 定数定義
-│ ├── api/ # API呼び出し（汎用関数を使用）
-│ └── hooks/ # カスタムフック
-│ # （TanStack Query + Context操作など）
+│     ├── pages/ # 機能のページコンポーネント
+│     ├── components/ # 機能固有のコンポーネント
+│     ├── constants/ # 定数定義
+│     ├── api/ # API呼び出し（汎用関数を使用）
+│     └── hooks/ # カスタムフック
+│      # （TanStack Query + Context操作など副作用が多い時）
 │
 ├── pages/ # 共通ページ
 │ ├── Home # ホームページ
@@ -56,8 +56,9 @@ src/
 ├── routes/ # ルーティング定義
 │
 ├── utils/ # 汎用ユーティリティ関数
-│ └── errorHandling # エラーハンドリング（404, 403, 500遷移等）
-│
+│ ├── handleApiError # エラーハンドリング（404, 403, 500遷移等）
+│ ├── authErrorGenerate # リクエストしない静的画面をフロントで制御する用
+│ └── downloadBlob #ファイルダウンロード関数
 ├── App.tsx # アプリケーションルート
 ├── index.css # グローバルスタイル
 └── main.tsx # エントリーポイント
