@@ -4,7 +4,7 @@ import { StudentService } from '@/features/student/services/studentService';
 import { StudentRepository } from '@/features/student/repositories/studentRepository';
 import { PasswordRepository } from '@/features/auth/repositories/passwordRepository';
 import { MinorCategoryRepository } from '@/features/minorCategory/repositories/minorCategoryRepository';
-import { sendAccountEmail } from '@/utils/mail/sendAccountEmail';
+import { sendAccountEmail } from '@/features/student/utils/mail/sendAccountEmail';
 
 export const createStudentModule = (prisma: PrismaClient) => {
   const studentRepo = new StudentRepository(prisma);

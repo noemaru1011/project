@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import { BaseRepository } from '@/repositories/baseRepository';
+import { BaseRepository } from '@/base/repositories/baseRepository';
 
 export class SubCategoryRepository extends BaseRepository {
   withTransaction(tx: Prisma.TransactionClient): SubCategoryRepository {

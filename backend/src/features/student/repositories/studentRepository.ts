@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { UpdateResult } from '@/types/UpdateResult';
-import { BaseRepository } from '@/repositories/baseRepository';
+import { BaseRepository } from '@/base/repositories/baseRepository';
 import type { StudentServerCreateInput, StudentServerUpdateInput } from '@shared/models/student';
 
 export class StudentRepository extends BaseRepository {
@@ -102,7 +102,7 @@ export class StudentRepository extends BaseRepository {
     return deleted.count;
   }
 
-  async searchStudents(data: {
+  async search(data: {
     minorCategoryIds?: number[] | undefined;
     departmentIds?: number[] | undefined;
     grades?: number[] | undefined;

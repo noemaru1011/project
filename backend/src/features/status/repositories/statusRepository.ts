@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import { BaseRepository } from '@/repositories/baseRepository';
+import { BaseRepository } from '@/base/repositories/baseRepository';
 
 export class StatusRepository extends BaseRepository {
   withTransaction(tx: Prisma.TransactionClient): StatusRepository {

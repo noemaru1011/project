@@ -1,8 +1,9 @@
 import { HistoryRepository } from '@/features/history/repositories/historyRepository';
 import { MinorCategoryRepository } from '@/features/minorCategory/repositories/minorCategoryRepository';
-import { OptimisticLockError, InvalidReferenceError } from '@/errors/appError';
-import { formatDateTime } from '@/utils/common/formatDateTime';
-import { aggregateHistory } from '@/utils/history/aggregateHIstory';
+import { OptimisticLockError, InvalidReferenceError, NotFoundError } from '@/errors/appError';
+import { formatDateTime } from '@/features/history/utils/formatDateTime';
+import { aggregateHistory } from '@/features/history/utils/aggregateHIstory';
+import { UpdateResult } from '@/types/UpdateResult';
 import type {
   HistoryServerCreateInput,
   HistoryServerUpdateInput,
@@ -18,9 +19,9 @@ export class HistoryService {
     private readonly minorCategoryRepo: MinorCategoryRepository,
   ) {}
 
-  async getHistory(historyId: string): Promise<HistoryResponse | null> {
-    const history = await this.historyRepo.find(historyId);
-    if (history == null) return null;
+  async getHistory(historyId: string): Promise<HistoryResponse> {
+    const history = await this.historyRepo.findById(historyId);
+    if (history == null) throw new NotFoundError();
     return {
       historyId: history.historyId,
       studentId: history.studentId,
@@ -41,7 +42,7 @@ export class HistoryService {
   async searchHistories(data: StudentServerSearchInput): Promise<HistorySummary[]> {
     const minorCategoryIds = await this.minorCategoryRepo.resolveMinorCategoryIds(data);
 
-    const histories = await this.historyRepo.searchHistories({
+    const histories = await this.historyRepo.search({
       minorCategoryIds,
       departmentIds: data.departmentIds,
       grades: data.grades,
@@ -60,7 +61,7 @@ export class HistoryService {
   }
 
   async searchByStartTimeHistories(query: Date) {
-    const histories = await this.historyRepo.searchByStartTimeHistories(query);
+    const histories = await this.historyRepo.searchByStartTime(query);
     const historiesMapped = histories.map((h) => ({
       statusId: h.statusId,
       grade: h.student.grade,
@@ -87,6 +88,7 @@ export class HistoryService {
         data.endTime ?? null,
       );
 
+      // 重複があれば名前を収集
       if (overlaps.length > 0) {
         // 名前を取得して配列に追加
         const studentNames = [
@@ -104,7 +106,7 @@ export class HistoryService {
 
     try {
       // 重複なしなら履歴作成
-      const created = await this.historyRepo.createHistory({
+      const created = await this.historyRepo.create({
         studentIds: data.studentIds,
         statusId: data.statusId,
         other: data.other,
@@ -112,7 +114,6 @@ export class HistoryService {
         endTime: data.endTime,
       });
 
-      // Prisma型 → API型に変換
       results.push(
         ...created.map((history) => ({
           historyId: history.historyId,
@@ -126,21 +127,25 @@ export class HistoryService {
           updatedAt: history.updatedAt.toISOString(),
         })),
       );
+      return results;
     } catch (err: any) {
+      //外部キー制約違反
       if (err.code === 'P2003') {
         throw new InvalidReferenceError();
       }
       throw err;
     }
-
-    // すべての学生分の処理が終わったら結果を返す
-    return results;
   }
 
   async updateHistory(data: HistoryServerUpdateInput, historyId: string): Promise<HistoryResponse> {
     try {
-      const history = await this.historyRepo.updateHistory(data, historyId);
-      if (history == null) throw new OptimisticLockError();
+      const history = await this.historyRepo.update(data, historyId);
+      //更新失敗時のエラー処理
+      //存在しない場合
+      if (history == UpdateResult.NOT_FOUND) throw new NotFoundError();
+      //楽観的ロックエラー
+      if (history == UpdateResult.OPTIMISTIC_LOCK) throw new OptimisticLockError();
+
       return {
         historyId: history.historyId,
         studentId: history.studentId,
@@ -153,6 +158,7 @@ export class HistoryService {
         updatedAt: history.updatedAt.toISOString(),
       };
     } catch (err: any) {
+      //外部キー制約違反
       if (err.code === 'P2003') {
         throw new InvalidReferenceError();
       }
@@ -161,6 +167,7 @@ export class HistoryService {
   }
 
   async deleteHistory(historyId: string) {
-    await this.historyRepo.deleteHistory(historyId);
+    const history = await this.historyRepo.delete(historyId);
+    if (history === 0) throw new NotFoundError();
   }
 }

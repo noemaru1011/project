@@ -61,3 +61,5 @@ export type HistoryServerCreateInput = z.infer<
 export type HistoryServerUpdateInput = z.infer<
   typeof HistoryServerUpdateSchema
 >;
+
+export const HistoryServerSearchSchema = z.object({});

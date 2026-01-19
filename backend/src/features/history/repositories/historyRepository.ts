@@ -1,5 +1,6 @@
 import { Prisma } from '@prisma/client';
-import { BaseRepository } from '@/repositories/baseRepository';
+import { UpdateResult } from '@/types/UpdateResult';
+import { BaseRepository } from '@/base/repositories/baseRepository';
 import type { HistoryServerCreateInput, HistoryServerUpdateInput } from '@shared/models/history';
 
 export class HistoryRepository extends BaseRepository {
@@ -7,7 +8,7 @@ export class HistoryRepository extends BaseRepository {
     return new HistoryRepository(tx);
   }
 
-  async find(historyId: string) {
+  async findById(historyId: string) {
     return await this.prisma.history.findUnique({
       where: {
         historyId,
@@ -43,7 +44,7 @@ export class HistoryRepository extends BaseRepository {
     });
   }
 
-  async searchHistories(data: {
+  async search(data: {
     minorCategoryIds?: number[] | undefined;
     departmentIds?: number[] | undefined;
     grades?: number[] | undefined;
@@ -93,7 +94,7 @@ export class HistoryRepository extends BaseRepository {
     });
   }
 
-  async searchByStartTimeHistories(query: Date) {
+  async searchByStartTime(query: Date) {
     return this.prisma.history.findMany({
       where: {
         validFlag: true,
@@ -137,7 +138,7 @@ export class HistoryRepository extends BaseRepository {
     });
   }
 
-  async createHistory(data: HistoryServerCreateInput) {
+  async create(data: HistoryServerCreateInput) {
     const datas = data.studentIds.map((id) => ({
       studentId: id,
       statusId: data.statusId,
@@ -156,8 +157,22 @@ export class HistoryRepository extends BaseRepository {
     );
   }
 
-  async updateHistory(data: HistoryServerUpdateInput, historyId: string) {
-    const updated = await this.prisma.history.updateMany({
+  async update(data: HistoryServerUpdateInput, historyId: string) {
+    const current = await this.prisma.history.findUnique({
+      where: { historyId },
+    });
+
+    // 存在しないID
+    if (!current) {
+      return UpdateResult.NOT_FOUND;
+    }
+
+    // 楽観的ロック
+    if (current.updatedAt.getTime() !== new Date(data.updatedAt).getTime()) {
+      return UpdateResult.OPTIMISTIC_LOCK;
+    }
+
+    return await this.prisma.history.update({
       where: {
         historyId,
         updatedAt: data.updatedAt,
@@ -170,20 +185,13 @@ export class HistoryRepository extends BaseRepository {
         validFlag: data.validFlag,
       },
     });
-
-    if (updated.count === 0) return null;
-
-    return this.prisma.history.findUnique({
-      where: { historyId },
-    });
   }
 
-  async deleteHistory(historyId: string) {
-    await this.prisma.history.delete({
-      where: {
-        historyId,
-      },
+  async delete(historyId: string) {
+    const result = await this.prisma.history.deleteMany({
+      where: { historyId },
     });
+    return result.count;
   }
 
   /**

@@ -1,5 +1,5 @@
 import { Prisma, PrismaClient } from '@prisma/client';
-import { BaseRepository } from '@/repositories/baseRepository';
+import { BaseRepository } from '@/base/repositories/baseRepository';
 
 export class AdminRepository extends BaseRepository {
   withTransaction(tx: Prisma.TransactionClient): AdminRepository {

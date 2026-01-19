@@ -4,8 +4,8 @@ import { UpdateResult } from '@/types/UpdateResult';
 import { StudentRepository } from '@/features/student/repositories/studentRepository';
 import { PasswordRepository } from '@/features/auth/repositories/passwordRepository';
 import { MinorCategoryRepository } from '@/features/minorCategory/repositories/minorCategoryRepository';
-import { generatePassword } from '@/utils/common/generatePassword';
-import { sendAccountEmail } from '@/utils/mail/sendAccountEmail';
+import { generatePassword } from '@/features/student/utils/common/generatePassword';
+import { sendAccountEmail } from '@/features/student/utils/mail/sendAccountEmail';
 import { OptimisticLockError, InvalidReferenceError, NotFoundError } from '@/errors/appError';
 import { EmailDuplicateError } from '@/errors/studentError';
 import type {
@@ -74,12 +74,14 @@ export class StudentService {
       };
     } catch (err: any) {
       if (
+        //メールアドレス重複複
         err.code === 'P2002' &&
         Array.isArray(err.meta?.target) &&
         err.meta.target.includes('email')
       ) {
         throw new EmailDuplicateError();
       }
+      //外部キー制約違反
       if (err.code === 'P2003') {
         throw new InvalidReferenceError();
       }
@@ -91,7 +93,10 @@ export class StudentService {
     try {
       const student = await this.studentRepo.update(studentId, data);
 
+      //更新失敗時のエラー処理
+      //存在しない場合
       if (student == UpdateResult.NOT_FOUND) throw new NotFoundError();
+      //楽観的ロックエラー
       if (student == UpdateResult.OPTIMISTIC_LOCK) throw new OptimisticLockError();
 
       return {
@@ -105,6 +110,7 @@ export class StudentService {
         updatedAt: student.updatedAt.toISOString(),
       };
     } catch (err: any) {
+      //外部キー制約違反
       if (err.code === 'P2003') {
         throw new InvalidReferenceError();
       }
@@ -113,16 +119,18 @@ export class StudentService {
   }
 
   async deleteStudent(studentId: string) {
-    const deleted = await this.studentRepo.delete(studentId);
-    if (deleted === 0) {
+    const student = await this.studentRepo.delete(studentId);
+    //削除失敗時のエラー処理
+    if (student === 0) {
       throw new NotFoundError();
     }
   }
 
   async searchStudents(data: StudentServerSearchInput): Promise<StudentSummary[]> {
+    //大分類、中分類を小分類に変換
     const minorCategoryIds = await this.minorCategoryRepo.resolveMinorCategoryIds(data);
 
-    const students = await this.studentRepo.searchStudents({
+    const students = await this.studentRepo.search({
       minorCategoryIds,
       departmentIds: data.departmentIds,
       grades: data.grades,

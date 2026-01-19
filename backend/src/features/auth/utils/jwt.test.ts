@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import jwt from 'jsonwebtoken';
-import { jwtUtil } from './jwt';
+import { jwtUtil } from '@/features/auth/utils/jwt';
 
 describe('jwtUtil.createToken', () => {
   beforeAll(() => {
