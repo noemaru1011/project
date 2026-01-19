@@ -45,7 +45,7 @@ services:
       - ./backend/prisma:/app/backend/prisma
     # 起動時にマイグレーションとシードを実行
     command: >
-      sh -c "npx prisma migrate dev && npx prisma db seed && npm run dev"
+      sh -c "npx prisma migrate dev --name init && npx prisma db seed && npm run dev"
 
   frontend:
     build:
