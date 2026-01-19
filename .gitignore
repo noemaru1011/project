@@ -6,7 +6,9 @@ node_modules/
 .env
 .env.*
 .env.local
-envs/.env.*
+
+envs/.env.dev
+envs/.env.prod
 !envs/.env.example
 
 # Build artifacts
