@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 import { useLogout } from './useLogout';
 import { authApi } from '@/features/auth/api';
-import { useAuth } from '@/contexts/auchContext';
+import { useAuth } from '@/contexts/authContext';
 import { usePasswordUpdateContext } from '@/contexts/passwordUpdateContext';
 
 // 1. 各モックの定義
@@ -12,7 +12,7 @@ vi.mock('@/features/auth/api', () => ({
   authApi: { logout: vi.fn() },
 }));
 
-vi.mock('@/contexts/atchContext', () => ({
+vi.mock('@/contexts/authContext', () => ({
   useAuth: vi.fn(),
 }));
 

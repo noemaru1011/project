@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { authApi } from '@/features/auth/api';
-import { useAuth } from '@/contexts/auchContext';
+import { useAuth } from '@/contexts/authContext';
 import { usePasswordUpdateContext } from '@/contexts/passwordUpdateContext';
 
 export function useLogout() {

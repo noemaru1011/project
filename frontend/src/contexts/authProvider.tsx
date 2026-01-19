@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import type { Role } from '@shared/models/common';
-import { AuthContext } from '@/contexts/auchContext';
+import { AuthContext } from '@/contexts/authContext';
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [role, setRoleState] = useState<Role | null>(null);

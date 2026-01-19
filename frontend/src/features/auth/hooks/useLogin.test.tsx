@@ -1,11 +1,12 @@
 import React from 'react';
+import type { Mock } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 import { useLogin } from './useLogin';
 import { authApi } from '@/features/auth/api';
 import { usePasswordUpdateContext } from '@/contexts/passwordUpdateContext';
-import { useAuth } from '@/contexts/auchContext';
+import { useAuth } from '@/contexts/authContext';
 
 // 1. 各モックの定義
 vi.mock('@/features/auth/api', () => ({
@@ -18,7 +19,7 @@ vi.mock('@/contexts/passwordUpdateContext', () => ({
   usePasswordUpdateContext: vi.fn(),
 }));
 
-vi.mock('@/contexts/atchContext', () => ({
+vi.mock('@/contexts/authContext', () => ({
   useAuth: vi.fn(),
 }));
 
@@ -31,7 +32,7 @@ describe('useLogin', () => {
     vi.clearAllMocks();
 
     // Contextの戻り値を設定
-    (usePasswordUpdateContext as any).mockReturnValue({
+    (usePasswordUpdateContext as Mock).mockReturnValue({
       setPasswordUpdateRequired: mockSetPasswordUpdateRequired,
     });
     (useAuth as any).mockReturnValue({
@@ -56,7 +57,7 @@ describe('useLogin', () => {
         role: 'admin',
       },
     };
-    (authApi.login as any).mockResolvedValue(mockResponse);
+    (authApi.login as Mock).mockResolvedValue(mockResponse);
 
     const { result } = renderHook(() => useLogin(), {
       wrapper: createWrapper(),
@@ -77,7 +78,7 @@ describe('useLogin', () => {
   });
 
   it('APIエラー時でも壊れないこと', async () => {
-    (authApi.login as any).mockRejectedValue(new Error('Login Failed'));
+    (authApi.login as Mock).mockRejectedValue(new Error('Login Failed'));
 
     const { result } = renderHook(() => useLogin(), {
       wrapper: createWrapper(),
