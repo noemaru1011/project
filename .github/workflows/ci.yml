@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: project
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: |
+            project/package-lock.json
+            project/frontend/package-lock.json
+            project/backend/package-lock.json
+
+      # --- install ---
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Install frontend dependencies
+        working-directory: project/frontend
+        run: npm ci
+
+      - name: Install backend dependencies
+        working-directory: project/backend
+        run: npm ci
+
+      # --- shared ---
+      - name: Shared tests (vitest)
+        run: npx vitest run shared
+
+      # --- frontend ---
+      - name: Frontend unit tests
+        working-directory: project/frontend
+        run: npm run test:unit
+
+      - name: Frontend e2e tests
+        working-directory: project/frontend
+        run: npm run test:e2e
+
+      - name: Frontend typecheck & build
+        working-directory: project/frontend
+        run: |
+          tsc -b
+          vite build
+
+      # --- backend ---
+      - name: Backend unit tests
+        working-directory: project/backend
+        run: npm run test:unit
+
+      - name: Backend typecheck & build
+        working-directory: project/backend
+        run: |
+          tsc -b
+          vite build
