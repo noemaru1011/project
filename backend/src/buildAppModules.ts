@@ -10,8 +10,37 @@ import { createMinorCategoryModule } from '@/features/minorCategory/minorCategor
 import { createStatusModule } from '@/features/status/status.module';
 import { createDepartmentModule } from '@/features/department/department.module';
 import { createHistoryModule } from './features/history/history.module';
+import { logger } from '@/utils/log/logger';
 
-const prisma = new PrismaClient();
+export const prisma = new PrismaClient({
+  log: [
+    { emit: 'event', level: 'query' },
+    { emit: 'event', level: 'info' },
+    { emit: 'event', level: 'warn' },
+    { emit: 'event', level: 'error' },
+  ],
+});
+
+prisma.$on('query', (e) => {
+  let maskedParams = e.params;
+
+  try {
+    const paramsArray = JSON.parse(e.params);
+    maskedParams = JSON.stringify(
+      paramsArray.map((p: any) => ({
+        ...p,
+        password: p.password ? '***' : p.password,
+      })),
+    );
+  } catch {}
+
+  logger.info('Prisma query executed', {
+    type: 'prisma-query',
+    sql: e.query,
+    params: maskedParams,
+    duration: e.duration,
+  });
+});
 
 // Student
 export const { studentController } = createStudentModule(prisma);
