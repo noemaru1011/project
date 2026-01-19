@@ -144,6 +144,18 @@ app.use(
 - **CSRF対策**: CSRFトークンを併用
 
 
+## データベースマイグレーション
+
+### 開発環境
+
+Docker起動時に自動で実行されます。
+
+```bash
+# docker-compose up 時に自動実行
+npx prisma migrate dev  # マイグレーション適用
+npx prisma db seed      # シードデータ投入
+```
+
 ## 単体テスト戦略
 
 ### テストパターン
