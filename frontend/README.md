@@ -78,8 +78,8 @@
 
 ### エラーハンドリング
 
-`utils/handleApiError` で一元管理し、適切なエラーページ（404, 403, 500）へ遷移
-`utils/authErrorGenerate` でサーバーへリクエストしない祭もUX的に、制御する
+- `utils/handleApiError` で一元管理し、適切なエラーページ（404, 403, 500）へ遷移
+- `utils/authErrorGenerate` でサーバーへリクエストしない祭もUX的に、制御する
 
 ## 単体テスト戦略
 
@@ -121,14 +121,6 @@
 ### 起動方法
 
 ```bash
-# 開発環境の起動
-docker-compose -f docker-compose.dev.yml up --build -d
-
-# 停止
-docker-compose -f docker-compose.dev.yml down
-
-# ログ確認
-docker-compose -f docker-compose.dev.yml logs -f
 
 # Storybook起動
 npm run storybook
