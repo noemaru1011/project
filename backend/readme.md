@@ -1,99 +1,112 @@
-# src/ ディレクトリ構成と設計方針
+# バックエンド構成
 
-本プロジェクトでは、**関心の分離（Separation of Concerns）** と  
-**依存関係の明示的管理** を重視したディレクトリ構成を採用しています。
+## 概要
 
----
+このプロジェクトは Express を使用したバックエンドアプリケーションです。
+
+## 技術スタック
+
+### 主要ライブラリ
+
+| カテゴリ | ライブラリ | 用途 |
+|---------|-----------|------|
+| **サーバー** | Express | Webアプリケーションフレームワーク |
+| **ORM** | Prisma | データベースアクセス・マイグレーション管理 |
+| **バリデーション** | Zod | サーバーサイドバリデーション |
+| **テスト** | Vitest | ユニットテスト |
 
 ## ディレクトリ構成
 
-src/
-├─ errors/
-├─ middleware/
-├─ repositories/
-├─ types/
-├─ utils/
-└─ features/
+- src
+  - errors
+    - FK違反、楽観的ロック、重複違反などのDB系エラー
+    - ビジネスロジックエラー
+    - 認証エラー（例外）を定義
+  - features
+    - 各機能別のモジュール
+    - route
+      - ルーティング定義
+    - Controller
+      - HTTPリクエスト/レスポンスの入り口
+    - service
+      - ビジネスロジック
+    - repository
+      - DB操作
+    - utils
+      - serviceを支えるヘルパー関数
+    - *.module.ts
+      - 依存関係の注入
+  - middleware
+    - 認証 + 認可
+    - ログ収集
+    - サーバーサイドバリデーション（Zod）
+    - CORS、Cookie等の汎用ミドルウェア
+  - repositories
+    - ベースリポジトリ
+    - トランザクション処理を共通化（毎回定義不要）
+  - types
+    - サーバーサイド専用の型定義
+  - utils
+    - ログ収集などの汎用関数
+  - app.ts
+    - ルーティングとミドルウェアの定義
+    - 例: `app.use(API_ROUTES.HISTORY_SEARCH, authMiddleware, requestLogger, historySearchRoutes);`
+  - buildAppModules.ts
+    - 依存関係の構築（routeにControllerを紐付け）
+  - server.ts
+    - サーバー起動処理
+- Dockerfile
+  - Docker設定ファイル
 
-## 共通レイヤ（横断的関心事）
+## アーキテクチャ
 
-### errors/
+### レイヤー構成
 
-アプリケーション全体で使用する **エラー定義** を集約します。
+Route →(Middleware) → Controller → Service → Repository → Database
 
-#### errors の役割
 
-- 認証・認可エラー
-- ログイン時のエラー
-- DB 制約違反（FK違反、ユニーク制約違反など）
-- HTTP レスポンス変換を前提としたドメインエラー
+| レイヤー | 責務 |
+|---------|------|
+| **Route** | エンドポイント定義、ミドルウェアの適用 |
+| **Controller** | HTTPリクエスト/レスポンスの処理、入力の受け取り |
+| **Service** | ビジネスロジックの実装 |
+| **Repository** | データベース操作の抽象化 |
+| **Middleware** | 認証・認可、ログ、バリデーション等の横断的関心事 |
 
----
+### 依存性注入
 
-### middleware/
+- 各機能の `*.module.ts` で依存関係を定義
+- `buildAppModules.ts` でアプリケーション全体の依存関係を構築
+- Controller、Service、Repository の疎結合を実現
 
-Express ミドルウェアを管理します。
+### エラーハンドリング
 
-#### middleware の役割
+`errors/` で定義されたカスタムエラー：
 
-- 認証・認可（JWT / Role）
-- リクエスト・レスポンスのログ収集
-- サーバーサイドのバリデーション
-- 共通的な前処理・後処理
+- **DB系エラー**: FK違反、楽観的ロック、重複違反
+- **ビジネスロジックエラー**: ドメイン固有のエラー
+- **認証エラー**: 未認証、権限不足
 
----
+### トランザクション管理
 
-### repositories/
+- `repositories/` のベースリポジトリで共通化
+- 各機能でトランザクション処理を個別に定義する必要がない
 
-DB アクセスに関する **共通基盤** を提供します。
+## ミドルウェアの適用例
 
-#### repositories の役割
+```typescript
+// app.ts
+app.use(
+  API_ROUTES.HISTORY_SEARCH,
+  authMiddleware,        // 認証・認可
+  requestLogger,         // リクエストログ
+  historySearchRoutes    // ルーティング
+);
+```
 
-- トランザクション用インスタンスの生成
-- ORM / QueryBuilder のラッパー
-- 複雑なクエリ処理や共通 CRUD 操作
+ミドルウェアは以下の順序で適用：
 
----
-
-### types/
-
-共通の型定義・インターフェース定義を配置します。
-
-#### types の役割
-
-- 型エイリアス
-- DTO / Interface
-- Express 拡張型（例: `Request.user`）
-
----
-
-### utils/
-
-汎用関数や **service 層で使うユーティリティ関数** をまとめます。
-
-#### utils の役割
-
-- ログ処理
-- 認証・認可補助
-- 日付・文字列などの共通ユーティリティ
-
----
-
-### features/
-
-各機能ごとにモジュール単位でまとめます。  
-features/
-├─ featureA/
-│ ├─ controller.ts
-│ ├─ service.ts
-│ ├─ repository.ts
-│ ├─ routes.ts
-│ └─ module.ts
-
-#### features の役割
-
-- controller: ルーティングされたリクエストを受け取り、service 層を呼び出す
-- service: ビジネスロジックを実装し、必要に応じて repository を呼び出す
-- repository: DB への CRUD 操作を担当
-- routes: エンドポイントのルーティングを定義
-- module: 依存関係を注入（DI）するための設定をまとめる
+認証・認可チェック
+ログ収集
+バリデーション
+ビジネスロジック実行
