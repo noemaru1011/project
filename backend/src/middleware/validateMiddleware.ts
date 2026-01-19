@@ -1,18 +1,17 @@
 import { ZodType } from 'zod';
 import { Request, Response, NextFunction } from 'express';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
-import type { ApiMessageCode } from '@shared/constants/apiMessage';
+import { ApiBody } from '@shared/models/common';
+
 export const validateBody =
-  (schema: ZodType) => (req: Request, res: Response, next: NextFunction) => {
+  (schema: ZodType) => (req: Request, res: Response<ApiBody<object>>, next: NextFunction) => {
     const result = schema.safeParse(req.body);
 
     if (!result.success) {
-      const key: ApiMessageCode = 'VALIDATE_ERROR';
-
       return res.status(400).json({
-        code: key,
+        code: 'VALIDATE_ERROR',
         message: APIMESSAGE.VALIDATE_ERROR,
-        errors: result.error.issues.map((issue) => ({
+        data: result.error.issues.map((issue) => ({
           field: issue.path.join('.'),
           reason: issue.message,
         })),

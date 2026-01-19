@@ -6,7 +6,7 @@ import { historyApi } from '@/features/history/api';
 import { StudentSearchForm } from '@/features/student/components/layouts/StudentSearchForm';
 import {
   HistoryTable,
-  HitorySearchForm,
+  HistorySearchForm,
   AggregationDashboard,
 } from '@/features/history/components/';
 import { handleApiErrorWithUI } from '@/utils';
@@ -59,7 +59,7 @@ export const HistoryIndexPage = () => {
         {/* 上段：時間帯別集計 */}
         <section className="bg-white p-6 rounded-xl shadow-md border border-gray-100">
           <h3 className="text-lg font-semibold mb-4 text-gray-700">時間帯別集計検索</h3>
-          <HitorySearchForm onSearch={handleTimeSearch} loading={isTimeLoading} />
+          <HistorySearchForm onSearch={handleTimeSearch} loading={isTimeLoading} />
           {aggregateRes?.data && <AggregationDashboard data={aggregateRes.data} />}
         </section>
 

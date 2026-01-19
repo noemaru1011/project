@@ -62,4 +62,16 @@ export type HistoryServerUpdateInput = z.infer<
   typeof HistoryServerUpdateSchema
 >;
 
-export const HistoryServerSearchSchema = z.object({});
+export const HistorySearchSchema = z.object({
+  query: z.string(),
+});
+
+export type HistorySearchInput = z.infer<typeof HistorySearchSchema>;
+
+export const HistoryServerSearchSchema = z.object({
+  query: z.coerce.date(),
+});
+
+export type HistoryServerSearchInput = z.infer<
+  typeof HistoryServerSearchSchema
+>;
