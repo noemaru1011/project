@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { authApi } from '@/features/auth/api';
 import { usePasswordUpdateContext } from '@/contexts/passwordUpdateContext';
-import { useAuth } from '@/contexts/atchContext';
+import { useAuth } from '@/contexts/auchContext';
 import type { LoginInput } from '@shared/models/auth';
 
 export function useLogin() {

@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { AuthProvider } from './authProvider';
-import { useAuth } from './atchContext';
+import { useAuth } from './auchContext';
 import Cookies from 'js-cookie';
 import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import type { Role } from '@shared/models/common';

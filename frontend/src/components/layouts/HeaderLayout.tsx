@@ -8,7 +8,7 @@ import { ROUTES } from '@/routes/routes';
 import { headerOptions } from '@/components/ui/option';
 import { handleApiError, downloadBlob } from '@/utils';
 import { usePasswordUpdateContext } from '@/contexts/passwordUpdateContext';
-import { useAuth } from '@/contexts/atchContext';
+import { useAuth } from '@/contexts/auchContext';
 
 export const HeaderLayout = () => {
   const navigate = useNavigate();

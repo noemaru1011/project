@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { useAuth } from '@/contexts/atchContext';
+import { useAuth } from '@/contexts/auchContext';
 import { HeaderLayout } from './HeaderLayout';
 
 //フッター作るならここに追加

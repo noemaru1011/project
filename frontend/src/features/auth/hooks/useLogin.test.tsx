@@ -5,7 +5,7 @@ import { vi, describe, it, expect, beforeEach } from 'vitest';
 import { useLogin } from './useLogin';
 import { authApi } from '@/features/auth/api';
 import { usePasswordUpdateContext } from '@/contexts/passwordUpdateContext';
-import { useAuth } from '@/contexts/atchContext';
+import { useAuth } from '@/contexts/auchContext';
 
 // 1. 各モックの定義
 vi.mock('@/features/auth/api', () => ({
