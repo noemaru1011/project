@@ -141,6 +141,8 @@ export class HistoryService {
     try {
       const history = await this.historyRepo.update(data, historyId);
       //更新失敗時のエラー処理
+      //TODO 新規作成と同様に重複チェックを入れる
+
       //存在しない場合
       if (history == UpdateResult.NOT_FOUND) throw new NotFoundError();
       //楽観的ロックエラー
