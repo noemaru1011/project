@@ -21,5 +21,6 @@ export default defineConfig({
     environment: 'jsdom',
     include: ['src/**/*.test.{ts,tsx}'], // Vitest が読む対象を制限
     setupFiles: './setupTests.ts',
+    watch: false,
   },
 });
