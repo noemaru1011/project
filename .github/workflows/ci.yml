@@ -31,7 +31,7 @@ jobs:
       # --- shared ---
       - name: Shared tests (via frontend)
         working-directory: frontend
-        run: npx vitest run ../shared
+        run: npx vitest run ../
 
       # --- frontend ---
       - name: Frontend unit tests
