@@ -7,6 +7,7 @@
 ### プロジェクトの目的
 
 個人開発を通じて、以下の技術習得を目指しています：
+
 - フルスタック開発（フロントエンド・バックエンド）
 - システム設計
 - インフラ構築
@@ -16,6 +17,7 @@
 学生寮に所属する学生の状態を一元管理するシステムです。
 
 **管理する情報:**
+
 - **誰が**: 学生名
 - **いつからいつまで**: 期間（未定も可）
 - **どこで**: 場所（病院、実家など）
@@ -40,6 +42,7 @@
 ## 技術スタック
 
 ### フロントエンド
+
 - React + Vite
 - TypeScript
 - TanStack Query
@@ -47,6 +50,7 @@
 - Tailwind CSS
 
 ### バックエンド
+
 - Express
 - Prisma（ORM）
 - TypeScript
@@ -54,6 +58,7 @@
 - Resend（メール送信）
 
 ### インフラ
+
 - PostgreSQL
 - Redis
 - Docker / Docker Compose
@@ -61,6 +66,7 @@
 ## プロジェクト構成
 
 project-root/
+
 - frontend/          # フロントエンド
 - backend/           # バックエンド
 - shared/            # 共通型定義・Zodスキーマ
@@ -68,6 +74,7 @@ project-root/
 - docker-compose.dev.yml
 
 各ディレクトリの詳細は、それぞれのREADMEを参照してください：
+
 - [フロントエンド開発ガイド](./frontend/README.md)
 - [バックエンド開発ガイド](./backend/README.md)
 - [共通型定義](./shared/README.md)
@@ -81,7 +88,8 @@ project-root/
 
 ### 起動方法
 
-# 開発環境の起動（フロント・バック・DB・Redis全て起動）
+## 開発環境の起動（フロント・バック・DB・Redis全て起動）
+
 ```bash
 docker-compose -f docker-compose.dev.yml up --build -d
 ```
@@ -90,10 +98,11 @@ docker-compose -f docker-compose.dev.yml up --build -d
 
 起動後、以下のURLでアクセスできます：
 
-- **フロントエンド**: http://localhost:5173
-- **バックエンドAPI**: http://localhost:3001
+- **フロントエンド**: <http://localhost:5173>
+- **バックエンドAPI**: <http://localhost:3001>
 
 ### 停止方法
+
 ```bash
 # 停止
 docker-compose -f docker-compose.dev.yml down
@@ -101,7 +110,6 @@ docker-compose -f docker-compose.dev.yml down
 # ログ確認
 docker-compose -f docker-compose.dev.yml logs -f
 ```
-
 
 ## 環境変数
 
@@ -125,10 +133,10 @@ TODO
 
 ### ポートが既に使用されている
 
-# 使用中のポートを確認
-### ポートが既に使用されている
+## 使用中のポートを確認
 
 **macOS / Linux:**
+
 ```bash
 # 使用中のポートを確認
 lsof -i :5173
@@ -139,6 +147,7 @@ kill -9 <PID>
 ```
 
 **windows:**
+
 ```shell
 netstat -ano | findstr :5173
 netstat -ano | findstr :3001
@@ -146,7 +155,6 @@ netstat -ano | findstr :3001
 # プロセスを停止
 taskkill /PID <PID> /F
 ```
-
 
 ### Dockerコンテナが起動しない
 
@@ -157,15 +165,19 @@ docker-compose -f docker-compose.dev.yml logs -f
 # コンテナを再ビルド
 docker-compose -f docker-compose.dev.yml up --build -d
 ```
+
 ### データベースをリセットしたい
 
-# バックエンドコンテナに入る
+## バックエンドコンテナに入る
+
 ```bash
 docker-compose -f docker-compose.dev.yml exec backend sh
 ```
+
 ※自分はA5M2使ってます。
 
-# データベースリセット（開発環境のみ）
+## データベースリセット（開発環境のみ）
+
 ```bash
 npx prisma migrate reset
 ```
