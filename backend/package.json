@@ -50,8 +50,9 @@
   "main": "server.ts",
   "scripts": {
     "postinstall": "prisma generate",
-    "test:unit": "vitest",
-    "test": "vitest run",
+    "test:unit": "vitest run --exclude='**/repositories/**/*.test.ts'",
+    "test:unit:all": "vitest run",
+    "test:integration": "vitest run '**/repositories/**/*.test.ts'"
     "test:coverage": "vitest run --coverage",
     "dev": "nodemon --verbose -e ts,json --exec ts-node --project tsconfig.json -r tsconfig-paths/register src/server.ts",
     "lint": "eslint . --ext .ts,.js",
