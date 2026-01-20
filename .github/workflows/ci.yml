@@ -18,20 +18,13 @@ jobs:
         with:
           node-version: 20
 
-      # --- frontend ---
-      - name: Install frontend dependencies
-        working-directory: frontend
-        run: npm ci
-
-      # --- backend ---
-      - name: Install backend dependencies
-        working-directory: backend
+      # --- install (workspace root) ---
+      - name: Install dependencies (workspaces)
         run: npm ci
 
       # --- shared ---
-      - name: Shared tests (via frontend)
-        working-directory: frontend
-        run: npx vitest run ../
+      - name: Shared tests
+        run: npx vitest run
 
       # --- frontend ---
       - name: Frontend unit tests

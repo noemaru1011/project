@@ -19,7 +19,8 @@
   "homepage": "https://github.com/noemaru1011/project#readme",
   "devDependencies": {
     "@types/node": "^24.8.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.17"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
