@@ -24,16 +24,16 @@ jobs:
 
       # --- shared ---
       - name: Shared tests
-        run: npx vitest run
+        run: npx vitest run --watch=false
 
       # --- frontend ---
       - name: Frontend unit tests
         working-directory: frontend
-        run: npm run test:unit
+        run: npm run test:unit --watch=false
 
       - name: Frontend e2e tests
         working-directory: frontend
-        run: npm run test:e2e
+        run: npm run test:e2e --watch=false
 
       - name: Frontend typecheck & build
         working-directory: frontend
@@ -44,7 +44,7 @@ jobs:
       # --- backend ---
       - name: Backend unit tests
         working-directory: backend
-        run: npm run test:unit
+        run: npm run test:unit --watch=false
 
       - name: Backend typecheck & build
         working-directory: backend
