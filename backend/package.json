@@ -49,6 +49,7 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
+    "postinstall": "prisma generate",
     "test:unit": "vitest",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
