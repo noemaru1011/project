@@ -12,6 +12,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
+          fetch-depth: 0 
           node-version: 20
       # --- install (workspace root) ---
       - name: Install dependencies (workspaces)
