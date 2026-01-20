@@ -10,7 +10,7 @@
     "lint:fix": "eslint . --ext .ts,.js --fix",
     "format": "prettier --write .",
     "preview": "vite preview",
-    "test:unit": "vitest --watch",
+    "test:unit": "vitest",
     "test:e2e": "playwright test",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
