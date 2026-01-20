@@ -6,6 +6,7 @@ export default defineConfig({
     globals: true,
     include: ['src/**/*.test.{ts,tsx}'], // Vitest が読む対象を制限
     environment: 'node',
+    watch: false,
     alias: {
       '@': path.resolve(__dirname, './src'),
       '@shared': path.resolve(__dirname, '../shared'),
