@@ -7,7 +7,7 @@ jobs:
   shared:
     runs-on: ubuntu-latest
     container:
-      image: node:22.12
+      image: node:22.22.0
     steps:
       - uses: actions/checkout@v4
       - run: npm ci
@@ -16,7 +16,7 @@ jobs:
   frontend:
     runs-on: ubuntu-latest
     container:
-      image: node:22.12
+      image: node:22.22.0
     steps:
       - uses: actions/checkout@v4
       - run: npm ci
@@ -30,7 +30,7 @@ jobs:
   backend:
     runs-on: ubuntu-latest
     container:
-      image: node:22.12
+      image: node:22.22.0
     steps:
       - uses: actions/checkout@v4
       - run: npm ci
