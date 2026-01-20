@@ -82,7 +82,9 @@ project-root/
 ### 起動方法
 
 # 開発環境の起動（フロント・バック・DB・Redis全て起動）
+```bash
 docker-compose -f docker-compose.dev.yml up --build -d
+```
 
 ### アクセスURL
 
@@ -92,12 +94,14 @@ docker-compose -f docker-compose.dev.yml up --build -d
 - **バックエンドAPI**: http://localhost:3001
 
 ### 停止方法
-
+```bash
 # 停止
 docker-compose -f docker-compose.dev.yml down
 
 # ログ確認
 docker-compose -f docker-compose.dev.yml logs -f
+```
+
 
 ## 環境変数
 
@@ -122,27 +126,49 @@ TODO
 ### ポートが既に使用されている
 
 # 使用中のポートを確認
+### ポートが既に使用されている
+
+**macOS / Linux:**
+```bash
+# 使用中のポートを確認
 lsof -i :5173
 lsof -i :3001
 
 # プロセスを停止
 kill -9 <PID>
+```
+
+**windows:**
+```shell
+netstat -ano | findstr :5173
+netstat -ano | findstr :3001
+
+# プロセスを停止
+taskkill /PID <PID> /F
+```
+
 
 ### Dockerコンテナが起動しない
 
+```bash
 # ログを確認
 docker-compose -f docker-compose.dev.yml logs -f
 
 # コンテナを再ビルド
 docker-compose -f docker-compose.dev.yml up --build -d
-
+```
 ### データベースをリセットしたい
 
 # バックエンドコンテナに入る
+```bash
 docker-compose -f docker-compose.dev.yml exec backend sh
+```
+※自分はA5M2使ってます。
 
 # データベースリセット（開発環境のみ）
+```bash
 npx prisma migrate reset
+```
 
 ## ライセンス
 
