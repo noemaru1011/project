@@ -62,6 +62,10 @@
 - PostgreSQL
 - Redis
 - Docker / Docker Compose
+  
+### テスト
+- vitest
+- Playwright
 
 ## プロジェクト構成
 
