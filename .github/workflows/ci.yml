@@ -10,53 +10,50 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # --- checkout ---
       - name: Checkout
         uses: actions/checkout@v4
 
-      # --- node ---
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # --- frontend install ---
+      # --- frontend ---
       - name: Install frontend dependencies
-        working-directory: project/frontend
+        working-directory: frontend
         run: npm ci
 
-      # --- backend install ---
+      # --- backend ---
       - name: Install backend dependencies
-        working-directory: project/backend
+        working-directory: backend
         run: npm ci
 
       # --- shared ---
       - name: Shared tests (vitest)
-        working-directory: project
         run: npx vitest run shared
 
       # --- frontend ---
       - name: Frontend unit tests
-        working-directory: project/frontend
+        working-directory: frontend
         run: npm run test:unit
 
       - name: Frontend e2e tests
-        working-directory: project/frontend
+        working-directory: frontend
         run: npm run test:e2e
 
       - name: Frontend typecheck & build
-        working-directory: project/frontend
+        working-directory: frontend
         run: |
           tsc -b
           vite build
 
       # --- backend ---
       - name: Backend unit tests
-        working-directory: project/backend
+        working-directory: backend
         run: npm run test:unit
 
       - name: Backend typecheck & build
-        working-directory: project/backend
+        working-directory: backend
         run: |
           tsc -b
           vite build
