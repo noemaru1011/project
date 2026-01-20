@@ -9,13 +9,29 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
         with:
           clean: true
           persist-credentials: true
+      
+      - name: Debug - List files
+        run: |
+          pwd
+          ls -la
+          echo "--- Checking package-lock.json ---"
+          if [ -f package-lock.json ]; then
+            echo "✅ Found package-lock.json"
+            ls -lh package-lock.json
+          else
+            echo "❌ package-lock.json NOT FOUND"
+            echo "Files in directory:"
+            ls -la
+          fi
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
           node-version: 20
-      # --- install (workspace root) ---
+      
       - name: Install dependencies (workspaces)
         run: npm ci
       # --- shared ---
