@@ -37,14 +37,6 @@ export const APIMESSAGE = {
 
 フロントエンド・バックエンド両方で使用する共通の型定義
 
-例:
-export type User = {
-  id: number;
-  email: string;
-  name: string;
-  role: 'admin' | 'user';
-};
-
 #### Zodスキーマ
 
 **フロントエンド用スキーマ:**
@@ -52,59 +44,10 @@ export type User = {
 - 基本的に文字列型
 - 必須チェック、文字数制限など
 
-例:
-export const UserSchemaFront = z.object({
-  email: z.string().email('メールアドレスの形式が正しくありません'),
-  name: z.string().min(1, '名前は必須です').max(50, '名前は50文字以内です'),
-});
-
 **バックエンド用スキーマ:**
 - DB型に合わせた型変換
 - より厳密なバリデーション
 - FK違反、重複制約違反などのDB単位のエラーはServiceレイヤーで処理
-
-例:
-export const UserSchemaBack = z.object({
-  email: z.string().email().transform(v => v.toLowerCase()),
-  name: z.string().min(1).max(50),
-  age: z.string().transform(v => parseInt(v, 10)),
-});
-
-### routes/
-
-APIエンドポイントのURL定義
-
-例:
-export const API_ROUTES = {
-  USERS: '/api/users',
-  LOGIN: '/api/auth/login',
-  LOGOUT: '/api/auth/logout',
-};
-
-## 使い方
-
-### フロントエンド
-
-import { UserSchemaFront } from '@shared/models/user';
-import { API_ROUTES } from '@shared/routes';
-import { APIMESSAGE } from '@shared/constants/apiMessage';
-import type { User } from '@shared/models/user';
-
-const result = UserSchemaFront.parse(formData);
-fetch(API_ROUTES.USERS, { ... });
-toast.success(APIMESSAGE.CREATE_SUCCESS);
-
-### バックエンド
-
-import { UserSchemaBack } from '@shared/models/user';
-import { APIMESSAGE } from '@shared/constants/apiMessage';
-import { API_ROUTES } from '@shared/routes';
-
-const validatedData = UserSchemaBack.parse(req.body);
-res.json({
-  message: APIMESSAGE.CREATE_SUCCESS,
-  data: user
-});
 
 ## バリデーション戦略
 
@@ -154,3 +97,4 @@ res.json({
 
 - フロント・バック両方で使う型は必ず shared/models/ に定義
 - スキーマ変更時は、フロント・バック両方への影響を確認
+
