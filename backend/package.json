@@ -49,9 +49,8 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "test:unit": "vitest --watch",
+    "test:unit": "vitest",
     "test": "vitest run",
-    "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "dev": "nodemon --verbose -e ts,json --exec ts-node --project tsconfig.json -r tsconfig-paths/register src/server.ts",
     "lint": "eslint . --ext .ts,.js",
