@@ -9,37 +9,30 @@ jobs:
   test-and-build:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        shell: bash
-        working-directory: project
-
     steps:
+      # --- checkout ---
       - name: Checkout
         uses: actions/checkout@v4
 
+      # --- node ---
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache-dependency-path: |
-            project/frontend/package-lock.json
-            project/backend/package-lock.json
 
-      # --- install ---
-      - name: Install root dependencies
-        run: npm ci
-
+      # --- frontend install ---
       - name: Install frontend dependencies
         working-directory: project/frontend
         run: npm ci
 
+      # --- backend install ---
       - name: Install backend dependencies
         working-directory: project/backend
         run: npm ci
 
       # --- shared ---
       - name: Shared tests (vitest)
+        working-directory: project
         run: npx vitest run shared
 
       # --- frontend ---
