@@ -3,5 +3,6 @@ export default defineConfig({
   test: {
     include: ["shared/**/*.test.ts"],
     exclude: ["**/dist/**"],
+    watch: false,
   },
 });
