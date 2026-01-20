@@ -13,19 +13,16 @@ jobs:
           clean: true
           persist-credentials: true
       
-      - name: Debug - List files
+      - name: Debug - Check package-lock.json content
         run: |
-          pwd
-          ls -la
-          echo "--- Checking package-lock.json ---"
-          if [ -f package-lock.json ]; then
-            echo "✅ Found package-lock.json"
-            ls -lh package-lock.json
-          else
-            echo "❌ package-lock.json NOT FOUND"
-            echo "Files in directory:"
-            ls -la
-          fi
+          echo "=== First 30 lines of package-lock.json ==="
+          head -30 package-lock.json
+          echo ""
+          echo "=== lockfileVersion ==="
+          grep -A 2 '"lockfileVersion"' package-lock.json
+          echo ""
+          echo "=== npm version ==="
+          npm --version
       
       - name: Setup Node.js
         uses: actions/setup-node@v4
