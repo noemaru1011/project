@@ -16,7 +16,8 @@
     "resend": "^6.4.0",
     "winston": "^3.18.3",
     "winston-daily-rotate-file": "^5.0.0",
-    "zod": "^4.3.5"
+    "zod": "^4.3.5",
+    "type": "module"
   },
   "devDependencies": {
     "@types/archiver": "^7.0.0",
