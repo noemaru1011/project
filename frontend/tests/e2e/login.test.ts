@@ -23,7 +23,7 @@ test.describe('ログイン機能', () => {
 
     // Assert: 結果の確認
     // 1. ホーム画面への遷移を確認 (URLの変更)
-    await expect(page).toHaveURL('http://localhost:5173/'); // ROUTES.HOME のパスに合わせて調整
+    await expect(page).toHaveURL('/');
 
     // 2. 成功トーストの表示確認 (React-Toastifyのデフォルトクラスやテキストで判定)
     // res.message の内容が含まれているか確認
@@ -35,9 +35,10 @@ test.describe('ログイン機能', () => {
     // Act: 何も入力せずにクリック
     await page.getByRole('button', { name: 'ログイン' }).click();
 
-    // Assert: エラーメッセージ等の表示確認 (LoginFormの実装に依存)
-    // aria-invalid が true になる、もしくはエラー文言が出ることを期待
+    // Assert: エラーメッセージ等の表示確認
     const emailInput = page.locator('input[name="email"]');
+    const passwordInput = page.locator('input[name="password"]');
     await expect(emailInput).toHaveAttribute('aria-invalid', 'true');
+    await expect(passwordInput).toHaveAttribute('aria-invalid', 'true');
   });
 });

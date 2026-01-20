@@ -1,4 +1,45 @@
 {
-  "cookies": [],
-  "origins": []
+  "cookies": [
+    {
+      "name": "token",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRlYWQ1YjAxLTkwZGItNDI2ZC1iNjQ5LWRkYWFlMWE3MTQ1OSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc2ODkxNjMwNSwiZXhwIjoxNzY4OTE5OTA1fQ.bXIpHdjWtmD51TkLh8tl41_pd3Nmjwz6Rn8x5FLv49Y",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1768919905.655835,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Strict"
+    },
+    {
+      "name": "role",
+      "value": "ADMIN",
+      "domain": "localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "csrf",
+      "value": "2cfcaa31-457c-4b52-890d-3bb7a89ffcf3",
+      "domain": "localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "http://localhost:5173",
+      "localStorage": [
+        {
+          "name": "passwordUpdateRequired",
+          "value": "false"
+        }
+      ]
+    }
+  ]
 }
