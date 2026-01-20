@@ -6,21 +6,19 @@ on:
 jobs:
   shared:
     runs-on: ubuntu-latest
+    container:
+      image: node:22.2
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22.2
       - run: npm ci
       - run: npx vitest run
 
   frontend:
     runs-on: ubuntu-latest
+    container:
+      image: node:22.2
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22.2
       - run: npm ci
       - working-directory: frontend
         run: npm run test:unit
@@ -31,15 +29,14 @@ jobs:
 
   backend:
     runs-on: ubuntu-latest
+    container:
+      image: node:22.2
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22.2
       - run: npm ci
       - working-directory: backend
         run: npm run test:unit
-      - working-directory: frontend
+      - working-directory: backend
         run: |
           npx tsc -b
           npx vite build
