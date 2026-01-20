@@ -13,45 +13,43 @@ jobs:
           clean: true
           persist-credentials: true
       
-      - name: Debug - Check package-lock.json content
-        run: |
-          echo "=== First 30 lines of package-lock.json ==="
-          head -30 package-lock.json
-          echo ""
-          echo "=== lockfileVersion ==="
-          grep -A 2 '"lockfileVersion"' package-lock.json
-          echo ""
-          echo "=== npm version ==="
-          npm --version
-      
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
       
+      - name: Update npm to 11
+        run: npm install -g npm@11
+      
       - name: Install dependencies (workspaces)
         run: npm ci
+      
       # --- shared ---
       - name: Shared tests
         run: npx vitest run
+      
       # --- frontend ---
       - name: Frontend unit tests
         working-directory: frontend
-        run: npm run test:unit 
+        run: npm run test:unit
+      
       # - name: Frontend e2e tests
       #   working-directory: frontend
-      #   run: npm run test:e2e --watch=false
+      #   run: npm run test:e2e
+      
       - name: Frontend typecheck & build
         working-directory: frontend
         run: |
-          tsc -b
+          npx tsc -b
           npx vite build
+      
       # --- backend ---
       - name: Backend unit tests
         working-directory: backend
         run: npm run test:unit
+      
       - name: Backend typecheck & build
         working-directory: backend
         run: |
-          tsc -b
+          npx tsc -b
           npx vite build
