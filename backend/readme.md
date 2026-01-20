@@ -213,7 +213,9 @@ npx prisma db seed      # シードデータ投入
 
 ## テスト実行
 
+```bash
 npm run test:unit # Vitest
+```
 
 ## ログ収集
 
