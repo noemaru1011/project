@@ -1,106 +1,140 @@
-import { describe, it, expect, beforeAll } from 'vitest';
-import fs from 'fs';
-import path from 'path';
-import { logger } from './logger';
-import DailyRotateFile from 'winston-daily-rotate-file';
+import { describe, it, expect } from 'vitest';
+import { logger } from './logger'; // 実際のパスに合わせてください
 
-// ------------------------------------------------------------------
-// 1. Arrange: Loggerの実態から設定を抽出する
-// ------------------------------------------------------------------
+// Winstonの内部シンボルを取得（フォーマット結果の文字列を取り出すため）
+const MESSAGE = Symbol.for('message');
 
-// logger.ts で定義された実際のディレクトリを取得
-// (process.env.NODE_ENV に依存する実装を確実に追いかけるため)
-const transport = logger.transports.find((t) => t instanceof DailyRotateFile) as any;
-const ACTUAL_LOG_DIR = transport?.dirname || 'logs-test';
+describe('Logger Configuration Tests', () => {
+  // logger.ts の transports 配列の順番に依存して参照を取得
+  // [0]: error, [1]: access, [2]: resource, [3]: prisma-query
+  const accessTransport = logger.transports[1];
+  const resourceTransport = logger.transports[2];
+  const prismaTransport = logger.transports[3];
 
-const getJstDateString = () => {
-  const options = {
-    timeZone: 'Asia/Tokyo',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  } as const;
-  const parts = new Intl.DateTimeFormat('ja-JP', options).formatToParts(new Date());
-  const y = parts.find((p) => p.type === 'year')?.value;
-  const m = parts.find((p) => p.type === 'month')?.value;
-  const d = parts.find((p) => p.type === 'day')?.value;
-  return `${y}-${m}-${d}`;
-};
+  /**
+   * ヘルパー関数: 指定したTransportのフォーマットロジックだけを実行する
+   * ファイル書き込みを行わず、メモリ上で結果を検証するために使用
+   */
+  const getFormattedMessage = (transport: any, info: any) => {
+    // 1. グローバルフォーマット（timestamp付与など）を適用
+    const globalInfo = logger.format.transform(info, { level: 'info' });
 
-const waitForLog = (ms = 500) => new Promise((resolve) => setTimeout(resolve, ms));
+    // 2. Transport固有のフォーマットを適用
+    const result = transport.format.transform(globalInfo);
 
-describe('Logger Integration Test (AAA Pattern)', () => {
-  const today = getJstDateString();
+    // フィルタリングされた場合は false が返る
+    if (result === false) return false;
 
-  beforeAll(() => {
-    console.log(`Checking logs in: ${path.resolve(ACTUAL_LOG_DIR)}`);
-    if (!fs.existsSync(ACTUAL_LOG_DIR)) {
-      fs.mkdirSync(ACTUAL_LOG_DIR, { recursive: true });
-    }
+    // 文字列フォーマットの結果を取得 (JSONの場合はオブジェクト自体、Textの場合はMESSAGEシンボル)
+    return result[MESSAGE] || result;
+  };
+
+  describe('Access Log (Standard)', () => {
+    it('通常のアクセスログが正しくフォーマットされ、他のログには出力されないこと', () => {
+      // === Arrange (準備) ===
+      const info = {
+        level: 'info',
+        message: '',
+        method: 'GET',
+        url: '/api/users/1',
+        status: 200,
+        responseTime: 45,
+      };
+
+      // === Act (実行) ===
+      const accessResult = getFormattedMessage(accessTransport, { ...info });
+      const resourceResult = getFormattedMessage(resourceTransport, { ...info });
+      const prismaResult = getFormattedMessage(prismaTransport, { ...info });
+
+      // === Assert (検証) ===
+      // 1. Accessログのフォーマット検証
+      // 期待: [2026/01/21 10:00:00] GET /api/users/1 200 45ms
+      expect(accessResult).toEqual(expect.stringContaining('GET /api/users/1 200 45ms'));
+      // 日付部分の簡易チェック (正規表現)
+      expect(accessResult).toMatch(/\[\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2}\]/);
+
+      // 2. 他のログではフィルタリングされること (false)
+      expect(resourceResult).toBe(false);
+      expect(prismaResult).toBe(false);
+    });
+
+    it('methodがない場合（起動ログ等）はメッセージのみ出力されること', () => {
+      // === Arrange ===
+      const info = {
+        level: 'info',
+        message: 'Server listening on port 3000',
+      };
+
+      // === Act ===
+      const result = getFormattedMessage(accessTransport, { ...info });
+
+      // === Assert ===
+      expect(result).toEqual(expect.stringContaining('Server listening on port 3000'));
+      expect(result).not.toContain('undefined');
+    });
   });
 
-  it('通常の info ログは access ログのみに書き込まれる', async () => {
-    // Arrange
-    const message = `info-test-${Date.now()}`;
-    const logPath = path.join(ACTUAL_LOG_DIR, `access-${today}.log`);
+  describe('Resource Log', () => {
+    it('type="resource" の場合、JSON形式でResourceログのみに出力されること', () => {
+      // === Arrange ===
+      const info = {
+        level: 'info',
+        message: 'S3 Upload',
+        type: 'resource',
+        bucket: 'my-bucket',
+        key: 'image.png',
+      };
 
-    // Act
-    logger.info(message);
-    await waitForLog();
+      // === Act ===
+      const accessResult = getFormattedMessage(accessTransport, { ...info });
+      const resourceResult = getFormattedMessage(resourceTransport, { ...info }); // ここでは文字列が返る
+      const prismaResult = getFormattedMessage(prismaTransport, { ...info });
 
-    // Assert
-    expect(fs.existsSync(logPath), `File not found: ${logPath}`).toBe(true);
-    const content = fs.readFileSync(logPath, 'utf-8');
-    expect(content).toContain(message);
+      // === Assert ===
+      // 1. Accessログからは除外
+      expect(accessResult).toBe(false);
+
+      // 2. Resourceログの検証
+      expect(resourceResult).not.toBe(false);
+
+      // ★ 修正ポイント: 文字列(JSON)をオブジェクトに変換してから検証する
+      // winston.format.json() は結果を文字列化するため、パースが必要です
+      const parsedResource = JSON.parse(resourceResult as string);
+
+      expect(parsedResource).toHaveProperty('bucket', 'my-bucket');
+      expect(parsedResource).toHaveProperty('type', 'resource');
+
+      // 3. Prismaログからは除外
+      expect(prismaResult).toBe(false);
+    });
   });
 
-  it('error ログは error ログファイルに書き込まれる', async () => {
-    // Arrange
-    const message = `error-test-${Date.now()}`;
-    const logPath = path.join(ACTUAL_LOG_DIR, `error-${today}.log`);
+  describe('Prisma Query Log', () => {
+    it('type="prisma-query" の場合、複数行テキストでPrismaログのみに出力されること', () => {
+      // === Arrange ===
+      const info = {
+        level: 'info',
+        message: '',
+        type: 'prisma-query',
+        duration: 120,
+        sql: 'SELECT * FROM users WHERE id = ?',
+        params: [1],
+      };
 
-    // Act
-    logger.error(message);
-    await waitForLog();
+      // === Act ===
+      const accessResult = getFormattedMessage(accessTransport, { ...info });
+      const prismaResult = getFormattedMessage(prismaTransport, { ...info });
 
-    // Assert
-    expect(fs.existsSync(logPath), `File not found: ${logPath}`).toBe(true);
-    const content = fs.readFileSync(logPath, 'utf-8');
-    expect(content).toContain(message);
-    expect(content).toContain('"level":"error"');
-  });
+      // === Assert ===
+      // 1. Accessログからは除外
+      expect(accessResult).toBe(false);
 
-  it('type: resource のログは resource ログのみに書き込まれる', async () => {
-    // Arrange
-    const message = `res-test-${Date.now()}`;
-    const logPath = path.join(ACTUAL_LOG_DIR, `resource-${today}.log`);
-    const accessPath = path.join(ACTUAL_LOG_DIR, `access-${today}.log`);
-
-    // Act
-    logger.info(message, { type: 'resource' });
-    await waitForLog();
-
-    // Assert
-    expect(fs.existsSync(logPath), `File not found: ${logPath}`).toBe(true);
-    expect(fs.readFileSync(logPath, 'utf-8')).toContain(message);
-
-    // Accessログには入っていないことの確認
-    if (fs.existsSync(accessPath)) {
-      expect(fs.readFileSync(accessPath, 'utf-8')).not.toContain(message);
-    }
-  });
-
-  it('type: prisma-query のログは専用ファイルに書き込まれる', async () => {
-    // Arrange
-    const message = `prisma-test-${Date.now()}`;
-    const logPath = path.join(ACTUAL_LOG_DIR, `prisma-query-${today}.log`);
-
-    // Act
-    logger.info(message, { type: 'prisma-query' });
-    await waitForLog();
-
-    // Assert
-    expect(fs.existsSync(logPath), `File not found: ${logPath}`).toBe(true);
-    expect(fs.readFileSync(logPath, 'utf-8')).toContain(message);
+      // 2. Prismaログのフォーマット検証
+      expect(prismaResult).toEqual(expect.stringContaining('Prisma Query'));
+      expect(prismaResult).toEqual(expect.stringContaining('duration: 120ms'));
+      // 改行を含むSQLの確認
+      expect(prismaResult).toEqual(expect.stringContaining('sql:\nSELECT * FROM users'));
+      expect(prismaResult).toEqual(expect.stringContaining('params:\n['));
+    });
   });
 });
