@@ -6,17 +6,20 @@ import { logger } from '@/utils/log/logger';
 export const errorLogger = (err: unknown, req: Request, res: Response, _next: NextFunction) => {
   const userId = req.user?.id ?? 'anonymous';
 
-  if (err instanceof appError) {
-    const msg = [
-      req.method,
-      req.originalUrl,
-      `status:${err.status}`,
-      `user:${userId}`,
-      `msg:${err.message}`,
-      `stack:${err.stack}`,
-    ].join(' | ');
+  // ログ用データの共通化
+  const logDetails = {
+    method: req.method,
+    url: req.originalUrl,
+    userId,
+    stack: err instanceof Error ? err.stack : undefined,
+  };
 
-    Promise.resolve(logger.error(msg)).catch(console.error);
+  if (err instanceof appError) {
+    logger.error(err.message, {
+      ...logDetails,
+      status: err.status,
+      code: err.code,
+    });
 
     return res.status(err.status).json({
       code: err.code,
@@ -24,18 +27,9 @@ export const errorLogger = (err: unknown, req: Request, res: Response, _next: Ne
     });
   }
 
-  if (err instanceof Error) {
-    const msg = [
-      req.method,
-      req.originalUrl,
-      `status:500`,
-      `user:${userId}`,
-      `msg:${err.message}`,
-      `stack:${err.stack}`,
-    ].join(' | ');
-
-    Promise.resolve(logger.error(msg)).catch(console.error);
-  }
+  // 予期せぬエラー
+  const message = err instanceof Error ? err.message : String(err);
+  logger.error(message, { ...logDetails, status: 500 });
 
   return res.status(500).json({
     code: 'INTERNAL_SERVER_ERROR',

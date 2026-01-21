@@ -2,15 +2,16 @@ import app from './app';
 import { logger } from '@/utils/log/logger';
 import { monitorEventLoopDelay } from 'perf_hooks';
 
-const PORT = Number(process.env.BACK_PORT);
+const PORT = Number(process.env.BACK_PORT) || 3000;
+const HOST = process.env.BACK_HOST || '0.0.0.0';
 
 // ===== プロセス監視 =====
 process.on('unhandledRejection', (reason) => {
-  logger.error('unhandledRejection', reason);
+  logger.error('unhandledRejection', { reason: String(reason) });
 });
 
 process.on('uncaughtException', (err) => {
-  logger.error('uncaughtException', err);
+  logger.error('uncaughtException', { message: err.message, stack: err.stack });
   process.exit(1);
 });
 
@@ -27,7 +28,7 @@ setInterval(() => {
   const mem = process.memoryUsage();
   const cpu = process.cpuUsage();
 
-  logger.info({
+  logger.info('system_resource', {
     type: 'resource',
     rss: mem.rss,
     heapUsed: mem.heapUsed,
@@ -39,9 +40,6 @@ setInterval(() => {
 }, 30_000);
 
 // ===== サーバー起動 =====
-const HOST = process.env.BACK_HOST || '0.0.0.0';
-
 app.listen(PORT, HOST, () => {
-  logger.info(`Backend running: ${process.env.BACK_URL}`);
-  logger.info(`Listening on ${HOST}:${PORT}`);
+  logger.info(`Backend running: ${process.env.BACK_URL || `http://${HOST}:${PORT}`}`);
 });
