@@ -1,6 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "module": "NodeNext",
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
@@ -9,7 +10,7 @@
     },
 
     "types": ["node"],
-    "moduleResolution": "Node",
+    "moduleResolution": "NodeNext",
     "esModuleInterop": true
   },
   "include": ["src", "../shared"]
