@@ -1,4 +1,4 @@
-import app from '@/app.js';
+import app from './app.js';
 import { logger } from '@/utils/log/logger';
 import { monitorEventLoopDelay } from 'perf_hooks';
 
