@@ -1,7 +1,7 @@
 # ==========================================
 # 1. Base Stage (共通のベース環境)
 # ==========================================
-FROM node:22.2-slim AS base
+FROM node:22.22.0-slim AS base
 
 # Prismaに必要なシステムライブラリをインストール
 RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
@@ -17,6 +17,7 @@ FROM base AS dependencies
 COPY package.json package-lock.json tsconfig.json ./
 COPY backend/package.json backend/package-lock.json backend/tsconfig.json ./backend/
 COPY shared ./shared
+COPY backend/prisma ./backend/prisma
 
 # 依存関係のインストール
 RUN npm ci
