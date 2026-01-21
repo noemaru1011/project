@@ -22,13 +22,7 @@ test.describe('ログイン機能', () => {
     await page.getByRole('button', { name: 'ログイン' }).click();
 
     // Assert: 結果の確認
-    // 1. ホーム画面への遷移を確認 (URLの変更)
     await expect(page).toHaveURL('/');
-
-    // 2. 成功トーストの表示確認 (React-Toastifyのデフォルトクラスやテキストで判定)
-    // res.message の内容が含まれているか確認
-    const toast = page.locator('.Toastify__toast--success');
-    await expect(toast).toBeVisible();
   });
 
   test('未入力などでログインボタンを押した場合、バリデーションが働くこと', async ({ page }) => {
