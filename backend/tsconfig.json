@@ -10,7 +10,7 @@
     },
 
     "types": ["node"],
-    "moduleResolution": "Node",
+    "moduleResolution": "NodeNext",
     "esModuleInterop": true
   },
   "include": ["src", "../shared"]
