@@ -58,7 +58,18 @@ export const logger = winston.createLogger({
       datePattern: 'YYYY-MM-DD',
       level: 'info',
       maxFiles: '14d',
-      format: winston.format((info) => (info.type === 'prisma-query' ? info : false))(),
+      format: winston.format.combine(
+        winston.format((info) => (info.type === 'prisma-query' ? info : false))(),
+        winston.format.printf((info) => {
+          // より読みやすい形式
+          return JSON.stringify({
+            timestamp: info.timestamp,
+            duration: `${info.duration}ms`,
+            sql: info.sql,
+            params: info.params,
+          }, null, 2);
+        }),
+      ),
     }),
   ],
 });

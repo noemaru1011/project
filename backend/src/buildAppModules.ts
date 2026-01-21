@@ -32,7 +32,16 @@ prisma.$on('query', (e) => {
         password: p.password ? '***' : p.password,
       })),
     );
-  } catch {}
+  } catch(error) {
+    // パースエラー時はそのまま出力
+    logger.info('Prisma query executed', {
+      type: 'prisma-query',
+      sql: e.query,
+      params: e.params,
+      duration: e.duration,
+      timestamp: e.timestamp,
+    });
+  }
 
   logger.info('Prisma query executed', {
     type: 'prisma-query',
