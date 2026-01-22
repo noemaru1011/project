@@ -16,12 +16,9 @@ Docker Composeが自動的に `.env.dev` を読み込むため、特別な設定
 
 ## 環境変数一覧
 
-### 環境変数一覧
-
-#### Database (PostgreSQL)
+### Database (PostgreSQL)
 
 | 変数名 | 説明 | デフォルト値 |
-|--------|------|------------|
 | `POSTGRES_USER` | PostgreSQLユーザー名 | `postgres` |
 | `POSTGRES_PASSWORD` | PostgreSQLパスワード | `postgres` |
 | `POSTGRES_DB` | データベース名 | `postgres` |
@@ -32,13 +29,11 @@ Docker Composeが自動的に `.env.dev` を読み込むため、特別な設定
 #### Redis
 
 | 変数名 | 説明 | デフォルト値 |
-|--------|------|------------|
 | `REDIS_URL` | Redis接続文字列 | `redis://redis:6379` |
 
 #### Backend
 
 | 変数名 | 説明 | 必須 | デフォルト値 |
-|--------|------|------|------------|
 | `NODE_ENV` | 実行環境 | ✅ | `development` |
 | `JWT_SECRET` | JWT署名用シークレットキー | ✅ | 任意の文字列を設定 |
 | `RESEND_API_KEY` | Resend APIキー | ✅ | [Resend](https://resend.com)で取得 |
@@ -49,14 +44,12 @@ Docker Composeが自動的に `.env.dev` を読み込むため、特別な設定
 #### Frontend
 
 | 変数名 | 説明 | 必須 | デフォルト値 |
-|--------|------|------|------------|
 | `VITE_API_BASE_URL` | バックエンドAPIのベースURL | ✅ | `http://localhost:3001` |
 | `FRONT_URL` | フロントエンドURL | ✅ | `http://localhost:5173` |
 
 #### Docker Compose Host Ports
 
 | 変数名 | 説明 | デフォルト値 |
-|--------|------|------------|
 | `HOST_DB_PORT` | ホストマシンからアクセスするDBポート | `5433` |
 | `HOST_BACKEND_PORT` | ホストマシンからアクセスするバックエンドポート | `3001` |
 | `HOST_REDIS_PORT` | ホストマシンからアクセスするRedisポート | `6378` |
@@ -65,8 +58,8 @@ Docker Composeが自動的に `.env.dev` を読み込むため、特別な設定
 
 開発環境起動後、以下のURLでアクセスできます：
 
-- **フロントエンド**: http://localhost:5173
-- **バックエンドAPI**: http://localhost:3001
+- **フロントエンド**: `http://localhost:5173`
+- **バックエンドAPI**: `http://localhost:3001`
 - **PostgreSQL**: `localhost:5433`（ホストマシンから）
 - **Redis**: `localhost:6378`（ホストマシンから）
 
