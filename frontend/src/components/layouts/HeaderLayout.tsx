@@ -6,7 +6,7 @@ import { useLogout } from '@/features/auth/hooks/useLogout';
 import { useLogDownload } from '@/features/auth/hooks/useLogDownload';
 import { ROUTES } from '@/routes/routes';
 import { headerOptions } from '@/components/ui/option';
-import { handleApiError, downloadBlob } from '@/utils';
+import { handleApiErrorWithUI, downloadBlob } from '@/utils';
 import { usePasswordUpdateContext } from '@/contexts/passwordUpdateContext';
 import { useAuth } from '@/contexts/authContext';
 
@@ -26,11 +26,7 @@ export const HeaderLayout = () => {
       toast.success(res.message);
       navigate(ROUTES.AUTH.LOGIN);
     } catch (err) {
-      const error = handleApiError(err);
-      toast.error(error.message);
-      if (error.redirectTo) {
-        navigate(error.redirectTo);
-      }
+      handleApiErrorWithUI(err, navigate);
     }
   };
 
@@ -39,11 +35,7 @@ export const HeaderLayout = () => {
       const blob = await logDownload();
       downloadBlob(blob, 'logs.zip');
     } catch (err) {
-      const error = handleApiError(err);
-      toast.error(error.message);
-      if (error.redirectTo) {
-        navigate(error.redirectTo);
-      }
+      handleApiErrorWithUI(err, navigate);
     }
   };
   const options = headerOptions.map((opt) => {
