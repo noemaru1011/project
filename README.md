@@ -41,6 +41,8 @@
 
 ## 技術スタック
 
+- Node.js(v22.22.0)
+
 ### フロントエンド
 
 - React + Vite
@@ -64,6 +66,7 @@
 - Docker / Docker Compose
   
 ### テスト
+
 - vitest
 - Playwright
 
