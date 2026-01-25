@@ -26,9 +26,10 @@ export class HistoryController {
 
   searchByStartTimeHistories = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const datetimeStr = req.query.datetime as string;
-
-      const query = new Date(datetimeStr);
+      // validateQueryで既にDateオブジェクトに変換されている
+      // req.queryはParsedQs型だが、実際にはHistoryServerSearchInput型のデータが入っている
+      const validatedQuery = req.query as unknown as { datetime: Date };
+      const query = validatedQuery.datetime;
 
       const histories = await this.historyService.searchByStartTimeHistories(query);
       return res.status(200).json({
