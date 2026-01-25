@@ -7,6 +7,7 @@ import type {
   AggregationData,
 } from '@shared/models/history';
 import type { StudentSearchInput } from '@shared/models/student';
+import type { PaginatedResponse } from '@shared/models/common';
 import { API_ROUTES } from '@shared/routes/routes';
 
 export const historyApi = {
@@ -27,7 +28,7 @@ export const historyApi = {
   delete: (id: string) => api<void>(`${API_ROUTES.HISTORY}/${id}`, { method: 'DELETE' }),
 
   search: (query: StudentSearchInput) =>
-    api<HistorySummary[]>(API_ROUTES.HISTORY_SEARCH, {
+    api<PaginatedResponse<HistorySummary>>(API_ROUTES.HISTORY_SEARCH, {
       method: 'POST',
       body: JSON.stringify(query),
     }),

@@ -48,6 +48,8 @@ export class HistoryRepository extends BaseRepository {
     minorCategoryIds?: number[] | undefined;
     departmentIds?: number[] | undefined;
     grades?: number[] | undefined;
+    page?: number;
+    limit?: number;
   }) {
     const where: Prisma.HistoryWhereInput = {
       student: {
@@ -58,6 +60,10 @@ export class HistoryRepository extends BaseRepository {
         ...(data.grades?.length ? { grade: { in: data.grades } } : {}),
       },
     };
+
+    const page = data.page ?? 1;
+    const limit = data.limit ?? 10;
+    const skip = (page - 1) * limit;
 
     return await this.prisma.history.findMany({
       where,
@@ -91,7 +97,27 @@ export class HistoryRepository extends BaseRepository {
         startTime: true,
         endTime: true,
       },
+      skip,
+      take: limit,
     });
+  }
+
+  async countSearch(data: {
+    minorCategoryIds?: number[] | undefined;
+    departmentIds?: number[] | undefined;
+    grades?: number[] | undefined;
+  }): Promise<number> {
+    const where: Prisma.HistoryWhereInput = {
+      student: {
+        ...(data.minorCategoryIds?.length
+          ? { minorCategoryId: { in: data.minorCategoryIds } }
+          : {}),
+        ...(data.departmentIds?.length ? { departmentId: { in: data.departmentIds } } : {}),
+        ...(data.grades?.length ? { grade: { in: data.grades } } : {}),
+      },
+    };
+
+    return await this.prisma.history.count({ where });
   }
 
   async searchByStartTime(query: Date) {

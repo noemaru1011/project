@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { HistoryService } from '@/features/history/service/historyService';
-import type { ApiBody } from '@shared/models/common';
+import type { ApiBody, PaginatedResponse } from '@shared/models/common';
 import type { HistoryResponse, HistorySummary } from '@shared/models/history';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
 
@@ -9,14 +9,14 @@ export class HistoryController {
 
   searchHistories = async (
     req: Request,
-    res: Response<ApiBody<HistorySummary[]>>,
+    res: Response<ApiBody<PaginatedResponse<HistorySummary>>>,
     next: NextFunction,
   ) => {
     try {
-      const histories = await this.historyService.searchHistories(req.body);
+      const result = await this.historyService.searchHistories(req.body);
       return res.status(200).json({
         code: 'FETCH_SUCCESS',
-        data: histories,
+        data: result,
         message: APIMESSAGE.FETCH_SUCCESS,
       });
     } catch (error) {

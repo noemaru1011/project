@@ -15,6 +15,7 @@ import type {
   StudentServerUpdateInput,
   StudentServerSearchInput,
 } from '@shared/models/student';
+import type { PaginatedResponse } from '@shared/models/common';
 
 export class StudentService {
   constructor(
@@ -126,22 +127,44 @@ export class StudentService {
     }
   }
 
-  async searchStudents(data: StudentServerSearchInput): Promise<StudentSummary[]> {
+  async searchStudents(data: StudentServerSearchInput): Promise<PaginatedResponse<StudentSummary>> {
     //大分類、中分類を小分類に変換
     const minorCategoryIds = await this.minorCategoryRepo.resolveMinorCategoryIds(data);
 
-    const students = await this.studentRepo.search({
-      minorCategoryIds,
-      departmentIds: data.departmentIds,
-      grades: data.grades,
-    });
+    const page = data.page ?? 1;
+    const limit = data.limit ?? 10;
 
-    return students.map((student) => ({
-      studentId: student.studentId.toString(),
-      studentName: student.studentName,
-      grade: student.grade.toString(),
-      departmentName: student.department.departmentName,
-      minorCategoryName: student.minorCategory.minorCategoryName,
-    }));
+    const [students, total] = await Promise.all([
+      this.studentRepo.search({
+        minorCategoryIds,
+        departmentIds: data.departmentIds,
+        grades: data.grades,
+        page,
+        limit,
+      }),
+      this.studentRepo.countSearch({
+        minorCategoryIds,
+        departmentIds: data.departmentIds,
+        grades: data.grades,
+      }),
+    ]);
+
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      data: students.map((student) => ({
+        studentId: student.studentId.toString(),
+        studentName: student.studentName,
+        grade: student.grade.toString(),
+        departmentName: student.department.departmentName,
+        minorCategoryName: student.minorCategory.minorCategoryName,
+      })),
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages,
+      },
+    };
   }
 }

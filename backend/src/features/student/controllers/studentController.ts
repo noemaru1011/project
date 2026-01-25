@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { StudentService } from '@/features/student/services/studentService';
-import type { ApiBody } from '@shared/models/common';
+import type { ApiBody, PaginatedResponse } from '@shared/models/common';
 import type { StudentResponse, StudentSummary } from '@shared/models/student';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
 
@@ -30,14 +30,14 @@ export class StudentController {
 
   searchStudents = async (
     req: Request,
-    res: Response<ApiBody<StudentSummary[]>>,
+    res: Response<ApiBody<PaginatedResponse<StudentSummary>>>,
     next: NextFunction,
   ) => {
     try {
-      const students = await this.studentService.searchStudents(req.body);
+      const result = await this.studentService.searchStudents(req.body);
       return res
         .status(200)
-        .json({ code: 'FETCH_SUCCESS', data: students, message: APIMESSAGE.FETCH_SUCCESS });
+        .json({ code: 'FETCH_SUCCESS', data: result, message: APIMESSAGE.FETCH_SUCCESS });
     } catch (error) {
       return next(error);
     }
