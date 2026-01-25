@@ -106,8 +106,6 @@ export class StudentRepository extends BaseRepository {
     minorCategoryIds?: number[] | undefined;
     departmentIds?: number[] | undefined;
     grades?: number[] | undefined;
-    page?: number;
-    limit?: number;
   }) {
     const where: Prisma.StudentWhereInput = {
       deleteFlag: false,
@@ -115,10 +113,6 @@ export class StudentRepository extends BaseRepository {
       ...(data.departmentIds?.length ? { departmentId: { in: data.departmentIds } } : {}),
       ...(data.grades?.length ? { grade: { in: data.grades } } : {}),
     };
-
-    const page = data.page ?? 1;
-    const limit = data.limit ?? 10;
-    const skip = (page - 1) * limit;
 
     return await this.prisma.student.findMany({
       where,
@@ -138,23 +132,6 @@ export class StudentRepository extends BaseRepository {
         },
       },
       orderBy: [{ minorCategory: { minorCategoryName: 'asc' } }, { grade: 'desc' }],
-      skip,
-      take: limit,
     });
-  }
-
-  async countSearch(data: {
-    minorCategoryIds?: number[] | undefined;
-    departmentIds?: number[] | undefined;
-    grades?: number[] | undefined;
-  }): Promise<number> {
-    const where: Prisma.StudentWhereInput = {
-      deleteFlag: false,
-      ...(data.minorCategoryIds?.length ? { minorCategoryId: { in: data.minorCategoryIds } } : {}),
-      ...(data.departmentIds?.length ? { departmentId: { in: data.departmentIds } } : {}),
-      ...(data.grades?.length ? { grade: { in: data.grades } } : {}),
-    };
-
-    return await this.prisma.student.count({ where });
   }
 }

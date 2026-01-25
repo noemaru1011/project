@@ -64,8 +64,6 @@ export const StudentSearchSchema = z.object({
   subCategoryIds: z.array(z.string()).optional(),
   minorCategoryIds: z.array(z.string()).optional(),
   departmentIds: z.array(z.string()).optional(),
-  page: z.coerce.number().int().min(1).optional().default(1),
-  limit: z.coerce.number().int().min(1).max(100).optional().default(10),
 });
 
 export type StudentSearchInput = z.infer<typeof StudentSearchSchema>;
@@ -76,8 +74,6 @@ export const StudentServerSearchSchema = z.object({
   subCategoryIds: z.array(z.coerce.number().int()).optional(),
   minorCategoryIds: z.array(z.coerce.number().int()).optional(),
   departmentIds: z.array(z.coerce.number().int()).optional(),
-  page: z.coerce.number().int().min(1).optional().default(1),
-  limit: z.coerce.number().int().min(1).max(100).optional().default(10),
 });
 
 export type StudentServerSearchInput = z.infer<

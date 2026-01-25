@@ -11,7 +11,6 @@ import type {
   HistorySummary,
 } from '@shared/models/history';
 import type { StudentServerSearchInput } from '@shared/models/student';
-import type { PaginatedResponse } from '@shared/models/common';
 import { StatusDuplicateError } from '@/errors/historyError';
 
 export class HistoryService {
@@ -40,48 +39,25 @@ export class HistoryService {
     };
   }
 
-  async searchHistories(data: StudentServerSearchInput): Promise<PaginatedResponse<HistorySummary>> {
+  async searchHistories(data: StudentServerSearchInput): Promise<HistorySummary[]> {
     const minorCategoryIds = await this.minorCategoryRepo.resolveMinorCategoryIds(data);
 
-    const page = data.page ?? 1;
-    const limit = data.limit ?? 10;
-
-    const [histories, total] = await Promise.all([
-      this.historyRepo.search({
-        minorCategoryIds,
-        departmentIds: data.departmentIds,
-        grades: data.grades,
-        page,
-        limit,
-      }),
-      this.historyRepo.countSearch({
-        minorCategoryIds,
-        departmentIds: data.departmentIds,
-        grades: data.grades,
-      }),
-    ]);
-
-    const totalPages = Math.ceil(total / limit);
-
-    return {
-      data: histories.map((history) => ({
-        historyId: history.historyId,
-        studentName: history.student.studentName,
-        grade: history.student.grade.toString(),
-        departmentName: history.student.department.departmentName,
-        minorCategoryName: history.student.minorCategory.minorCategoryName,
-        statusName: history.status.statusName,
-        other: history.other,
-        startTime: formatDateTime(history.startTime)!,
-        endTime: formatDateTime(history.endTime),
-      })),
-      pagination: {
-        page,
-        limit,
-        total,
-        totalPages,
-      },
-    };
+    const histories = await this.historyRepo.search({
+      minorCategoryIds,
+      departmentIds: data.departmentIds,
+      grades: data.grades,
+    });
+    return histories.map((history) => ({
+      historyId: history.historyId,
+      studentName: history.student.studentName,
+      grade: history.student.grade.toString(),
+      departmentName: history.student.department.departmentName,
+      minorCategoryName: history.student.minorCategory.minorCategoryName,
+      statusName: history.status.statusName,
+      other: history.other,
+      startTime: formatDateTime(history.startTime)!,
+      endTime: formatDateTime(history.endTime),
+    }));
   }
 
   async searchByStartTimeHistories(query: Date) {

@@ -24,24 +24,6 @@ export interface ApiErrorResponse extends ApiResponse<null> {
 }
 
 /**
- * ページング情報
- */
-export interface PaginationInfo {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-}
-
-/**
- * ページング付きレスポンス
- */
-export interface PaginatedResponse<T> {
-  data: T[];
-  pagination: PaginationInfo;
-}
-
-/**
  * 権限ロール定義
  */
 export const ROLE = {

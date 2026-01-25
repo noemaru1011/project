@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { StudentSearchForm } from '@/features/student/components/layouts/StudentSearchForm';
 import { StudentTable } from '@/features/student/components';
-import { Pagination } from '@/components/ui/Pagination/Pagination';
 import { studentApi } from '@/features/student';
 import { ROUTES } from '@/routes/routes';
 import { handleApiErrorWithUI } from '@/utils';
@@ -12,17 +11,16 @@ import type { StudentSearchInput } from '@shared/models/student';
 
 export const StudentIndexPage = () => {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useState<StudentSearchInput>({ page: 1, limit: 10 });
-  const [currentPage, setCurrentPage] = useState(1);
+  const [searchParams, setSearchParams] = useState<StudentSearchInput>({});
 
   const {
     data: response,
     isLoading,
     isFetching,
   } = useQuery({
-    queryKey: ['students', searchParams, currentPage],
+    queryKey: ['students', searchParams],
     queryFn: async () => {
-      const res = await studentApi.search({ ...searchParams, page: currentPage, limit: 10 });
+      const res = await studentApi.search(searchParams);
       if (searchParams) {
         toast.info(res.message);
       }
@@ -33,16 +31,10 @@ export const StudentIndexPage = () => {
     },
   });
 
-  const students = response?.data?.data ?? [];
-  const pagination = response?.data?.pagination;
+  const students = response?.data ?? [];
 
   const handleSearch = (query: StudentSearchInput) => {
-    setSearchParams({ ...query, page: 1, limit: 10 });
-    setCurrentPage(1);
-  };
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
+    setSearchParams(query);
   };
 
   return (
@@ -58,13 +50,6 @@ export const StudentIndexPage = () => {
         data={students}
         actions={['Update', 'Read', 'Delete']}
       />
-      {pagination && pagination.totalPages > 0 && (
-        <Pagination
-          pagination={pagination}
-          onPageChange={handlePageChange}
-          disabled={isLoading || isFetching}
-        />
-      )}
     </div>
   );
 };

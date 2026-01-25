@@ -6,7 +6,6 @@ import type {
   StudentSearchInput,
   StudentSummary,
 } from '@shared/models/student';
-import type { PaginatedResponse } from '@shared/models/common';
 import { API_ROUTES } from '@shared/routes/routes';
 
 export const studentApi = {
@@ -30,7 +29,7 @@ export const studentApi = {
   view: (id: string) => api<StudentResponse>(`${API_ROUTES.STUDENT}/${id}`, { method: 'GET' }),
 
   search: (query: StudentSearchInput) =>
-    api<PaginatedResponse<StudentSummary>>(API_ROUTES.STUDENT_SEARCH, {
+    api<StudentSummary[]>(API_ROUTES.STUDENT_SEARCH, {
       method: 'POST',
       body: JSON.stringify(query),
     }),
