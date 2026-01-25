@@ -69,7 +69,7 @@ export const HistorySearchSchema = z.object({
 export type HistorySearchInput = z.infer<typeof HistorySearchSchema>;
 
 export const HistoryServerSearchSchema = z.object({
-  query: z.coerce.date(),
+  datetime: z.coerce.date(),
 });
 
 export type HistoryServerSearchInput = z.infer<
