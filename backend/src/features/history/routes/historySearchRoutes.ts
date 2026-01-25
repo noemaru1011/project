@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { historyController } from '@/buildAppModules';
-import { validateBody } from '@/middleware/validateMiddleware';
+import { validateBody, validateQuery } from '@/middleware/validateMiddleware';
 import { StudentServerSearchSchema } from '@shared/models/student';
 import { HistoryServerSearchSchema } from '@shared/models/history';
 import { csrfMiddleware } from '@/middleware';
@@ -16,7 +16,7 @@ router.post(
 
 router.get(
   '/',
-  validateBody(HistoryServerSearchSchema),
+  validateQuery(HistoryServerSearchSchema),
   historyController.searchByStartTimeHistories,
 );
 
