@@ -6,21 +6,24 @@
 
 ## 技術スタック
 
+- Node.js(v22.22.0)
+
 ### 主要ライブラリ
 
-| カテゴリ         | ライブラリ                                 | 用途                                                                     |
-| ---------------- | ------------------------------------------ | ------------------------------------------------------------------------ |
-| **ルーティング** | React Router (`react-router-dom`)          | ページ遷移の管理                                                         |
-| **状態管理**     | `useState` / `useContext` / TanStack Query | ローカル状態、グローバル状態（パスワード変更フラグ等）、サーバー状態管理 |
-| **フォーム**     | React Hook Form + Zod                      | フォーム制御とバリデーション(sharedにスキーマ定義)                       |
-| **スタイリング** | Tailwind CSS                               | ユーティリティファーストCSS                                              |
-| **テスト**       | Vitest / Playwright                        | ユニットテスト / E2Eテスト                                               |
-| **UIカタログ**   | Storybook                                  | コンポーネントの可視化・管理                                             |
+| カテゴリ         | ライブラリ                                 | 用途                                                                           |
+| ---------------- | ------------------------------------------ | ------------------------------------------------------------------------------ |
+| **ルーティング** | React Router (`react-router-dom`)          | ページ遷移の管理                                                               |
+| **状態管理**     | `useState` / `useContext` / TanStack Query | ローカル状態、グローバル状態（パスワード変更促進フラグなど）、サーバー状態管理 |
+| **フォーム**     | React Hook Form + Zod                      | フォーム制御とバリデーション(sharedにスキーマ定義)                             |
+| **スタイリング** | Tailwind CSS                               | ユーティリティファーストCSS                                                    |
+| **テスト**       | Vitest / Playwright                        | ユニットテスト / E2Eテスト                                                     |
+| **UIカタログ**   | Storybook                                  | コンポーネントの可視化・管理                                                   |
 
 ### 状態管理の使い分け
 
 - **useState**: コンポーネント内のローカル状態(基本的にReact Hook Formが行う)
-- **useContext**: パスワード変更促進フラグ、ログインユーザーのロール管理
+- **useContext**: パスワード変更促進フラグ、ログインユーザーのロール管理(複数画面・UI制御)
+  ※ useContext ではサーバー同期が必要な状態は管理しない
 - **TanStack Query**: マスタデータの取得、データ操作（CRUD）
 
 ## ディレクトリ構成
@@ -34,8 +37,8 @@
     - UI: Button / Input など（Storybook管理）
     - Layouts: レイアウト系（Storybook管理）
   - contexts
-    - auth: ログインユーザー情報
-    - passwordUpdateContext: パスワード変更フラグ
+    - auth: ログインユーザー情報(サーバーにリクエストしない画面をUXとして制御する用)
+    - passwordUpdateContext: パスワード変更促進フラグ(初期パスワードのままや30日パスワードを変更していない場合!マークを出す用)
   - features
     - feature-name
       - pages: 画面コンポーネント
@@ -43,7 +46,7 @@
       - api: API呼び出し
       - hooks: カスタムフック
       - constants: 定数
-  - pages
+  - pages※ pages は feature に属さない共通・例外的ページのみを配置
     - Home
     - Error
   - routes: ルーティング定義
@@ -54,6 +57,8 @@
   - App.tsx
   - index.css
   - main.tsx
+
+※環境変数はプロジェクト直下の `.env.example` を参照
 
 ## 設計方針
 
@@ -79,7 +84,7 @@
 ### エラーハンドリング
 
 - `utils/handleApiError` で一元管理し、適切なエラーページ（404, 403, 500）へ遷移
-- `utils/authErrorGenerate` でサーバーへリクエストしない祭もUX的に、制御する
+- `utils/authErrorGenerate` でサーバーへリクエストしない際もUX的に、制御する
 
 ## 単体テスト戦略
 
@@ -122,6 +127,9 @@
 
 ```bash
 
+# 開発サーバー起動(詳しくはプロジェクトのREADME参照)
+docker-compose -f docker-compose.dev.yml up --build -d
+
 # Storybook起動
 npm run storybook
 
@@ -129,3 +137,12 @@ npm run storybook
 npm run test:unit          # Vitest
 npm run test:e2e      # Playwright
 ```
+
+## 追加開発
+
+### 新規画面追加手順（例）
+
+1. features/{feature-name}/pages に画面を作成
+2. 必要に応じて features/{feature-name}/apiやutils を作成
+3. サーバー通信は TanStack Query + カスタムフックで実装
+4. routes/ にルーティングを追加

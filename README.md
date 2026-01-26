@@ -2,7 +2,7 @@
 
 ## 概要
 
-大学時代の学生寮のシステムをWebアプリケーションとして再現したプロジェクトです。
+大学時代の学生寮のシステムをWebアプリケーションとして再現した個人プロジェクトです。
 
 ### プロジェクトの目的
 
@@ -26,6 +26,7 @@
 - **どの状態**: ステータス（病気休暇、停学など）
 
 **例:**
+
 > 第3大隊学生寮の住吉さんが、12月1日から12月10日（未定）の間、○○病院で、病気休暇中
 
 ### 組織構造
@@ -43,7 +44,7 @@
 
 ## 技術スタック
 
-- Node.js(v22.22.0)
+- Node.js(verは各README参照)
 
 ### フロントエンド
 
@@ -67,7 +68,7 @@
 - PostgreSQL
 - Redis
 - Docker / Docker Compose
-  
+
 ### テスト
 
 - vitest
@@ -77,10 +78,10 @@
 
 project-root/
 
-- frontend/          # フロントエンド
-- backend/           # バックエンド
-- shared/            # 共通型定義・Zodスキーマ
-- envs/              # 環境変数
+- frontend/ # フロントエンド
+- backend/ # バックエンド
+- shared/ # 共通型定義・Zodスキーマ
+- envs/ # 環境変数
 - docker-compose.dev.yml
 
 各ディレクトリの詳細は、それぞれのREADMEを参照してください：
@@ -99,7 +100,7 @@ project-root/
 
 ### 起動方法
 
-## 開発環境の起動（フロント・バック・DB・Redis全て起動）
+#### 開発環境の起動（フロント・バック・DB・Redis全て起動）
 
 ```bash
 docker-compose -f docker-compose.dev.yml up --build -d
@@ -130,7 +131,8 @@ docker-compose -f docker-compose.dev.yml logs -f
 
 ### アーキテクチャ
 
-TODO
+フロントエンド・バックエンドは分離構成とし、REST APIで通信します。
+詳細は backend/README.md を参照してください。
 
 詳細な認証フローやAPI仕様は [backend/README.md](./backend/README.md) を参照してください。
 
