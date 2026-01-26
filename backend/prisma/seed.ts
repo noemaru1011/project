@@ -202,7 +202,7 @@ async function main() {
   const histories: any[] = [];
 
   const FIXED_START = new Date('2026-01-01T09:00:00+09:00');
-  const FIXED_END = new Date('2026-01-10T15:00:00+09:00');
+  const FIXED_END = new Date('2026-01-31T17:00:00+09:00');
 
   // 学生リストをシャッフルして、ランダムに履歴を作成する（全学生の約30%に履歴を持たせる）
   const shuffledStudents = [...students].sort(() => Math.random() - 0.5);
