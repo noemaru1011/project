@@ -41,8 +41,8 @@
     - passwordUpdateContext: パスワード変更促進フラグ(初期パスワードのままや30日パスワードを変更していない場合!マークを出す用)
   - features
     - feature-name
-      - pages: 画面コンポーネント
-      - components: 機能専用UI
+      - pages: 画面
+      - components: 機能専用UI/Layoutコンポーネント
       - api: API呼び出し
       - hooks: カスタムフック
       - constants: 定数
@@ -65,8 +65,9 @@
 ### API通信
 
 - `api/` ディレクトリの汎用関数を使用
-- APIパス、HTTPメソッド、リクエストボディを指定して呼び出し
+- 各featuresでAPIパス、HTTPメソッド、リクエストボディを指定して呼び出し
 - CSRF トークンと JWT は自動で付与
+- レスポンスが不正な時も、対応できる(サーバーに繋がらない時やJSONが壊れた時など)
 - **制限事項**: JSON形式のみ対応（ZIPファイル等のバイナリダウンロードは非対応）
 
 ### フォーム管理
@@ -76,15 +77,18 @@
 
 ### カスタムフック
 
-基本的に TanStack Query を使用するが、以下の場合は独自フックを作成：
+基本的に TanStack Query を使用し、page内でAPIを呼ぶが、以下の場合は独自フックを作成し、pageの可読性や保守性を上げる：
 
-- Context の同時操作が必要な場合
+- Context を同時に操作が必要な場合
 - 副作用が複雑な場合
 
 ### エラーハンドリング
 
 - `utils/handleApiError` で一元管理し、適切なエラーページ（404, 403, 500）へ遷移
-- `utils/authErrorGenerate` でサーバーへリクエストしない際もUX的に、制御する
+- `utils/authErrorGenerate` でサーバーへリクエストしない際もUX的に、制御する(authContextを用いる)
+
+## 各画面の解説
+TODO
 
 ## 単体テスト戦略
 
