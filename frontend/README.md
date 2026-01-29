@@ -44,7 +44,7 @@
     - feature-name
       - pages: 画面
       - components: 機能専用UI/Layoutコンポーネント
-      - api: API呼び出し
+      - api: APIのパス、型、httpメソッドなどを定義
       - hooks: カスタムフック
       - constants: 定数
   - pages※ pages は feature に属さない共通・例外的ページのみを配置
@@ -109,18 +109,22 @@
 - テーブルのthタグなどの定数を定義(現状それくらい)
 
 #### hooks
-- 基本的には、page内で`react-toastify`を用いてapi通信を行い、成功時、失敗時、処理中の3状態を管理する
-- しかし、`Context`の操作を伴う場合など、ロジックが複雑な場合にhooksを作成し、`react-toastify`を用いてapi通信を行う(pageの可読性や保守性を上げる)
-- また、pageがないマスタデータについても、`useMemo`や`react-toastify`を用いてapi通信を行う
+- `API 通信・副作用（react-toastify / navigation / Context 更新 / cache 操作 / Contextの更新 など）`を集約する
+- hook は「ユースケース単位」で責務を完結させ
+- 呼び出し側は handler をそのまま渡すだけにする
+- page を持たない処理（例: マスタデータ取得）も hooks として定義する
 
 #### utils
 - そのfeatures(機能)で用いる関数
 - テストのしやすさなどを考慮して、utilsにして切り出した
 
 #### page
-- 最終的な画面ページ、`react-toastify`を用いてapi通信を行い、成功時、失敗時、処理中の3状態を管理する
-- `components`や必要に応じて、`hooks`や`utils`を呼び出す
+- 最終的な画面コンポーネント
+- 状態取得・条件分岐・UI 構成に専念し、
+- API 通信や副作用の詳細は原則持たない
+- `components` を組み合わせ、必要に応じて `hooks` や `utils` を呼び出す
 
+イベントハンドラは、hooks から返される関数をそのまま渡すことを基本とする
 ### utils
 
 - `utils/handleApiError` でエラーを一元管理し、適切なエラーページ（404, 403, 500）へ遷移
