@@ -30,36 +30,53 @@
 - **TanStack Query**: マスタデータの取得、データ操作（CRUD）
 
 ## ディレクトリ構成
-
-- src
-  - api
-    - API通信の共通処理（JSONのみ）
-  - assets
-    - 画像などの静的ファイル
-  - components
-    - UI: Button / Input など（Storybook管理）
-    - Layouts: レイアウト系（Storybook管理）
-  - contexts
-  - features
-    - feature-name
-      - pages: 画面
-      - components: 機能専用UI/Layoutコンポーネント
-      - api: APIのパス、型、httpメソッドなどを定義
-      - hooks: カスタムフック
-      - constants: 定数
-  - pages※ pages は feature に属さない共通・例外的ページのみを配置
-    - Home
-    - Error
-  - routes: ルーティング定義
-  - utils
-    - handleApiError
-    - authErrorGenerate
-    - downloadBlob
-  - App.tsx
-  - index.css
-  - main.tsx
+```
+src/
+├─ api/
+│  └─ API通信の共通処理（JSONのみ）
+│
+├─ assets/
+│  └─ 画像などの静的ファイル
+│
+├─ components/
+│  ├─ UI/
+│  │  └─ Button / Input など（Storybook管理）
+│  └─ Layouts/
+│     └─ レイアウト系（Storybook管理）
+│
+├─ contexts/
+│
+├─ features/
+│  └─ feature-name/
+│     ├─ pages/
+│     │  └─ 画面
+│     ├─ components/
+│     │  └─ 機能専用UI / Layoutコンポーネント
+│     ├─ api/
+│     │  └─ src直下のapi共通処理を呼び出し、APIのパス・型・HTTPメソッド定義
+│     ├─ hooks/
+│     │  └─ カスタムフック
+│     └─ constants/
+│        └─ 定数
+│
+├─ pages/  ※ feature に属さない共通・例外的ページのみ
+│  ├─ Home/
+│  └─ Error/
+│　　　　└─  components/Layouts/ エラー画面レイアウトを呼び出す
+├─ routes/
+│  └─ ルーティング定義
+│
+├─ utils/
+│  ├─ handleApiError
+│  ├─ authErrorGenerate
+│  └─ downloadBlob
+│
+├─ App.tsx
+├─ index.css
+└─ main.tsx
 
 ※環境変数はプロジェクト直下の `.env.example` を参照
+```
 
 ## 設計方針
 
