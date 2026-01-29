@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { statusApi, statusesToOptions } from '@/features/status';
+import { statusApi } from '@/features/status';
+import { statusesToOptions } from '@/features/status/utils/mapper';
 
 export const useStatusOptions = () => {
   // 1. API 取得

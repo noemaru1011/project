@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { departmentApi, departmentsToOptions } from '@/features/department';
+import { departmentApi } from '@/features/department';
+import { departmentsToOptions } from '@/features/department/utils/mapper';
 
 export const useDepartmentOptions = () => {
   // 1. API 取得

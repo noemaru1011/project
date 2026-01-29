@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { subCategoryApi, subCategoriesToOptions } from '@/features/subCategory';
+import { subCategoryApi } from '@/features/subCategory';
+import { subCategoriesToOptions } from '@/features/subCategory/utils/mapper';
 
 export const useSubCategoryOptions = () => {
   // 1. API 取得

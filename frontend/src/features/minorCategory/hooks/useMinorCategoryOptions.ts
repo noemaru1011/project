@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { minorCategoryApi, minorCategoriesToOptions } from '@/features/minorCategory';
+import { minorCategoryApi } from '@/features/minorCategory';
+import { minorCategoriesToOptions } from '@/features/minorCategory/utils/mapper';
 
 export const useMinorCategoryOptions = () => {
   // 1. API 取得

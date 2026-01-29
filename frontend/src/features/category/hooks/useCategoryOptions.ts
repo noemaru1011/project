@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { categoryApi, categoriesToOptions } from '@/features/category';
+import { categoryApi } from '@/features/category';
+import { categoriesToOptions } from '@/features/category/utils/mapper';
 
 export const useCategoryOptions = () => {
   // 1. API 取得
