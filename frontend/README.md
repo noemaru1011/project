@@ -149,10 +149,6 @@ src/
 
 ## 単体テスト戦略
 
-### テストパターン
-
-すべての単体テストは **AAAパターン**（Arrange, Act, Assert）に従って記述
-
 ### 単体テスト対象
 
 以下の汎用的・重要度の高いモジュールを単体テストでカバー：
@@ -199,11 +195,18 @@ npm run test:unit          # Vitest
 npm run test:e2e      # Playwright
 ```
 
-## 追加開発
+## 今後の改善予定・検討事項
 
-### 新規画面追加手順（例）
+- **カスタムデータ属性を用いた画面制御**
+  - 現在は value / label をDBとマッピングしているのみ
+  - 今後は HTML のカスタムデータ属性（data-\*）と紐付けを行い、
+    hooks を用いて画面制御ロジック(イメージは、画面上での自動計算処理)などを実装してみたい
 
-1. features/{feature-name}/pages に画面を作成
-2. 必要に応じて features/{feature-name}/apiやutilsやcomponent を作成
-3. サーバー通信は TanStack Query (+ カスタムフック)で実装
-4. routes/ にルーティングを追加
+- **GET + Query Parameters による検索**
+  - 検索条件が多いため現在は POST で検索を実装している
+  - 単純な検索条件については query を用いた GET API での検索も検討(現状は1検索のみ、queryを用いている)
+
+- **Redux を用いた状態遷移管理**
+  - 当初はマスタデータ取得に Redux を使用していた
+  - サーバー状態管理としては TanStack Query が適切と判断し切り替え
+  - Redux による状態遷移設計自体は今後別途開発したい
