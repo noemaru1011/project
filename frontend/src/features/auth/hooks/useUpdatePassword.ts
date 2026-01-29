@@ -1,24 +1,32 @@
 import { useMutation } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { authApi } from '@/features/auth/api';
 import { usePasswordUpdateContext } from '@/contexts/passwordUpdateContext';
+import { ROUTES } from '@/routes/routes';
+import { handleApiErrorWithUI } from '@/utils';
 import type { PasswordUpdateInput } from '@shared/models/auth';
 
 export function useUpdatePassword() {
+  const navigate = useNavigate();
   const { setPasswordUpdateRequired } = usePasswordUpdateContext();
 
   const mutation = useMutation({
-    // 実行するAPI関数
     mutationFn: (data: PasswordUpdateInput) => authApi.updatePassword(data),
 
-    // 成功時の処理
-    onSuccess: () => {
-      // パスワード更新が完了したので、!マークを消す
+    onSuccess: (res) => {
       setPasswordUpdateRequired(false);
+      toast.success(res.message);
+      navigate(ROUTES.HOME);
+    },
+
+    onError: (err) => {
+      handleApiErrorWithUI(err, navigate);
     },
   });
 
   return {
-    update: mutation.mutateAsync,
+    submit: mutation.mutate,
     loading: mutation.isPending,
   };
 }
