@@ -40,8 +40,6 @@
     - UI: Button / Input など（Storybook管理）
     - Layouts: レイアウト系（Storybook管理）
   - contexts
-    - auth: ログインユーザー情報(サーバーにリクエストしない画面をUXとして制御する用)
-    - passwordUpdate: パスワード変更促進フラグ(初期パスワードのままや30日パスワードを変更していない場合!マークを出す用)
   - features
     - feature-name
       - pages: 画面
@@ -82,7 +80,7 @@
 - `ARIA属性`を適切に実装
 - カタログとして見れるように`Storybook`を使用
 
-### コンテクスト
+### Context
 
 #### **auth**:
 - 本プロジェクトでは、管理者アカウントと学生アカウントで利用可能なAPIおよび画面を切り分けている。たとえば学生アカウントでは、学生を新規作成する操作（＝対応するAPIの実行）は許可されない。
@@ -94,26 +92,39 @@
 - ログイン時に、学生が初期パスワードのまま、もしくは変更から30日以上経過していた場合は、パスワード変更ボタンの横に!マークが出現する
 - auth同様、ログイン時、ログアウト時や、パスワード変更変更時に状態の更新があるためコンテキストにした
 
+### features
 
-### フォーム管理
+#### api
+- page(またはhooks)で用いるapiを定義している
+- `api/`ディレクトリにある汎用関数に、、`apiのパス`、`httpメソッド`、`リクエスト・レスポンスの型(JSON)`を渡し、実装している
+- ※JSON形式のみ対応
 
-- React Hook Form でフォーム制御
-- Zod でスキーマ定義とバリデーション
+#### components
+- pageで用いるコンポーネントを定義している
+- ` components/`ディレクトリにあるUIに`props`を渡して実装している
+- `form`などのリクエストをする要素の場合は、`layouts`に `hooks form` と `zod` を用いて実装
+- `zod`は、schemaを作成し、型定義とバリエーションチェックをしている
 
-### カスタムフック
+#### constants
+- テーブルのthタグなどの定数を定義(現状それくらい)
 
-基本的に TanStack Query を使用し、page内でAPIを呼ぶが、以下の場合は独自フックを作成し、pageの可読性や保守性を上げる：
+#### hooks
+- 基本的には、page内で`react-toastify`を用いてapi通信を行い、成功時、失敗時、処理中の3状態を管理する
+- しかし、`Context`の操作を伴う場合など、ロジックが複雑な場合にhooksを作成し、`react-toastify`を用いてapi通信を行う(pageの可読性や保守性を上げる)
+- また、pageがないマスタデータについても、`useMemo`や`react-toastify`を用いてapi通信を行う
 
-- Context を同時に操作が必要な場合
-- 副作用が複雑な場合
+#### utils
+- そのfeatures(機能)で用いる関数
+- テストのしやすさなどを考慮して、utilsにして切り出した
 
-### エラーハンドリング
+#### page
+- 最終的な画面ページ、`react-toastify`を用いてapi通信を行い、成功時、失敗時、処理中の3状態を管理する
+- `components`や必要に応じて、`hooks`や`utils`を呼び出す
 
-- `utils/handleApiError` で一元管理し、適切なエラーページ（404, 403, 500）へ遷移
-- `utils/authErrorGenerate` でサーバーへリクエストしない際もUX的に、制御する(authContextを用いる)
+### utils
 
-## 各画面の解説
-TODO
+- `utils/handleApiError` でエラーを一元管理し、適切なエラーページ（404, 403, 500）へ遷移
+- `utils/authErrorGenerate` でサーバーへリクエストしない画面もUX的に、制御する(authContextを用いる)
 
 ## 単体テスト戦略
 
