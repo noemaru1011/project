@@ -1,42 +1,18 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { ROUTES } from '@/routes/routes';
 import { StudentDeleteView } from '@/features/student/components/layouts/StudentDeleteView';
-import { studentApi } from '@/features/student';
-import { handleApiErrorWithUI } from '@/utils';
-import { APIMESSAGE } from '@shared/constants/apiMessage';
+import { useDeleteStudent } from '@/features/student/hooks/useDeleteStudent';
 
 export const StudentDeletePage = () => {
   const { studentId } = useParams<{ studentId: string }>();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-
-  const { data: response, isLoading: isFetching } = useQuery({
-    queryKey: ['student', studentId],
-    queryFn: () => studentApi.view(studentId!),
-    enabled: !!studentId,
-    meta: {
-      onError: (err: any) => handleApiErrorWithUI(err, navigate),
-    },
-  });
-
-  const student = response?.data;
-
-  const deleteMutation = useMutation({
-    mutationFn: (id: string) => studentApi.delete(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['students'] });
-      toast.success(APIMESSAGE.DELETE_SUCCESS);
-      navigate(ROUTES.STUDENT.INDEX);
-    },
-    onError: (err) => handleApiErrorWithUI(err, navigate),
-  });
 
   if (!studentId) {
     return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
   }
+
+  const { student, isFetching, deleteStudent, isDeleting } = useDeleteStudent(studentId);
 
   if (isFetching) {
     return <Loading loading />;
@@ -52,9 +28,9 @@ export const StudentDeletePage = () => {
         <h2 className="text-2xl font-bold text-gray-800 text-center">学生削除</h2>
         <StudentDeleteView
           student={student}
-          onDelete={() => deleteMutation.mutate(student.studentId)}
+          onDelete={deleteStudent}
           onBack={() => navigate(ROUTES.STUDENT.INDEX)}
-          loading={deleteMutation.isPending}
+          loading={isDeleting}
         />
       </div>
     </div>

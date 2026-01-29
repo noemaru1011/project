@@ -1,32 +1,21 @@
-import { useNavigate, useParams, Navigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { ROUTES } from '@/routes/routes';
 import { StudentView } from '@/features/student/components/layouts/StudentDetailView';
-import { studentApi } from '@/features/student';
-import { handleApiErrorWithUI } from '@/utils';
+import { useViewStudent } from '@/features/student/hooks/useViewStudent';
 
 export const StudentViewPage = () => {
-  const navigate = useNavigate();
   const { studentId } = useParams<{ studentId: string }>();
-
-  const { data: response, isLoading } = useQuery({
-    queryKey: ['student', studentId],
-    queryFn: () => studentApi.view(studentId!),
-    enabled: !!studentId,
-    meta: {
-      onError: (err: any) => handleApiErrorWithUI(err, navigate),
-    },
-  });
-
-  const student = response?.data;
+  const navigate = useNavigate();
 
   if (!studentId) {
     return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
   }
 
+  const { student, isLoading } = useViewStudent(studentId);
+
   if (isLoading) {
-    return <Loading loading={isLoading} />;
+    return <Loading loading />;
   }
 
   if (!student) {
