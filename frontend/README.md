@@ -16,19 +16,18 @@
 | **ルーティング** | React Router (`react-router-dom`)          | ページ遷移の管理                                                               |
 | **状態管理**     | `useState` / `useContext` / `useMemo` / TanStack Query | ローカル状態、グローバル状態（パスワード変更促進フラグなど）、サーバー状態管理 |
 | **フォーム**     | React Hook Form + Zod                      | フォーム制御とバリデーション(sharedにスキーマ定義)                             |
-| **スタイリング** | Tailwind CSS                               | ユーティリティファーストCSS                                                    |
-| **デザイニング** | Figma                                      | UI・Layoutのデザイン開発                                                   |
+| **スタイル** | Tailwind CSS                               | ユーティリティファーストCSS                                                    |
+| **デザイン** | Figma                                      | UI・Layoutのデザイン開発                                                   |
 | **テスト**       | Vitest / Playwright                        | ユニットテスト / E2Eテスト                                                     |
 | **UIカタログ**   | Storybook                                  | コンポーネントの可視化・管理                                                   |
-| **フォーマッタ**   | Prettier                                  |簡単なルールのみ                                                   |
+| **フォーマッタ**   | Prettier                                  |セミコロンやクオーテーションなど簡単なルールのみ                                                   |
 | **リンター**   | ESLint                                  　　　| recommended程度                                                   |
 
 ### 状態管理の使い分け
 
 - **useState**: コンポーネント内のローカル状態(基本的にReact Hook Formが行う)
 - **useContext**: パスワード変更促進フラグ、ログインユーザーのロール管理(複数画面・UI制御)
-  ※ useContext ではサーバー同期が必要な状態は管理しない
-- **useMemo**: 取得したマスタデータを再レンダリングさせないため
+- **useMemo**: 取得したマスタデータなどをmemo化
 - **TanStack Query**: マスタデータの取得、データ操作（CRUD）
 
 ## ディレクトリ構成
