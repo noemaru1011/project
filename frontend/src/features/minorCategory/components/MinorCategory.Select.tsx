@@ -8,7 +8,7 @@ type Props = Omit<
 >;
 
 export const MinorCategorySelect = ({ disabled, ...rest }: Props) => {
-  const { options, loading } = useMinorCategoryOptions();
+  const { options, isLoading } = useMinorCategoryOptions();
 
   return (
     <Select
@@ -17,7 +17,7 @@ export const MinorCategorySelect = ({ disabled, ...rest }: Props) => {
       id="minorCategoryId"
       options={options}
       leftIcon={<Group className="size-4" />}
-      disabled={loading || disabled}
+      disabled={isLoading || disabled}
       required
     />
   );
