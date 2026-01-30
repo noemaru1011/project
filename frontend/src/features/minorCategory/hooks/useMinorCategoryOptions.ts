@@ -15,7 +15,7 @@ export const useMinorCategoryOptions = () => {
   const data = response?.data ?? [];
   
   // 2. マッピング
-  const options =　useMemo(() => minorCategoriesToOptions(data), [data]);
+  const options = useMemo(() => minorCategoriesToOptions(data), [data]);
 
   return { data, options, isLoading };
 };
