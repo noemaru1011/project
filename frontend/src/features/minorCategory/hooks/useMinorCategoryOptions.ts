@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { minorCategoryApi } from '@/features/minorCategory';
 import { minorCategoriesToOptions } from '@/features/minorCategory/utils/mapper';
@@ -12,8 +13,9 @@ export const useMinorCategoryOptions = () => {
   });
 
   const data = response?.data ?? [];
+  
   // 2. マッピング
-  const options = minorCategoriesToOptions(data);
+  const options =　useMemo(() => minorCategoriesToOptions(data), [data]);
 
   return { data, options, isLoading };
 };
