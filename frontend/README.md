@@ -17,6 +17,7 @@
 | **状態管理**     | `useState` / `useContext` / TanStack Query | ローカル状態、グローバル状態（パスワード変更促進フラグなど）、サーバー状態管理 |
 | **フォーム**     | React Hook Form + Zod                      | フォーム制御とバリデーション(sharedにスキーマ定義)                             |
 | **スタイリング** | Tailwind CSS                               | ユーティリティファーストCSS                                                    |
+| **デザイニング** | Figma                                      | UI・Layoutのデザイン開発                                                   |
 | **テスト**       | Vitest / Playwright                        | ユニットテスト / E2Eテスト                                                     |
 | **UIカタログ**   | Storybook                                  | コンポーネントの可視化・管理                                                   |
 | **フォーマッタ**   | Prettier                                  |簡単なルールのみ                                                   |
@@ -52,7 +53,7 @@ src/
 │     │  └─ 画面
 │     ├─ components/
 │     │  └─ 機能専用UI / Layoutコンポーネント
-│     ├─ api/
+│     ├─ api
 │     │  └─ src直下のapi共通処理を呼び出し、APIのパス・型・HTTPメソッド定義
 │     ├─ hooks/
 │     │  └─ カスタムフック
@@ -70,6 +71,7 @@ src/
 │  ├─ handleApiError
 │  ├─ authErrorGenerate
 │  └─ downloadBlob
+│  └─ pageGuard.tsx
 │
 ├─ App.tsx
 ├─ index.css
@@ -140,12 +142,14 @@ src/
 - 状態取得・条件分岐・UI 構成に専念し、
 - API 通信や副作用の詳細は原則持たない
 - `components` を組み合わせ、必要に応じて `hooks` や `utils` を呼び出す
+- イベントハンドラは、hooks から返される関数をそのまま渡すことを基本とする
 
-イベントハンドラは、hooks から返される関数をそのまま渡すことを基本とする
+
 ### utils
-
-- `utils/handleApiError` でエラーを一元管理し、適切なエラーページ（404, 403, 500）へ遷移
-- `utils/authErrorGenerate` でサーバーへリクエストしない画面もUX的に、制御する(authContextを用いる)
+- `handleApiError` でエラーを一元管理し、適切なエラーページ（404, 403, 500）へ遷移
+- `authErrorGenerate` でサーバーへリクエストしない画面もUX的に、制御する(authContextを用いる)
+- `downloadBlob`　でBlobデータのダウンロード(現状はログファイルのダウンロードのみ)
+- `pageGuard` で `App.tsx`内で、画面の権限制御
 
 ## 単体テスト戦略
 
