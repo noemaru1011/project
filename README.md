@@ -9,9 +9,9 @@
 個人開発を通じて、以下の技術習得を目指しています：
 
 - フルスタック開発（フロントエンド・バックエンド）
-- システム設計
+- システム・DB設計
 - インフラ構築
-- モダンな開発手法(GitHub Actionsやコンテナ技術など)
+- モダンな開発手法(GitHubActionsやコンテナ技術など)
 - 外部APIの使用
 
 ### 機能概要
@@ -45,12 +45,12 @@
 
 ## 技術スタック
 
-- Node.js(v22.22.0)(共通)
+- Node.js(v22.22.0)
+- TypeScript
 
 ### フロントエンド
 
 - React + Vite
-- TypeScript
 - TanStack Query
 - React Hook Form + Zod
 - Tailwind CSS
@@ -75,10 +75,20 @@
 - vitest
 - Playwright
 
+ ### フォーマッター・リンター
+
+ - Prettier
+ - ESLint
+
+### CI/CD
+
+- GitHubActions:push時の単体テスト、コンパイルを行う(改修予定)
+ 
 ## プロジェクト構成
 
 project-root/
 
+- .github/ # GitHubActions
 - frontend/ # フロントエンド
 - backend/ # バックエンド
 - shared/ # 共通型定義・Zodスキーマ
@@ -132,7 +142,7 @@ docker-compose -f docker-compose.dev.yml logs -f
 
 ### アーキテクチャ
 
-フロントエンド・バックエンドは分離構成とし、REST APIで通信します。
+フロントエンド・バックエンドは分離構成とし、RESTful APIで通信します。
 詳細は backend/README.md を参照してください。
 詳細な認証フローやAPI仕様は [backend/README.md](./backend/README.md) を参照してください。
 
@@ -194,22 +204,6 @@ npx prisma migrate reset
 Private（個人開発プロジェクト）
 
 ## 今後の改善予定・検討事項
-
-### フロントエンド改善予定
-
-- **カスタムデータ属性を用いた画面制御**
-  - 現在は value / label をDBとマッピングしているのみ
-  - 今後は HTML のカスタムデータ属性（data-\*）と紐付け、
-    hooks 等を用いて画面制御ロジックなどを実装してみたい
-
-- **GET + Query Parameters による検索**
-  - 検索条件が多いため現在は POST で検索を実装している
-  - 単純な検索条件については query を用いた GET API での検索も検討(現状は1検索のみ、queryを用いている)
-
-- **Redux を用いた状態遷移管理**
-  - 当初はマスタデータ取得に Redux を使用していた
-  - サーバー状態管理としては TanStack Query が適切と判断し切り替え
-  - Redux による状態遷移設計自体は今後別途開発したい
 
 ### バックエンド改善予定
 
