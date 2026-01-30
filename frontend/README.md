@@ -144,7 +144,6 @@ src/
 - `components` を組み合わせ、必要に応じて `hooks` や `utils` を呼び出す
 - イベントハンドラは、hooks から返される関数をそのまま渡すことを基本とする
 
-
 ### utils
 - `handleApiError` でエラーを一元管理し、適切なエラーページ（404, 403, 500）へ遷移
 - `authErrorGenerate` でサーバーへリクエストしない画面もUX的に、制御する(authContextを用いる)
@@ -200,11 +199,6 @@ npm run test:e2e      # Playwright
 ```
 
 ## 今後の改善予定・検討事項
-
-- **カスタムデータ属性を用いた画面制御**
-  - 現在は value / label をDBとマッピングしているのみ
-  - 今後は HTML のカスタムデータ属性（data-\*）と紐付けを行い、
-    hooks を用いて画面制御ロジック(イメージは、画面上での自動計算処理)などを実装してみたい
 
 - **GET + Query Parameters による検索**
   - 検索条件が多いため現在は POST で検索を実装している
