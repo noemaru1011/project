@@ -19,6 +19,7 @@ export function useLogout() {
     onSuccess: (res) => {
       setRole(null);
       setPasswordUpdateRequired(false);
+      localStorage.clear();
       queryClient.clear();
 
       toast.success(res.message);

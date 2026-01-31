@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import type { Role } from '@shared/models/common';
 
+// js-cookie のモック設定
 vi.mock('js-cookie', () => ({
   default: {
     get: vi.fn(),
@@ -14,58 +15,76 @@ vi.mock('js-cookie', () => ({
 }));
 
 describe('AuthContext & AuthProvider', () => {
+  const mockGet = Cookies.get as unknown as Mock;
+  const mockSet = Cookies.set as unknown as Mock;
+  const mockRemove = Cookies.remove as unknown as Mock;
+
   beforeEach(() => {
     vi.clearAllMocks();
-
-    // js-cookie.get のオーバーロードを潰して string を返せるようにする
-    const get = Cookies.get as unknown as Mock;
-    get.mockReturnValue(undefined);
+    // デフォルトでは Cookie は空
+    mockGet.mockReturnValue(undefined);
   });
 
-  it('AuthProvider 配下でない場合、useAuth がエラーを投げること', () => {
+  it('【失敗】AuthProvider 配下でない場合、useAuth がエラーを投げること', () => {
+    // --- Arrange ---
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
+    // --- Act & Assert ---
     expect(() => renderHook(() => useAuth())).toThrow('useAuth must be used inside AuthProvider');
 
     consoleSpy.mockRestore();
   });
 
-  it('初期レンダリング時に Cookie からロールを復元すること', () => {
-    (Cookies.get as unknown as Mock).mockReturnValue('ADMIN');
+  it('【成功】初期レンダリング時に Cookie からロールを復元すること', () => {
+    // --- Arrange ---
+    const initialRole: Role = 'ADMIN';
+    mockGet.mockReturnValue(initialRole);
 
+    // --- Act ---
     const { result } = renderHook(() => useAuth(), {
       wrapper: AuthProvider,
     });
 
-    expect(result.current.role).toBe('ADMIN');
-    expect(Cookies.get).toHaveBeenCalledWith('role');
+    // --- Assert ---
+    expect(result.current.role).toBe(initialRole);
+    expect(mockGet).toHaveBeenCalledWith('role');
   });
 
-  it('setRole を呼ぶとロールが更新され、Cookie に保存されること', () => {
+  it('【成功】setRole を呼ぶとロールが更新され、セキュアな設定で Cookie に保存されること', () => {
+    // --- Arrange ---
+    const newRole: Role = 'STUDENT';
     const { result } = renderHook(() => useAuth(), {
       wrapper: AuthProvider,
     });
 
+    // --- Act ---
     act(() => {
-      result.current.setRole('STUDENT' as Role);
+      result.current.setRole(newRole);
     });
 
-    expect(result.current.role).toBe('STUDENT');
-    expect(Cookies.set).toHaveBeenCalledWith('role', 'STUDENT');
+    // --- Assert ---
+    expect(result.current.role).toBe(newRole);
+    // 第3引数のオプションまで検証
+    expect(mockSet).toHaveBeenCalledWith('role', newRole, {
+      secure: true,
+      sameSite: 'strict',
+    });
   });
 
-  it('setRole(null) を呼ぶとロールがクリアされ、Cookie から削除されること', () => {
-    (Cookies.get as unknown as Mock).mockReturnValue('ADMIN');
-
+  it('【成功】setRole(null) を呼ぶとロールがクリアされ、Cookie から削除されること', () => {
+    // --- Arrange ---
+    mockGet.mockReturnValue('ADMIN'); // 初期状態
     const { result } = renderHook(() => useAuth(), {
       wrapper: AuthProvider,
     });
 
+    // --- Act ---
     act(() => {
       result.current.setRole(null);
     });
 
+    // --- Assert ---
     expect(result.current.role).toBe(null);
-    expect(Cookies.remove).toHaveBeenCalledWith('role');
+    expect(mockRemove).toHaveBeenCalledWith('role');
   });
 });
