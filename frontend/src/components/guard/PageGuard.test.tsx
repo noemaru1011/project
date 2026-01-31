@@ -3,15 +3,26 @@ import { render, screen } from '@testing-library/react';
 import { PageGuard } from './PageGuard';
 import { useAuth } from '@/contexts/authContext';
 import { MemoryRouter, useNavigate } from 'react-router-dom';
-import * as apiErrorUtils from '@/utils/handleApiError';
+// 1. コンポーネントが import しているパスと同じ "@/utils" に合わせる
+import * as apiUtils from '@/utils';
 
-// 依存関係のモック
+// 2. "@/utils" 全体をモック化し、必要な関数をスパイにする
 vi.mock('@/contexts/authContext');
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
   return { ...actual, useNavigate: vi.fn() };
 });
-vi.mock('./handleApiError');
+
+// 3. コンポーネントが参照しているエイリアスパス "@/utils" をモック
+vi.mock('@/utils', async () => {
+  const actual = await vi.importActual<typeof import('@/utils')>('@/utils');
+  return {
+    ...actual,
+    handleApiErrorWithUI: vi.fn(),
+    // authErrorGenerate は実際の挙動が必要ならそのまま、
+    // もしステータスだけチェックしたいなら実際の関数を流用
+  };
+});
 
 describe('PageGuard', () => {
   const mockNavigate = vi.fn();
@@ -22,12 +33,12 @@ describe('PageGuard', () => {
   });
 
   it('【成功】ユーザーが許可されたロールを持つ場合、コンテンツを表示する', () => {
-    // --- Arrange (準備) ---
+    // --- Arrange ---
     const role = 'admin';
     const allowedRoles: any[] = ['admin'];
     (useAuth as any).mockReturnValue({ role });
 
-    // --- Act (実行) ---
+    // --- Act ---
     render(
       <MemoryRouter>
         <PageGuard allowedRoles={allowedRoles}>
@@ -36,52 +47,48 @@ describe('PageGuard', () => {
       </MemoryRouter>,
     );
 
-    // --- Assert (検証) ---
+    // --- Assert ---
     expect(screen.getByTestId('protected-content')).toBeDefined();
-    expect(apiErrorUtils.handleApiErrorWithUI).not.toHaveBeenCalled();
+    // 4. 正しいモックオブジェクトを検証
+    expect(apiUtils.handleApiErrorWithUI).not.toHaveBeenCalled();
   });
 
-  it('【失敗】未ログイン（roleがnull）の場合、401エラーハンドラーを実行して何も表示しない', () => {
-    // --- Arrange (準備) ---
+  it('【失敗】未ログイン（roleがnull）の場合、401エラーハンドラーを実行', () => {
+    // --- Arrange ---
     (useAuth as any).mockReturnValue({ role: null });
-    const allowedRoles: any[] = ['admin'];
 
-    // --- Act (実行) ---
+    // --- Act ---
     const { container } = render(
       <MemoryRouter>
-        <PageGuard allowedRoles={allowedRoles}>
+        <PageGuard allowedRoles={['ADMIN']}>
           <div>Protected Content</div>
         </PageGuard>
       </MemoryRouter>,
     );
 
-    // --- Assert (検証) ---
-    // handleApiErrorWithUIが第一引数に401エラー（authErrorGenerate(401)の結果）を持って呼ばれたか
-    expect(apiErrorUtils.handleApiErrorWithUI).toHaveBeenCalledWith(
+    // --- Assert ---
+    expect(apiUtils.handleApiErrorWithUI).toHaveBeenCalledWith(
       expect.objectContaining({ status: 401 }),
       expect.any(Function),
     );
-    // 画面には何も表示されていないこと
     expect(container.firstChild).toBeNull();
   });
 
-  it('【失敗】権限が不足している場合、403エラーハンドラーを実行して何も表示しない', () => {
-    // --- Arrange (準備) ---
-    const role = 'student'; // 学生が
-    const allowedRoles: any[] = ['admin']; // 管理者限定ページへ
-    (useAuth as any).mockReturnValue({ role });
+  it('【失敗】権限が不足している場合、403エラーハンドラーを実行', () => {
+    // --- Arrange ---
+    (useAuth as any).mockReturnValue({ role: 'student' });
 
-    // --- Act (実行) ---
+    // --- Act ---
     const { container } = render(
       <MemoryRouter>
-        <PageGuard allowedRoles={allowedRoles}>
+        <PageGuard allowedRoles={['ADMIN']}>
           <div>Admin Only Content</div>
         </PageGuard>
       </MemoryRouter>,
     );
 
-    // --- Assert (検証) ---
-    expect(apiErrorUtils.handleApiErrorWithUI).toHaveBeenCalledWith(
+    // --- Assert ---
+    expect(apiUtils.handleApiErrorWithUI).toHaveBeenCalledWith(
       expect.objectContaining({ status: 403 }),
       expect.any(Function),
     );
