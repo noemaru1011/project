@@ -7,7 +7,7 @@ type Props = Omit<
 >;
 
 export const StatusRadioGroup = ({ disabled, ...rest }: Props) => {
-  const { options, loading } = useStatusOptions();
+  const { options, isLoading } = useStatusOptions();
 
   return (
     <RadioGroup
@@ -15,7 +15,7 @@ export const StatusRadioGroup = ({ disabled, ...rest }: Props) => {
       options={options}
       label="ステータス"
       required
-      disabled={loading || disabled}
+      disabled={isLoading || disabled}
     />
   );
 };

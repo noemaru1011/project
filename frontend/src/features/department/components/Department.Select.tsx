@@ -8,7 +8,7 @@ type Props = Omit<
 >;
 
 export const DepartmentSelect = ({ disabled, ...rest }: Props) => {
-  const { options, loading } = useDepartmentOptions();
+  const { options, isLoading } = useDepartmentOptions();
 
   return (
     <Select
@@ -17,7 +17,7 @@ export const DepartmentSelect = ({ disabled, ...rest }: Props) => {
       id="departmentId"
       options={options}
       leftIcon={<Library className="size-4" />}
-      disabled={loading || disabled}
+      disabled={isLoading || disabled}
       required
     />
   );
