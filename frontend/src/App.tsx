@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toast } from '@/components/ui/Toast/Toast';
 import { ROUTES } from '@/routes/routes';
-import { PageGuard } from '@/utils/PageGuard';
+import { pageGuard } from '@/utils/pageGuard';
 
 import { BaseLayout } from '@/components/layouts/BaseLayout';
 import { Login } from '@/features/auth/pages/login';
@@ -34,25 +34,25 @@ const AppRoutes = () => (
       <Route
         path={ROUTES.HOME}
         element={
-          <PageGuard allowedRoles={['ADMIN', 'STUDENT']}>
+          <pageGuard allowedRoles={['ADMIN', 'STUDENT']}>
             <HomePage />
-          </PageGuard>
+          </pageGuard>
         }
       />
       <Route
         path={ROUTES.HISTORY.INDEX}
         element={
-          <PageGuard allowedRoles={['ADMIN', 'STUDENT']}>
+          <pageGuard allowedRoles={['ADMIN', 'STUDENT']}>
             <HistoryIndexPage />
-          </PageGuard>
+          </pageGuard>
         }
       />
       <Route
         path={ROUTES.HISTORY.CREATE}
         element={
-          <PageGuard allowedRoles={['ADMIN', 'STUDENT']}>
+          <pageGuard allowedRoles={['ADMIN', 'STUDENT']}>
             <HistoryCreatePage />
-          </PageGuard>
+          </pageGuard>
         }
       />
       <Route path={ROUTES.HISTORY.UPDATE()} element={<HistoryUpdatePage />} />
@@ -61,9 +61,9 @@ const AppRoutes = () => (
       <Route
         path={ROUTES.AUTH.PASSWORD_CHANGE}
         element={
-          <PageGuard allowedRoles={['STUDENT']}>
+          <pageGuard allowedRoles={['STUDENT']}>
             <ChangePassword />
-          </PageGuard>
+          </pageGuard>
         }
       />
 
@@ -71,17 +71,17 @@ const AppRoutes = () => (
       <Route
         path={ROUTES.STUDENT.INDEX}
         element={
-          <PageGuard allowedRoles={['ADMIN']}>
+          <pageGuard allowedRoles={['ADMIN']}>
             <StudentIndexPage />
-          </PageGuard>
+          </pageGuard>
         }
       />
       <Route
         path={ROUTES.STUDENT.CREATE}
         element={
-          <PageGuard allowedRoles={['ADMIN']}>
+          <pageGuard allowedRoles={['ADMIN']}>
             <StudentCreatePage />
-          </PageGuard>
+          </pageGuard>
         }
       />
       <Route path={ROUTES.STUDENT.UPDATE()} element={<StudentUpdatePage />} />

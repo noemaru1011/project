@@ -17,5 +17,5 @@ export const useCategoryOptions = () => {
   // 2. マッピング
   const options = useMemo(() => categoriesToOptions(data), [data]);
 
-  return { data, options, loading: isLoading };
+  return { data, options, isLoading };
 };

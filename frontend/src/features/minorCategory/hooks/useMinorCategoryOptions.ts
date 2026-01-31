@@ -13,7 +13,7 @@ export const useMinorCategoryOptions = () => {
   });
 
   const data = response?.data ?? [];
-  
+
   // 2. マッピング
   const options = useMemo(() => minorCategoriesToOptions(data), [data]);
 

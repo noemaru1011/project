@@ -37,10 +37,10 @@ describe('useStatusOptions', () => {
     });
 
     // 初期状態はローディング中
-    expect(result.current.loading).toBe(true);
+    expect(result.current.isLoading).toBe(true);
 
     // 非同期処理の完了を待機
-    await waitFor(() => expect(result.current.loading).toBe(false));
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
 
     // マッピングされた結果を確認
     expect(result.current.options).toEqual([
@@ -56,7 +56,7 @@ describe('useStatusOptions', () => {
       wrapper: createWrapper(),
     });
 
-    await waitFor(() => expect(result.current.loading).toBe(false));
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
 
     expect(result.current.options).toEqual([]);
   });

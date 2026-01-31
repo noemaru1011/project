@@ -17,5 +17,5 @@ export const useDepartmentOptions = () => {
   // 2. マッピング
   const options = useMemo(() => departmentsToOptions(data), [data]);
 
-  return { data, options, loading: isLoading };
+  return { data, options, isLoading };
 };

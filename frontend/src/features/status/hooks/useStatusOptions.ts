@@ -17,5 +17,5 @@ export const useStatusOptions = () => {
   // 2. マッピング
   const options = useMemo(() => statusesToOptions(data), [data]);
 
-  return { data, options, loading: isLoading };
+  return { data, options, isLoading };
 };

@@ -9,7 +9,8 @@ const isApiResponse = (err: unknown): err is ApiResponse<unknown> => {
   return typeof err === 'object' && err !== null && 'status' in err && 'message' in err;
 };
 
-//バックエンドのエラーを、フロントエンドのUI制御に変換する関数
+//バックエンドのエラーを、フロントエンドで扱いやすい形に変換する
+//また、画面遷移が必要な場合はredirectToに遷移先をセットする
 export const handleApiError = (err: unknown): ApiErrorResponse => {
   if (!isApiResponse(err)) {
     const key: ApiMessageCode = 'INTERNAL_SERVER_ERROR';
@@ -53,6 +54,7 @@ export const handleApiError = (err: unknown): ApiErrorResponse => {
   }
 };
 
+//UI表示も含めたエラーハンドリング
 export const handleApiErrorWithUI = (err: unknown, navigate: NavigateFunction) => {
   const error = handleApiError(err);
 

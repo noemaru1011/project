@@ -1,49 +1,46 @@
-import { useEffect, useMemo } from 'react';
-import { toast } from 'react-toastify';
-import type { ReactNode } from 'react';
-import Cookies from 'js-cookie';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { handleApiError } from '@/utils/handleApiError';
-import { authErrorGenerate } from '@/utils/authErrorGenerate';
+import type { ReactNode } from 'react';
+import { useAuth } from '@/contexts/authContext';
 import type { Role } from '@shared/models/common';
+import { handleApiErrorWithUI, authErrorGenerate } from './index';
 
 interface Props {
   children: ReactNode;
   allowedRoles?: Role[];
 }
 
-export const PageGuard = ({ children, allowedRoles }: Props) => {
+/**
+ * 権限に基づいたアクセス制限を行うガードコンポーネント
+ */
+export const pageGuard = ({ children, allowedRoles }: Props) => {
+  const { role } = useAuth();
   const navigate = useNavigate();
 
-  const role = Cookies.get('role') as Role | undefined;
-
-  const guardResult = useMemo(() => {
-    // 未ログイン
-    if (!role) {
-      return handleApiError(authErrorGenerate(401));
-    }
-
-    // 権限不足
-    if (allowedRoles && allowedRoles.length > 0 && !allowedRoles.includes(role)) {
-      return handleApiError(authErrorGenerate(403));
-    }
-
-    return null; // 通過
-  }, [role, allowedRoles]);
+  // 1. 判定ロジック
+  const isNotLoggedIn = !role;
+  const isUnauthorized =
+    allowedRoles && allowedRoles.length > 0 && role && !allowedRoles.includes(role);
 
   useEffect(() => {
-    if (!guardResult) return;
-
-    toast.error(guardResult.message);
-
-    if (guardResult.redirectTo) {
-      navigate(guardResult.redirectTo);
+    // 未ログインの場合
+    if (isNotLoggedIn) {
+      handleApiErrorWithUI(authErrorGenerate(401), navigate);
+      return;
     }
-  }, [guardResult, navigate]);
 
-  if (guardResult) {
+    // 権   限不足の場合
+    if (isUnauthorized) {
+      handleApiErrorWithUI(authErrorGenerate(403), navigate);
+      return;
+    }
+  }, [isNotLoggedIn, isUnauthorized, navigate]);
+
+  // 判定中、またはエラー時は何も表示しない（チラつき防止）
+  if (isNotLoggedIn || isUnauthorized) {
     return null;
   }
 
+  // 権限に問題がなければ子コンポーネントを表示
   return <>{children}</>;
 };
