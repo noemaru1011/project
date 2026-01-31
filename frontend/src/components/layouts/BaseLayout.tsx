@@ -9,6 +9,7 @@ export const BaseLayout = () => {
 
   return (
     <>
+      {/* ログインしている場合のみヘッダーを表示 */}
       {isLoggedIn && <HeaderLayout />}
       <main>
         <Outlet />

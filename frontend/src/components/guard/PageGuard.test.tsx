@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { pageGuard } from './index';
+import { PageGuard } from './PageGuard';
 import { useAuth } from '@/contexts/authContext';
 import { MemoryRouter, useNavigate } from 'react-router-dom';
-import * as apiErrorUtils from './handleApiError';
+import * as apiErrorUtils from '@/utils/handleApiError';
 
 // 依存関係のモック
 vi.mock('@/contexts/authContext');
@@ -30,9 +30,9 @@ describe('PageGuard', () => {
     // --- Act (実行) ---
     render(
       <MemoryRouter>
-        <pageGuard allowedRoles={allowedRoles}>
+        <PageGuard allowedRoles={allowedRoles}>
           <div data-testid="protected-content">Access Granted</div>
-        </pageGuard>
+        </PageGuard>
       </MemoryRouter>,
     );
 
@@ -49,9 +49,9 @@ describe('PageGuard', () => {
     // --- Act (実行) ---
     const { container } = render(
       <MemoryRouter>
-        <pageGuard allowedRoles={allowedRoles}>
+        <PageGuard allowedRoles={allowedRoles}>
           <div>Protected Content</div>
-        </pageGuard>
+        </PageGuard>
       </MemoryRouter>,
     );
 
@@ -74,9 +74,9 @@ describe('PageGuard', () => {
     // --- Act (実行) ---
     const { container } = render(
       <MemoryRouter>
-        <pageGuard allowedRoles={allowedRoles}>
+        <PageGuard allowedRoles={allowedRoles}>
           <div>Admin Only Content</div>
-        </pageGuard>
+        </PageGuard>
       </MemoryRouter>,
     );
 

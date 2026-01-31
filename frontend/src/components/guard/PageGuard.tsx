@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import type { ReactNode } from 'react';
 import { useAuth } from '@/contexts/authContext';
 import type { Role } from '@shared/models/common';
-import { handleApiErrorWithUI, authErrorGenerate } from './index';
+import { handleApiErrorWithUI, authErrorGenerate } from '@/utils';
 
 interface Props {
   children: ReactNode;
@@ -13,7 +13,7 @@ interface Props {
 /**
  * 権限に基づいたアクセス制限を行うガードコンポーネント
  */
-export const pageGuard = ({ children, allowedRoles }: Props) => {
+export const PageGuard = ({ children, allowedRoles }: Props) => {
   const { role } = useAuth();
   const navigate = useNavigate();
 
