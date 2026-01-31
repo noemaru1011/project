@@ -17,7 +17,7 @@ export const useSearchStudents = () => {
       toast.info(res.message);
       return res;
     },
-    enabled: false,
+    enabled: !!searchParams,
     meta: {
       onError: (err: any) => handleApiErrorWithUI(err, navigate),
     },
@@ -25,7 +25,6 @@ export const useSearchStudents = () => {
 
   const search = (params: StudentSearchInput) => {
     setSearchParams(params);
-    query.refetch();
   };
 
   return {
