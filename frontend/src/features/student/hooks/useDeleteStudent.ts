@@ -12,7 +12,7 @@ export const useDeleteStudent = () => {
   });
 
   return {
-    deleteStudent: mutation.mutate,
+    deleteStudent: mutation.mutateAsync,
     isDeleting: mutation.isPending,
   };
 };

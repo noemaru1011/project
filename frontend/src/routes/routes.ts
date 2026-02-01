@@ -7,7 +7,6 @@ export const ROUTES = {
     CREATE: '/students/new',
     UPDATE: (studentId = ':studentId') => `/students/${studentId}/edit`,
     VIEW: (studentId = ':studentId') => `/students/${studentId}`,
-    DELETE: (studentId = ':studentId') => `/students/${studentId}/delete`,
   },
 
   //履歴一覧

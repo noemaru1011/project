@@ -14,17 +14,15 @@ export const StudentIndexPage = () => {
 
   const { deleteStudent, isDeleting } = useDeleteStudent();
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (!window.confirm('本当に削除しますか？')) return;
 
-    deleteStudent(id, {
-      onSuccess: () => {
-        toast.success(APIMESSAGE.DELETE_SUCCESS);
-      },
-      onError: (err) => {
-        handleApiErrorWithUI(err, navigate);
-      },
-    });
+    try {
+      await deleteStudent(id);
+      toast.success(APIMESSAGE.DELETE_SUCCESS);
+    } catch (err) {
+      handleApiErrorWithUI(err, navigate);
+    }
   };
 
   return (
