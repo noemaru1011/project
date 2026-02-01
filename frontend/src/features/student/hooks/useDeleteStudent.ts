@@ -7,7 +7,7 @@ export const useDeleteStudent = () => {
   const mutation = useMutation({
     mutationFn: (studentId: string) => studentApi.delete(studentId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['students'] });
+      queryClient.invalidateQueries({ queryKey: ['students'], exact: false });
     },
   });
 
