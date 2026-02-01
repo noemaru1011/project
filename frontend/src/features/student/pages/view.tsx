@@ -3,6 +3,7 @@ import { Loading } from '@/components/ui/Loading/Loading';
 import { ROUTES } from '@/routes/routes';
 import { StudentView } from '@/features/student/components/layouts/StudentDetailView';
 import { useViewStudent } from '@/features/student/hooks/useViewStudent';
+import { handleApiErrorWithUI } from '@/utils';
 
 export const StudentViewPage = () => {
   const { studentId } = useParams<{ studentId: string }>();
@@ -12,10 +13,15 @@ export const StudentViewPage = () => {
     return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
   }
 
-  const { student, isLoading } = useViewStudent(studentId);
+  const { student, isLoading, isError, error } = useViewStudent(studentId);
 
   if (isLoading) {
     return <Loading loading />;
+  }
+
+  if (isError && error) {
+    handleApiErrorWithUI(error, navigate);
+    return null;
   }
 
   if (!student) {
