@@ -24,7 +24,7 @@ export const HistoryTable = ({ data, loading, actions = ['Update', 'Delete'] }: 
         data={data ?? []}
         keyField="historyId"
         actions={actions}
-        routeMap={routeMap}
+        onAction={routeMap}
       />
     </Loading>
   );

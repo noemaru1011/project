@@ -57,7 +57,7 @@ const AppRoutes = () => (
       />
       <Route path={ROUTES.HISTORY.UPDATE()} element={<HistoryUpdatePage />} />
       <Route path={ROUTES.HISTORY.DELETE()} element={<HistoryDeletePage />} />
-      {/* 学生のみ */}
+      {/* 以下学生のみ */}
       <Route
         path={ROUTES.AUTH.PASSWORD_CHANGE}
         element={
@@ -67,7 +67,7 @@ const AppRoutes = () => (
         }
       />
 
-      {/* aminのみ*/}
+      {/* 以下管理者のみ*/}
       <Route
         path={ROUTES.STUDENT.INDEX}
         element={

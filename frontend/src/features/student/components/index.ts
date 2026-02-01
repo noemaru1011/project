@@ -5,5 +5,4 @@ export * from './ui/StudentSearch.Accordion';
 export * from './layouts/StudentCreateForm';
 export * from './layouts/StudentUpdateForm';
 export * from './layouts/StudentDetailView';
-export * from './layouts/StudentDeleteView';
 export * from './layouts/StudentSearchForm';
