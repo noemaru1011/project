@@ -10,7 +10,7 @@ import { StudentIndexPage } from '@/features/student/pages/';
 import { StudentCreatePage } from '@/features/student/pages/create';
 import { StudentUpdatePage } from '@/features/student/pages/update';
 import { StudentViewPage } from '@/features/student/pages/view';
-import { StudentDeletePage } from '@/features/student/pages/delete';
+
 import { ChangePassword } from '@/features/auth/pages/updatePassword';
 import { HistoryIndexPage } from '@/features/history/pages';
 import { HistoryCreatePage } from '@/features/history/pages/create';
@@ -86,7 +86,6 @@ const AppRoutes = () => (
       />
       <Route path={ROUTES.STUDENT.UPDATE()} element={<StudentUpdatePage />} />
       <Route path={ROUTES.STUDENT.VIEW()} element={<StudentViewPage />} />
-      <Route path={ROUTES.STUDENT.DELETE()} element={<StudentDeletePage />} />
     </Route>
   </Routes>
 );
