@@ -6,11 +6,19 @@ const meta = {
   component: Table,
   title: 'UI/Table',
   tags: ['autodocs'],
+  args: {
+    onAction: {
+      Read: (id: string) => console.log('Read Action:', id),
+      Update: (id: string) => console.log('Update Action:', id),
+      Delete: (id: string) => console.log('Delete Action:', id),
+    },
+  },
 } satisfies Meta<typeof Table>;
 
 export default meta;
 type Story = StoryObj<typeof Table>;
 
+/** --- データの定義 (Row型を再利用) --- */
 type Row = {
   id: string;
   name: string;
@@ -27,9 +35,10 @@ const labels: Record<keyof Row, string> = {
 
 const data: Row[] = [
   { id: '1', name: '田中 太郎', email: 'tanaka@example.com', role: '管理者' },
-  { id: '2', name: '佐藤 花子', email: 'sato@example.com', role: '一般ユーザー' },
-  { id: '3', name: '鈴木 一郎', email: 'suzuki@example.com', role: '一般ユーザー' },
+  { id: '2', name: '佐藤 花子', email: 'sato@example.com', role: '一般' },
 ];
+
+/** --- ストーリー定義 --- */
 
 export const Default: Story = {
   args: {
@@ -39,13 +48,21 @@ export const Default: Story = {
   },
 };
 
+export const WithActions: Story = {
+  args: {
+    ...Default.args,
+    actions: ['Read', 'Update', 'Delete'],
+  },
+};
+
 export const WithCheckboxes: Story = {
   render: (args) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [selectedIds, setSelectedIds] = React.useState<string[]>([]);
 
     const handleSelect = (id: string, checked: boolean) => {
-      if (checked) setSelectedIds([...selectedIds, id]);
-      else setSelectedIds(selectedIds.filter((item) => item !== id));
+      if (checked) setSelectedIds((prev) => [...prev, id]);
+      else setSelectedIds((prev) => prev.filter((item) => item !== id));
     };
 
     return (
@@ -54,12 +71,6 @@ export const WithCheckboxes: Story = {
   },
   args: {
     ...Default.args,
-  },
-};
-
-export const Empty: Story = {
-  args: {
-    ...Default.args,
-    data: [],
+    actions: ['Read'],
   },
 };

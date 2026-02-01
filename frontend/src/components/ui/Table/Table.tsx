@@ -12,8 +12,8 @@ type Props<T> = {
   keyField: keyof T & string;
   /** 表示するアクションの種類 */
   actions?: Action[];
-  /** 表示するアクションの種類 */
-  routeMap?: Partial<Record<Action, (id: string) => string>>;
+  /** アクション実行時のハンドラ (遷移やAPIコール) */
+  onAction?: Partial<Record<Action, (id: string) => void>>; // routeMapから変更
   className?: string;
   tableClassName?: string;
 };
@@ -41,7 +41,7 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
     data,
     keyField,
     actions,
-    routeMap,
+    onAction, // 名称変更
     showCheckbox = false,
     selectedIds,
     onSelect,
@@ -71,7 +71,7 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
             {data.length === 0 ? (
               <tr>
                 <td
-                  colSpan={labelKeys.length + (actions ? 1 : 0)}
+                  colSpan={labelKeys.length + (actions ? 1 : 0) + (showCheckbox ? 1 : 0)}
                   className="text-center py-4 text-gray-500"
                 >
                   データがありません
@@ -85,7 +85,7 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
                   labelKeys={labelKeys}
                   row={row}
                   actions={actions}
-                  routeMap={routeMap}
+                  onAction={onAction}
                   showCheckbox={showCheckbox}
                   selectedIds={selectedIds}
                   onSelect={onSelect}

@@ -100,9 +100,26 @@ describe('Table', () => {
           data: mockData,
           keyField: 'id',
           actions: ['Update'],
-          routeMap: { Update: (id: string) => `/update/${id}` },
+          onAction: { Update: vi.fn() }, // routeMap から onAction に変更
         });
         expect(screen.getByText('操作')).toBeInTheDocument();
+      });
+
+      it('アクションボタンをクリックした時に onAction ハンドラが正しいIDで呼ばれる', () => {
+        const handleUpdate = vi.fn();
+        renderTable({
+          labels: mockLabels,
+          data: mockData,
+          keyField: 'id',
+          actions: ['Update'],
+          onAction: { Update: handleUpdate },
+        });
+
+        // 1行目の「更新」ボタンをクリック
+        const updateButtons = screen.getAllByRole('button', { name: '更新' });
+        fireEvent.click(updateButtons[0]);
+
+        expect(handleUpdate).toHaveBeenCalledWith('1');
       });
     });
 
@@ -148,7 +165,7 @@ describe('Table', () => {
       expect(container.firstChild).toMatchSnapshot();
     });
 
-    it('チェックボックスありの状態の HTML 構造', () => {
+    it('チェックボックスありの状態의 HTML 構造', () => {
       const { container } = renderTable({
         labels: mockLabels,
         data: mockData,

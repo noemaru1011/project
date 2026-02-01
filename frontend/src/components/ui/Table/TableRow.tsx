@@ -4,9 +4,9 @@ import { RowActions } from '@/components/ui/Table/TableRowActions';
 type Props = {
   rowKey: string;
   labelKeys: string[];
-  row: Record<string, string>;
+  row: Record<string, any>;
   actions?: Action[];
-  routeMap?: Partial<Record<Action, (id: string) => string>>;
+  onAction?: Partial<Record<Action, (id: string) => void>>;
   showCheckbox?: boolean;
   selectedIds?: string[];
   onSelect?: (id: string, checked: boolean) => void;
@@ -17,13 +17,13 @@ export const TableRow = ({
   labelKeys,
   row,
   actions,
-  routeMap,
+  onAction,
   selectedIds = [],
   showCheckbox,
   onSelect,
 }: Props) => {
   return (
-    <tr className="border-b">
+    <tr className="border-b hover:bg-gray-50 transition-colors">
       {showCheckbox && (
         <td className="px-4 py-2 text-center">
           <input
@@ -40,9 +40,11 @@ export const TableRow = ({
         </td>
       ))}
 
-      {actions && routeMap && (
-        <td className="px-4 py-2 flex justify-center">
-          <RowActions rowKey={String(rowKey)} actions={actions} routeMap={routeMap} />
+      {actions && onAction && (
+        <td className="px-4 py-2">
+          <div className="flex justify-center">
+            <RowActions rowKey={rowKey} actions={actions} onAction={onAction} />
+          </div>
         </td>
       )}
     </tr>

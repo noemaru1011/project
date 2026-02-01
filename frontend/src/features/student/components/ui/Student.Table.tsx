@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Table } from '@/components/ui/Table/Table';
 import { studentLabels } from '@/features/student/constants';
 import type { StudentSummary } from '@shared/models/student';
@@ -9,13 +10,22 @@ type Props = {
   loading: boolean;
   data: StudentSummary[];
   actions?: Action[];
+  onDelete?: (id: string) => void;
 };
 
-export const StudentTable = ({ loading, data, actions }: Props) => {
-  const routeMap: Record<Action, (id: string) => string> = {
-    Update: (id) => ROUTES.STUDENT.UPDATE(id),
-    Read: (id) => ROUTES.STUDENT.VIEW(id),
-    Delete: (id) => ROUTES.STUDENT.DELETE(id),
+export const StudentTable = ({ loading, data, actions, onDelete }: Props) => {
+  const navigate = useNavigate();
+
+  const handleAction: Partial<Record<Action, (id: string) => void>> = {
+    Read: (id) => navigate(ROUTES.STUDENT.VIEW(id)),
+    Update: (id) => navigate(ROUTES.STUDENT.UPDATE(id)),
+    Delete: (id) => {
+      if (onDelete) {
+        onDelete(id);
+      } else {
+        console.warn('Delete handler is not provided');
+      }
+    },
   };
 
   return (
@@ -25,7 +35,7 @@ export const StudentTable = ({ loading, data, actions }: Props) => {
         data={data ?? []}
         keyField="studentId"
         actions={actions}
-        routeMap={routeMap}
+        onAction={handleAction}
       />
     </Loading>
   );

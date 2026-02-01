@@ -6,6 +6,7 @@ export interface Option {
   label: string;
 }
 
+// メニューは現状1つのみ
 export const MenuOptions: Option[] = [{ value: ROUTES.STUDENT.INDEX, label: '学生マスタ' }];
 
 //画面遷移用

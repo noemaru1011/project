@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Table > スナップショット > チェックボックスありの状態の HTML 構造 1`] = `
+exports[`Table > スナップショット > チェックボックスありの状態의 HTML 構造 1`] = `
 <div
   class="m-4"
 >
@@ -38,7 +38,7 @@ exports[`Table > スナップショット > チェックボックスありの状
       </thead>
       <tbody>
         <tr
-          class="border-b"
+          class="border-b hover:bg-gray-50 transition-colors"
         >
           <td
             class="px-4 py-2 text-center"
@@ -65,7 +65,7 @@ exports[`Table > スナップショット > チェックボックスありの状
           </td>
         </tr>
         <tr
-          class="border-b"
+          class="border-b hover:bg-gray-50 transition-colors"
         >
           <td
             class="px-4 py-2 text-center"
@@ -129,7 +129,7 @@ exports[`Table > スナップショット > 基本状態の HTML 構造 1`] = `
       </thead>
       <tbody>
         <tr
-          class="border-b"
+          class="border-b hover:bg-gray-50 transition-colors"
         >
           <td
             class="px-4 py-2 text-center"
@@ -148,7 +148,7 @@ exports[`Table > スナップショット > 基本状態の HTML 構造 1`] = `
           </td>
         </tr>
         <tr
-          class="border-b"
+          class="border-b hover:bg-gray-50 transition-colors"
         >
           <td
             class="px-4 py-2 text-center"

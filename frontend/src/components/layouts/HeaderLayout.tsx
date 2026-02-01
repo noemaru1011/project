@@ -18,12 +18,15 @@ export const HeaderLayout = () => {
   const [open, setOpen] = useState(false);
 
   const options = headerOptions.map((opt) => {
+    // ログのダウンロードは管理者のみ表示
     if (opt.kind === 'action' && opt.action === 'logDownload') {
       return { ...opt, visible: isAdmin };
     }
+    // パスワード変更は学生のみ表示
     if (opt.kind === 'link' && opt.to === ROUTES.AUTH.PASSWORD_CHANGE) {
       return { ...opt, visible: isStudent };
     }
+    // その他は全て表示
     return { ...opt, visible: true };
   });
 

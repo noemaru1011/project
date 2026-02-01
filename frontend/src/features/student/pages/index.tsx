@@ -1,13 +1,31 @@
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { StudentSearchForm } from '@/features/student/components/layouts/StudentSearchForm';
 import { StudentTable } from '@/features/student/components';
 import { ROUTES } from '@/routes/routes';
 import { useSearchStudents } from '@/features/student/hooks/useSearchStudents';
+import { useDeleteStudent } from '@/features/student/hooks/useDeleteStudent';
+import { handleApiErrorWithUI } from '@/utils';
+import { APIMESSAGE } from '@shared/constants/apiMessage';
 
 export const StudentIndexPage = () => {
   const navigate = useNavigate();
-
   const { students, search, isLoading, isFetching } = useSearchStudents();
+
+  const { deleteStudent, isDeleting } = useDeleteStudent();
+
+  const handleDelete = (id: string) => {
+    if (!window.confirm('本当に削除しますか？')) return;
+
+    deleteStudent(id, {
+      onSuccess: () => {
+        toast.success(APIMESSAGE.DELETE_SUCCESS);
+      },
+      onError: (err) => {
+        handleApiErrorWithUI(err, navigate);
+      },
+    });
+  };
 
   return (
     <div className="p-4 mx-auto max-w-4xl">
@@ -18,9 +36,10 @@ export const StudentIndexPage = () => {
         onCreate={() => navigate(ROUTES.STUDENT.CREATE)}
       />
       <StudentTable
-        loading={isLoading || isFetching}
+        loading={isLoading || isFetching || isDeleting}
         data={students}
         actions={['Update', 'Read', 'Delete']}
+        onDelete={handleDelete}
       />
     </div>
   );

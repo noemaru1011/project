@@ -1,27 +1,28 @@
 import { Button } from '@/components/ui/Button/Button';
 import type { ButtonVariant } from '@/components/ui/Button/ButtonVariant';
-import { useNavigate } from 'react-router-dom';
 
 export type Action = 'Update' | 'Read' | 'Delete';
 
 type Props = {
   rowKey: string;
   actions?: Action[];
-  routeMap?: Partial<Record<Action, (id: string) => string>>;
+  onAction?: Partial<Record<Action, (id: string) => void>>;
 };
 
-export const RowActions = ({ rowKey, actions = [], routeMap = {} }: Props) => {
-  const navigate = useNavigate();
+const ACTION_SETTINGS: Record<Action, { variant: ButtonVariant; label: string }> = {
+  Update: { variant: 'Primary', label: '更新' },
+  Read: { variant: 'Secondary', label: '参照' },
+  Delete: { variant: 'Danger', label: '削除' },
+};
 
+export const RowActions = ({ rowKey, actions = [], onAction = {} }: Props) => {
   return (
     <div className="flex gap-2">
       {actions.map((action) => {
-        const pathFn = routeMap[action];
-        if (!pathFn) return null;
+        const handler = onAction[action];
+        if (!handler) return null;
 
-        const variant: ButtonVariant =
-          action === 'Update' ? 'Primary' : action === 'Read' ? 'Secondary' : 'Danger';
-        const label = action === 'Update' ? '更新' : action === 'Read' ? '参照' : '削除';
+        const { variant, label } = ACTION_SETTINGS[action];
 
         return (
           <Button
@@ -29,7 +30,7 @@ export const RowActions = ({ rowKey, actions = [], routeMap = {} }: Props) => {
             type="button"
             variant={variant}
             label={label}
-            onClick={() => navigate(pathFn(rowKey))}
+            onClick={() => handler(rowKey)}
           />
         );
       })}
