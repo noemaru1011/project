@@ -20,11 +20,7 @@ export const StudentTable = ({ loading, data, actions, onDelete }: Props) => {
     Read: (id) => navigate(ROUTES.STUDENT.VIEW(id)),
     Update: (id) => navigate(ROUTES.STUDENT.UPDATE(id)),
     Delete: (id) => {
-      if (onDelete) {
-        onDelete(id);
-      } else {
-        console.warn('Delete handler is not provided');
-      }
+      if (onDelete) onDelete(id);
     },
   };
 
