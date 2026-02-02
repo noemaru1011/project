@@ -15,7 +15,6 @@ import { ChangePassword } from '@/features/auth/pages/updatePassword';
 import { HistoryIndexPage } from '@/features/history/pages';
 import { HistoryCreatePage } from '@/features/history/pages/create';
 import { HistoryUpdatePage } from '@/features/history/pages/update';
-import { HistoryDeletePage } from '@/features/history/pages/delete';
 
 import { NotFoundPage } from '@/pages/error/notFound';
 import { ServerErrorPage } from '@/pages/error/serverError';
@@ -56,7 +55,6 @@ const AppRoutes = () => (
         }
       />
       <Route path={ROUTES.HISTORY.UPDATE()} element={<HistoryUpdatePage />} />
-      <Route path={ROUTES.HISTORY.DELETE()} element={<HistoryDeletePage />} />
       {/* 以下学生のみ */}
       <Route
         path={ROUTES.AUTH.PASSWORD_CHANGE}

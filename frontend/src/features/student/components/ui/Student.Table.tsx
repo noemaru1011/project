@@ -10,7 +10,7 @@ type Props = {
   loading: boolean;
   data: StudentSummary[];
   actions?: Action[];
-  onDelete?: (id: string) => void;
+  onDelete: (id: string) => void;
 };
 
 export const StudentTable = ({ loading, data, actions, onDelete }: Props) => {
@@ -19,9 +19,7 @@ export const StudentTable = ({ loading, data, actions, onDelete }: Props) => {
   const handleAction: Partial<Record<Action, (id: string) => void>> = {
     Read: (id) => navigate(ROUTES.STUDENT.VIEW(id)),
     Update: (id) => navigate(ROUTES.STUDENT.UPDATE(id)),
-    Delete: (id) => {
-      if (onDelete) onDelete(id);
-    },
+    Delete: (id) => onDelete(id),
   };
 
   return (

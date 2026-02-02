@@ -1,27 +1,59 @@
+import { useEffect } from 'react';
 import { Navigate, useParams, useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 import { ROUTES } from '@/routes/routes';
 import { Loading } from '@/components/ui/Loading/Loading';
 import { HistoryUpdateForm, HistoryBasicInfo } from '@/features/history/components';
 import { useViewHistory } from '@/features/history/hooks/useViewHistory';
 import { useUpdateHistory } from '@/features/history/hooks/useUpdateHistory';
+import { handleApiErrorWithUI } from '@/utils';
+import type { HistoryUpdateInput } from '@shared/models/history';
 
 export const HistoryUpdatePage = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { historyId } = useParams<{ historyId: string }>();
 
+  // IDがない場合は即リダイレクト
   if (!historyId) {
     return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
   }
 
-  const { history, defaultValues, historyBasic, loading } = useViewHistory(historyId);
+  // データ取得Hook
+  const { defaultValues, historyBasic, isLoading, isError, error } = useViewHistory(historyId);
+  // 更新Hook
+  const { updateHistory, updating } = useUpdateHistory();
 
-  const { updateHistory, updating } = useUpdateHistory(historyId);
+  // データ取得失敗時のエラーハンドリング
+  useEffect(() => {
+    if (isError && error) {
+      handleApiErrorWithUI(error, navigate);
+    }
+  }, [isError, error, navigate]);
 
-  if (loading) {
-    return <Loading loading />;
-  }
+  // 更新処理のハンドラ
+  const handleSubmit = (data: HistoryUpdateInput) => {
+    updateHistory(
+      { historyId, data },
+      {
+        onSuccess: (res) => {
+          // キャッシュの無効化
+          queryClient.invalidateQueries({ queryKey: ['histories'] });
+          queryClient.invalidateQueries({ queryKey: ['history', historyId] });
 
-  if (!history || !defaultValues || !historyBasic) {
+          toast.success(res.message);
+          navigate(ROUTES.HISTORY.INDEX);
+        },
+        onError: (err) => handleApiErrorWithUI(err, navigate),
+      },
+    );
+  };
+
+  if (isLoading) return <Loading loading />;
+
+  // 取得完了後、データが欠損している場合は404へ
+  if (!defaultValues || !historyBasic) {
     return <Navigate to={ROUTES.ERROR.NOTFOUND} replace />;
   }
 
@@ -39,7 +71,7 @@ export const HistoryUpdatePage = () => {
             <HistoryUpdateForm
               defaultValues={defaultValues}
               loading={updating}
-              onSubmit={updateHistory}
+              onSubmit={handleSubmit}
               onBack={() => navigate(ROUTES.HISTORY.INDEX)}
             />
           </div>

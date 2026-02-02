@@ -41,7 +41,7 @@ export function Table<T extends Record<string, any>>(props: TableProps<T>) {
     data,
     keyField,
     actions,
-    onAction, // 名称変更
+    onAction,
     showCheckbox = false,
     selectedIds,
     onSelect,
