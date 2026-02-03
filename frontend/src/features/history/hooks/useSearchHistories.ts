@@ -12,7 +12,8 @@ export function useSearchHistories(params: StudentSearchInput | null) {
 
   return {
     histories: query.data?.data ?? [],
-    isLoading: query.isFetching,
+    isLoading: query.isLoading,
+    isFetching: query.isFetching,
     isError: query.isError,
     error: query.error,
   };
