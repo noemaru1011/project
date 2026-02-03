@@ -93,10 +93,10 @@ project/
 │   └── # GitHub Actions: 自動テスト、コンパイルを行う(改修予定)
 │
 ├── frontend/
-│   └── # フロントエンド（React / Vite）: 先ほど定義した Feature-based アーキテクチャ
+│   └── # フロントエンド（React / Vite）: Feature-based アーキテクチャ
 │
 ├── backend/
-│   └── # バックエンド（Node.js / Express）: Controller-Service-Repository 構成
+│   └── # バックエンド（Node.js / Express）: Feature-basedのController-Service-Repository 構成
 │
 ├── shared/
 │   └── # 共通資産: 型定義、Zodスキーマ、APIメッセージ、ルート定義（フロント・バック両方から参照）
