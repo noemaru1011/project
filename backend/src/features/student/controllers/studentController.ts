@@ -1,86 +1,42 @@
-import { Request, Response, NextFunction } from 'express';
 import { StudentService } from '@/features/student/services/studentService';
-import type { ApiBody } from '@shared/models/common';
 import type { StudentResponse, StudentSummary } from '@shared/models/student';
-import { APIMESSAGE } from '@shared/constants/apiMessage';
+import { BaseController } from '@/base/controllers/baseController';
 
-export class StudentController {
-  constructor(private readonly studentService: StudentService) {}
+export class StudentController extends BaseController {
+  constructor(private readonly studentService: StudentService) {
+    super();
+  }
 
-  getStudent = async (
-    req: Request,
-    res: Response<ApiBody<StudentResponse>>,
-    next: NextFunction,
-  ) => {
-    try {
-      const { id } = req.params;
-      const student = await this.studentService.getStudent(id);
-      if (!student) {
-        return res
-          .status(404)
-          .json({ code: 'RESOURCE_NOT_FOUND', data: null, message: APIMESSAGE.RESOURCE_NOT_FOUND });
-      }
-      return res
-        .status(200)
-        .json({ code: 'FETCH_SUCCESS', data: student, message: APIMESSAGE.FETCH_SUCCESS });
-    } catch (error) {
-      return next(error);
-    }
-  };
+  // 1件取得
+  getStudent = this.asyncHandler<StudentResponse>(async (req, res) => {
+    const { id } = req.params;
+    const student = await this.studentService.getStudent(id);
+    return this.ok(res, student);
+  });
 
-  searchStudents = async (
-    req: Request,
-    res: Response<ApiBody<StudentSummary[]>>,
-    next: NextFunction,
-  ) => {
-    try {
-      const students = await this.studentService.searchStudents(req.body);
-      return res
-        .status(200)
-        .json({ code: 'FETCH_SUCCESS', data: students, message: APIMESSAGE.FETCH_SUCCESS });
-    } catch (error) {
-      return next(error);
-    }
-  };
+  // 検索
+  searchStudents = this.asyncHandler<StudentSummary[]>(async (req, res) => {
+    const students = await this.studentService.searchStudents(req.body);
+    return this.ok(res, students);
+  });
 
-  createStudent = async (
-    req: Request,
-    res: Response<ApiBody<StudentResponse>>,
-    next: NextFunction,
-  ) => {
-    try {
-      const student = await this.studentService.createStudent(req.body);
-      return res
-        .status(201)
-        .json({ code: 'CREATE_SUCCESS', data: student, message: APIMESSAGE.CREATE_SUCCESS });
-    } catch (error) {
-      return next(error);
-    }
-  };
+  // 作成
+  createStudent = this.asyncHandler<StudentResponse>(async (req, res) => {
+    const student = await this.studentService.createStudent(req.body);
+    return this.created(res, student);
+  });
 
-  updateStudent = async (
-    req: Request,
-    res: Response<ApiBody<StudentResponse>>,
-    next: NextFunction,
-  ) => {
-    try {
-      const { id } = req.params;
-      const student = await this.studentService.updateStudent(id, req.body);
-      return res
-        .status(200)
-        .json({ code: 'UPDATE_SUCCESS', data: student, message: APIMESSAGE.UPDATE_SUCCESS });
-    } catch (error) {
-      return next(error);
-    }
-  };
+  // 更新
+  updateStudent = this.asyncHandler<StudentResponse>(async (req, res) => {
+    const { id } = req.params;
+    const student = await this.studentService.updateStudent(id, req.body);
+    return this.updated(res, student);
+  });
 
-  deleteStudent = async (req: Request, res: Response<ApiBody<null>>, next: NextFunction) => {
-    try {
-      const { id } = req.params;
-      await this.studentService.deleteStudent(id);
-      return res.status(204);
-    } catch (error) {
-      return next(error);
-    }
-  };
+  // 削除
+  deleteStudent = this.asyncHandler<null>(async (req, res) => {
+    const { id } = req.params;
+    await this.studentService.deleteStudent(id);
+    return this.deleted(res);
+  });
 }
