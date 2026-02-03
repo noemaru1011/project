@@ -1,9 +1,18 @@
+import { Prisma } from '@prisma/client';
 import { HistoryRepository } from '@/features/history/repositories/historyRepository';
 import { MinorCategoryRepository } from '@/features/minorCategory/repositories/minorCategoryRepository';
-import { OptimisticLockError, InvalidReferenceError, NotFoundError } from '@/errors/appError';
-import { formatDateTime } from '@/features/history/utils/formatDateTime';
-import { aggregateHistory } from '@/features/history/utils/aggregateHIstory';
 import { UpdateResult } from '@/types/UpdateResult';
+import {
+  OptimisticLockError,
+  InvalidReferenceError,
+  NotFoundError,
+  StatusDuplicateError,
+} from '@/errors';
+import {
+  toHistoryResponse,
+  toHistorySummary,
+  aggregateHistory,
+} from '@/features/history/utils/index';
 import type {
   HistoryServerCreateInput,
   HistoryServerUpdateInput,
@@ -11,7 +20,6 @@ import type {
   HistorySummary,
 } from '@shared/models/history';
 import type { StudentServerSearchInput } from '@shared/models/student';
-import { StatusDuplicateError } from '@/errors/historyError';
 
 export class HistoryService {
   constructor(
@@ -22,21 +30,7 @@ export class HistoryService {
   async getHistory(historyId: string): Promise<HistoryResponse> {
     const history = await this.historyRepo.findById(historyId);
     if (history == null) throw new NotFoundError();
-    return {
-      historyId: history.historyId,
-      studentId: history.studentId,
-      studentName: history.student.studentName,
-      grade: history.student.grade.toString(),
-      departmentName: history.student.department.departmentName,
-      minorCategoryName: history.student.minorCategory.minorCategoryName,
-      statusId: history.statusId.toString(),
-      other: history.other,
-      startTime: formatDateTime(history.startTime)!,
-      endTime: formatDateTime(history.endTime),
-      validFlag: history.validFlag,
-      createdAt: history.createdAt.toISOString(),
-      updatedAt: history.updatedAt.toISOString(),
-    };
+    return toHistoryResponse(history);
   }
 
   async searchHistories(data: StudentServerSearchInput): Promise<HistorySummary[]> {
@@ -47,21 +41,12 @@ export class HistoryService {
       departmentIds: data.departmentIds,
       grades: data.grades,
     });
-    return histories.map((history) => ({
-      historyId: history.historyId,
-      studentName: history.student.studentName,
-      grade: history.student.grade.toString(),
-      departmentName: history.student.department.departmentName,
-      minorCategoryName: history.student.minorCategory.minorCategoryName,
-      statusName: history.status.statusName,
-      other: history.other,
-      startTime: formatDateTime(history.startTime)!,
-      endTime: formatDateTime(history.endTime),
-    }));
+    return histories.map(toHistorySummary);
   }
 
   async searchByStartTimeHistories(query: Date) {
     const histories = await this.historyRepo.searchByStartTime(query);
+
     const historiesMapped = histories.map((h) => ({
       statusId: h.statusId,
       grade: h.student.grade,
@@ -77,20 +62,17 @@ export class HistoryService {
   }
 
   async createHistory(data: HistoryServerCreateInput): Promise<HistoryResponse[]> {
-    const results: HistoryResponse[] = [];
     const duplicateStudents: string[] = [];
 
+    // 重複チェックロジック（既存のまま）
     for (const studentId of data.studentIds) {
-      // 指定期間と重複する履歴をチェック
       const overlaps = await this.historyRepo.findOverlappingHistories(
         studentId,
         data.startTime,
         data.endTime ?? null,
       );
 
-      // 重複があれば名前を収集
       if (overlaps.length > 0) {
-        // 名前を取得して配列に追加
         const studentNames = [
           ...new Set(overlaps.map((h) => h.student.studentName ?? '不明な学生')),
         ].join(', ');
@@ -98,14 +80,11 @@ export class HistoryService {
       }
     }
 
-    // 重複学生がいたらまとめて例外
     if (duplicateStudents.length > 0) {
-      const allStudents = duplicateStudents.join(', ');
-      throw new StatusDuplicateError(allStudents);
+      throw new StatusDuplicateError(duplicateStudents.join(', '));
     }
 
     try {
-      // 重複なしなら履歴作成
       const created = await this.historyRepo.create({
         studentIds: data.studentIds,
         statusId: data.statusId,
@@ -114,24 +93,13 @@ export class HistoryService {
         endTime: data.endTime,
       });
 
-      results.push(
-        ...created.map((history) => ({
-          historyId: history.historyId,
-          studentId: history.studentId,
-          statusId: history.statusId.toString(),
-          other: history.other,
-          startTime: formatDateTime(history.startTime)!,
-          endTime: formatDateTime(history.endTime),
-          validFlag: history.validFlag,
-          createdAt: history.createdAt.toISOString(),
-          updatedAt: history.updatedAt.toISOString(),
-        })),
-      );
-      return results;
-    } catch (err: any) {
-      //外部キー制約違反
-      if (err.code === 'P2003') {
-        throw new InvalidReferenceError();
+      return created.map(toHistoryResponse);
+    } catch (err: unknown) {
+      if (err instanceof Prisma.PrismaClientKnownRequestError) {
+        // 外部キー制約違反 (Foreign key constraint failed)
+        if (err.code === 'P2003') {
+          throw new InvalidReferenceError();
+        }
       }
       throw err;
     }
@@ -139,30 +107,38 @@ export class HistoryService {
 
   async updateHistory(data: HistoryServerUpdateInput, historyId: string): Promise<HistoryResponse> {
     try {
-      const history = await this.historyRepo.update(data, historyId);
-      //更新失敗時のエラー処理
-      //TODO 新規作成と同様に重複チェックを入れる
+      const current = await this.historyRepo.findById(historyId);
+      if (!current) throw new NotFoundError();
 
-      //存在しない場合
+      // 入力値があればそれ、なければ現在の値を使って期間を判定
+      const targetStartTime = data.startTime ?? current.startTime;
+      const targetEndTime = data.endTime !== undefined ? data.endTime : current.endTime;
+
+      const overlaps = await this.historyRepo.findOverlappingHistories(
+        current.studentId,
+        targetStartTime,
+        targetEndTime,
+        historyId, // 自分のIDを渡して除外させる
+      );
+
+      if (overlaps.length > 0) {
+        // 重複があればエラーを投げる
+        const studentName = overlaps[0].student.studentName ?? '不明な学生';
+        throw new StatusDuplicateError(studentName);
+      }
+
+      const history = await this.historyRepo.update(data, historyId);
+
       if (history == UpdateResult.NOT_FOUND) throw new NotFoundError();
-      //楽観的ロックエラー
       if (history == UpdateResult.OPTIMISTIC_LOCK) throw new OptimisticLockError();
 
-      return {
-        historyId: history.historyId,
-        studentId: history.studentId,
-        statusId: history.statusId.toString(),
-        other: history.other,
-        startTime: formatDateTime(history.startTime)!,
-        endTime: formatDateTime(history.endTime),
-        validFlag: history.validFlag,
-        createdAt: history.createdAt.toISOString(),
-        updatedAt: history.updatedAt.toISOString(),
-      };
-    } catch (err: any) {
-      //外部キー制約違反
-      if (err.code === 'P2003') {
-        throw new InvalidReferenceError();
+      return toHistoryResponse(history);
+    } catch (err: unknown) {
+      if (err instanceof Prisma.PrismaClientKnownRequestError) {
+        // 外部キー制約違反 (Foreign key constraint failed)
+        if (err.code === 'P2003') {
+          throw new InvalidReferenceError();
+        }
       }
       throw err;
     }

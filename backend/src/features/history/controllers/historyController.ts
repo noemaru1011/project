@@ -1,92 +1,49 @@
-import { Request, Response, NextFunction } from 'express';
 import { HistoryService } from '@/features/history/service/historyService';
-import type { ApiBody } from '@shared/models/common';
-import type { HistoryResponse, HistorySummary } from '@shared/models/history';
-import { APIMESSAGE } from '@shared/constants/apiMessage';
+import { BaseController } from '@/base/controllers/baseController';
+import type { HistoryResponse, HistorySummary, AggregationData } from '@shared/models/history';
 
-export class HistoryController {
-  constructor(private readonly historyService: HistoryService) {}
+export class HistoryController extends BaseController {
+  constructor(private readonly historyService: HistoryService) {
+    super();
+  }
 
-  searchHistories = async (
-    req: Request,
-    res: Response<ApiBody<HistorySummary[]>>,
-    next: NextFunction,
-  ) => {
-    try {
-      const histories = await this.historyService.searchHistories(req.body);
-      return res.status(200).json({
-        code: 'FETCH_SUCCESS',
-        data: histories,
-        message: APIMESSAGE.FETCH_SUCCESS,
-      });
-    } catch (error) {
-      return next(error);
-    }
-  };
+  // 履歴検索
+  searchHistories = this.asyncHandler<HistorySummary[]>(async (req, res) => {
+    const histories = await this.historyService.searchHistories(req.body);
+    return this.ok(res, histories);
+  });
 
-  searchByStartTimeHistories = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const query = new Date(req.query.datetime as string);
+  // 開始時間による検索 (Query Parameter)
+  searchByStartTimeHistories = this.asyncHandler<AggregationData>(async (req, res) => {
+    const query = new Date(req.query.datetime as string);
+    const histories = await this.historyService.searchByStartTimeHistories(query);
+    return this.ok(res, histories);
+  });
 
-      const histories = await this.historyService.searchByStartTimeHistories(query);
-      return res.status(200).json({
-        code: 'FETCH_SUCCESS',
-        data: histories,
-        message: APIMESSAGE.FETCH_SUCCESS,
-      });
-    } catch (error) {
-      return next(error);
-    }
-  };
+  // 1件取得
+  getHistory = this.asyncHandler<HistoryResponse>(async (req, res) => {
+    const { id } = req.params;
+    const history = await this.historyService.getHistory(id);
+    return this.ok(res, history);
+  });
 
-  getHistory = async (
-    req: Request,
-    res: Response<ApiBody<HistoryResponse>>,
-    next: NextFunction,
-  ) => {
-    try {
-      const { id } = req.params;
-      const history = await this.historyService.getHistory(id);
-      return res
-        .status(200)
-        .json({ code: 'FETCH_SUCCESS', data: history, message: APIMESSAGE.FETCH_SUCCESS });
-    } catch (error) {
-      return next(error);
-    }
-  };
+  // 作成
+  createHistory = this.asyncHandler<HistoryResponse[]>(async (req, res) => {
+    const history = await this.historyService.createHistory(req.body);
+    return this.created(res, history);
+  });
 
-  createHistory = async (
-    req: Request,
-    res: Response<ApiBody<HistoryResponse[]>>,
-    next: NextFunction,
-  ) => {
-    try {
-      const history = await this.historyService.createHistory(req.body);
-      return res
-        .status(201)
-        .json({ code: 'CREATE_SUCCESS', data: history, message: APIMESSAGE.CREATE_SUCCESS });
-    } catch (error) {
-      return next(error);
-    }
-  };
+  // 更新
+  updateHistory = this.asyncHandler<null>(async (req, res) => {
+    const { id } = req.params;
+    await this.historyService.updateHistory(req.body, id);
+    return this.updated(res, null);
+  });
 
-  updateHistory = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { id } = req.params;
-      await this.historyService.updateHistory(req.body, id);
-      return res.status(200).json({ code: 'UPDATE_SUCCESS', message: APIMESSAGE.UPDATE_SUCCESS });
-    } catch (error) {
-      return next(error);
-    }
-  };
-
-  deleteHistory = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { id } = req.params;
-      await this.historyService.deleteHistory(id);
-      return res.status(204);
-    } catch (error) {
-      return next(error);
-    }
-  };
+  // 削除
+  deleteHistory = this.asyncHandler<void>(async (req, res) => {
+    const { id } = req.params;
+    await this.historyService.deleteHistory(id);
+    return this.deleted(res);
+  });
 }

@@ -197,11 +197,18 @@ export class HistoryRepository extends BaseRepository {
   /**
    * repository に重複確認用のヘルパーメソッド
    */
-  async findOverlappingHistories(studentId: string, startTime: Date, endTime: Date | null) {
+  async findOverlappingHistories(
+    studentId: string,
+    startTime: Date,
+    endTime: Date | null,
+    excludeHistoryId?: string,
+  ) {
     return this.prisma.history.findMany({
       where: {
         studentId,
         validFlag: true,
+        // 更新時は自分自身をチェック対象から外す
+        NOT: excludeHistoryId ? { historyId: excludeHistoryId } : undefined,
         AND: [
           {
             startTime: { lte: endTime ?? new Date('9999-12-31') },
