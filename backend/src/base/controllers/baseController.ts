@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, RequestHandler } from 'express';
 import type { ApiBody } from '@shared/models/common';
-import type { ApiMessage } from '@shared/constants/apiMessage';
+import type { ApiMessage, ApiMessageCode } from '@shared/constants/apiMessage';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
 
 export abstract class BaseController {
@@ -18,8 +18,13 @@ export abstract class BaseController {
     res: Response<ApiBody<T>>,
     data: T,
     message: ApiMessage = APIMESSAGE.FETCH_SUCCESS,
+    code: ApiMessageCode = 'FETCH_SUCCESS',
   ) {
-    return res.status(200).json({ code: 'FETCH_SUCCESS', data, message });
+    return res.status(200).json({
+      code,
+      data,
+      message,
+    });
   }
 
   // 作成成功 (201)

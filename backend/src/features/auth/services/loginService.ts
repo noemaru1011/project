@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { InvalidCredentialsError } from '@/errors/authError';
+import { InvalidCredentialsError } from '@/errors';
 import { jwtUtil } from '@/features/auth/utils/jwt';
 import { ROLE } from '@shared/models/common';
 import { isPasswordUpdateRequired } from '@/features/auth/utils/isPasswordUpdateRequired';
@@ -20,8 +20,7 @@ export class LoginService {
       this.studentRepo.findByEmail(email),
     ]);
 
-    const DUMMY_HASH = '$2b$10$dummyhashtopreventtimingattacks000000000000000';
-
+    // 1. 管理者ログイン
     if (admin) {
       const isMatch = await bcrypt.compare(inputPassword, admin.password);
       if (!isMatch) throw new InvalidCredentialsError();
@@ -30,21 +29,28 @@ export class LoginService {
       return { token, role: ROLE.ADMIN };
     }
 
-    let studentPasswordHash = DUMMY_HASH;
-    let studentPasswordData: any = null;
+    // 2. 学生ログインの準備
+    const DUMMY_HASH = '$2b$10$dummyhashtopreventtimingattacks000000000000000';
+
+    // リポジトリから直接型を抽出
+    let studentPasswordData: Awaited<ReturnType<typeof this.passwordRepo.findByStudentId>> = null;
 
     if (student) {
       studentPasswordData = await this.passwordRepo.findByStudentId(student.studentId);
-      if (studentPasswordData) studentPasswordHash = studentPasswordData.password;
     }
 
+    // パスワード比較（studentがいなくても、データがなくてもDUMMY_HASHを使う）
+    const studentPasswordHash = studentPasswordData?.password ?? DUMMY_HASH;
     const isMatch = await bcrypt.compare(inputPassword, studentPasswordHash);
 
-    if (!isMatch || !student) throw new InvalidCredentialsError();
+    if (!isMatch || !student || !studentPasswordData) {
+      throw new InvalidCredentialsError();
+    }
 
+    // パスワード変更を推奨するフラグをセット
     const passwordUpdateRequired = isPasswordUpdateRequired(
-      studentPasswordData!.createdAt,
-      studentPasswordData!.updatedAt,
+      studentPasswordData.createdAt,
+      studentPasswordData.updatedAt,
     );
 
     const token = jwtUtil.createToken(student.studentId, ROLE.STUDENT);
