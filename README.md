@@ -87,15 +87,26 @@
 - Vercel:デプロイ
  
 ## プロジェクト構成
+```
+project/
+├── .github/
+│   └── # GitHub Actions: 自動テスト、コンパイルを行う(改修予定)
+│
+├── frontend/
+│   └── # フロントエンド（React / Vite）: 先ほど定義した Feature-based アーキテクチャ
+│
+├── backend/
+│   └── # バックエンド（Node.js / Express）: Controller-Service-Repository 構成
+│
+├── shared/
+│   └── # 共通資産: 型定義、Zodスキーマ、APIメッセージ、ルート定義（フロント・バック両方から参照）
+│
+├── envs/
+│   └── # 環境変数管理: 実ファイルは gitignore
+│
+└──── docker-compose.dev.yml # 開発用コンテナ定義
 
-project-root/
-
-- .github/ # GitHubActions
-- frontend/ # フロントエンド
-- backend/ # バックエンド
-- shared/ # 共通型定義・Zodスキーマ
-- envs/ # 環境変数
-- docker-compose.dev.yml
+```
 
 各ディレクトリの詳細は、それぞれのREADMEを参照してください：
 
