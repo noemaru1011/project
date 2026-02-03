@@ -2,7 +2,7 @@ export const APIMESSAGE = {
   FETCH_SUCCESS: "取得成功。",
   CREATE_SUCCESS: "追加完了。",
   UPDATE_SUCCESS: "更新完了。",
-  DELETE_SUCCESS: "削除完了。",
+  DELETE_SUCCESS: "削除完了。", //204なのでフロントで使用
   LOGIN_SUCCESS: "ログインが成功しました。",
   LOGOUT_SUCCESS: "ログアウトしました。",
   //以下エラーメッセージ

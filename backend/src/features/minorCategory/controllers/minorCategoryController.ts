@@ -1,26 +1,15 @@
-import { Request, Response, NextFunction } from 'express';
 import { MinorCategoryService } from '@/features/minorCategory/services/minorCategoryService';
-import type { ApiBody } from '@shared/models/common';
 import type { MinorCategory } from '@shared/models/master';
-import { APIMESSAGE } from '@shared/constants/apiMessage';
+import { BaseController } from '@/base/controllers/baseController';
 
-export class MinorCategoryController {
-  constructor(private readonly minorCategoryService: MinorCategoryService) {}
+export class MinorCategoryController extends BaseController {
+  constructor(private readonly minorCategoryService: MinorCategoryService) {
+    super();
+  }
 
-  getAllMinorCategories = async (
-    _req: Request,
-    res: Response<ApiBody<MinorCategory[]>>,
-    next: NextFunction,
-  ) => {
-    try {
-      const minorcategories = await this.minorCategoryService.getAllMinorCategories();
-      res.status(200).json({
-        code: 'FETCH_SUCCESS',
-        data: minorcategories,
-        message: APIMESSAGE.FETCH_SUCCESS,
-      });
-    } catch (error) {
-      return next(error);
-    }
-  };
+  getAllMinorCategories = this.asyncHandler<MinorCategory[]>(async (_req, res) => {
+    const minorCategories = await this.minorCategoryService.getAllMinorCategories();
+
+    return this.ok(res, minorCategories);
+  });
 }
