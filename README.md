@@ -13,6 +13,7 @@
 - インフラ構築
 - モダンな開発手法(GitHubActionsやコンテナ技術など)
 - 外部APIの使用
+- CI/CD
 
 ### 機能概要
 
@@ -51,9 +52,9 @@
 ### フロントエンド
 
 - React + Vite
-- TanStack Query
-- React Hook Form + Zod
+- TypeScript
 - Tailwind CSS
+- Zod（バリデーション）
 - Storybook
 
 ### バックエンド
@@ -66,7 +67,7 @@
 
 ### インフラ
 
-- PostgreSQL
+- PostgreSQL(Supabase)
 - Redis
 - Docker / Docker Compose
 
@@ -83,6 +84,7 @@
 ### CI/CD
 
 - GitHubActions:push時の単体テスト、コンパイルを行う(改修予定)
+- Vercel:デプロイ
  
 ## プロジェクト構成
 
@@ -102,12 +104,13 @@ project-root/
 - [共通型定義](./shared/README.md)
 - [環境変数設定](./envs/README.md)
 
-## クイックスタート
+## 環境構築
 
 ### 前提条件
 
 - Docker と Docker Compose がインストールされていること
 - env.devに環境変数が設定されていること
+- 環境変数の詳細は [envs/README.md](./envs/README.md) を参照してください。
 
 ### 起動方法
 
@@ -133,18 +136,6 @@ docker-compose -f docker-compose.dev.yml down
 # ログ確認
 docker-compose -f docker-compose.dev.yml logs -f
 ```
-
-## 環境変数
-
-環境変数の詳細は [envs/README.md](./envs/README.md) を参照してください。
-
-## 開発ガイド
-
-### アーキテクチャ
-
-フロントエンド・バックエンドは分離構成とし、RESTful APIで通信します。
-詳細は backend/README.md を参照してください。
-詳細な認証フローやAPI仕様は [backend/README.md](./backend/README.md) を参照してください。
 
 ## トラブルシューティング
 
@@ -202,18 +193,3 @@ npx prisma migrate reset
 ## ライセンス
 
 Private（個人開発プロジェクト）
-
-## 今後の改善予定・検討事項
-
-### バックエンド改善予定
-
-- **ページネーション対応**
-  - Prisma を使用しているため、skip / take を用いたページネーションを実装したい
-
-- **バッチ処理の実装**
-  - 進級等に伴う学生情報の一括更新を想定
-  - 現在は設計・学習段階
-
-- **運用を意識したログ設計・バックアップリストア**
-  - 現状は開発用途や、ログを取るという勉強が中心
-  - 運用時に意味のあるログ粒度・バックアップおよびリストア手順の整備を検討
