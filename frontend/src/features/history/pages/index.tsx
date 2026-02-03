@@ -11,7 +11,7 @@ import {
 } from '@/features/history/components';
 import { useSearchHistories } from '@/features/history/hooks/useSearchHistories';
 import { useAggregateHistories } from '@/features/history/hooks/useAggregateHistories';
-import { useDeleteHistory } from '@/features/history/hooks/useDeleteHistory'; // 追加
+import { useDeleteHistory } from '@/features/history/hooks/useDeleteHistory';
 import { handleApiErrorWithUI } from '@/utils';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
 import type { StudentSearchInput } from '@shared/models/student';
