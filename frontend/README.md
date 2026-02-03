@@ -35,52 +35,49 @@
 ```
 src/
 ├─ api/
-│  └─ API通信の共通処理（JSONのみ）
+│  └─ # axios等の設定、共通インターセプター（トークン注入・共通エラー処理）
 │
 ├─ assets/
-│  └─ 画像などの静的ファイル
+│  └─ # 画像、SVG静的リソース
 │
 ├─ components/
 │  ├─ Guard/
-│  │  └─　PageGuard で App.tsx内で、画面の権限制御
+│  │  └─ # PageGuard: 権限（Role）や認証状態に基づいたレンダリング制御
 │  ├─ UI/
-│  │  └─ Button / Input など（Storybook管理）
+│  │  └─ # Button, Input等、ドメイン知識を持たない汎用部品（Storybook）
 │  └─ Layouts/
-│     └─ レイアウト系（Storybook管理）
+│     └─ # Header, Error等、画面の骨組み（Storybook）
 │
 ├─ contexts/
+│  └─ # AuthContext, ThemeContext 等、グローバルに共有する状態
 │
 ├─ features/
-│  └─ feature-name/
+│  └─ [feature-name]/
 │     ├─ pages/
-│     │  └─ 画面
+│     │  └─ # 機能のルートとなる画面（ロジックのオーケストレーション）
 │     ├─ components/
-│     │  └─ 機能専用UI / Layoutコンポーネント
-│     ├─ api
-│     │  └─ src直下のapi共通処理を呼び出し、APIのパス・型・HTTPメソッド定義
+│     │  └─ # その機能でしか使わない複雑なフォームやリスト部品
+│     ├─ api/
+│     │  └─ # エンドポイント定義、リクエスト/レスポンスの型定義
 │     ├─ hooks/
-│     │  └─ カスタムフック
+│     │  └─ # useMutation, useQuery をラップした、UIから分離されたロジック
 │     └─ constants/
-│        └─ 定数
+│        └─ # ラベル定義
 │
-├─ pages/  ※ feature に属さない共通・例外的ページのみ
-│  ├─ Home/
-│  └─ Error/
-│　　　　└─  components/Layouts/ エラー画面レイアウトを呼び出す
+├─ pages/
+│  └─ # Home, NotFound, ServerError 等、機能に依存しない共通画面
+│
 ├─ routes/
-│  └─ ルーティング定義
+│  └─ # ROUTES定数、BrowserRouterの設定、動的ルートの定義
 │
 ├─ utils/
-│  ├─ handleApiError
-│  ├─ authErrorGenerate
-│  └─ downloadBlob
-│  └─ pageGuard.tsx
+│  ├─ # handleApiError: APIエラーをトーストや遷移に変換する共通処理
+│  ├─ # authErrorGenerate: エラーメッセージの文言生成ロジック（(フロントのみで完結)
+│  ├─ # downloadBlob: ファイルダウンロードのヘルパー
 │
-├─ App.tsx
-├─ index.css
-└─ main.tsx
-
-※環境変数はプロジェクト直下の `.env.example` を参照
+├─ App.tsx    # プロバイダーの設置、PageGuardによる全体ルーティング
+├─ index.css  # Tailwind等のグローバルスタイル
+└─ main.tsx   # ReactのMount、StrictMode設定
 ```
 
 ## 設計方針
