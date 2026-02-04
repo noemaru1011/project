@@ -40,6 +40,10 @@ setInterval(() => {
 }, 30_000);
 
 // ===== サーバー起動 =====
-app.listen(PORT, HOST, () => {
-  logger.info(`Backend running: ${process.env.BACK_URL || `http://${HOST}:${PORT}`}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, HOST, () => {
+    logger.info(`Backend running: ${process.env.BACK_URL || `http://${HOST}:${PORT}`}`);
+  });
+}
+
+export default app; // Vercelのためにexportが必要
