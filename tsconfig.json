@@ -6,8 +6,9 @@
       "@/*": ["backend/src/*"],
       "@shared/*": ["shared/*"]
     },
-    "target": "ESNext",
-    "module": "CommonJS",
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "strict": true,
     "skipLibCheck": true
   },
