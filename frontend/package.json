@@ -34,7 +34,7 @@
     "react-toastify": "^11.0.5",
     "swr": "^2.3.6",
     "tailwindcss": "^4.1.13",
-    "@vitejs/plugin-react-swc": "^3.5.0"
+    "@vitejs/plugin-react-swc": "^4.2.3"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^4.1.1",
