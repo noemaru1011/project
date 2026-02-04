@@ -1,22 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
-
+import { fakerJA } from '@faker-js/faker';
 const prisma = new PrismaClient();
 
-const lastNames = ['佐藤', '鈴木', '高橋', '田中', '伊藤', '渡辺', '山本', '中村', '小林', '加藤'];
-const firstNames = [
-  '健太',
-  '大輔',
-  '直樹',
-  '浩二',
-  '修平',
-  '結衣',
-  '陽子',
-  '美咲',
-  '彩香',
-  '真理子',
-];
 
 async function main() {
   const categories = ['1大隊', '2大隊', '3大隊', '4大隊'];
@@ -155,12 +142,8 @@ async function main() {
       for (const deptId of deptIds) {
         // 各学科30人程度
         for (let i = 0; i < 30; i++) {
-          const nameIdx = (grade + bat + deptId + i) % lastNames.length;
-          const firstIdx = (i * grade) % firstNames.length;
 
-          const lastName = lastNames[nameIdx];
-          const firstName = firstNames[firstIdx];
-          const studentName = `${lastName} ${firstName}`;
+          const studentName = fakerJA.person.fullName();
 
           const email = `${crypto.randomUUID()}@example.com`;
 
@@ -202,11 +185,11 @@ async function main() {
   const histories: any[] = [];
 
   const FIXED_START = new Date('2026-01-01T09:00:00+09:00');
-  const FIXED_END = new Date('2026-01-31T17:00:00+09:00');
+  const FIXED_END = new Date();
 
-  // 学生リストをシャッフルして、ランダムに履歴を作成する（全学生の約30%に履歴を持たせる）
+  // 学生リストをシャッフルして、ランダムに履歴を作成する（全学生の約10%に履歴を持たせる）
   const shuffledStudents = [...students].sort(() => Math.random() - 0.5);
-  const targetStudentCount = Math.floor(shuffledStudents.length * 0.3);
+  const targetStudentCount = Math.floor(shuffledStudents.length * 0.1);
 
   for (let i = 0; i < targetStudentCount; i++) {
     const student = shuffledStudents[i];
