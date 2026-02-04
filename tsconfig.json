@@ -1,5 +1,11 @@
 {
   "compilerOptions": {
+    //バックエンドデプロイ用
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["backend/src/*"],
+      "@shared/*": ["shared/*"]
+    },
     "target": "ESNext",
     "module": "CommonJS",
     "strict": true,
