@@ -5,10 +5,10 @@
 ## ファイル構成
 
 - `.env.example` - 環境変数のテンプレート
-- `.env.dev` - 開発環境用（Docker Composeが自動読み込み）
-- `.env.prod` - 本番環境用
+- `.env.dev` - 開発環境用（Docker Composeが自動読み込み,gitignore対象）
+- `.env.prod` - 本番環境用(gitignore対象)
 
-## セットアップ
+## 開発環境セットアップ
 
 Docker Composeが自動的に `.env.dev` を読み込むため、特別な設定は不要です。
 
@@ -39,7 +39,7 @@ Docker Composeが自動的に `.env.dev` を読み込むため、特別な設定
 | --- | --- | --- | --- |
 | `NODE_ENV` | 実行環境 | ✅ | `development` |
 | `JWT_SECRET` | JWT署名用シークレットキー | ✅ | 任意の文字列を設定 |
-| `RESEND_API_KEY` | Resend APIキー |  | [Resend](https://resend.com)で取得 |
+| `RESEND_API_KEY` | Resend APIキー | ない場合は、学生作成時パスワードが不明に | [Resend](https://resend.com)で取得 |
 | `BACK_PORT` | バックエンドポート（Docker内） | ✅ | `3000` |
 | `BACK_HOST` | バックエンドホスト | ✅ | `0.0.0.0` |
 | `BACK_URL` | バックエンドURL（外部アクセス用） | ✅ | `http://localhost:3001` |

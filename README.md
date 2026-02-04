@@ -11,10 +11,11 @@
 - フルスタック開発（フロントエンド・バックエンド）
 - システム・DB設計
 - インフラ構築
-- モダンな開発手法(GitHubActionsやコンテナ技術など)
+- モダンな開発手法(GitHubActionsやコンテナ技術、生成AIなど)
 - 外部APIの使用
+- CI/CD
 
-### 機能概要
+### システムの概要
 
 学生寮に所属する学生の状態を一元管理するシステムです。
 
@@ -27,9 +28,9 @@
 
 **例:**
 
-> 第3大隊学生寮の住吉さんが、12月1日から12月10日（未定）の間、○○病院で、病気休暇中
+> 第3大隊学生寮の住吉さんが、12月1日から12月10日（もしくは未定）の間、○○病院で、病気休暇中
 
-### 組織構造
+### 学生寮の組織構造
 
 学生寮は階層構造になっております：
 
@@ -51,9 +52,9 @@
 ### フロントエンド
 
 - React + Vite
-- TanStack Query
-- React Hook Form + Zod
+- TypeScript
 - Tailwind CSS
+- Zod（バリデーション）
 - Storybook
 
 ### バックエンド
@@ -66,7 +67,7 @@
 
 ### インフラ
 
-- PostgreSQL
+- PostgreSQL(Supabase)
 - Redis
 - Docker / Docker Compose
 
@@ -83,17 +84,29 @@
 ### CI/CD
 
 - GitHubActions:push時の単体テスト、コンパイルを行う(改修予定)
+- Vercel:デプロイ
  
 ## プロジェクト構成
+```
+project/
+├── .github/
+│   └── # GitHub Actions: 自動テスト、コンパイルを行う(改修予定)
+│
+├── frontend/
+│   └── # フロントエンド（React / Vite）: Feature-based アーキテクチャ
+│
+├── backend/
+│   └── # バックエンド（Node.js / Express）: Feature-basedのController-Service-Repository 構成
+│
+├── shared/
+│   └── # 共通資産: 型定義、Zodスキーマ、APIメッセージ、ルート定義（フロント・バック両方から参照）
+│
+├── envs/
+│   └── # 環境変数管理: 実ファイルは gitignore
+│
+└──── docker-compose.dev.yml # 開発用コンテナ定義
 
-project-root/
-
-- .github/ # GitHubActions
-- frontend/ # フロントエンド
-- backend/ # バックエンド
-- shared/ # 共通型定義・Zodスキーマ
-- envs/ # 環境変数
-- docker-compose.dev.yml
+```
 
 各ディレクトリの詳細は、それぞれのREADMEを参照してください：
 
@@ -102,12 +115,13 @@ project-root/
 - [共通型定義](./shared/README.md)
 - [環境変数設定](./envs/README.md)
 
-## クイックスタート
+## 環境構築
 
 ### 前提条件
 
 - Docker と Docker Compose がインストールされていること
 - env.devに環境変数が設定されていること
+- 環境変数の詳細は [envs/README.md](./envs/README.md) を参照してください。
 
 ### 起動方法
 
@@ -133,18 +147,6 @@ docker-compose -f docker-compose.dev.yml down
 # ログ確認
 docker-compose -f docker-compose.dev.yml logs -f
 ```
-
-## 環境変数
-
-環境変数の詳細は [envs/README.md](./envs/README.md) を参照してください。
-
-## 開発ガイド
-
-### アーキテクチャ
-
-フロントエンド・バックエンドは分離構成とし、RESTful APIで通信します。
-詳細は backend/README.md を参照してください。
-詳細な認証フローやAPI仕様は [backend/README.md](./backend/README.md) を参照してください。
 
 ## トラブルシューティング
 
@@ -202,18 +204,3 @@ npx prisma migrate reset
 ## ライセンス
 
 Private（個人開発プロジェクト）
-
-## 今後の改善予定・検討事項
-
-### バックエンド改善予定
-
-- **ページネーション対応**
-  - Prisma を使用しているため、skip / take を用いたページネーションを実装したい
-
-- **バッチ処理の実装**
-  - 進級等に伴う学生情報の一括更新を想定
-  - 現在は設計・学習段階
-
-- **運用を意識したログ設計・バックアップリストア**
-  - 現状は開発用途や、ログを取るという勉強が中心
-  - 運用時に意味のあるログ粒度・バックアップおよびリストア手順の整備を検討

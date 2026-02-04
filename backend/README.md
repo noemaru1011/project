@@ -7,6 +7,7 @@
 ## 技術スタック
 
 - Node.js(v22.22.0)
+- TypeScript
 
 ### 主要ライブラリ
 
@@ -20,7 +21,7 @@
 | **メール送信**            | Resend     | メール送信（ユーザー作成時の初期パスワード通知） ※モダンなメール送信APIを試したかったため採用 |
 | **テスト**                | Vitest     | ユニットテスト                                                                                |
 | **フォーマッタ**          | Prettier    | セミコロンやクオーテーションなど簡単なルールのみ                                               |
-| **リンター**             | ESLint 　　　          | recommended程度                                                                     |
+| **リンター**             | ESLint 　　| recommended程度                                                                     |
 
 ## ディレクトリ構成
 
@@ -28,45 +29,45 @@
 
 src/
 ├── base
-│   ├── controller/      # レスポンス、エラーレスポンス等の汎用Controller
-│   └── repository/      # トランザクション管理の汎用Repository
+│   ├── controller/            # レスポンス、エラーレスポンス等の汎用Controller
+│   └── repository/            # トランザクション管理の汎用Repository
 ├── errors
-│   ├── index.ts           # すべてのエラークラスをまとめて export する
-│   ├── appError.ts        # 基底となる AppError クラス（FK違反や楽観的ロック違反、リソース未検出）
-│   ├── authError.ts       # ログイン失敗、トークン無効、権限不足など
-│   ├── csrfError.ts       # CSRFトークン不一致、検証失敗
-│   ├── historyError.ts    # 履歴操作に関するビジネスルール違反（履歴の重複）
-│   ├── passwordError.ts   # パスワードが異なるエラー
-│   └── studentError.ts    # 学生データに関する制約（メールアドレスの重複）
+│   ├── index.ts               # すべてのエラークラスをまとめて export する
+│   ├── appError.ts            # 基底となる AppError クラス（FK違反や楽観的ロック違反、リソース未検出）
+│   ├── authError.ts           # ログイン失敗、トークン無効、権限不足など
+│   ├── csrfError.ts           # CSRFトークン不一致、検証失敗
+│   ├── historyError.ts        # 履歴操作に関するビジネスルール違反（履歴の重複）
+│   ├── passwordError.ts       # パスワードが異なるエラー
+│   └── studentError.ts        # 学生データに関する制約（メールアドレスの重複）
 ├── features
-│   └── [feature_name]   # 各機能（例: history, user, auth）
-│       ├── route/       # Expressルーティング定義
-│       ├── controller/  # HTTPリクエストの受け口、レスポンス送出
-│       ├── service/     # ビジネスロジック、ドメインルール
-│       ├── repository/  # DB操作（SQL発行、Prisma）
-│       ├── utils/       # 当該機能内でのみ使用するヘルパー
-│       └── *.module.ts  # DI（依存性注入）の定義ファイル
+│   └── [feature_name]         # 各機能（例: history, user, auth）
+│       ├── route/             # Expressルーティング定義
+│       ├── controller/        # HTTPリクエストの受け口、レスポンス送出
+│       ├── service/           # ビジネスロジック、ドメインルール
+│       ├── repository/        # DB操作（SQL発行、Prisma）
+│       ├── utils/             # 当該機能内でのみ使用するヘルパー
+│       └── *.module.ts        # DI（依存性注入）の定義ファイル
 ├── middleware
-│   ├── index.ts              # 各ミドルウェアをエクスポートし、app.tsでの一括登録を容易にする
-│   ├── authMiddleware.ts     # JWTの検証、セッション確認、および `req.user` へのRole注入
-│   ├── csrfMiddleware.ts     # CSRFトークンの発行・照合（Cookie/Headerの比較など）
-│   ├── validateMiddleware.ts # Zod等を使用したリクエストボディ/クエリのスキーマバリデーション
-│   ├── securityMiddleware.ts # Helmet, CORS, Rate Limitなどのセキュリティ関連設定
-│   ├── commonMiddleware.ts   # JSONパース、URLエンコード、Cookie Parser等の共通処理
-│   ├── requestLogger.ts      # アクセスログ（メソッド、URL、ステータス、レスポンス時間）
-│   ├── errorLogger.ts        # AppError以外の予期せぬ例外を検知し、スタックトレースをログ保存
-│   ├── authMiddleware.test.ts # 認証ロジックのユニットテスト
-│   └── csrfMiddleware.test.ts # CSRF対策のユニットテスト
-├── types                # サーバーサイド専用の型定義
-├── utils                # 全体で利用する汎用関数（Loggerとtokenのブラックリスト）
+│   ├── index.ts                # 各ミドルウェアをエクスポートし、app.tsでの一括登録を容易にする
+│   ├── authMiddleware.ts       # JWTの検証、セッション確認、および `req.user` へのRole注入
+│   ├── csrfMiddleware.ts       # CSRFトークンの発行・照合（Cookie/Headerの比較など）
+│   ├── validateMiddleware.ts   # Zod等を使用したリクエストボディ/クエリのスキーマバリデーション
+│   ├── securityMiddleware.ts   # Helmet, CORS, Rate Limitなどのセキュリティ関連設定
+│   ├── commonMiddleware.ts     # JSONパース、URLエンコード、Cookie Parser等の共通処理
+│   ├── requestLogger.ts        # アクセスログ（メソッド、URL、ステータス、レスポンス時間）
+│   ├── errorLogger.ts          # AppError以外の予期せぬ例外を検知し、スタックトレースをログ保存
+│   ├── authMiddleware.test.ts  # 認証ロジックのユニットテスト
+│   └── csrfMiddleware.test.ts  # CSRF対策のユニットテスト
+├── types                       # サーバーサイド専用の型定義
+├── utils                       # 全体で利用する汎用関数（Loggerとtokenのブラックリスト）
 │   ├── auth/
-│   │    └── tokenBlacklist.ts     # ログアウト済みトークントークンの管理（Redis等との連携）
+│   │    └── tokenBlacklist.ts  # ログアウト済みトークントークンの管理（Redis等との連携）
 │   └── log/
-│         └──  logger.ts             # Winstonなどを用いた構造化ログの設定（出力先やレベル管理）
-├── app.ts               # Expressアプリ定義、共通ミドルウェア・ルート登録
-├── buildAppModules.ts   # アプリケーション全体のDIコンテナ構築・紐付け
-└── server.ts            # Listen実行、サーバー起動・停止処理
-└─── Dockerfile               # コンテナイメージビルド用
+│         └──  logger.ts        # Winstonなどを用いた構造化ログの設定（出力先やレベル管理）
+├── app.ts                      # Expressアプリ定義、共通ミドルウェア・ルート登録
+├── buildAppModules.ts          # アプリケーション全体のDIコンテナ構築・紐付け
+└── server.ts                   # Listen実行、サーバー起動・停止処理
+└─── Dockerfile                 # コンテナイメージビルド用
 ```
 
 ## アーキテクチャ
@@ -165,7 +166,7 @@ app.use(
     認証処理時間に差が出ないよう制御
 
 - **認証情報保護**
-- 認証トークンは HttpOnly Cookie に保存
+  - 認証トークンは HttpOnly Cookie に保存
 
 ## データベースマイグレーション
 
@@ -186,6 +187,7 @@ npx prisma db seed      # シードデータ投入
 ### マスタデータ
 
 | マスタ | 説明 |
+| -------------- | ------------------- |
 | **大分類マスタ** | 学生寮の大分類(大隊) |
 | **中分類マスタ** | 学生寮の中分類(中隊) |
 | **小分類マスタ** | 学生寮の小分類(小隊) |
@@ -202,12 +204,21 @@ npx prisma db seed      # シードデータ投入
 
 ### 管理者アカウント
 
-開発環境では以下の管理者アカウントでログインできます：
+管理者アカウントでログインできます：
 
 | 項目               | 値                  |
 | ------------------ | ------------------- |
 | **メールアドレス** | `admin@exmaple.com` |
 | **パスワード**     | `admin123`          |
+
+### 学生アカウント
+
+ダミー学生アカウントでログイン(resendがなくても体験できるように)できます：
+
+| 項目               | 値                  |
+| ------------------ | ------------------- |
+| **メールアドレス** | `{guid}@exmaple.com` |
+| **パスワード**     | `123456`          |
 
 ## 単体テスト戦略
 
@@ -268,3 +279,16 @@ npm run test:unit # Vitest
 | `cpuUser`      | ユーザーCPU時間                        |
 | `cpuSystem`    | システムCPU時間                        |
 | `eventLoopP99` | イベントループ遅延（99パーセンタイル） |
+
+## 今後の改善予定・検討事項
+
+- **ページネーション対応**
+  - Prisma を使用しているため、skip / take を用いたページネーションを実装したい
+
+- **バッチ処理の実装**
+  - 進級等に伴う学生情報の一括更新を想定
+  - 現在は設計・学習段階
+
+- **運用を意識したログ設計・バックアップリストア**
+  - 現状は開発用途や、ログを取るという勉強が中心
+  - 運用時に意味のあるログ粒度・バックアップおよびリストア手順の整備を検討
