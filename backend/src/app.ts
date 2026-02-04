@@ -1,27 +1,27 @@
 /// <reference path="./types/express.d.ts" />
 import express from 'express';
-import { API_ROUTES } from '@shared/routes/routes';
-import { ROLE } from '@shared/models/common';
-import loginRoutes from '@/features/auth/routes/loginRoutes';
-import logoutRoutes from '@/features/auth/routes/logoutRoutes';
-import logRoutes from '@/features/log/routes/logRoutes';
-import categoryRoutes from '@/features/category/routes/categoryRoutes';
-import SubCategoryRoutes from '@/features/subCategory/routes/subCategoryRoutes';
-import MinorCategoryRoutes from '@/features/minorCategory/routes/minorCategoryRoutes';
-import DepartmentRoutes from '@/features/department/routes/departmentRoutes';
-import statusRoutes from '@/features/status/routes/statusRoutes';
-import studentSearchRoutes from '@/features/student/routes/studentSearchRoutes';
-import studentRoutes from '@/features/student/routes/studentRoutes';
-import historyRoutes from '@/features/history/routes/historyRoutes';
-import historySearchRoutes from '@/features/history/routes/historySearchRoutes';
-import passwordRoutes from '@/features/auth/routes/passwordRoutes';
+import { API_ROUTES } from '../../shared/routes/routes';
+import { ROLE } from '../../shared/models/common';
+import loginRoutes from './features/auth/routes/loginRoutes';
+import logoutRoutes from './features/auth/routes/logoutRoutes';
+import logRoutes from './features/log/routes/logRoutes';
+import categoryRoutes from './features/category/routes/categoryRoutes';
+import SubCategoryRoutes from './features/subCategory/routes/subCategoryRoutes';
+import MinorCategoryRoutes from './features/minorCategory/routes/minorCategoryRoutes';
+import DepartmentRoutes from './features/department/routes/departmentRoutes';
+import statusRoutes from './features/status/routes/statusRoutes';
+import studentSearchRoutes from './features/student/routes/studentSearchRoutes';
+import studentRoutes from './features/student/routes/studentRoutes';
+import historyRoutes from './features/history/routes/historyRoutes';
+import historySearchRoutes from './features/history/routes/historySearchRoutes';
+import passwordRoutes from './features/auth/routes/passwordRoutes';
 import {
   authMiddleware,
   requireRole,
   errorLogger,
   requestLogger,
   commonMiddlewares,
-} from '@/middleware';
+} from './middleware';
 
 const app = express();
 app.use(commonMiddlewares);
