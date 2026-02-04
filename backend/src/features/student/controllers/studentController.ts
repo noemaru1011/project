@@ -9,7 +9,7 @@ export class StudentController extends BaseController {
 
   // 1件取得
   getStudent = this.asyncHandler<StudentResponse>(async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.params as { id: string };
     const student = await this.studentService.getStudent(id);
     return this.ok(res, student);
   });
@@ -28,14 +28,14 @@ export class StudentController extends BaseController {
 
   // 更新
   updateStudent = this.asyncHandler<StudentResponse>(async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.params as { id: string };
     const student = await this.studentService.updateStudent(id, req.body);
     return this.updated(res, student);
   });
 
   // 削除
   deleteStudent = this.asyncHandler<null>(async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.params as { id: string };
     await this.studentService.deleteStudent(id);
     return this.deleted(res);
   });

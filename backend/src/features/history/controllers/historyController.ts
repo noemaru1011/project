@@ -22,7 +22,7 @@ export class HistoryController extends BaseController {
 
   // 1件取得
   getHistory = this.asyncHandler<HistoryResponse>(async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.params as { id: string };
     const history = await this.historyService.getHistory(id);
     return this.ok(res, history);
   });
@@ -35,14 +35,14 @@ export class HistoryController extends BaseController {
 
   // 更新
   updateHistory = this.asyncHandler<null>(async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.params as { id: string };
     await this.historyService.updateHistory(req.body, id);
     return this.updated(res, null);
   });
 
   // 削除
   deleteHistory = this.asyncHandler<void>(async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.params as { id: string };
     await this.historyService.deleteHistory(id);
     return this.deleted(res);
   });
