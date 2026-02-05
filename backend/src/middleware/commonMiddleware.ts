@@ -6,7 +6,14 @@ import helmet from 'helmet';
 // HTTPレイヤ
 export const commonMiddlewares = [
   cors({
-    origin: process.env.FRONT_URL,
+    origin: (origin, callback) => {
+      // 1. 開発環境(originなし) 2. FRONT_URLと一致 3. VercelのプレビューURL
+      if (!origin || origin === process.env.FRONT_URL || origin.endsWith('.vercel.app')) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
   }),
   helmet(),
