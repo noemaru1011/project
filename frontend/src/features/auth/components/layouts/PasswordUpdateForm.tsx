@@ -21,6 +21,11 @@ export const PasswordUpdateForm = ({ onSubmit, loading }: Props) => {
     formState: { errors },
   } = useForm<PasswordUpdateInput>({
     resolver: zodResolver(PasswordUpdateSchema),
+    defaultValues: {
+      oldPassword: '',
+      newPassword: '',
+      checkNewPassword: '',
+    },
   });
 
   return (

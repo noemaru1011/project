@@ -24,12 +24,10 @@ export const RadioGroup = ({
   required,
   disabled,
   column,
-  value, // デフォルト値を設定しない
+  value='', 
   className,
   onChange,
 }: Props) => {
-  // undefined を空文字列に正規化
-  const normalizedValue = value ?? '';
 
   const handleChange = useCallback(
     (val: string) => {
@@ -38,6 +36,10 @@ export const RadioGroup = ({
     [onChange],
   );
 
+    /**
+   * options を column 指定に基づいて 2D 配列へ変換
+   * column 未指定時は [options] を返し、1行にすべて表示する（横一列）
+   */
   const grid = useMemo(() => {
     if (!column || column <= 0) {
       return [options];
@@ -80,7 +82,7 @@ export const RadioGroup = ({
                     name={name}
                     label={option.label}
                     value={option.value}
-                    checked={normalizedValue === option.value}
+                    checked={value === option.value}
                     onChange={() => handleChange(option.value)}
                     disabled={disabled}
                     className="flex items-center cursor-pointer select-none p-2 rounded-lg transition-colors hover:bg-gray-50"

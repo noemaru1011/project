@@ -17,6 +17,10 @@ export const LoginForm = ({ onSubmit, loading }: Props) => {
     formState: { errors },
   } = useForm<LoginInput>({
     resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
   });
 
   return (

@@ -22,7 +22,13 @@ export const HistoryCreateForm = ({ selectedStudents, onSubmit, loading }: Props
     formState: { errors, isSubmitted },
   } = useForm<HistoryCreateInput>({
     resolver: zodResolver(HistoryCreateSchema),
-    defaultValues: { studentIds: [] },
+    defaultValues: { 
+      studentIds: [],
+      statusId: '',
+      startTime: '',
+      endTime: '',
+      other: ''
+    },
   });
 
   useEffect(() => {
