@@ -13,7 +13,7 @@
 - インフラ構築
 - モダンな開発手法(GitHubActionsやコンテナ技術、生成AIなど)
 - 外部APIの使用
-- CI/CD
+- CI/CD、デプロイ技術
 
 ### システムの概要
 
@@ -42,7 +42,13 @@
 - **中隊**: 大隊ごとに4つ（各階）
 - **小隊**: 中隊ごとに3つ
 - **合計**: 1大隊あたり12小隊（4階 × 3小隊）
-- (※webアプリのホームに組織図があります)
+
+参考画像(1大隊)
+![組織編成図](frontend/src/assets/organization.svg)
+
+### クイックスタート(デプロイ先)
+- **Webアプリケーション**: <http://localhost:5173>
+- **UIカタログ(Storybook)**: <http://localhost:3001>
 
 ## 技術スタック
 
@@ -52,22 +58,21 @@
 ### フロントエンド
 
 - React + Vite
-- TypeScript
 - Tailwind CSS
 - Zod（バリデーション）
 - Storybook
+- Figma(デザイン)
 
 ### バックエンド
 
 - Express
 - Prisma（ORM）
-- TypeScript
 - Zod（バリデーション）
 - Resend（メール送信）
 
 ### インフラ
 
-- PostgreSQL(Supabase)
+- PostgreSQL
 - Redis
 - Docker / Docker Compose
 
@@ -83,14 +88,16 @@
 
 ### CI/CD
 
-- GitHubActions:push時の単体テスト、コンパイルを行う(改修予定)
+- GitHubActions:push時の単体テスト、コンパイルを行う程度(改修予定)
 - Vercel:デプロイ
+- Upstash:Redisのデプロイ
+- Supabase:PostgreSQLの本番環境)
  
 ## プロジェクト構成
 ```
 project/
 ├── .github/
-│   └── # GitHub Actions: 自動テスト、コンパイルを行う(改修予定)
+│   └── # GitHub Actions: 自動テスト、コンパイルを行う程度(改修予定)
 │
 ├── frontend/
 │   └── # フロントエンド（React / Vite）: Feature-based アーキテクチャ
