@@ -1,16 +1,15 @@
+// project/tsconfig.json
 {
   "compilerOptions": {
-    //バックエンドデプロイ用
     "baseUrl": ".",
     "paths": {
       "@/*": ["backend/src/*"],
       "@shared/*": ["shared/*"]
     },
+    "module": "CommonJS",
     "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["src"]
+  "include": ["backend/src", "shared"]
 }
