@@ -7,6 +7,7 @@ import helmet from 'helmet';
 export const commonMiddlewares = [
   cors({
     origin: (origin, callback) => {
+      console.log(origin);
       // 1. 開発環境(originなし) 2. FRONT_URLと一致 3. VercelのプレビューURL
       if (!origin || origin === process.env.FRONT_URL || origin.endsWith('.vercel.app')) {
         callback(null, true);
