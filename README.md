@@ -58,7 +58,6 @@
 ### フロントエンド
 
 - React + Vite
-- TypeScript
 - Tailwind CSS
 - Zod（バリデーション）
 - Storybook
@@ -68,13 +67,12 @@
 
 - Express
 - Prisma（ORM）
-- TypeScript
 - Zod（バリデーション）
 - Resend（メール送信）
 
 ### インフラ
 
-- PostgreSQL(Supabase)
+- PostgreSQL
 - Redis
 - Docker / Docker Compose
 
@@ -90,14 +88,16 @@
 
 ### CI/CD
 
-- GitHubActions:push時の単体テスト、コンパイルを行う(改修予定)
+- GitHubActions:push時の単体テスト、コンパイルを行う程度(改修予定)
 - Vercel:デプロイ
+- Upstash:Redisのデプロイ
+- Supabase:PostgreSQLの本番環境)
  
 ## プロジェクト構成
 ```
 project/
 ├── .github/
-│   └── # GitHub Actions: 自動テスト、コンパイルを行う(改修予定)
+│   └── # GitHub Actions: 自動テスト、コンパイルを行う程度(改修予定)
 │
 ├── frontend/
 │   └── # フロントエンド（React / Vite）: Feature-based アーキテクチャ
