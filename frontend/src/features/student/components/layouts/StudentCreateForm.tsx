@@ -22,13 +22,6 @@ export const StudentCreateForm = ({ onSubmit, onBack, loading }: Props) => {
     formState: { errors },
   } = useForm<StudentCreateInput>({
     resolver: zodResolver(StudentCreateSchema),
-    defaultValues: {
-      studentName: '',
-      grade: '',
-      minorCategoryId: '',
-      email: '',
-      departmentId: '',
-    },
   });
 
   return (
