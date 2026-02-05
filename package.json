@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npm run build -w frontend",
+    "build:backend": "tsc -p backend/tsconfig.json && tsc-alias -p backend/tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
