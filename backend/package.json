@@ -60,7 +60,7 @@
     "lint": "eslint . --ext .ts,.js",
     "lint:fix": "eslint . --ext .ts,.js --fix",
     "format": "prettier --write .",
-    "build": "echo 'Skipping backend build...'",
+    "build": "tsc && tsc-alias",
     "start": "node dist/backend/src/server.js"
   },
   "prisma": {
