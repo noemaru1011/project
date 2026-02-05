@@ -6,18 +6,12 @@ import helmet from 'helmet';
 // HTTPレイヤ
 export const commonMiddlewares = [
   cors({
-    origin: (origin, callback) => {
-      console.log(origin);
-      // 1. 開発環境(originなし) 2. FRONT_URLと一致 3. VercelのプレビューURL
-      if (!origin || origin === process.env.FRONT_URL || origin.endsWith('.vercel.app')) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
+    origin: true, //process.env.FRONT_URL,デプロイできないのだ(´;ω;｀)
     credentials: true,
   }),
-  helmet(),
+  helmet({
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
+  }),
   cookieParser(),
   express.json({ limit: '10kb' }),
   express.urlencoded({ extended: true, limit: '10kb' }),
