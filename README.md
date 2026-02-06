@@ -93,7 +93,7 @@
 - Upstash:Redisのデプロイ
 - Supabase:PostgreSQLの本番環境)
  
-## プロジェクト構成
+## プロジェクト構成(モノリスアーキテクチャ)
 ```
 project/
 ├── .github/
