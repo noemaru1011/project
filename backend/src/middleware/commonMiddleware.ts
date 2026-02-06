@@ -3,15 +3,20 @@ import cookieParser from 'cookie-parser';
 import express from 'express';
 import helmet from 'helmet';
 
+const allowedOrigins = [
+  process.env.FRONT_URL,
+  /\.vercel\.app$/,
+  'http://localhost:3000',
+].filter((origin): origin is string | RegExp => origin !== undefined);
+// ✅ 型ガードで undefined を明示的に除外
+
 // HTTPレイヤ
 export const commonMiddlewares = [
   cors({
-    origin: true, //process.env.FRONT_URL,デプロイできないのだ(´;ω;｀)
+    origin: allowedOrigins,
     credentials: true,
   }),
-  helmet({
-    crossOriginResourcePolicy: { policy: 'cross-origin' },
-  }),
+  helmet(),
   cookieParser(),
   express.json({ limit: '10kb' }),
   express.urlencoded({ extended: true, limit: '10kb' }),
