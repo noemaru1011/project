@@ -3,15 +3,19 @@ import type { NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { authMiddleware, requireRole } from './authMiddleware';
 import { TokenError, InvalidCredentialsError, ForbiddenError } from '@/errors/authError';
-import { tokenBlacklist } from '@/utils/tokenBlacklist';
+import * as tokenBlacklistModule from '@/utils/tokenBlacklist';
 import { ROLE } from '@shared/models/common';
 
-vi.mock('jsonwebtoken');
-vi.mock('@/utils/auth/tokenBlacklist', () => ({
-  tokenBlacklist: {
-    isBlacklisted: vi.fn(),
-  },
+// ======================
+// mocks
+// ======================
+vi.mock('jsonwebtoken', () => ({
+  verify: vi.fn(),
+  sign: vi.fn(),
 }));
+
+// tokenBlacklist は spyOn で扱う
+// ======================
 
 const createReq = (token?: string, user?: any) =>
   ({
@@ -27,6 +31,9 @@ describe('authMiddleware & requireRole', () => {
     vi.clearAllMocks();
     process.env.JWT_SECRET = 'secret';
     next = vi.fn();
+
+    // isBlacklisted は常に Promise<boolean> を返すようにする
+    vi.spyOn(tokenBlacklistModule.tokenBlacklist, 'isBlacklisted').mockResolvedValue(false);
   });
 
   // ======================
@@ -43,7 +50,7 @@ describe('authMiddleware & requireRole', () => {
 
     it('JWT が不正な場合 TokenError', async () => {
       (jwt.verify as any).mockImplementation(() => {
-        throw new Error();
+        throw new Error('invalid token');
       });
 
       const req = createReq('token');
@@ -58,7 +65,8 @@ describe('authMiddleware & requireRole', () => {
         id: 1,
         role: ROLE.ADMIN,
       });
-      (tokenBlacklist.isBlacklisted as any).mockResolvedValue(true);
+
+      (tokenBlacklistModule.tokenBlacklist.isBlacklisted as any).mockResolvedValue(true);
 
       const req = createReq('token');
 
@@ -72,8 +80,8 @@ describe('authMiddleware & requireRole', () => {
         id: 1,
         role: ROLE.ADMIN,
       };
+
       (jwt.verify as any).mockReturnValue(payload);
-      (tokenBlacklist.isBlacklisted as any).mockResolvedValue(false);
 
       const req = createReq('token');
 
@@ -99,7 +107,9 @@ describe('authMiddleware & requireRole', () => {
 
     it('権限不足の場合 ForbiddenError', () => {
       const middleware = requireRole([ROLE.ADMIN]);
-      const req = createReq(undefined, { role: ROLE.STUDENT });
+      const req = createReq(undefined, {
+        role: ROLE.STUDENT,
+      });
 
       middleware(req, res, next);
 
@@ -108,7 +118,9 @@ describe('authMiddleware & requireRole', () => {
 
     it('権限が一致する場合 next が呼ばれる', () => {
       const middleware = requireRole([ROLE.ADMIN]);
-      const req = createReq(undefined, { role: ROLE.ADMIN });
+      const req = createReq(undefined, {
+        role: ROLE.ADMIN,
+      });
 
       middleware(req, res, next);
 

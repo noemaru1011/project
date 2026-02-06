@@ -3,10 +3,10 @@ import { InvalidCredentialsError, ForbiddenError, TokenError } from '@/errors/au
 import { Role } from '@shared/models/common';
 import { JwtPayload } from '@/types/JwtPayload';
 import { tokenBlacklist } from '@/utils/tokenBlacklist';
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 
 export const authMiddleware = async (req: Request, _res: Response, next: NextFunction) => {
-  const token = req.cookies.token;
+  const token = req.cookies?.token;
 
   if (!token) {
     return next(new TokenError());
@@ -17,6 +17,7 @@ export const authMiddleware = async (req: Request, _res: Response, next: NextFun
     if (!JWT_SECRET) {
       throw new Error('JWT_SECRET is not defined');
     }
+
     const payload = jwt.verify(token, JWT_SECRET) as JwtPayload;
 
     // ブラックリストチェック
@@ -25,7 +26,7 @@ export const authMiddleware = async (req: Request, _res: Response, next: NextFun
     }
 
     req.user = payload;
-    next();
+    return next();
   } catch {
     return next(new TokenError());
   }
@@ -42,6 +43,6 @@ export const requireRole = (roles: Role[]) => {
       return next(new ForbiddenError());
     }
 
-    next();
+    return next();
   };
 };
