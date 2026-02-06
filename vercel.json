@@ -1,8 +1,17 @@
 {
   "version": 2,
+  "buildCommand": "npm run build:backend && npm run build",
+  "installCommand": "npm install",
+  "outputDirectory": "frontend/dist",
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "nodejs20.x"
+    }
+  },
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/index.ts" },
-    { "source": "/(.*)", "destination": "/frontend/dist/$1" },
-    { "source": "/(.*)", "destination": "/frontend/dist/index.html" }
+    {
+      "source": "/api/:path*",
+      "destination": "/api"
+    }
   ]
 }
