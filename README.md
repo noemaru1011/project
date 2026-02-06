@@ -47,7 +47,11 @@
 ![組織編成図](frontend/src/assets/organization.svg)
 
 ### クイックスタート(デプロイ先)
+
 - **Webアプリケーション**: <https://my-project-dusky-one.vercel.app/login>
+- **学生データの登録ができないように機能を一部制限しています(メールアドレスを用いるため)**
+- 管理者アカウントは`admin@example.com` ,`admin123`
+- 学生アカウントは`{guid}@example.com`,`123456`
 - **UIカタログ(Storybook)**: <https://project-frontend-phi-blond.vercel.app/>
 
 ## 技術スタック
@@ -81,20 +85,21 @@
 - vitest
 - Playwright(TODO)
 
- ### フォーマッター・リンター
+### フォーマッター・リンター
 
- - Prettier
- - ESLint
+- Prettier
+- ESLint
 
 ### CI/CD
 
 - GitHubActions:push時の単体テスト、コンパイルを行う程度(改修予定)
 - Vercel:デプロイ
 - Upstash:Redisのデプロイ
-- Supabase:PostgreSQLの本番環境)
- 
+- Supabase:PostgreSQLの本番環境
+
 ## プロジェクト構成(モノリスアーキテクチャ)
-```
+
+```typescript
 project/
 ├── .github/
 │   └── # GitHub Actions: 自動テスト、コンパイルを行う程度(改修予定)
