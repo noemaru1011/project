@@ -1,7 +1,5 @@
 {
-  "version": 2,
-  "buildCommand": "npm run build:backend && npm run build",
-  "installCommand": "npm install",
+  "buildCommand": "cp -r shared backend/src/shared && npm run build",
   "outputDirectory": "frontend/dist",
   "rewrites": [
     {
