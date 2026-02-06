@@ -25,7 +25,7 @@ import {
 } from '@/middleware';
 
 const app = express();
-app.use(...commonMiddlewares);
+app.use(commonMiddlewares as any);
 
 //ログインは認証不要
 app.use(API_ROUTES.LOGIN, requestLogger, loginRoutes);
