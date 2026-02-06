@@ -1,5 +1,5 @@
 import { BaseController } from '@/base/controllers/baseController';
-import { tokenBlacklist } from '@/utils/auth/tokenBlacklist';
+import { tokenBlacklist } from '@/utils/tokenBlacklist';
 import { APIMESSAGE } from '@shared/constants/apiMessage';
 import jwt from 'jsonwebtoken';
 

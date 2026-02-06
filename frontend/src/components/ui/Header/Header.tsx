@@ -7,7 +7,6 @@ import type { HeaderOption } from '../option';
 type Props = {
   options: HeaderOption[];
   onLogout: () => void;
-  onLogDownload: () => void;
   loading: boolean;
   passwordUpdateRequired: boolean;
   isAdmin: boolean;
@@ -18,7 +17,6 @@ type Props = {
 export const Header = ({
   options,
   onLogout,
-  onLogDownload,
   loading,
   passwordUpdateRequired,
   isAdmin,
@@ -34,7 +32,6 @@ export const Header = ({
           <HeaderNav
             options={options}
             onLogout={onLogout}
-            onLogDownload={onLogDownload}
             loading={loading}
             passwordUpdateRequired={passwordUpdateRequired}
           />

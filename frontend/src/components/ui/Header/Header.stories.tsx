@@ -22,7 +22,6 @@ export const Default: Story = {
   args: {
     options: headerOptions,
     onLogout: () => alert('ログアウトしました'),
-    onLogDownload: () => alert('ログをダウンロードします'),
     loading: false,
     passwordUpdateRequired: false,
     isAdmin: true,

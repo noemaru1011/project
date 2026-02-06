@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import type { NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 import { authMiddleware, requireRole } from './authMiddleware';
 import { TokenError, InvalidCredentialsError, ForbiddenError } from '@/errors/authError';
-import { tokenBlacklist } from '@/utils/auth/tokenBlacklist';
+import { tokenBlacklist } from '@/utils/tokenBlacklist';
 import { ROLE } from '@shared/models/common';
 
 vi.mock('jsonwebtoken');

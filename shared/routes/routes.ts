@@ -11,5 +11,4 @@ export const API_ROUTES = {
   PASSWORD: "/api/v1/passwords",
   LOGIN: "/api/v1/login",
   LOGOUT: "/api/v1/logout",
-  LOG: "/api/v1/log",
 } as const;

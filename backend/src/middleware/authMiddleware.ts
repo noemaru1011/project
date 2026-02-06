@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { InvalidCredentialsError, ForbiddenError, TokenError } from '@/errors/authError';
 import { Role } from '@shared/models/common';
 import { JwtPayload } from '@/types/JwtPayload';
-import { tokenBlacklist } from '@/utils/auth/tokenBlacklist';
+import { tokenBlacklist } from '@/utils/tokenBlacklist';
 import jwt from 'jsonwebtoken';
 
 export const authMiddleware = async (req: Request, _res: Response, next: NextFunction) => {

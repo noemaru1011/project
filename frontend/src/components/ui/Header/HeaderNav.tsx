@@ -5,21 +5,13 @@ import type { HeaderOption } from '../option';
 type Props = {
   options: HeaderOption[];
   onLogout: () => void;
-  onLogDownload: () => void;
   loading?: boolean;
   passwordUpdateRequired?: boolean;
 };
 
-export const HeaderNav = ({
-  options,
-  onLogout,
-  onLogDownload,
-  loading,
-  passwordUpdateRequired,
-}: Props) => {
+export const HeaderNav = ({ options, onLogout, loading, passwordUpdateRequired }: Props) => {
   const actionHandlers: Record<string, () => void> = {
     logout: onLogout,
-    logDownload: onLogDownload,
   };
 
   return (
