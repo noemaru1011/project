@@ -3,11 +3,6 @@
   "buildCommand": "npm run build:backend && npm run build",
   "installCommand": "npm install",
   "outputDirectory": "frontend/dist",
-  "functions": {
-    "api/**/*.js": {
-      "runtime": "nodejs20.x"
-    }
-  },
   "rewrites": [
     {
       "source": "/api/:path*",
