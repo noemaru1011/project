@@ -47,7 +47,7 @@
 ![組織編成図](frontend/src/assets/organization.svg)
 
 ### クイックスタート(デプロイ先)
-- **Webアプリケーション**: <http://localhost:5173>
+- **Webアプリケーション**: <https://my-project-dusky-one.vercel.app/login>
 - **UIカタログ(Storybook)**: <https://project-frontend-phi-blond.vercel.app/>
 
 ## 技術スタック
