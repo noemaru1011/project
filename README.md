@@ -48,7 +48,7 @@
 
 ### クイックスタート(デプロイ先)
 - **Webアプリケーション**: <http://localhost:5173>
-- **UIカタログ(Storybook)**: <http://localhost:3001>
+- **UIカタログ(Storybook)**: <https://project-frontend-phi-blond.vercel.app/>
 
 ## 技術スタック
 
