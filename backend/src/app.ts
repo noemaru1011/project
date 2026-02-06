@@ -1,4 +1,5 @@
 /// <reference path="./types/express.d.ts" />
+import 'tsconfig-paths/register';
 import express from 'express';
 import { API_ROUTES } from '@shared/routes/routes';
 import { ROLE } from '@shared/models/common';
