@@ -12,5 +12,12 @@
     "types": ["node"],
     "esModuleInterop": true
   },
-  "include": ["src", "../shared"]
+  "include": ["src", "../shared"],
+   "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "**/__tests__/**"
+  ]
 }
