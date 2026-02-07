@@ -6,7 +6,7 @@
 
 ## ディレクトリ構成
 
-```typescript
+````bash
 shared/
 ├── constants/
 │   └── # apiMessage.ts: フロント・バック共通で使用する成功/失敗時のシステムメッセージ定義
@@ -39,7 +39,7 @@ shared/
 │       └── index.ts         # マスタデータの外部公開設定
 │
 └─── routes/
-    └── # routes.ts: バックエンドのパス定義。axiosのベースURLやエンドポイントを管理
+     └─── routes.ts: #バックエンドのパス定義。axiosのベースURLやエンドポイントを管理
 ```
 
 ### constants/
@@ -103,3 +103,4 @@ export const APIMESSAGE = {
 
 - フロント・バック両方で使う型は必ず shared/models/ に定義
 - スキーマ変更時は、フロント・バック両方への影響を確認
+````

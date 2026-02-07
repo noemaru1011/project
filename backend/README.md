@@ -25,45 +25,45 @@
 
 ## ディレクトリ構成
 
-```typescript
+```bash
 
 src/
 ├── base
-│   ├── controller/            // レスポンス、エラーレスポンス等の汎用Controller
-│   └── repository/            // トランザクション管理の汎用Repository
+│   ├── controller/            # レスポンス、エラーレスポンス等の汎用Controller
+│   └── repository/            # トランザクション管理の汎用Repository
 ├── errors
-│   ├── index.ts               // すべてのエラークラスをまとめて export する
-│   ├── appError.ts            // 基底となる AppError クラス（FK違反や楽観的ロック違反、リソース未検出）
-│   ├── authError.ts           // ログイン失敗、トークン無効、権限不足など
-│   ├── csrfError.ts           // CSRFトークン不一致、検証失敗
-│   ├── historyError.ts        // 履歴操作に関するビジネスルール違反（履歴の重複）
-│   ├── passwordError.ts       // パスワードが異なるエラー
-│   └── studentError.ts        // 学生データに関する制約（メールアドレスの重複）
+│   ├── index.ts               # すべてのエラークラスをまとめて export する
+│   ├── appError.ts            # 基底となる AppError クラス（FK違反や楽観的ロック違反、リソース未検出）
+│   ├── authError.ts           # ログイン失敗、トークン無効、権限不足など
+│   ├── csrfError.ts           # CSRFトークン不一致、検証失敗
+│   ├── historyError.ts        # 履歴操作に関するビジネスルール違反（履歴の重複）
+│   ├── passwordError.ts       # パスワードが異なるエラー
+│   └── studentError.ts        # 学生データに関する制約（メールアドレスの重複）
 ├── features
-│   └── [feature_name]         // 各機能（例: history, user, auth）
-│       ├── route/             // Expressルーティング定義
-│       ├── controller/        // HTTPリクエストの受け口、レスポンス送出
-│       ├── service/           // ビジネスロジック、ドメインルール
-│       ├── repository/        // DB操作（SQL発行、Prisma）
-│       ├── utils/             // 当該機能内でのみ使用するヘルパー
-│       └── *.module.ts        // DI（依存性注入）の定義ファイル
+│   └── [feature_name]         # 各機能（例: history, user, auth）
+│       ├── route/             # Expressルーティング定義
+│       ├── controller/        # HTTPリクエストの受け口、レスポンス送出
+│       ├── service/           # ビジネスロジック、ドメインルール
+│       ├── repository/        # DB操作（SQL発行、Prisma）
+│       ├── utils/             # 当該機能内でのみ使用するヘルパー
+│       └── *.module.ts        # DI（依存性注入）の定義ファイル
 ├── middleware
-│   ├── index.ts               // 各ミドルウェアをエクスポートし、app.tsでの一括登録を容易にする
-│   ├── authMiddleware.ts       // JWTの検証、セッション確認、および `req.user` へのRole注入
-│   ├── csrfMiddleware.ts       // CSRFトークンの発行・照合（Cookie/Headerの比較など）
-│   ├── validateMiddleware.ts   // Zod等を使用したリクエストボディ/クエリのスキーマバリデーション
-│   ├── securityMiddleware.ts   // Helmet, CORS, Rate Limitなどのセキュリティ関連設定(使ってない)
-│   ├── commonMiddleware.ts     // JSONパース、URLエンコード、Cookie Parser等の共通処理
-│   ├── errorMiddleware.ts      // AppError以外の予期せぬ例外を検知し、スタックトレースをログ保存
-│   ├── authMiddleware.test.ts  // 認証ロジックのユニットテスト
-│   └── csrfMiddleware.test.ts  // CSRF対策のユニットテスト
-├── types                       // サーバーサイド専用の型定義
-├── utils                       // 全体で利用する汎用関数（Loggerとtokenのブラックリスト
-│   └── tokenBlacklist.ts       // ログアウト済みトークントークンの管理（Redis等との連携）
-├── app.ts                      // Expressアプリ定義、共通ミドルウェア・ルート登録
-├── buildAppModules.ts          // アプリケーション全体のDIコンテナ構築・紐付け
-├─── server.ts                  // Listen実行、サーバー起動・停止処理
-└─── Dockerfile                 // コンテナイメージビルド用
+│   ├── index.ts               # 各ミドルウェアをエクスポートし、app.tsでの一括登録を容易にする
+│   ├── authMiddleware.ts       # JWTの検証、セッション確認、および `req.user` へのRole注入
+│   ├── csrfMiddleware.ts       # CSRFトークンの発行・照合（Cookie/Headerの比較など）
+│   ├── validateMiddleware.ts   # Zod等を使用したリクエストボディ/クエリのスキーマバリデーション
+│   ├── securityMiddleware.ts   # Helmet, CORS, Rate Limitなどのセキュリティ関連設定(使ってない)
+│   ├── commonMiddleware.ts     # JSONパース、URLエンコード、Cookie Parser等の共通処理
+│   ├── errorMiddleware.ts      # AppError以外の予期せぬ例外を検知し、スタックトレースをログ保存
+│   ├── authMiddleware.test.ts  # 認証ロジックのユニットテスト
+│   └── csrfMiddleware.test.ts  # CSRF対策のユニットテスト
+├── types                       # サーバーサイド専用の型定義
+├── utils                       # 全体で利用する汎用関数（Loggerとtokenのブラックリスト
+│   └── tokenBlacklist.ts       # ログアウト済みトークントークンの管理（Redis等との連携）
+├── app.ts                      # Expressアプリ定義、共通ミドルウェア・ルート登録
+├── buildAppModules.ts          # アプリケーション全体のDIコンテナ構築・紐付け
+├─── server.ts                  # Listen実行、サーバー起動・停止処理
+└─── Dockerfile                 # コンテナイメージビルド用
 ```
 
 ## アーキテクチャ
@@ -99,7 +99,7 @@ Route →(+Middleware) → Controller → Service → Repository → Database
 ## ミドルウェアの適用例
 
 ```typescript
-// app.ts
+# app.ts
 app.use(
   API_ROUTES.PASSWORD, //URL指定
   authMiddleware, //認証
@@ -112,7 +112,7 @@ app.use(
 
 ```typescript
 router.put(
-  //httpメソッド指定
+  #httpメソッド指定
   '/:id', //ルーティング
   csrfMiddleware, //データが送られる場合は,csrfトークン検証
   validateBody(HistoryServerUpdateSchema), //入力項目のバリデーション

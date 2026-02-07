@@ -1,6 +1,7 @@
 # dockerコマンドまとめ
 
-```
+```bash
+
 # dockerコンテナをビルド
 docker-compose -f docker-compose.dev.yml up --build -d
 

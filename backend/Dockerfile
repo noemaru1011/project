@@ -37,37 +37,4 @@ RUN npx prisma generate
 EXPOSE 3000
 CMD ["npm", "run", "dev"]
 
-# ==========================================
-# 4. Build Stage (本番用ビルド)
-# ==========================================
-FROM dependencies AS build
-
-WORKDIR /app
-COPY backend/src ./backend/src
-COPY backend/prisma ./backend/prisma
-
-WORKDIR /app/backend
-RUN npx prisma generate
-RUN npm run build
-
-# 本番に不要な依存関係を削除
-WORKDIR /app
-RUN npm prune --production
-
-# ==========================================
-# 5. Production Stage (本番実行用)
-# ==========================================
-FROM base AS production
-
-WORKDIR /app
-ENV NODE_ENV=production
-
-# ビルド成果物と依存関係をコピー
-COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/backend/dist ./dist
-COPY --from=build /app/backend/package.json ./package.json
-COPY --from=build /app/backend/prisma ./prisma
-
-EXPOSE 3000
-CMD ["node", "dist/backend/src/server.js"]
 
