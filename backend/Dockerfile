@@ -15,7 +15,7 @@ FROM base AS dependencies
 
 # 設定ファイルのコピー
 COPY package.json package-lock.json tsconfig.json ./
-COPY backend/package.json backend/package-lock.json backend/tsconfig.json ./backend/
+COPY backend/package.json backend/tsconfig.json ./backend/
 COPY shared ./shared
 COPY backend/prisma ./backend/prisma
 
